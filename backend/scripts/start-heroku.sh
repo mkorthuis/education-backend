@@ -8,7 +8,7 @@ echo "Port: $PORT"
 
 # Run migrations
 echo "Running database migrations..."
-python -m alembic upgrade head
+python -m alembic upgrade head &
 
 # Run uvicorn with correct timeout flags
 exec uvicorn app.main:app \
