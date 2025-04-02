@@ -60,13 +60,6 @@ class Settings(BaseSettings):
             path=self.POSTGRES_DB,
         )
 
-    CLAUDE_API_KEY: str
-    CLAUDE_API_URL: str
-
-    OPENAI_API_KEY: str
-
-    GEMINI_API_KEY: str
-
     SMTP_HOST: str = "smtp.gmail.com"  # Default to Gmail SMTP
     SMTP_PORT: int = 587
     SMTP_USER: str
