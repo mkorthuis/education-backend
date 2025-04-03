@@ -13,39 +13,12 @@ class BalanceFundTypeGet(BaseModel):
     class Config:
         from_attributes = True
 
-class BalanceEntryTypeGet(BaseModel):
-    id: int
-    name: str
-    account_no: str
-    page: Optional[str] = None
-    line: Optional[str] = None
-    balance_entry_category_type_id_fk: int = Field(alias='balance_entry_category_type_id')
-
-    class Config:
-        from_attributes = True
-        populate_by_name = True
-
-class BalanceEntryCategoryGet(BaseModel):
-    id: int
-    name: str
-    balance_entry_super_category_id_fk: int = Field(alias='balance_entry_super_category_id')
-
-    class Config:
-        from_attributes = True
-        populate_by_name = True
-
-class BalanceEntrySuperCategoryGet(BaseModel):
-    id: int
-    name: str
-
-    class Config:
-        from_attributes = True
 
 class BalanceSheetGet(BaseModel):
     id: int
     value: Optional[float] = None
-    entry_type: Optional[BalanceEntryTypeGet] = None
-    fund_type: Optional[BalanceFundTypeGet] = None
+    balance_entry_type_id_fk: Optional[int] = Field(alias='entry_type_id')
+    balance_fund_type_id_fk: Optional[int] = Field(alias='fund_type_id')
 
     class Config:
         from_attributes = True
@@ -60,39 +33,11 @@ class RevenueFundTypeGet(BaseModel):
     class Config:
         from_attributes = True
 
-class RevenueEntryTypeGet(BaseModel):
-    id: int
-    name: str
-    account_no: str
-    page: Optional[str] = None
-    line: Optional[str] = None
-    revenue_entry_category_type_id_fk: int = Field(alias='revenue_entry_category_type_id')
-
-    class Config:
-        from_attributes = True
-        populate_by_name = True
-
-class RevenueEntryCategoryGet(BaseModel):
-    id: int
-    name: str
-    revenue_entry_super_category_id_fk: int = Field(alias='revenue_entry_super_category_id')
-
-    class Config:
-        from_attributes = True
-        populate_by_name = True
-
-class RevenueEntrySuperCategoryGet(BaseModel):
-    id: int
-    name: str
-
-    class Config:
-        from_attributes = True
-
 class RevenueGet(BaseModel):
     id: int
     value: Optional[float] = None
-    entry_type: Optional[RevenueEntryTypeGet] = None
-    fund_type: Optional[RevenueFundTypeGet] = None
+    revenue_entry_type_id_fk: Optional[int] = Field(alias='entry_type_id')
+    revenue_fund_type_id_fk: Optional[int] = Field(alias='fund_type_id')
 
     class Config:
         from_attributes = True
@@ -107,39 +52,11 @@ class ExpenditureFundTypeGet(BaseModel):
     class Config:
         from_attributes = True
 
-class ExpenditureEntryTypeGet(BaseModel):
-    id: int
-    name: str
-    account_no: str
-    page: Optional[str] = None
-    line: Optional[str] = None
-    expenditure_entry_category_type_id_fk: int = Field(alias='expenditure_entry_category_type_id')
-
-    class Config:
-        from_attributes = True
-        populate_by_name = True
-
-class ExpenditureEntryCategoryGet(BaseModel):
-    id: int
-    name: str
-    expenditure_entry_super_category_id_fk: int = Field(alias='expenditure_entry_super_category_id')
-
-    class Config:
-        from_attributes = True
-        populate_by_name = True
-
-class ExpenditureEntrySuperCategoryGet(BaseModel):
-    id: int
-    name: str
-
-    class Config:
-        from_attributes = True
-
 class ExpenditureGet(BaseModel):
     id: int
     value: Optional[float] = None
-    entry_type: Optional[ExpenditureEntryTypeGet] = None
-    fund_type: Optional[ExpenditureFundTypeGet] = None
+    expenditure_entry_type_id_fk: Optional[int] = Field(alias='entry_type_id')
+    expenditure_fund_type_id_fk: Optional[int] = Field(alias='fund_type_id')
 
     class Config:
         from_attributes = True
@@ -166,6 +83,110 @@ class FinancialReportGet(BaseModel):
     balance_sheets: List[BalanceSheetGet] = []
     revenues: List[RevenueGet] = []
     expenditures: List[ExpenditureGet] = []
+
+    class Config:
+        from_attributes = True
+
+
+class BalanceEntrySuperCategoryGet(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True
+
+class RevenueEntrySuperCategoryGet(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True
+
+class ExpenditureEntrySuperCategoryGet(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True
+
+class BalanceEntryCategoryGet(BaseModel):
+    id: int
+    name: str
+    super_category: Optional[BalanceEntrySuperCategoryGet] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+class RevenueEntryCategoryGet(BaseModel):
+    id: int
+    name: str
+    super_category: Optional[RevenueEntrySuperCategoryGet] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+class ExpenditureEntryCategoryGet(BaseModel):
+    id: int
+    name: str
+    super_category: Optional[ExpenditureEntrySuperCategoryGet] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+# Enhanced schemas for entry types with nested categories
+class BalanceEntryTypeGet(BaseModel):
+    id: int
+    name: str
+    account_no: str
+    page: Optional[str] = None
+    line: Optional[str] = None
+    category: Optional[BalanceEntryCategoryGet] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+class RevenueEntryTypeGet(BaseModel):
+    id: int
+    name: str
+    account_no: str
+    page: Optional[str] = None
+    line: Optional[str] = None
+    category: Optional[RevenueEntryCategoryGet] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+class ExpenditureEntryTypeGet(BaseModel):
+    id: int
+    name: str
+    account_no: str
+    page: Optional[str] = None
+    line: Optional[str] = None
+    category: Optional[ExpenditureEntryCategoryGet] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+# Combined schema for all entry types
+class AllEntryTypesGet(BaseModel):
+    balance_entry_types: List[BalanceEntryTypeGet] = []
+    revenue_entry_types: List[RevenueEntryTypeGet] = []
+    expenditure_entry_types: List[ExpenditureEntryTypeGet] = []
+
+    class Config:
+        from_attributes = True
+
+# Combined schema for all fund types
+class AllFundTypesGet(BaseModel):
+    balance_fund_types: List[BalanceFundTypeGet] = []
+    revenue_fund_types: List[RevenueFundTypeGet] = []
+    expenditure_fund_types: List[ExpenditureFundTypeGet] = []
 
     class Config:
         from_attributes = True

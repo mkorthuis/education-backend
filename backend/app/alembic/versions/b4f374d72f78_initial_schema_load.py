@@ -1,4 +1,4 @@
-"""Initial Schema  Load
+"""Initial Schema Load
 
 Revision ID: b4f374d72f78
 Revises: 

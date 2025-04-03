@@ -5,7 +5,7 @@ from uuid import UUID
 from app.api.v1.deps import SessionDep
 from app.schema.finance_schema import (
     DOEFormGet, BalanceSheetGet, RevenueGet, ExpenditureGet,
-    FinancialReportGet
+    FinancialReportGet, AllEntryTypesGet, AllFundTypesGet
 )
 from app.service.public.finance_service import finance_service
 
@@ -36,4 +36,40 @@ def get_financial_report(
         session=session,
         district_id=district_id,
         year=year
-    ) 
+    )
+
+@router.get("/entry-types",
+    response_model=AllEntryTypesGet,
+    summary="Get all entry types",
+    description="Retrieves all entry types (balance, revenue, expenditure) with their categories and super categories.",
+    response_description="All entry types with categories and super categories")
+def get_all_entry_types(
+    session: SessionDep
+):
+    """
+    Get all entry types (balance, revenue, expenditure) with their categories and super categories.
+    
+    This includes:
+    - Balance entry types with their categories and super categories
+    - Revenue entry types with their categories and super categories
+    - Expenditure entry types with their categories and super categories
+    """
+    return finance_service.get_all_entry_types(session=session)
+
+@router.get("/fund-types",
+    response_model=AllFundTypesGet,
+    summary="Get all fund types",
+    description="Retrieves all fund types (balance, revenue, expenditure).",
+    response_description="All fund types")
+def get_all_fund_types(
+    session: SessionDep
+):
+    """
+    Get all fund types (balance, revenue, expenditure).
+    
+    This includes:
+    - Balance fund types
+    - Revenue fund types
+    - Expenditure fund types
+    """
+    return finance_service.get_all_fund_types(session=session) 

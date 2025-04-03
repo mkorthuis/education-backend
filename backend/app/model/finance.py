@@ -25,7 +25,7 @@ class BalanceEntryCategory(BaseMixin, table=True):
     __tablename__ = "balance_entry_category_type"
     
     name: str = Field(max_length=255)
-    balance_entry_super_category_id_fk: int = Field(foreign_key="balance_entry_super_category_type.id")
+    balance_entry_super_category_type_id_fk: int = Field(foreign_key="balance_entry_super_category_type.id")
     super_category: BalanceEntrySuperCategory = Relationship(back_populates="categories")
     entry_types: List["BalanceEntryType"] = Relationship(back_populates="category")
 
@@ -71,7 +71,7 @@ class RevenueEntryCategory(BaseMixin, table=True):
     __tablename__ = "revenue_entry_category_type"
     
     name: str = Field(max_length=255)
-    revenue_entry_super_category_id_fk: int = Field(foreign_key="revenue_entry_super_category_type.id")
+    revenue_entry_super_category_type_id_fk: int = Field(foreign_key="revenue_entry_super_category_type.id")
     super_category: RevenueEntrySuperCategory = Relationship(back_populates="categories")
     entry_types: List["RevenueEntryType"] = Relationship(back_populates="category")
 
@@ -117,7 +117,7 @@ class ExpenditureEntryCategory(BaseMixin, table=True):
     __tablename__ = "expenditure_entry_category_type"
     
     name: str = Field(max_length=255)
-    expenditure_entry_super_category_id_fk: int = Field(foreign_key="expenditure_entry_super_category_type.id")
+    expenditure_entry_super_category_type_id_fk: int = Field(foreign_key="expenditure_entry_super_category_type.id")
     super_category: ExpenditureEntrySuperCategory = Relationship(back_populates="categories")
     entry_types: List["ExpenditureEntryType"] = Relationship(back_populates="category")
 

@@ -6,12 +6,19 @@ from app.model.finance import (
     DOEForm, BalanceSheet, Revenue, Expenditure,
     BalanceEntryType, BalanceFundType,
     RevenueEntryType, RevenueFundType,
-    ExpenditureEntryType, ExpenditureFundType
+    ExpenditureEntryType, ExpenditureFundType,
+    BalanceEntryCategory, BalanceEntrySuperCategory,
+    RevenueEntryCategory, RevenueEntrySuperCategory,
+    ExpenditureEntryCategory, ExpenditureEntrySuperCategory
 )
 from app.model.location import District
 from app.schema.finance_schema import (
     DOEFormGet, BalanceSheetGet, RevenueGet, ExpenditureGet,
-    FinancialReportGet
+    FinancialReportGet, AllEntryTypesGet,
+    BalanceEntryTypeGet, RevenueEntryTypeGet, ExpenditureEntryTypeGet,
+    BalanceEntryCategoryGet, RevenueEntryCategoryGet, ExpenditureEntryCategoryGet,
+    BalanceFundTypeGet, RevenueFundTypeGet, ExpenditureFundTypeGet,
+    AllFundTypesGet
 )
 from app.schema.location_schema import DistrictGet
 
@@ -43,20 +50,7 @@ class FinanceService:
         """Enhance balance sheets with related data."""
         result = []
         for bs in balance_sheets:
-            # Get related entry type and fund type
-            entry_type = session.get(BalanceEntryType, bs.balance_entry_type_id_fk)
-            fund_type = session.get(BalanceFundType, bs.balance_fund_type_id_fk)
-            
-            # Convert to DTO
             bs_dto = BalanceSheetGet.from_orm(bs)
-            
-            # Add related data if available
-            if entry_type:
-                bs_dto.entry_type = entry_type
-            
-            if fund_type:
-                bs_dto.fund_type = fund_type
-                
             result.append(bs_dto)
             
         return result
@@ -65,20 +59,7 @@ class FinanceService:
         """Enhance revenues with related data."""
         result = []
         for rev in revenues:
-            # Get related entry type and fund type
-            entry_type = session.get(RevenueEntryType, rev.revenue_entry_type_id_fk)
-            fund_type = session.get(RevenueFundType, rev.revenue_fund_type_id_fk)
-            
-            # Convert to DTO
             rev_dto = RevenueGet.from_orm(rev)
-            
-            # Add related data if available
-            if entry_type:
-                rev_dto.entry_type = entry_type
-            
-            if fund_type:
-                rev_dto.fund_type = fund_type
-                
             result.append(rev_dto)
             
         return result
@@ -87,20 +68,7 @@ class FinanceService:
         """Enhance expenditures with related data."""
         result = []
         for exp in expenditures:
-            # Get related entry type and fund type
-            entry_type = session.get(ExpenditureEntryType, exp.expenditure_entry_type_id_fk)
-            fund_type = session.get(ExpenditureFundType, exp.expenditure_fund_type_id_fk)
-            
-            # Convert to DTO
             exp_dto = ExpenditureGet.from_orm(exp)
-            
-            # Add related data if available
-            if entry_type:
-                exp_dto.entry_type = entry_type
-            
-            if fund_type:
-                exp_dto.fund_type = fund_type
-                
             result.append(exp_dto)
             
         return result
@@ -136,6 +104,159 @@ class FinanceService:
             balance_sheets=enhanced_balance_sheets,
             revenues=enhanced_revenues,
             expenditures=enhanced_expenditures
+        )
+    
+    def get_balance_entry_types(self, session: Session) -> List[BalanceEntryTypeGet]:
+        """Get all balance entry types with their categories and super categories."""
+        # Get all balance entry types
+        statement = select(BalanceEntryType)
+        entry_types = session.exec(statement).all()
+        
+        # Enhance with category and super category
+        result = []
+        for entry_type in entry_types:
+            # Get category
+            category = session.get(BalanceEntryCategory, entry_type.balance_entry_category_type_id_fk)
+            
+            # Create enhanced entry type
+            enhanced_entry_type = BalanceEntryTypeGet.model_validate(entry_type.model_dump())
+            
+            if category:
+                # Get super category
+                super_category = session.get(BalanceEntrySuperCategory, category.balance_entry_super_category_type_id_fk)
+                
+                # Create enhanced category
+                enhanced_category = BalanceEntryCategoryGet.model_validate(category.model_dump())
+                
+                if super_category:
+                    enhanced_category.super_category = super_category
+                
+                enhanced_entry_type.category = enhanced_category
+            
+            result.append(enhanced_entry_type)
+        
+        return result
+    
+    def get_revenue_entry_types(self, session: Session) -> List[RevenueEntryTypeGet]:
+        """Get all revenue entry types with their categories and super categories."""
+        # Get all revenue entry types
+        statement = select(RevenueEntryType)
+        entry_types = session.exec(statement).all()
+        
+        # Enhance with category and super category
+        result = []
+        for entry_type in entry_types:
+            # Get category
+            category = session.get(RevenueEntryCategory, entry_type.revenue_entry_category_type_id_fk)
+            
+            # Create enhanced entry type
+            enhanced_entry_type = RevenueEntryTypeGet.model_validate(entry_type.model_dump())
+            
+            if category:
+                # Get super category
+                super_category = session.get(RevenueEntrySuperCategory, category.revenue_entry_super_category_type_id_fk)
+                
+                # Create enhanced category
+                enhanced_category = RevenueEntryCategoryGet.model_validate(category.model_dump())
+                
+                if super_category:
+                    enhanced_category.super_category = super_category
+                
+                enhanced_entry_type.category = enhanced_category
+            
+            result.append(enhanced_entry_type)
+        
+        return result
+    
+    def get_expenditure_entry_types(self, session: Session) -> List[ExpenditureEntryTypeGet]:
+        """Get all expenditure entry types with their categories and super categories."""
+        # Get all expenditure entry types
+        statement = select(ExpenditureEntryType)
+        entry_types = session.exec(statement).all()
+        
+        # Enhance with category and super category
+        result = []
+        for entry_type in entry_types:
+            # Get category
+            category = session.get(ExpenditureEntryCategory, entry_type.expenditure_entry_category_type_id_fk)
+            
+            # Create enhanced entry type
+            enhanced_entry_type = ExpenditureEntryTypeGet.model_validate(entry_type.model_dump())
+            
+            if category:
+                # Get super category
+                super_category = session.get(ExpenditureEntrySuperCategory, category.expenditure_entry_super_category_type_id_fk)
+                
+                # Create enhanced category
+                enhanced_category = ExpenditureEntryCategoryGet.model_validate(category.model_dump())
+                
+                if super_category:
+                    enhanced_category.super_category = super_category
+                
+                enhanced_entry_type.category = enhanced_category
+            
+            result.append(enhanced_entry_type)
+        
+        return result
+    
+    def get_all_entry_types(self, session: Session) -> AllEntryTypesGet:
+        """Get all entry types (balance, revenue, expenditure) with their categories and super categories."""
+        balance_entry_types = self.get_balance_entry_types(session)
+        revenue_entry_types = self.get_revenue_entry_types(session)
+        expenditure_entry_types = self.get_expenditure_entry_types(session)
+        
+        return AllEntryTypesGet(
+            balance_entry_types=balance_entry_types,
+            revenue_entry_types=revenue_entry_types,
+            expenditure_entry_types=expenditure_entry_types
+        )
+        
+    def get_balance_fund_types(self, session: Session) -> List[BalanceFundTypeGet]:
+        """Get all balance fund types."""
+        statement = select(BalanceFundType)
+        fund_types = session.exec(statement).all()
+        
+        result = []
+        for fund_type in fund_types:
+            fund_type_dto = BalanceFundTypeGet.model_validate(fund_type.model_dump())
+            result.append(fund_type_dto)
+            
+        return result
+    
+    def get_revenue_fund_types(self, session: Session) -> List[RevenueFundTypeGet]:
+        """Get all revenue fund types."""
+        statement = select(RevenueFundType)
+        fund_types = session.exec(statement).all()
+        
+        result = []
+        for fund_type in fund_types:
+            fund_type_dto = RevenueFundTypeGet.model_validate(fund_type.model_dump())
+            result.append(fund_type_dto)
+            
+        return result
+    
+    def get_expenditure_fund_types(self, session: Session) -> List[ExpenditureFundTypeGet]:
+        """Get all expenditure fund types."""
+        statement = select(ExpenditureFundType)
+        fund_types = session.exec(statement).all()
+        
+        result = []
+        for fund_type in fund_types:
+            fund_type_dto = ExpenditureFundTypeGet.model_validate(fund_type.model_dump())
+            result.append(fund_type_dto)
+            
+        return result
+        
+    def get_all_fund_types(self, session: Session) -> AllFundTypesGet:
+        """Get all fund types (balance, revenue, expenditure)."""
+        balance_fund_types = self.get_balance_fund_types(session)
+        revenue_fund_types = self.get_revenue_fund_types(session)
+        expenditure_fund_types = self.get_expenditure_fund_types(session)
+        
+        return AllFundTypesGet(
+            balance_fund_types=balance_fund_types,
+            revenue_fund_types=revenue_fund_types,
+            expenditure_fund_types=expenditure_fund_types
         )
 
 # Create singleton instance
