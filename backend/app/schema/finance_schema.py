@@ -64,7 +64,7 @@ class ExpenditureGet(BaseModel):
         from_attributes = True
         populate_by_name = True
 
-class ExpenditureStateTotalGet(BaseModel):
+class ExpenditureStateRollupGet(BaseModel):
     """State-level expenditure data by year and school level"""
     id: int
     year: int
@@ -82,6 +82,19 @@ class ExpenditureStateTotalGet(BaseModel):
 
     class Config:
         from_attributes = True
+
+class ExpenditureStateTotalGet(BaseModel):
+    """State-level expenditure data by year and entry type"""
+    id: int
+    year: int
+    expenditure_entry_type_id_fk: int = Field(alias='entry_type_id')
+    value: Optional[float] = None
+    date_created: datetime
+    date_updated: datetime
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
 
 class RevenueStateTotalGet(BaseModel):
     """State-level revenue data by year and entry type"""

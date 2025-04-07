@@ -11,7 +11,7 @@ from app.model.finance import (
     RevenueEntryCategory, RevenueEntrySuperCategory,
     ExpenditureEntryCategory, ExpenditureEntrySuperCategory,
     StateCostPerPupil, DistrictCostPerPupil,
-    ExpenditureStateTotal, RevenueStateTotal
+    ExpenditureStateRollup, RevenueStateTotal, ExpenditureStateTotal
 )
 from app.model.location import District
 from app.schema.finance_schema import (
@@ -21,7 +21,7 @@ from app.schema.finance_schema import (
     BalanceEntryCategoryGet, RevenueEntryCategoryGet, ExpenditureEntryCategoryGet,
     BalanceFundTypeGet, RevenueFundTypeGet, ExpenditureFundTypeGet,
     AllFundTypesGet, StateCostPerPupilGet, DistrictCostPerPupilGet,
-    ExpenditureStateTotalGet, RevenueStateTotalGet
+    ExpenditureStateRollupGet, RevenueStateTotalGet, ExpenditureStateTotalGet
 )
 from app.schema.location_schema import DistrictGet
 
@@ -347,22 +347,52 @@ class FinanceService:
         # Convert to response schema
         return [DistrictCostPerPupilGet.model_validate(result.model_dump()) for result in results]
 
-    def get_state_expenditure_total(self, session: Session, year: Optional[int] = None) -> List[ExpenditureStateTotalGet]:
+    def get_state_expenditure_rollup(self, session: Session, year: Optional[int] = None) -> List[ExpenditureStateRollupGet]:
         """
-        Get state level expenditure total data, optionally filtered by year.
+        Get state level expenditure rollup data, optionally filtered by year.
         
         Args:
             session: The database session
             year: Optional year to filter by
             
         Returns:
+            List[ExpenditureStateRollupGet]: A list of state expenditure rollup data
+        """
+        statement = select(ExpenditureStateRollup)
+        
+        # Apply year filter if provided
+        if year is not None:
+            statement = statement.where(ExpenditureStateRollup.year == year)
+            
+        # Order by year (most recent first)
+        statement = statement.order_by(ExpenditureStateRollup.year.desc())
+        
+        # Execute query
+        results = session.exec(statement).all()
+        
+        # Convert to response schema
+        return [ExpenditureStateRollupGet.model_validate(result.model_dump()) for result in results]
+        
+    def get_state_expenditure(self, session: Session, year: Optional[int] = None, expenditure_entry_type_id: Optional[int] = None) -> List[ExpenditureStateTotalGet]:
+        """
+        Get state level expenditure total data, optionally filtered by year and expenditure entry type.
+        
+        Args:
+            session: The database session
+            year: Optional year to filter by
+            expenditure_entry_type_id: Optional expenditure entry type ID to filter by
+            
+        Returns:
             List[ExpenditureStateTotalGet]: A list of state expenditure total data
         """
         statement = select(ExpenditureStateTotal)
         
-        # Apply year filter if provided
+        # Apply filters if provided
         if year is not None:
             statement = statement.where(ExpenditureStateTotal.year == year)
+            
+        if expenditure_entry_type_id is not None:
+            statement = statement.where(ExpenditureStateTotal.expenditure_entry_type_id_fk == expenditure_entry_type_id)
             
         # Order by year (most recent first)
         statement = statement.order_by(ExpenditureStateTotal.year.desc())

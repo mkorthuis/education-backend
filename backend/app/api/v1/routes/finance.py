@@ -7,7 +7,7 @@ from app.schema.finance_schema import (
     DOEFormGet, BalanceSheetGet, RevenueGet, ExpenditureGet,
     FinancialReportGet, AllEntryTypesGet, AllFundTypesGet,
     StateCostPerPupilGet, DistrictCostPerPupilGet,
-    ExpenditureStateTotalGet, RevenueStateTotalGet
+    ExpenditureStateRollupGet, RevenueStateTotalGet, ExpenditureStateTotalGet
 )
 from app.service.public.finance_service import finance_service
 
@@ -117,12 +117,12 @@ def get_district_per_pupil_costs(
         year=year
     )
 
-@router.get("/state-expenditure", 
-    response_model=List[ExpenditureStateTotalGet],
+@router.get("/state-expenditure-rollup", 
+    response_model=List[ExpenditureStateRollupGet],
     summary="Get state level expenditure totals",
-    description="Retrieves state level expenditure totals, optionally filtered by year.",
+    description="Retrieves state level expenditure totals, optionally filtered by year. Pulled from https://www.education.nh.gov/who-we-are/division-of-educator-and-analytic-resources/bureau-of-education-statistics/financial-reports: State Average Cost Per Pupil and Total Expenditures",
     response_description="State level expenditure totals")
-def get_state_expenditure_total(
+def get_state_expenditure_rollup(
     session: SessionDep,
     year: Optional[int] = Query(None, description="Optional year to filter by")
 ):
@@ -137,9 +137,37 @@ def get_state_expenditure_total(
     - Current expenses (elementary, middle, high, total)
     - Total expenditures
     """
-    return finance_service.get_state_expenditure_total(
+    return finance_service.get_state_expenditure_rollup(
         session=session,
         year=year
+    )
+
+@router.get("/state-expenditure", 
+    response_model=List[ExpenditureStateTotalGet],
+    summary="Get state level expenditure totals by entry type",
+    description="Retrieves state level expenditure totals, optionally filtered by year and expenditure entry type.",
+    response_description="State level expenditure totals by entry type")
+def get_state_expenditure(
+    session: SessionDep,
+    year: Optional[int] = Query(None, description="Optional year to filter by"),
+    expenditure_entry_type_id: Optional[int] = Query(None, description="Optional expenditure entry type ID to filter by")
+):
+    """
+    Get state level expenditure totals, optionally filtered by year and expenditure entry type.
+    
+    If year is provided, returns data for that specific year.
+    If expenditure_entry_type_id is provided, returns data for that specific expenditure entry type.
+    If neither is provided, returns data for all available years and entry types in descending order by year (most recent first).
+    
+    The data includes:
+    - Year
+    - Expenditure entry type ID
+    - Expenditure value
+    """
+    return finance_service.get_state_expenditure(
+        session=session,
+        year=year,
+        expenditure_entry_type_id=expenditure_entry_type_id
     )
 
 @router.get("/state-revenue", 
