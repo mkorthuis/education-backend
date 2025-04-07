@@ -113,7 +113,7 @@ class Revenue(BaseMixin, table=True):
 
 class RevenueStateTotal(BaseMixin, table=True):
     """State-level revenue data by year and entry type"""
-    __tablename__ = "revenue_state_totals"
+    __tablename__ = "revenue_state_total"
     
     revenue_entry_type_id_fk: int = Field(foreign_key="revenue_entry_type.id", index=True)
     year: int = Field(index=True)
