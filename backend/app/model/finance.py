@@ -157,6 +157,21 @@ class Expenditure(BaseMixin, table=True):
     entry_type: ExpenditureEntryType = Relationship(back_populates="expenditures")
     fund_type: ExpenditureFundType = Relationship(back_populates="expenditures")
 
+class ExpenditureStateTotal(BaseMixin, table=True):
+    """State-level expenditure data by year and school level"""
+    __tablename__ = "expenditure_state_total"
+    
+    year: int = Field(index=True)
+    operating_elementary: Optional[float] = Field(default=None)
+    operating_middle: Optional[float] = Field(default=None)
+    operating_high: Optional[float] = Field(default=None)
+    operating_total: Optional[float] = Field(default=None)
+    current_elementary: Optional[float] = Field(default=None) 
+    current_middle: Optional[float] = Field(default=None)
+    current_high: Optional[float] = Field(default=None)
+    current_total: Optional[float] = Field(default=None)
+    total: Optional[float] = Field(default=None)
+
 class StateCostPerPupil(BaseMixin, table=True):
     """State level cost per pupil data by year"""
     __tablename__ = "state_cost_per_pupil"

@@ -6,7 +6,8 @@ from app.api.v1.deps import SessionDep
 from app.schema.finance_schema import (
     DOEFormGet, BalanceSheetGet, RevenueGet, ExpenditureGet,
     FinancialReportGet, AllEntryTypesGet, AllFundTypesGet,
-    StateCostPerPupilGet, DistrictCostPerPupilGet
+    StateCostPerPupilGet, DistrictCostPerPupilGet,
+    ExpenditureStateTotalGet
 )
 from app.service.public.finance_service import finance_service
 
@@ -113,5 +114,30 @@ def get_district_per_pupil_costs(
     return finance_service.get_district_per_pupil_costs(
         session=session,
         district_id=district_id,
+        year=year
+    )
+
+@router.get("/state-expenditure", 
+    response_model=List[ExpenditureStateTotalGet],
+    summary="Get state level expenditure totals",
+    description="Retrieves state level expenditure totals, optionally filtered by year.",
+    response_description="State level expenditure totals")
+def get_state_expenditure_total(
+    session: SessionDep,
+    year: Optional[int] = Query(None, description="Optional year to filter by")
+):
+    """
+    Get state level expenditure totals, optionally filtered by year.
+    
+    If year is provided, returns data for that specific year.
+    If year is not provided, returns data for all available years in descending order (most recent first).
+    
+    The data includes:
+    - Operating expenses (elementary, middle, high, total)
+    - Current expenses (elementary, middle, high, total)
+    - Total expenditures
+    """
+    return finance_service.get_state_expenditure_total(
+        session=session,
         year=year
     ) 

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query
 from typing import List, Optional
 
 from app.api.v1.deps import SessionDep
-from app.schema.enrollment_schema import SchoolEnrollmentGet
+from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet
 from app.service.public.enrollment_service import enrollment_service
 
 router = APIRouter()
@@ -55,4 +55,26 @@ def get_latest_school_enrollments(
     return enrollment_service.get_latest_school_enrollments(
         session=session, 
         school_id=school_id
+    )
+
+@router.get("/state", 
+    response_model=List[StateEnrollmentGet],
+    summary="Get state-level enrollments",
+    description="Retrieves state-level enrollment data, with optional filtering by year",
+    response_description="List of state enrollment records")
+def get_state_enrollments(
+    session: SessionDep,
+    year: Optional[int] = Query(None, description="Filter enrollments by year")
+):
+    """
+    Get state-level enrollment data, optionally filtered by year.
+    
+    Parameters:
+    - **year**: Optional year to filter enrollments by
+    
+    Returns a list of state enrollment records with elementary, middle, high, and total enrollment figures.
+    """
+    return enrollment_service.get_state_enrollments(
+        session=session, 
+        year=year
     )
