@@ -111,6 +111,14 @@ class Revenue(BaseMixin, table=True):
     entry_type: RevenueEntryType = Relationship(back_populates="revenues")
     fund_type: RevenueFundType = Relationship(back_populates="revenues")
 
+class RevenueStateTotal(BaseMixin, table=True):
+    """State-level revenue data by year and entry type"""
+    __tablename__ = "revenue_state_totals"
+    
+    revenue_entry_type_id_fk: int = Field(foreign_key="revenue_entry_type.id", index=True)
+    year: int = Field(index=True)
+    value: Optional[float] = Field(default=None)
+
 # Expenditure Models
 class ExpenditureEntrySuperCategory(BaseMixin, table=True):
     __tablename__ = "expenditure_entry_super_category_type"
