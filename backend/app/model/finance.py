@@ -111,6 +111,14 @@ class Revenue(BaseMixin, table=True):
     entry_type: RevenueEntryType = Relationship(back_populates="revenues")
     fund_type: RevenueFundType = Relationship(back_populates="revenues")
 
+class RevenueStateTotal(BaseMixin, table=True):
+    """State-level revenue data by year and entry type"""
+    __tablename__ = "revenue_state_totals"
+    
+    revenue_entry_type_id_fk: int = Field(foreign_key="revenue_entry_type.id", index=True)
+    year: int = Field(index=True)
+    value: Optional[float] = Field(default=None)
+
 # Expenditure Models
 class ExpenditureEntrySuperCategory(BaseMixin, table=True):
     __tablename__ = "expenditure_entry_super_category_type"
@@ -156,6 +164,21 @@ class Expenditure(BaseMixin, table=True):
     doe_form: DOEForm = Relationship(back_populates="expenditures")
     entry_type: ExpenditureEntryType = Relationship(back_populates="expenditures")
     fund_type: ExpenditureFundType = Relationship(back_populates="expenditures")
+
+class ExpenditureStateTotal(BaseMixin, table=True):
+    """State-level expenditure data by year and school level"""
+    __tablename__ = "expenditure_state_total"
+    
+    year: int = Field(index=True)
+    operating_elementary: Optional[float] = Field(default=None)
+    operating_middle: Optional[float] = Field(default=None)
+    operating_high: Optional[float] = Field(default=None)
+    operating_total: Optional[float] = Field(default=None)
+    current_elementary: Optional[float] = Field(default=None) 
+    current_middle: Optional[float] = Field(default=None)
+    current_high: Optional[float] = Field(default=None)
+    current_total: Optional[float] = Field(default=None)
+    total: Optional[float] = Field(default=None)
 
 class StateCostPerPupil(BaseMixin, table=True):
     """State level cost per pupil data by year"""

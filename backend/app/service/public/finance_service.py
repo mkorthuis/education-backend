@@ -10,7 +10,8 @@ from app.model.finance import (
     BalanceEntryCategory, BalanceEntrySuperCategory,
     RevenueEntryCategory, RevenueEntrySuperCategory,
     ExpenditureEntryCategory, ExpenditureEntrySuperCategory,
-    StateCostPerPupil, DistrictCostPerPupil
+    StateCostPerPupil, DistrictCostPerPupil,
+    ExpenditureStateTotal, RevenueStateTotal
 )
 from app.model.location import District
 from app.schema.finance_schema import (
@@ -19,7 +20,8 @@ from app.schema.finance_schema import (
     BalanceEntryTypeGet, RevenueEntryTypeGet, ExpenditureEntryTypeGet,
     BalanceEntryCategoryGet, RevenueEntryCategoryGet, ExpenditureEntryCategoryGet,
     BalanceFundTypeGet, RevenueFundTypeGet, ExpenditureFundTypeGet,
-    AllFundTypesGet, StateCostPerPupilGet, DistrictCostPerPupilGet
+    AllFundTypesGet, StateCostPerPupilGet, DistrictCostPerPupilGet,
+    ExpenditureStateTotalGet, RevenueStateTotalGet
 )
 from app.schema.location_schema import DistrictGet
 
@@ -344,6 +346,62 @@ class FinanceService:
         
         # Convert to response schema
         return [DistrictCostPerPupilGet.model_validate(result.model_dump()) for result in results]
+
+    def get_state_expenditure_total(self, session: Session, year: Optional[int] = None) -> List[ExpenditureStateTotalGet]:
+        """
+        Get state level expenditure total data, optionally filtered by year.
+        
+        Args:
+            session: The database session
+            year: Optional year to filter by
+            
+        Returns:
+            List[ExpenditureStateTotalGet]: A list of state expenditure total data
+        """
+        statement = select(ExpenditureStateTotal)
+        
+        # Apply year filter if provided
+        if year is not None:
+            statement = statement.where(ExpenditureStateTotal.year == year)
+            
+        # Order by year (most recent first)
+        statement = statement.order_by(ExpenditureStateTotal.year.desc())
+        
+        # Execute query
+        results = session.exec(statement).all()
+        
+        # Convert to response schema
+        return [ExpenditureStateTotalGet.model_validate(result.model_dump()) for result in results]
+
+    def get_state_revenue(self, session: Session, year: Optional[int] = None, revenue_entry_type_id: Optional[int] = None) -> List[RevenueStateTotalGet]:
+        """
+        Get state level revenue total data, optionally filtered by year and revenue entry type.
+        
+        Args:
+            session: The database session
+            year: Optional year to filter by
+            revenue_entry_type_id: Optional revenue entry type ID to filter by
+            
+        Returns:
+            List[RevenueStateTotalGet]: A list of state revenue total data
+        """
+        statement = select(RevenueStateTotal)
+        
+        # Apply filters if provided
+        if year is not None:
+            statement = statement.where(RevenueStateTotal.year == year)
+            
+        if revenue_entry_type_id is not None:
+            statement = statement.where(RevenueStateTotal.revenue_entry_type_id_fk == revenue_entry_type_id)
+            
+        # Order by year (most recent first)
+        statement = statement.order_by(RevenueStateTotal.year.desc())
+        
+        # Execute query
+        results = session.exec(statement).all()
+        
+        # Convert to response schema
+        return [RevenueStateTotalGet.model_validate(result.model_dump()) for result in results]
 
 # Create singleton instance
 finance_service = FinanceService() 

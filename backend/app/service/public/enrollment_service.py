@@ -2,8 +2,8 @@ from typing import List, Optional
 from sqlmodel import Session, select, func
 from fastapi import HTTPException
 
-from app.model.enrollment import SchoolEnrollment
-from app.schema.enrollment_schema import SchoolEnrollmentGet
+from app.model.enrollment import SchoolEnrollment, StateEnrollment
+from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet
 
 class EnrollmentService:
     def get_school_enrollments(
@@ -60,5 +60,35 @@ class EnrollmentService:
         
         enrollments = session.exec(statement).all()
         return [SchoolEnrollmentGet.from_orm(enrollment) for enrollment in enrollments]
+
+    def get_state_enrollments(
+        self,
+        session: Session,
+        year: Optional[int] = None
+    ) -> List[StateEnrollmentGet]:
+        """
+        Get state-level enrollment data, optionally filtered by year.
+        
+        Args:
+            session: Database session
+            year: Optional year to filter enrollments by
+            
+        Returns:
+            List of state enrollment records
+        """
+        statement = select(StateEnrollment)
+        
+        if year is not None:
+            statement = statement.where(StateEnrollment.year == year)
+            
+        # Order by year descending to get most recent first
+        statement = statement.order_by(StateEnrollment.year.desc())
+            
+        enrollments = session.exec(statement).all()
+        
+        if not enrollments and year is not None:
+            raise HTTPException(status_code=404, detail=f"No state enrollment data found for year {year}")
+            
+        return [StateEnrollmentGet.from_orm(enrollment) for enrollment in enrollments]
 
 enrollment_service = EnrollmentService() 

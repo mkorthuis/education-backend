@@ -64,6 +64,38 @@ class ExpenditureGet(BaseModel):
         from_attributes = True
         populate_by_name = True
 
+class ExpenditureStateTotalGet(BaseModel):
+    """State-level expenditure data by year and school level"""
+    id: int
+    year: int
+    operating_elementary: Optional[float] = None
+    operating_middle: Optional[float] = None
+    operating_high: Optional[float] = None
+    operating_total: Optional[float] = None
+    current_elementary: Optional[float] = None 
+    current_middle: Optional[float] = None
+    current_high: Optional[float] = None
+    current_total: Optional[float] = None
+    total: Optional[float] = None
+    date_created: datetime
+    date_updated: datetime
+
+    class Config:
+        from_attributes = True
+
+class RevenueStateTotalGet(BaseModel):
+    """State-level revenue data by year and entry type"""
+    id: int
+    year: int
+    revenue_entry_type_id_fk: int = Field(alias='entry_type_id')
+    value: Optional[float] = None
+    date_created: datetime
+    date_updated: datetime
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
 # DOE Form Schema
 class DOEFormGet(BaseModel):
     id: int
