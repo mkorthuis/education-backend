@@ -5,21 +5,22 @@ from uuid import UUID
 from app.api.v1.deps import SessionDep
 from app.schema.finance_schema import (
     DOEFormGet, BalanceSheetGet, RevenueGet, ExpenditureGet,
-    FinancialReportGet, AllEntryTypesGet, AllFundTypesGet
+    FinancialReportGet, AllEntryTypesGet, AllFundTypesGet,
+    StateCostPerPupilGet, DistrictCostPerPupilGet
 )
 from app.service.public.finance_service import finance_service
 
 router = APIRouter()
 
 @router.get("/report", 
-    response_model=FinancialReportGet,
+    response_model=List[FinancialReportGet],
     summary="Get financial report",
     description="Retrieves a comprehensive financial report for a specific district and year, including DOE form data and all related financial data.",
     response_description="Financial report with DOE form and related financial data")
 def get_financial_report(
     session: SessionDep,
     district_id: int = Query(..., description="District ID"),
-    year: int = Query(..., description="Year of the financial report")
+    year: Optional[int] = Query(None, description="Optional year to filter by")
 ):
     """
     Get a comprehensive financial report for a specific district and year.
@@ -72,4 +73,45 @@ def get_all_fund_types(
     - Revenue fund types
     - Expenditure fund types
     """
-    return finance_service.get_all_fund_types(session=session) 
+    return finance_service.get_all_fund_types(session=session)
+
+@router.get("/per-pupil/state",
+    response_model=List[StateCostPerPupilGet],
+    summary="Get state level per pupil costs",
+    description="Retrieves state level per pupil costs, optionally filtered by year.",
+    response_description="State level per pupil costs")
+def get_state_per_pupil_costs(
+    session: SessionDep,
+    year: Optional[int] = Query(None, description="Optional year to filter by")
+):
+    """
+    Get state level per pupil costs, optionally filtered by year.
+    
+    If year is not provided, returns data for all available years.
+    """
+    return finance_service.get_state_per_pupil_costs(
+        session=session,
+        year=year
+    )
+
+@router.get("/per-pupil/district",
+    response_model=List[DistrictCostPerPupilGet],
+    summary="Get district level per pupil costs",
+    description="Retrieves district level per pupil costs, optionally filtered by district ID and year.",
+    response_description="District level per pupil costs")
+def get_district_per_pupil_costs(
+    session: SessionDep,
+    district_id: Optional[int] = Query(None, description="Optional district ID to filter by"),
+    year: Optional[int] = Query(None, description="Optional year to filter by")
+):
+    """
+    Get district level per pupil costs, optionally filtered by district ID and year.
+    
+    If district_id is not provided, returns data for all districts.
+    If year is not provided, returns data for all available years.
+    """
+    return finance_service.get_district_per_pupil_costs(
+        session=session,
+        district_id=district_id,
+        year=year
+    ) 

@@ -21,10 +21,10 @@ fileConfig(config.config_file_name)
 # target_metadata = None
 
 from app.model.base import BaseMixin as SQLModel
-from app.model import location, finance, measurement, enrollment   # noqa
+from app.model import location, finance, measurement, enrollment, assessment   # noqa
 from app.core.config import settings # noqa
 
-MODELS = [location, finance, measurement, enrollment]
+MODELS = [location, finance, measurement, enrollment, assessment]
 
 target_metadata = SQLModel.metadata
 

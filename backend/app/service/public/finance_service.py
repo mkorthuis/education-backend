@@ -9,7 +9,8 @@ from app.model.finance import (
     ExpenditureEntryType, ExpenditureFundType,
     BalanceEntryCategory, BalanceEntrySuperCategory,
     RevenueEntryCategory, RevenueEntrySuperCategory,
-    ExpenditureEntryCategory, ExpenditureEntrySuperCategory
+    ExpenditureEntryCategory, ExpenditureEntrySuperCategory,
+    StateCostPerPupil, DistrictCostPerPupil
 )
 from app.model.location import District
 from app.schema.finance_schema import (
@@ -18,7 +19,7 @@ from app.schema.finance_schema import (
     BalanceEntryTypeGet, RevenueEntryTypeGet, ExpenditureEntryTypeGet,
     BalanceEntryCategoryGet, RevenueEntryCategoryGet, ExpenditureEntryCategoryGet,
     BalanceFundTypeGet, RevenueFundTypeGet, ExpenditureFundTypeGet,
-    AllFundTypesGet
+    AllFundTypesGet, StateCostPerPupilGet, DistrictCostPerPupilGet
 )
 from app.schema.location_schema import DistrictGet
 
@@ -29,7 +30,7 @@ class FinanceService:
             DOEForm.district_id_fk == district_id,
             DOEForm.year == year
         )
-        return session.exec(statement).first()
+        return session.exec(statement)
     
     def get_balance_sheets(self, session: Session, doe_form_id: int) -> List[BalanceSheet]:
         """Get balance sheets for a DOE form."""
@@ -73,38 +74,67 @@ class FinanceService:
             
         return result
     
-    def get_financial_report(self, session: Session, district_id: int, year: int) -> FinancialReportGet:
+    def get_financial_report(self, session: Session, district_id: int, year: Optional[int] = None) -> List[FinancialReportGet]:
         """
         Get comprehensive financial report including DOE form and all related financial data
         for a specific district and year.
+        
+        Args:
+            session: The database session
+            district_id: The district ID to get the report for
+            year: Optional year to filter by. If not provided, returns the most recent report.
+        
+        Returns:
+            List[FinancialReportGet]: A list of comprehensive financial reports for the district
         """
         # Get the DOE form
-        doe_form = self.get_doe_form(session, district_id, year)
-        if not doe_form:
-            raise HTTPException(
-                status_code=404, 
-                detail=f"Financial report not found for district ID {district_id} and year {year}"
+        if year is not None:
+            # If year is provided, get the specific DOE form
+            statement = select(DOEForm).where(
+                DOEForm.district_id_fk == district_id,
+                DOEForm.year == year
             )
+            doe_forms = session.exec(statement).all()
+            if not doe_forms:
+                raise HTTPException(
+                    status_code=404, 
+                    detail=f"Financial report not found for district ID {district_id} and year {year}"
+                )
+        else:
+            # If year is not provided, get the most recent DOE form for the district
+            statement = select(DOEForm).where(
+                DOEForm.district_id_fk == district_id
+            ).order_by(DOEForm.year.desc())
+            doe_forms = session.exec(statement).all()
+            
+            if not doe_forms:
+                raise HTTPException(
+                    status_code=404, 
+                    detail=f"No financial reports found for district ID {district_id}"
+                )
         
-        # Get related data
-        balance_sheets = self.get_balance_sheets(session, doe_form.id)
-        revenues = self.get_revenues(session, doe_form.id)
-        expenditures = self.get_expenditures(session, doe_form.id)
+        results = []
+        for doe_form in doe_forms:
+            # Get related data
+            balance_sheets = self.get_balance_sheets(session, doe_form.id)
+            revenues = self.get_revenues(session, doe_form.id)
+            expenditures = self.get_expenditures(session, doe_form.id)
+            
+            # Enhance data with related entities
+            enhanced_balance_sheets = self._enhance_balance_sheets(session, balance_sheets)
+            enhanced_revenues = self._enhance_revenues(session, revenues)
+            enhanced_expenditures = self._enhance_expenditures(session, expenditures)
+            
+            doe_form_dto = DOEFormGet.model_validate(doe_form.model_dump())
+            
+            results.append(FinancialReportGet(
+                doe_form=doe_form_dto,
+                balance_sheets=enhanced_balance_sheets,
+                revenues=enhanced_revenues,
+                expenditures=enhanced_expenditures
+            ))
         
-        # Enhance data with related entities
-        enhanced_balance_sheets = self._enhance_balance_sheets(session, balance_sheets)
-        enhanced_revenues = self._enhance_revenues(session, revenues)
-        enhanced_expenditures = self._enhance_expenditures(session, expenditures)
-        
-        doe_form_dto = DOEFormGet.model_validate(doe_form.model_dump())
-
-        
-        return FinancialReportGet(
-            doe_form=doe_form_dto,
-            balance_sheets=enhanced_balance_sheets,
-            revenues=enhanced_revenues,
-            expenditures=enhanced_expenditures
-        )
+        return results
     
     def get_balance_entry_types(self, session: Session) -> List[BalanceEntryTypeGet]:
         """Get all balance entry types with their categories and super categories."""
@@ -258,6 +288,62 @@ class FinanceService:
             revenue_fund_types=revenue_fund_types,
             expenditure_fund_types=expenditure_fund_types
         )
+        
+    def get_state_per_pupil_costs(self, session: Session, year: Optional[int] = None) -> List[StateCostPerPupilGet]:
+        """
+        Get state level per pupil costs, optionally filtered by year.
+        
+        Args:
+            session: The database session
+            year: Optional year to filter by
+            
+        Returns:
+            List[StateCostPerPupilGet]: A list of state per pupil costs
+        """
+        statement = select(StateCostPerPupil)
+        
+        # Apply year filter if provided
+        if year is not None:
+            statement = statement.where(StateCostPerPupil.year == year)
+            
+        # Order by year (most recent first)
+        statement = statement.order_by(StateCostPerPupil.year.desc())
+        
+        # Execute query
+        results = session.exec(statement).all()
+        
+        # Convert to response schema
+        return [StateCostPerPupilGet.model_validate(result.model_dump()) for result in results]
+        
+    def get_district_per_pupil_costs(self, session: Session, district_id: Optional[int] = None, year: Optional[int] = None) -> List[DistrictCostPerPupilGet]:
+        """
+        Get district level per pupil costs, optionally filtered by district ID and year.
+        
+        Args:
+            session: The database session
+            district_id: Optional district ID to filter by
+            year: Optional year to filter by
+            
+        Returns:
+            List[DistrictCostPerPupilGet]: A list of district per pupil costs
+        """
+        statement = select(DistrictCostPerPupil)
+        
+        # Apply filters if provided
+        if district_id is not None:
+            statement = statement.where(DistrictCostPerPupil.district_id_fk == district_id)
+            
+        if year is not None:
+            statement = statement.where(DistrictCostPerPupil.year == year)
+            
+        # Order by district ID and year (most recent first)
+        statement = statement.order_by(DistrictCostPerPupil.district_id_fk, DistrictCostPerPupil.year.desc())
+        
+        # Execute query
+        results = session.exec(statement).all()
+        
+        # Convert to response schema
+        return [DistrictCostPerPupilGet.model_validate(result.model_dump()) for result in results]
 
 # Create singleton instance
 finance_service = FinanceService() 

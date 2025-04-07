@@ -1,7 +1,12 @@
-from typing import Optional, List
+from typing import Optional, List, TYPE_CHECKING
 from sqlmodel import Field, Relationship
 from .base import BaseMixin
-from .location import District
+
+if TYPE_CHECKING:
+    from .location import District
+else:
+    # Need to use a string type hint at runtime
+    District = "District"
 
 class DOEForm(BaseMixin, table=True):
     __tablename__ = "doe_form"
@@ -150,4 +155,27 @@ class Expenditure(BaseMixin, table=True):
     
     doe_form: DOEForm = Relationship(back_populates="expenditures")
     entry_type: ExpenditureEntryType = Relationship(back_populates="expenditures")
-    fund_type: ExpenditureFundType = Relationship(back_populates="expenditures") 
+    fund_type: ExpenditureFundType = Relationship(back_populates="expenditures")
+
+class StateCostPerPupil(BaseMixin, table=True):
+    """State level cost per pupil data by year"""
+    __tablename__ = "state_cost_per_pupil"
+    
+    year: int = Field(index=True)
+    elementary: Optional[int] = None
+    middle: Optional[int] = None
+    high: Optional[int] = None
+    total: Optional[int] = None
+
+class DistrictCostPerPupil(BaseMixin, table=True):
+    """District level cost per pupil data by year"""
+    __tablename__ = "district_cost_per_pupil"
+    
+    district_id_fk: int = Field(foreign_key="district.id", index=True)
+    year: int = Field(index=True)
+    elementary: Optional[int] = None
+    middle: Optional[int] = None
+    high: Optional[int] = None
+    total: Optional[int] = None
+    
+    district: "District" = Relationship(back_populates="cost_per_pupil") 

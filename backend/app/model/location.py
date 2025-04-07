@@ -1,6 +1,9 @@
-from typing import Optional, List
+from typing import Optional, List, TYPE_CHECKING
 from sqlmodel import Field, Relationship, SQLModel
 from .base import BaseMixin
+
+if TYPE_CHECKING:
+    from .finance import DistrictCostPerPupil
 
 # First define ALL link tables
 class DistrictGradeLink(BaseMixin, table=True):
@@ -51,17 +54,18 @@ class SAUStaff(BaseMixin, table=True):
     admin_type: str = Field(max_length=50)  # Based on migration default 'SUP'
     email: Optional[str] = Field(max_length=255, default=None)
 
-    sau: SAU = Relationship(back_populates="staff")
+    sau: "SAU" = Relationship(back_populates="staff")
 
 class District(BaseMixin, table=True):
     __tablename__ = "district"
     name: str = Field(max_length=255)
     sau_id_fk: Optional[int] = Field(foreign_key="sau.id")
-    sau: Optional[SAU] = Relationship(back_populates="districts")
+    sau: Optional["SAU"] = Relationship(back_populates="districts")
     is_public: bool = Field(default=True)
     schools: List["School"] = Relationship(back_populates="district")
     towns: List["Town"] = Relationship(back_populates="districts", link_model=TownDistrictLink)
     grades: List["Grade"] = Relationship(back_populates="districts", link_model=DistrictGradeLink)
+    cost_per_pupil: List["DistrictCostPerPupil"] = Relationship(back_populates="district")
 
 class Region(BaseMixin, table=True):
     __tablename__ = "region"
@@ -108,10 +112,10 @@ class School(BaseMixin, table=True):
     county: Optional[str] = Field(max_length=100)
     webpage: Optional[str] = Field(max_length=255)
     
-    sau: Optional[SAU] = Relationship(back_populates="schools")
-    district: Optional[District] = Relationship(back_populates="schools")
-    region: Optional[Region] = Relationship(back_populates="schools")
-    school_type: Optional[SchoolType] = Relationship(back_populates="schools")
-    town: Optional[Town] = Relationship(sa_relationship_kwargs={"foreign_keys": "School.town_id_fk"})
-    grades: List[Grade] = Relationship(back_populates="schools", link_model=SchoolGradeLink)
-    towns_served: List[Town] = Relationship(back_populates="schools_served", link_model=TownServedLink) 
+    sau: Optional["SAU"] = Relationship(back_populates="schools")
+    district: Optional["District"] = Relationship(back_populates="schools")
+    region: Optional["Region"] = Relationship(back_populates="schools")
+    school_type: Optional["SchoolType"] = Relationship(back_populates="schools")
+    town: Optional["Town"] = Relationship(sa_relationship_kwargs={"foreign_keys": "School.town_id_fk"})
+    grades: List["Grade"] = Relationship(back_populates="schools", link_model=SchoolGradeLink)
+    towns_served: List["Town"] = Relationship(back_populates="schools_served", link_model=TownServedLink) 

@@ -1,7 +1,7 @@
 """Load Measurement State Targets
 
 Revision ID: 65ab32afd32c
-Revises: b4f374d72f78
+Revises: 21ea12af9faf
 Create Date: 2024-04-02 01:33:00.000000
 
 """

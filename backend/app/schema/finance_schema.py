@@ -2,7 +2,9 @@ from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 from uuid import UUID
 from datetime import datetime
-from .location_schema import DistrictGet
+
+# Remove circular import 
+# from .location_schema import DistrictGet
 
 # Balance Sheet Related Schemas
 class BalanceFundTypeGet(BaseModel):
@@ -190,3 +192,33 @@ class AllFundTypesGet(BaseModel):
 
     class Config:
         from_attributes = True
+
+# Cost Per Pupil Schemas
+class StateCostPerPupilGet(BaseModel):
+    id: int
+    year: int
+    elementary: Optional[int] = None
+    middle: Optional[int] = None
+    high: Optional[int] = None
+    total: Optional[int] = None
+    date_created: datetime
+    date_updated: datetime
+    
+    class Config:
+        from_attributes = True
+
+
+class DistrictCostPerPupilGet(BaseModel):
+    id: int
+    year: int
+    elementary: Optional[int] = None
+    middle: Optional[int] = None
+    high: Optional[int] = None
+    total: Optional[int] = None
+    district_id_fk: int = Field(alias='district_id')
+    date_created: datetime
+    date_updated: datetime
+    
+    class Config:
+        from_attributes = True
+        populate_by_name = True
