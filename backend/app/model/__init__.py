@@ -15,3 +15,7 @@ from .assessment import (
     AssessmentSubject, AssessmentSubgroup, AssessmentDistrict, 
     AssessmentSchool, AssessmentState, AssessmentException
 )
+from .education_freedom_account import (
+    EducationFreedomAccountEntryType, EducationFreedomAccountEntryTypeValue,
+    EducationFreedomAccountEntry
+)
