@@ -33,7 +33,7 @@ def get_state_assessments(
     year: Optional[int] = Query(default=None, description="Filter by year"),
     assessment_subgroup_id: Optional[int] = Query(default=None, description="Filter by assessment subgroup ID"),
     assessment_subject_id: Optional[int] = Query(default=None, description="Filter by assessment subject ID"),
-    grade_id: Optional[int] = Query(default=None, description="Filter by grade ID")
+    grade_id: Optional[int] = Query(default=None, description="Filter by grade ID.  If you pass in 999, it returnes the summed values of all grades (grade_id is NULL)")
 ):
     return assessment_service.get_state_assessments(
         session=session,
@@ -54,7 +54,7 @@ def get_district_assessments(
     year: Optional[int] = Query(default=None, description="Filter by year"),
     assessment_subgroup_id: Optional[int] = Query(default=None, description="Filter by assessment subgroup ID"),
     assessment_subject_id: Optional[int] = Query(default=None, description="Filter by assessment subject ID"),
-    grade_id: Optional[int] = Query(default=None, description="Filter by grade ID")
+    grade_id: Optional[int] = Query(default=None, description="Filter by grade ID.  If you pass in 999, it returnes the summed values of all grades (grade_id is NULL)")
 ):
     return assessment_service.get_district_assessments(
         session=session,
@@ -77,7 +77,7 @@ def get_school_assessments(
     year: Optional[int] = Query(default=None, description="Filter by year"),
     assessment_subgroup_id: Optional[int] = Query(default=None, description="Filter by assessment subgroup ID"),
     assessment_subject_id: Optional[int] = Query(default=None, description="Filter by assessment subject ID"),
-    grade_id: Optional[int] = Query(default=None, description="Filter by grade ID")
+    grade_id: Optional[int] = Query(default=None, description="Filter by grade ID.  If you pass in 999, it returnes the summed values of all grades (grade_id is NULL)")
 ):
     return assessment_service.get_school_assessments(
         session=session,

@@ -42,7 +42,11 @@ class AssessmentService:
             statement = statement.where(model.assessment_subject_id_fk == assessment_subject_id)
             
         if grade_id is not None:
-            statement = statement.where(model.grade_id_fk == grade_id)
+            if grade_id == 999:
+                # Special case: grade_id 999 searches for NULL grade_id_fk
+                statement = statement.where(model.grade_id_fk.is_(None))
+            else:
+                statement = statement.where(model.grade_id_fk == grade_id)
             
         return statement
     
