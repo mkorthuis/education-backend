@@ -101,11 +101,7 @@ class SafetyService:
             statement = statement.where(model.school_id_fk == school_id)
             
         if district_id is not None:
-            # Join to School to filter by district_id
-            statement = statement.join(
-                School, 
-                model.school_id_fk == School.id
-            ).where(School.district_id_fk == district_id)
+            statement = statement.where(School.district_id_fk == district_id)
             
         return statement
     
