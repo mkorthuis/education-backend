@@ -468,15 +468,15 @@ def process_discipline_data(sheet_name: str, df: pd.DataFrame, year: int, school
                 
             _, value_int = clean_numeric_value(row.iloc[column_idx])
             
-            if value_int > 0:
-                sql = f"""INSERT INTO school_discipline_incident (
-                            school_id_fk, year, school_discipline_incident_type_id_fk, count
-                          ) VALUES (
-                            {school_id}, {year}, 
-                            (SELECT id FROM school_discipline_incident_type WHERE name = '{incident_type["name"]}'), 
-                            {value_int}
-                          );"""
-                statements.append(format_sql(sql))
+            # Modified: Insert record regardless of value (even if zero)
+            sql = f"""INSERT INTO school_discipline_incident (
+                        school_id_fk, year, school_discipline_incident_type_id_fk, count
+                      ) VALUES (
+                        {school_id}, {year}, 
+                        (SELECT id FROM school_discipline_incident_type WHERE name = '{incident_type["name"]}'), 
+                        {value_int}
+                      );"""
+            statements.append(format_sql(sql))
         
         # Process count types
         for count_type in discipline_count_types:
@@ -486,15 +486,15 @@ def process_discipline_data(sheet_name: str, df: pd.DataFrame, year: int, school
                 
             _, value_int = clean_numeric_value(row.iloc[column_idx])
             
-            if value_int > 0:
-                sql = f"""INSERT INTO school_discipline_count (
-                            school_id_fk, year, school_discipline_count_type_id_fk, count
-                          ) VALUES (
-                            {school_id}, {year}, 
-                            (SELECT id FROM school_discipline_count_type WHERE name = '{count_type["name"]}'), 
-                            {value_int}
-                          );"""
-                statements.append(format_sql(sql))
+            # Modified: Insert record regardless of value (even if zero)
+            sql = f"""INSERT INTO school_discipline_count (
+                        school_id_fk, year, school_discipline_count_type_id_fk, count
+                      ) VALUES (
+                        {school_id}, {year}, 
+                        (SELECT id FROM school_discipline_count_type WHERE name = '{count_type["name"]}'), 
+                        {value_int}
+                      );"""
+            statements.append(format_sql(sql))
                 
         return statements
     
