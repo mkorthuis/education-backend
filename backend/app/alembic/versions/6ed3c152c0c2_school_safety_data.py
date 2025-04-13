@@ -192,9 +192,9 @@ def process_truancy_data(sheet_name: str, df: pd.DataFrame, year: int, schools: 
         if count_col_idx < len(row):
             _, count_int = clean_numeric_value(row.iloc[count_col_idx])
             
-            if count_int > 0:
-                sql = f"INSERT INTO school_truancy (school_id_fk, year, count) VALUES ({school_id}, {year}, {count_int});"
-                statements.append(sql)
+            # Modified: Insert record even if count is zero
+            sql = f"INSERT INTO school_truancy (school_id_fk, year, count) VALUES ({school_id}, {year}, {count_int});"
+            statements.append(sql)
                 
         return statements
     
@@ -231,17 +231,16 @@ def process_harassment_data(sheet_name: str, df: pd.DataFrame, year: int, school
             _, impact_int = clean_numeric_value(row.iloc[impact_col_idx])
             _, engaged_int = clean_numeric_value(row.iloc[engaged_col_idx])
             
-            # Only insert if we have data
-            if incident_int > 0 or impact_int > 0 or engaged_int > 0:
-                sql = f"""INSERT INTO school_harassment (
-                            school_id_fk, year, school_harassment_classification_id_fk, 
-                            incident_count, student_impact_count, student_engaged_count
-                          ) VALUES (
-                            {school_id}, {year}, 
-                            (SELECT id FROM school_harassment_classification WHERE name = '{classification_type["name"]}'), 
-                            {incident_int}, {impact_int}, {engaged_int}
-                          );"""
-                statements.append(format_sql(sql))
+            # Modified: Insert record regardless of values (even if all are zero)
+            sql = f"""INSERT INTO school_harassment (
+                        school_id_fk, year, school_harassment_classification_id_fk, 
+                        incident_count, student_impact_count, student_engaged_count
+                      ) VALUES (
+                        {school_id}, {year}, 
+                        (SELECT id FROM school_harassment_classification WHERE name = '{classification_type["name"]}'), 
+                        {incident_int}, {impact_int}, {engaged_int}
+                      );"""
+            statements.append(format_sql(sql))
                 
         return statements
     
@@ -290,15 +289,15 @@ def process_bullying_data(sheet_name: str, df: pd.DataFrame, year: int, schools:
             _, reported_int = clean_numeric_value(row.iloc[column_idx])
             _, investigated_int = clean_numeric_value(row.iloc[column_idx + 2])
             
-            if reported_int > 0 or investigated_int > 0:
-                sql = f"""INSERT INTO school_bullying (
-                            school_id_fk, year, school_bullying_type_id_fk, reported, investigated_actual
-                          ) VALUES (
-                            {school_id}, {year}, 
-                            (SELECT id FROM school_bullying_type WHERE name = '{bullying_type["name"]}'), 
-                            {reported_int}, {investigated_int}
-                          );"""
-                statements.append(format_sql(sql))
+            # Modified: Insert record regardless of values (even if all are zero)
+            sql = f"""INSERT INTO school_bullying (
+                        school_id_fk, year, school_bullying_type_id_fk, reported, investigated_actual
+                      ) VALUES (
+                        {school_id}, {year}, 
+                        (SELECT id FROM school_bullying_type WHERE name = '{bullying_type["name"]}'), 
+                        {reported_int}, {investigated_int}
+                      );"""
+            statements.append(format_sql(sql))
         
         # Process classification types
         for classification_type in bullying_classification_types:
@@ -308,15 +307,15 @@ def process_bullying_data(sheet_name: str, df: pd.DataFrame, year: int, schools:
                 
             _, value_int = clean_numeric_value(row.iloc[column_idx])
             
-            if value_int > 0:
-                sql = f"""INSERT INTO school_bullying_classification (
-                            school_id_fk, year, school_bullying_classification_type_id_fk, count
-                          ) VALUES (
-                            {school_id}, {year}, 
-                            (SELECT id FROM school_bullying_classification_type WHERE name = '{classification_type["name"]}'), 
-                            {value_int}
-                          );"""
-                statements.append(format_sql(sql))
+            # Modified: Insert record regardless of value (even if zero)
+            sql = f"""INSERT INTO school_bullying_classification (
+                        school_id_fk, year, school_bullying_classification_type_id_fk, count
+                      ) VALUES (
+                        {school_id}, {year}, 
+                        (SELECT id FROM school_bullying_classification_type WHERE name = '{classification_type["name"]}'), 
+                        {value_int}
+                      );"""
+            statements.append(format_sql(sql))
         
         # Process impact types
         for impact_type in bullying_impact_types:
@@ -326,15 +325,15 @@ def process_bullying_data(sheet_name: str, df: pd.DataFrame, year: int, schools:
                 
             _, value_int = clean_numeric_value(row.iloc[column_idx])
             
-            if value_int > 0:
-                sql = f"""INSERT INTO school_bullying_impact (
-                            school_id_fk, year, school_bullying_impact_type_id_fk, count
-                          ) VALUES (
-                            {school_id}, {year}, 
-                            (SELECT id FROM school_bullying_impact_type WHERE name = '{impact_type["name"]}'), 
-                            {value_int}
-                          );"""
-                statements.append(format_sql(sql))
+            # Modified: Insert record regardless of value (even if zero)
+            sql = f"""INSERT INTO school_bullying_impact (
+                        school_id_fk, year, school_bullying_impact_type_id_fk, count
+                      ) VALUES (
+                        {school_id}, {year}, 
+                        (SELECT id FROM school_bullying_impact_type WHERE name = '{impact_type["name"]}'), 
+                        {value_int}
+                      );"""
+            statements.append(format_sql(sql))
                 
         return statements
     
