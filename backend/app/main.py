@@ -51,7 +51,7 @@ if settings.all_cors_origins:
 @app.on_event("startup")
 async def startup_db_client():
     logger.info("Application starting up. Database pool initialized.")
-    logger.info(f"Database pool configured with size={engine.pool._pool_size}, max_overflow={engine.pool._max_overflow}")
+    logger.info(f"Database pool configured with size={engine.pool.size()}, max_overflow={engine.pool.overflow()}")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

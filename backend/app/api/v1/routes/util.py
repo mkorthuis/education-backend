@@ -20,6 +20,6 @@ def get_pool_stats():
         "checkedin": engine.pool.checkedin(),  # Number of connections checked in
         "checkedout": engine.pool.checkedout(),  # Number of connections checked out
         "overflow": engine.pool.overflow(),  # Number of overflow connections
-        "configured_max_overflow": engine.pool._max_overflow,  # Max configured overflow
-        "configured_pool_size": engine.pool._pool_size,  # Configured pool size
+        "configured_max_size": engine.pool.size() - engine.pool.overflow(),  # Base size of the pool
+        "total_connections": engine.pool.size(),  # Total connections in the pool
     }
