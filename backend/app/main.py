@@ -29,7 +29,6 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.api.v1.main import api_router
 from app.core.config import settings
-from app.core.db import engine
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -46,18 +45,6 @@ if settings.all_cors_origins:
         allow_headers=["*"],
         expose_headers=["*"],
     )
-
-# Add startup and shutdown events for database connection management
-@app.on_event("startup")
-async def startup_db_client():
-    logger.info("Application starting up. Database pool initialized.")
-    logger.info(f"Database pool configured with size={engine.pool.size()}, max_overflow={engine.pool.overflow()}")
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    logger.info("Application shutting down. Disposing database engine...")
-    engine.dispose()
-    logger.info("Database engine disposed.")
 
 # Add custom exception handlers
 @app.exception_handler(StarletteHTTPException)

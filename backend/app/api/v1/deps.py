@@ -1,29 +1,23 @@
 from collections.abc import Generator
 from typing import Annotated
-import logging
 
 from fastapi import Depends
 from sqlmodel import Session
 
 from app.core.db import engine
 
-logger = logging.getLogger(__name__)
-
 def get_db() -> Generator[Session, None, None]:
     """
-    Get a database session with proper connection handling.
-    The session automatically closes when the request is complete.
+    Create a new database session and ensure it's closed properly.
+    
+    This dependency guarantees that the session is closed and connection 
+    is returned to the pool after the request is processed, even if an 
+    exception occurs.
     """
-    with Session(engine) as session:
-        try:
-            yield session
-        except Exception as e:
-            logger.error(f"Database session error: {str(e)}")
-            # Roll back on error
-            session.rollback()
-            raise
-        finally:
-            # Make sure session is closed
-            session.close()
+    session = Session(engine)
+    try:
+        yield session
+    finally:
+        session.close()
 
 SessionDep = Annotated[Session, Depends(get_db)]

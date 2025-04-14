@@ -3,18 +3,15 @@ from sqlalchemy.pool import QueuePool
 
 from app.core.config import settings
 
-# Create engine with connection pooling configuration
+# Configure the engine with appropriate pool settings to avoid connection exhaustion
+# For Heroku with 4 workers, use pool_size=2 and max_overflow=3, totaling max 5 connections per worker
+# Total max connections for 4 workers: 20 connections
 engine = create_engine(
     str(settings.SQLALCHEMY_DATABASE_URI),
-    # Set pool size to be safely under the Heroku's connection limit
-    # Min connections to keep open
-    pool_size=5,
-    # Max overflow connections allowed
-    max_overflow=10,
-    # Use QueuePool - the default pool but we're explicit here
     poolclass=QueuePool,
-    # Time (seconds) connections are recycled
-    pool_recycle=3600,
-    # Timeout (seconds) to wait for a connection from pool
+    pool_size=2,
+    max_overflow=3,
     pool_timeout=30,
+    pool_pre_ping=True,  # Verify connections before using them
+    pool_recycle=1800,   # Recycle connections after 30 minutes
 )
