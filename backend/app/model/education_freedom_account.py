@@ -1,5 +1,5 @@
 from typing import Optional, List, TYPE_CHECKING
-from sqlmodel import Field, Relationship
+from sqlmodel import Field, Relationship, SQLModel
 from .base import BaseMixin
 
 if TYPE_CHECKING:
@@ -51,4 +51,13 @@ class EducationFreedomAccountEntry(BaseMixin, table=True):
     
     # Relationships
     town: Town = Relationship(back_populates="education_freedom_account_entries")
-    entry_type: EducationFreedomAccountEntryType = Relationship(back_populates="entries") 
+    entry_type: EducationFreedomAccountEntryType = Relationship(back_populates="entries")
+
+class EducationFreedomAccountEntryState(SQLModel, table=True):
+    """State-level aggregated Education Freedom Account entry data by year and type"""
+    __tablename__ = "education_freedom_account_entry_state"
+    
+    # Materialized view columns - composite primary key
+    year: int = Field(primary_key=True)
+    education_freedom_account_entry_type_id_fk: int = Field(primary_key=True)
+    value: Optional[float] = Field(default=None) 

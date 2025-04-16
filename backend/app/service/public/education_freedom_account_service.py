@@ -5,12 +5,14 @@ from fastapi import HTTPException
 from app.model.education_freedom_account import (
     EducationFreedomAccountEntryType,
     EducationFreedomAccountEntryTypeValue,
-    EducationFreedomAccountEntry
+    EducationFreedomAccountEntry,
+    EducationFreedomAccountEntryState
 )
 from app.model.location import Town, TownDistrictLink
 from app.schema.education_freedom_account_schema import (
     EducationFreedomAccountEntryGet,
-    EFAEntryTypeGet
+    EFAEntryTypeGet,
+    EFAEntryStateGet
 )
 
 class EducationFreedomAccountService:
@@ -139,6 +141,47 @@ class EducationFreedomAccountService:
         
         # Convert to response schema
         return [EducationFreedomAccountEntryGet.model_validate(result.model_dump()) for result in results]
+
+    def get_state_entries(
+        self, 
+        session: Session, 
+        year: Optional[int] = None,
+        entry_type_id: Optional[int] = None
+    ) -> List[EFAEntryStateGet]:
+        """
+        Get state-level education freedom account entries from the materialized view,
+        optionally filtered by year and entry type ID.
+        
+        Args:
+            session: The database session
+            year: Optional year to filter by
+            entry_type_id: Optional entry type ID to filter by
+            
+        Returns:
+            List[EFAEntryStateGet]: A list of state-level entries
+        """
+        statement = select(EducationFreedomAccountEntryState)
+        
+        # Apply filters if provided
+        if year is not None:
+            statement = statement.where(EducationFreedomAccountEntryState.year == year)
+            
+        if entry_type_id is not None:
+            statement = statement.where(
+                EducationFreedomAccountEntryState.education_freedom_account_entry_type_id_fk == entry_type_id
+            )
+            
+        # Order by year (most recent first) and entry type ID
+        statement = statement.order_by(
+            EducationFreedomAccountEntryState.year.desc(),
+            EducationFreedomAccountEntryState.education_freedom_account_entry_type_id_fk
+        )
+        
+        # Execute query
+        results = session.exec(statement).all()
+        
+        # Convert to response schema
+        return [EFAEntryStateGet.model_validate(result.model_dump()) for result in results]
 
 # Create singleton instance
 education_freedom_account_service = EducationFreedomAccountService() 

@@ -25,4 +25,14 @@ class EFAEntryTypeGet(BaseModel):
     value: Optional[float] = None
     
     class Config:
-        from_attributes = True 
+        from_attributes = True
+
+class EFAEntryStateGet(BaseModel):
+    """State-level aggregated Education Freedom Account entry data by year and type"""
+    year: int
+    education_freedom_account_entry_type_id_fk: int = Field(alias='entry_type_id')
+    value: Optional[float] = None
+    
+    class Config:
+        from_attributes = True
+        populate_by_name = True 
