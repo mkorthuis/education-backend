@@ -11,7 +11,8 @@ from app.model.finance import (
     RevenueEntryCategory, RevenueEntrySuperCategory,
     ExpenditureEntryCategory, ExpenditureEntrySuperCategory,
     StateCostPerPupil, DistrictCostPerPupil,
-    ExpenditureStateRollup, RevenueStateTotal, ExpenditureStateTotal
+    ExpenditureStateRollup, RevenueStateTotal, ExpenditureStateTotal,
+    DOEFormADM, DOEFormADMState
 )
 from app.model.location import District
 from app.schema.finance_schema import (
@@ -21,7 +22,8 @@ from app.schema.finance_schema import (
     BalanceEntryCategoryGet, RevenueEntryCategoryGet, ExpenditureEntryCategoryGet,
     BalanceFundTypeGet, RevenueFundTypeGet, ExpenditureFundTypeGet,
     AllFundTypesGet, StateCostPerPupilGet, DistrictCostPerPupilGet,
-    ExpenditureStateRollupGet, RevenueStateTotalGet, ExpenditureStateTotalGet
+    ExpenditureStateRollupGet, RevenueStateTotalGet, ExpenditureStateTotalGet,
+    DOEFormADMGet, DOEFormADMStateGet
 )
 from app.schema.location_schema import DistrictGet
 
@@ -48,6 +50,42 @@ class FinanceService:
         """Get expenditures for a DOE form."""
         statement = select(Expenditure).where(Expenditure.doe_form_id_fk == doe_form_id)
         return session.exec(statement).all()
+    
+    def get_adm_data(self, session: Session, district_id: int, year: Optional[int] = None) -> List[DOEFormADMGet]:
+        """
+        Get Average Daily Membership (ADM) data for a district, optionally filtered by year.
+        
+        Args:
+            session: The database session
+            district_id: The district ID to get ADM data for
+            year: Optional year to filter by. If not provided, returns data for all years.
+            
+        Returns:
+            List[DOEFormADMGet]: A list of ADM data objects
+        """
+        # Build a join query to get ADM data along with DOE form info
+        statement = select(DOEFormADM).join(DOEForm, DOEFormADM.doe_form_id_fk == DOEForm.id).where(
+            DOEForm.district_id_fk == district_id
+        )
+        
+        # Filter by year if provided
+        if year is not None:
+            statement = statement.where(DOEForm.year == year)
+            
+        # Order by year (most recent first)
+        statement = statement.order_by(DOEForm.year.desc())
+        
+        # Execute query
+        results = session.exec(statement).all()
+        
+        if not results and year is not None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"ADM data not found for district ID {district_id} and year {year}"
+            )
+            
+        # Convert to response schema
+        return [DOEFormADMGet.model_validate(result.model_dump()) for result in results]
     
     def _enhance_balance_sheets(self, session: Session, balance_sheets: List[BalanceSheet]) -> List[BalanceSheetGet]:
         """Enhance balance sheets with related data."""
@@ -122,6 +160,10 @@ class FinanceService:
             revenues = self.get_revenues(session, doe_form.id)
             expenditures = self.get_expenditures(session, doe_form.id)
             
+            # Get ADM data if available
+            statement = select(DOEFormADM).where(DOEFormADM.doe_form_id_fk == doe_form.id)
+            adm = session.exec(statement).first()
+            
             # Enhance data with related entities
             enhanced_balance_sheets = self._enhance_balance_sheets(session, balance_sheets)
             enhanced_revenues = self._enhance_revenues(session, revenues)
@@ -129,12 +171,19 @@ class FinanceService:
             
             doe_form_dto = DOEFormGet.model_validate(doe_form.model_dump())
             
-            results.append(FinancialReportGet(
+            # Create the financial report
+            financial_report = FinancialReportGet(
                 doe_form=doe_form_dto,
                 balance_sheets=enhanced_balance_sheets,
                 revenues=enhanced_revenues,
                 expenditures=enhanced_expenditures
-            ))
+            )
+            
+            # Add ADM data to the financial report if available
+            if adm:
+                financial_report.adm = DOEFormADMGet.model_validate(adm.model_dump())
+            
+            results.append(financial_report)
         
         return results
     
@@ -432,6 +481,32 @@ class FinanceService:
         
         # Convert to response schema
         return [RevenueStateTotalGet.model_validate(result.model_dump()) for result in results]
+
+    def get_state_adm(self, session: Session, year: Optional[int] = None) -> List[DOEFormADMStateGet]:
+        """
+        Get state level Average Daily Membership (ADM) data, optionally filtered by year.
+        
+        Args:
+            session: The database session
+            year: Optional year to filter by
+            
+        Returns:
+            List[DOEFormADMStateGet]: A list of state ADM data
+        """
+        statement = select(DOEFormADMState)
+        
+        # Apply year filter if provided
+        if year is not None:
+            statement = statement.where(DOEFormADMState.year == year)
+            
+        # Order by year (most recent first)
+        statement = statement.order_by(DOEFormADMState.year.desc())
+        
+        # Execute query
+        results = session.exec(statement).all()
+        
+        # Convert to response schema
+        return [DOEFormADMStateGet.model_validate(result.model_dump()) for result in results]
 
 # Create singleton instance
 finance_service = FinanceService() 

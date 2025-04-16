@@ -6,6 +6,31 @@ from datetime import datetime
 # Remove circular import 
 # from .location_schema import DistrictGet
 
+# DOE Form ADM Schema
+class DOEFormADMGet(BaseModel):
+    id: int
+    elementary: Optional[float] = None
+    middle: Optional[float] = None
+    high: Optional[float] = None
+    total: Optional[float] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+# DOE Form ADM State Schema (for the materialized view)
+class DOEFormADMStateGet(BaseModel):
+    """State-level aggregated Average Daily Membership data by year"""
+    year: int
+    elementary: Optional[float] = None
+    middle: Optional[float] = None
+    high: Optional[float] = None
+    total: Optional[float] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
 # Balance Sheet Related Schemas
 class BalanceFundTypeGet(BaseModel):
     id: int
@@ -130,6 +155,7 @@ class FinancialReportGet(BaseModel):
     balance_sheets: List[BalanceSheetGet] = []
     revenues: List[RevenueGet] = []
     expenditures: List[ExpenditureGet] = []
+    adm: Optional[DOEFormADMGet] = None
 
     class Config:
         from_attributes = True

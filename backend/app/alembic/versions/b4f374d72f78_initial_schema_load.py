@@ -364,23 +364,7 @@ def upgrade():
         $$ LANGUAGE 'plpgsql'
     """)
 
-    # Create triggers for all tables
-    tables_for_triggers = [
-        'sau', 'district', 'region', 'school_type', 'grades', 'town',
-        'measurement_type_category', 'measurement_type', 'school',
-        'school_grade_xref', 'town_served_xref', 'measurement',
-        'measurement_state_target', 'district_grade_xref', 
-        'school_enrollment', 'town_district_xref'
-    ]
-
-    for table in tables_for_triggers:
-        op.execute(f"""
-            CREATE TRIGGER trigger_update_{table}_timestamp
-            BEFORE UPDATE ON {table}
-            FOR EACH ROW EXECUTE FUNCTION update_date_updated_column()
-        """)
-
-    # Create indexes
+    # Create indexes for tables that already exist
     indexes = [
         "CREATE INDEX idx_school_enrollment_school ON school_enrollment(school_id_fk)",
         "CREATE INDEX idx_school_enrollment_grade ON school_enrollment(grade_id_fk)",
@@ -423,6 +407,29 @@ def upgrade():
                 UNIQUE (district_id_fk, year)
         )
     """)
+
+    # Create doe_form_adm table for Average Daily Membership data
+    op.execute("""
+        CREATE TABLE doe_form_adm (
+            id SERIAL PRIMARY KEY,
+            doe_form_id_fk INTEGER NOT NULL,
+            elementary NUMERIC(15,2),
+            middle NUMERIC(15,2),
+            high NUMERIC(15,2),
+            total NUMERIC(15,2),
+            date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            CONSTRAINT fk_doe_form_adm
+                FOREIGN KEY (doe_form_id_fk)
+                REFERENCES doe_form(id)
+                ON DELETE CASCADE,
+            CONSTRAINT unique_doe_form_adm
+                UNIQUE (doe_form_id_fk)
+        )
+    """)
+    
+    # Create index for doe_form_adm after the table exists
+    op.execute("CREATE INDEX idx_doe_form_adm_doe_form ON doe_form_adm(doe_form_id_fk)")
 
     # Create balance sheet related tables and their relationships
     balance_tables = [
@@ -658,6 +665,27 @@ def upgrade():
     for table in expenditure_tables:
         op.execute(table)
 
+    # Create triggers for all tables AFTER all tables are created
+    tables_for_triggers = [
+        'sau', 'district', 'region', 'school_type', 'grades', 'town',
+        'measurement_type_category', 'measurement_type', 'school',
+        'school_grade_xref', 'town_served_xref', 'measurement',
+        'measurement_state_target', 'district_grade_xref', 
+        'school_enrollment', 'town_district_xref', 'doe_form', 'doe_form_adm',
+        'balance_entry_super_category_type', 'balance_entry_category_type', 'balance_entry_type',
+        'balance_fund_type', 'balance_sheet', 'revenue_entry_super_category_type',
+        'revenue_entry_category_type', 'revenue_entry_type', 'revenue_fund_type', 'revenue',
+        'expenditure_entry_super_category_type', 'expenditure_entry_category_type',
+        'expenditure_entry_type', 'expenditure_fund_type', 'expenditure'
+    ]
+
+    for table in tables_for_triggers:
+        op.execute(f"""
+            CREATE TRIGGER trigger_update_{table}_timestamp
+            BEFORE UPDATE ON {table}
+            FOR EACH ROW EXECUTE FUNCTION update_date_updated_column()
+        """)
+
     # ### end Alembic commands ###
 
 
@@ -681,6 +709,7 @@ def downgrade():
         'balance_entry_type',
         'balance_entry_category_type',
         'balance_entry_super_category_type',
+        'doe_form_adm',
         'doe_form',
         'school_enrollment',
         'district_grade_xref',

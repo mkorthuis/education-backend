@@ -1,5 +1,5 @@
 from typing import Optional, List, TYPE_CHECKING
-from sqlmodel import Field, Relationship
+from sqlmodel import Field, Relationship, SQLModel
 from .base import BaseMixin
 
 if TYPE_CHECKING:
@@ -18,6 +18,30 @@ class DOEForm(BaseMixin, table=True):
     balance_sheets: List["BalanceSheet"] = Relationship(back_populates="doe_form")
     revenues: List["Revenue"] = Relationship(back_populates="doe_form")
     expenditures: List["Expenditure"] = Relationship(back_populates="doe_form")
+    adm: Optional["DOEFormADM"] = Relationship(back_populates="doe_form")
+
+class DOEFormADM(BaseMixin, table=True):
+    """Average Daily Membership data associated with a DOE form"""
+    __tablename__ = "doe_form_adm"
+    
+    doe_form_id_fk: int = Field(foreign_key="doe_form.id", index=True)
+    elementary: Optional[float] = Field(default=None)
+    middle: Optional[float] = Field(default=None)
+    high: Optional[float] = Field(default=None)
+    total: Optional[float] = Field(default=None)
+    
+    doe_form: DOEForm = Relationship(back_populates="adm")
+
+class DOEFormADMState(SQLModel, table=True):
+    """State-level aggregated Average Daily Membership data by year"""
+    __tablename__ = "doe_form_adm_state"
+    
+    # Materialized view only has these columns
+    year: int = Field(primary_key=True)
+    elementary: Optional[float] = Field(default=None)
+    middle: Optional[float] = Field(default=None)
+    high: Optional[float] = Field(default=None)
+    total: Optional[float] = Field(default=None)
 
 # Balance Sheet Models
 class BalanceEntrySuperCategory(BaseMixin, table=True):

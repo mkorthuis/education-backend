@@ -48,12 +48,20 @@ class ExpenditureEntry:
     value: float
 
 @dataclass
+class ADMData:
+    elementary: float
+    middle: float
+    high: float
+    total: float
+
+@dataclass
 class DOEFormData:
     district_id: int
     year: int
     balance_entries: List[BalanceSheetEntry]
     revenue_entries: List[RevenueEntry]
     expenditure_entries: List[ExpenditureEntry]
+    adm_data: Optional[ADMData] = None
     
     def generate_sql_statements(self) -> List[str]:
         """Generate SQL statements for this DOE form and all its entries."""
@@ -73,6 +81,10 @@ class DOEFormData:
         # Generate expenditure entries
         for entry in self.expenditure_entries:
             statements.append(f"""INSERT INTO expenditure (doe_form_id_fk, expenditure_entry_type_id_fk, expenditure_fund_type_id_fk, value) VALUES ((SELECT id FROM doe_form WHERE district_id_fk = {self.district_id} AND year = {self.year} ORDER BY id DESC LIMIT 1), {entry.entry_type_id}, {entry.fund_type_id}, {entry.value});""")
+            
+        # Generate ADM data insert if available
+        if self.adm_data:
+            statements.append(f"""INSERT INTO doe_form_adm (doe_form_id_fk, elementary, middle, high, total) VALUES ((SELECT id FROM doe_form WHERE district_id_fk = {self.district_id} AND year = {self.year} ORDER BY id DESC LIMIT 1), {self.adm_data.elementary}, {self.adm_data.middle}, {self.adm_data.high}, {self.adm_data.total});""")
             
         return statements
 
@@ -168,6 +180,43 @@ def parse_doe_form(file_path: str, year: int, config: dict, config_district_id: 
                               for e in raw_entries])
             return entries
 
+        def extract_adm_data(df: pd.DataFrame) -> Optional[ADMData]:
+            """Find the row containing ADM data and extract the values from appropriate columns."""
+            try:
+                # Find the row where column A contains "AVE DAILY MEMBERSHIP" (case insensitive)
+                adm_rows = df[df.iloc[:, 0].astype(str).str.strip().str.lower() == "ave daily membership"]
+                
+                if adm_rows.empty:
+                    logger.warning(f"No ADM data found in file: {file_path}")
+                    return None
+                
+                # Extract values from columns F, G, H, I (indexes 5, 6, 7, 8)
+                adm_row = adm_rows.iloc[0]
+                
+                # Convert values to float, handling strings with commas
+                def safe_float_convert(val):
+                    if pd.isna(val):
+                        return 0.0
+                    if isinstance(val, str):
+                        return float(val.replace(',', ''))
+                    return float(val)
+                
+                elementary = safe_float_convert(adm_row.iloc[5])
+                middle = safe_float_convert(adm_row.iloc[6])
+                high = safe_float_convert(adm_row.iloc[7])
+                total = safe_float_convert(adm_row.iloc[8])
+                
+                return ADMData(
+                    elementary=elementary,
+                    middle=middle,
+                    high=high,
+                    total=total
+                )
+                
+            except Exception as e:
+                logger.warning(f"Error extracting ADM data from {file_path}: {e}")
+                return None
+                
         # Add robust district ID validation
         try:
             raw_district_id = df.iloc[0, 1]
@@ -212,13 +261,21 @@ def parse_doe_form(file_path: str, year: int, config: dict, config_district_id: 
             ExpenditureEntry,
             year
         )
+        
+        # Extract ADM data
+        adm_data = extract_adm_data(df)
+        if adm_data:
+            logger.info(f"Found ADM data in {file_path}: Elementary={adm_data.elementary}, Middle={adm_data.middle}, High={adm_data.high}, Total={adm_data.total}")
+        else:
+            logger.warning(f"No ADM data found in {file_path}")
 
         return DOEFormData(
             district_id=district_id,
             year=year,
             balance_entries=balance_entries,
             revenue_entries=revenue_entries,
-            expenditure_entries=expenditure_entries
+            expenditure_entries=expenditure_entries,
+            adm_data=adm_data
         )
         
     except Exception as e:
