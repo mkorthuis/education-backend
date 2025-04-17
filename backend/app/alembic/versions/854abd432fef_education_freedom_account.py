@@ -80,6 +80,8 @@ def process_entry_types(df, config, year=None):
                     logger.info(f"Skipping entry type '{cell_value}' because value cell is null")
                     col_index += 2
                     continue
+
+                logger.info(f"Processing entry type: {cell_value} for year {year_to_use}")
                 
                 entry_type = {
                     'id': entry_id,
@@ -104,7 +106,9 @@ def process_entry_types(df, config, year=None):
         
         col_index += 2  # Move two columns to the right
     
-    logger.info(f"Processed {len(entry_types)} entry types")
+    logger.info(f"Processed {len(entry_types)} entry types for year {year}")
+    logger.info(f"Entry types: {entry_types}")
+    logger.info(f"Entry type values: {entry_type_values}")
     return entry_types, entry_type_values
 
 
@@ -314,7 +318,8 @@ def upgrade():
             all_entry_type_values = []
             all_entries = []
             entry_type_ids = {}
-            
+            year_entry_types = []
+
             # Get the base pattern for input files
             input_pattern = config['file_settings']['default_input']
             base_dir = os.path.abspath(os.path.join(current_dir, os.path.dirname(input_pattern)))
@@ -357,6 +362,7 @@ def upgrade():
                             logger.info("Processing entry types from first file")
                             entry_types, entry_type_values = process_entry_types(df, config)
                             all_entry_types = entry_types
+                            year_entry_types = entry_types
                             all_entry_type_values = entry_type_values
                             
                             # Create a mapping of entry types by name
@@ -366,7 +372,7 @@ def upgrade():
                             # For subsequent files, check for new entry types
                             logger.info("Checking for new entry types in subsequent file")
                             new_entry_types, new_entry_type_values = process_entry_types(df, config, year)
-                            
+                            year_entry_types = new_entry_types
                             for i, new_entry_type in enumerate(new_entry_types):
                                 if new_entry_type['name'] not in entry_type_ids:
                                     new_id = len(all_entry_types) + 1
@@ -387,7 +393,7 @@ def upgrade():
                         
                         # Process entries for this file
                         logger.info(f"Processing entries for year {year}")
-                        entries = process_entries(df, all_entry_types, year)
+                        entries = process_entries(df, year_entry_types, year)
                         logger.info(f"Found {len(entries)} entries for year {year}")
                         all_entries.extend(entries)
                     except Exception as e:
