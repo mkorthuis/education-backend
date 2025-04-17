@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query
 from typing import List, Optional
 
 from app.api.v1.deps import SessionDep
-from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet
+from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, TownEnrollmentGet, TownEnrollmentStateGet
 from app.service.public.enrollment_service import enrollment_service
 
 router = APIRouter()
@@ -55,6 +55,74 @@ def get_latest_school_enrollments(
     return enrollment_service.get_latest_school_enrollments(
         session=session, 
         school_id=school_id
+    )
+
+@router.get("/town", 
+    response_model=List[TownEnrollmentGet],
+    summary="Get town enrollments",
+    description="Retrieves enrollment data for towns, with optional filtering by town ID, district ID, and year",
+    response_description="List of town enrollments")
+def get_town_enrollments(
+    session: SessionDep,
+    town_id: Optional[int] = Query(None, description="Optional town ID to filter by"),
+    district_id: Optional[int] = Query(None, description="Optional district ID to filter by. If both district_id and town_id are provided, district_id takes precedence"),
+    year: Optional[int] = Query(None, description="Optional year to filter by")
+):
+    """
+    Get enrollment data for towns, optionally filtered by town ID, district ID, and year.
+    
+    If town_id is provided, returns data for that specific town.
+    If district_id is provided, returns data for all towns in that district.
+    If year is provided, returns data for that specific year.
+    
+    If both town_id and district_id are provided, district_id takes precedence, 
+    and the system will verify that the town belongs to the district.
+    
+    Parameters:
+    - **town_id**: Optional town ID to filter enrollments by
+    - **district_id**: Optional district ID to filter enrollments by
+    - **year**: Optional year to filter enrollments by
+    
+    Returns a list of town enrollment records with grade information.
+    """
+    return enrollment_service.get_town_enrollments(
+        session=session, 
+        town_id=town_id,
+        district_id=district_id,
+        year=year
+    )
+
+@router.get("/town/state", 
+    response_model=List[TownEnrollmentStateGet],
+    summary="Get state-level town enrollments",
+    description="Retrieves state-level town enrollment data aggregated by year and grade, with optional filtering",
+    response_description="List of state-level town enrollment records")
+def get_town_enrollment_state(
+    session: SessionDep,
+    year: Optional[int] = Query(None, description="Optional year to filter by"),
+    grade_id: Optional[int] = Query(None, description="Optional grade ID to filter by")
+):
+    """
+    Get state-level town enrollment data aggregated by year and grade, optionally filtered.
+    
+    This endpoint returns data from the town_enrollment_state materialized view, which
+    contains pre-aggregated sums of town enrollments by year and grade.
+    
+    If year is provided, returns data for that specific year.
+    If grade_id is provided, returns data for that specific grade.
+    If both are provided, returns data for that specific combination.
+    If neither is provided, returns all state-level town enrollment data.
+    
+    Parameters:
+    - **year**: Optional year to filter by
+    - **grade_id**: Optional grade ID to filter by
+    
+    Returns a list of state-level town enrollment records with grade information.
+    """
+    return enrollment_service.get_town_enrollment_state(
+        session=session, 
+        year=year, 
+        grade_id=grade_id
     )
 
 @router.get("/state", 

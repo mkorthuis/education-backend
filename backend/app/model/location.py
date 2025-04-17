@@ -5,6 +5,7 @@ from .base import BaseMixin
 if TYPE_CHECKING:
     from .finance import DistrictCostPerPupil
     from .education_freedom_account import EducationFreedomAccountEntry
+    from .enrollment import TownEnrollment, SchoolEnrollment
 
 # First define ALL link tables
 class DistrictGradeLink(BaseMixin, table=True):
@@ -83,6 +84,8 @@ class Grade(BaseMixin, table=True):
     name: str = Field(max_length=50)
     schools: List["School"] = Relationship(back_populates="grades", link_model=SchoolGradeLink)
     districts: List["District"] = Relationship(back_populates="grades", link_model=DistrictGradeLink)
+    school_enrollments: List["SchoolEnrollment"] = Relationship(back_populates="grade")
+    town_enrollments: List["TownEnrollment"] = Relationship(back_populates="grade")
 
 class Town(BaseMixin, table=True):
     __tablename__ = "town"
@@ -90,6 +93,7 @@ class Town(BaseMixin, table=True):
     districts: List["District"] = Relationship(back_populates="towns", link_model=TownDistrictLink)
     schools_served: List["School"] = Relationship(back_populates="towns_served", link_model=TownServedLink)
     education_freedom_account_entries: List["EducationFreedomAccountEntry"] = Relationship(back_populates="town")
+    town_enrollments: List["TownEnrollment"] = Relationship(back_populates="town")
 
 class School(BaseMixin, table=True):
     __tablename__ = "school"

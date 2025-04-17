@@ -1,0 +1,5 @@
+file_settings:
+  default_input: "../assets/town-enrollments/****-Town Level Enrollment By Grade.xlsx"
+  year_start: 2012
+  year_end: 2025
+  sql_cache_dir: "../sql_cache" 

@@ -1,6 +1,6 @@
 from typing import List, Optional, Dict
 from pydantic import BaseModel, Field
-from app.schema.location_schema import GradeGet, SchoolGet
+from app.schema.location_schema import GradeGet, SchoolGet, TownGet
 from datetime import datetime
 
 class SchoolEnrollmentGet(BaseModel):
@@ -9,6 +9,29 @@ class SchoolEnrollmentGet(BaseModel):
     grade_id_fk: int = Field(alias='grade_id')
     year: int
     enrollment: int
+    grade: Optional[GradeGet] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+class TownEnrollmentGet(BaseModel):
+    id: int
+    town_id_fk: int = Field(alias='town_id')
+    grade_id_fk: int = Field(alias='grade_id')
+    year: int
+    enrollment: int
+    grade: Optional[GradeGet] = None
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+
+class TownEnrollmentStateGet(BaseModel):
+    """Schema for town enrollment state materialized view data"""
+    year: int
+    grade_id_fk: int = Field(alias='grade_id')
+    total_enrollment: int
     grade: Optional[GradeGet] = None
 
     class Config:
