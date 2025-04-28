@@ -1,0 +1,40 @@
+file_settings:
+  teacher_salary_band_file: '../assets/staff/teacher-starting-salary/****-Teacher-Starting.xlsx'
+  # We'll process the first sheet by default
+  start_row: 8
+  years: [2024]  # Currently only processing 2024, can add more years in the future
+  sql_cache_dir: '../sql_cache'
+
+column_mappings:
+  district_id: 2
+  salary_band_type: 4  # Teacher salary band type column (BA, BA15, MA, etc.)
+  min_salary: 5        # Minimum salary for this band
+  max_salary: 6        # Maximum salary for this band
+  steps: 7             # Number of steps in this salary band
+
+# Mapping from names in Excel file to teacher_salary_band_type.id values
+salary_band_mapping:
+  "BA": 1
+  "B.A.": 1
+  "Bachelor": 1
+  "Bachelors": 1
+  "BA+15": 2
+  "BA15": 2
+  "B.A.+15": 2
+  "Bachelors+15": 2
+  "BA+30": 3
+  "BA30": 3
+  "B.A.+30": 3
+  "Bachelors+30": 3
+  "MA": 4
+  "M.A.": 4
+  "Master": 4
+  "Masters": 4
+  "MA+15": 5
+  "MA15": 5
+  "M.A.+15": 5
+  "Masters+15": 5
+  "MA+30": 6
+  "MA30": 6
+  "M.A.+30": 6
+  "Masters+30": 6 

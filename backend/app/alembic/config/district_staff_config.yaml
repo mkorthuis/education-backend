@@ -1,0 +1,22 @@
+file_settings:
+  district_staff_file: '../assets/staff/staff-count/****-FTE-Staff.xlsx'
+  sheet_name: 'Staff Full-time Equivalent by D'
+  start_row: 8
+  years: [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+  sql_cache_dir: '../sql_cache'
+
+column_mappings:
+  district_id: 2
+  teacher_count: 4
+  instruction_support_count: 5
+  librarian_count: 6
+  specialist_count: 7
+  admin_support_count: 8
+  other_support_count: 9 
+
+# Settings for identifying and processing state-level data
+state_data_settings:
+  # The column index (0-based) where the state identifier text is expected to be found
+  state_column_index: 3
+  # The text string that identifies a row as containing state totals
+  state_identifier_text: "State Total" 
