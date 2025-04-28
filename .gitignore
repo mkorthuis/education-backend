@@ -2,3 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Alembic SQL cache
+backend/app/alembic/sql_cache/
