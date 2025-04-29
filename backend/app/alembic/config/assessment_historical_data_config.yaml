@@ -1,0 +1,14 @@
+file_settings:
+  default_input: "../assets/assessments/assessments-****.csv"
+  download_files: false
+  year_start: 2009
+  year_end: 2017
+  sql_cache_dir: "../sql_cache"
+
+school_name_translations:
+  "Carpenter Elementary School": "Carpenter School"
+  "Conant High School": "Conant Middle High School (H)"
+  "Jaffrey-Rindge Middle School": "Conant Middle High School (M)"
+  "West Running Brook Middle School": "West Running Brook Intermediate School"
+  "Allenstown Elementary School": "Allenstown Community School"
+  "Armand R. Dupont School": "Allenstown Community School" 
