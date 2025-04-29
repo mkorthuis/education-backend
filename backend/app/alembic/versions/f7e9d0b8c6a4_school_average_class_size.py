@@ -181,7 +181,7 @@ def upgrade():
             date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             CONSTRAINT fk_school_class_size_school FOREIGN KEY (school_id_fk) REFERENCES school(id) ON DELETE CASCADE,
-            CONSTRAINT unique_school_year UNIQUE (school_id_fk, year)
+            CONSTRAINT unique_school_average_class_size_year UNIQUE (school_id_fk, year)
         )
     """)
 

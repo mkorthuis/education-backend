@@ -1,0 +1,17 @@
+file_settings:
+  default_input: "../assets/early-exit-dropout/****-early-exit-dropout-rates-HS.xlsx"
+  year_start: 2012
+  year_end: 2024
+  sql_cache_dir: "../sql_cache"
+
+column_mappings:
+  school_name: 4           # Column E
+  adjusted_fall_enrollment: 6   # Column G
+  earned_hiset: 7          # Column H
+  enrolled_in_college: 8   # Column I
+  dropped_out: 9           # Column J
+  missing: 11              # Column L
+  annual_early_exit_percentage: 12      # Column M
+  '4_year_early_exit_percentage': 13    # Column N
+  annual_dropout_percentage: 14         # Column O
+  '4_year_dropout_percentage': 15       # Column P 

@@ -246,7 +246,7 @@ def upgrade():
             date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             CONSTRAINT fk_district_class_size_district FOREIGN KEY (district_id_fk) REFERENCES district(id) ON DELETE CASCADE,
-            CONSTRAINT unique_district_year UNIQUE (district_id_fk, year)
+            CONSTRAINT unique_district_average_class_size_year UNIQUE (district_id_fk, year)
         )
     """)
 
@@ -274,7 +274,7 @@ def upgrade():
             grade_5_8 NUMERIC(15,2),
             date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            CONSTRAINT unique_state_year UNIQUE (year)
+            CONSTRAINT unique_state_average_class_size_year UNIQUE (year)
         )
     """)
 

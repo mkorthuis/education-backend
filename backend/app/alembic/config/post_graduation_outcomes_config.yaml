@@ -1,0 +1,17 @@
+file_settings:
+  default_input: "../assets/completers/****-Completers.xlsx"
+  year_start: 2012
+  year_end: 2024
+  sql_cache_dir: "../sql_cache"
+
+column_mappings:
+  school_id: 4            # Column E
+  total_students: 6       # Column G
+  percentages:
+    4_year_college: 7         # Column H
+    gt_4_year_college: 8      # Column I
+    addl_high_school: 9       # Column J
+    employed: 10              # Column K
+    armed_forces: 11          # Column L
+    unemployed: 12            # Column M
+    unknown: 13               # Column N 
