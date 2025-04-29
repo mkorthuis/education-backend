@@ -1,0 +1,13 @@
+file_settings:
+  # Excel files path template; **** will be replaced by year
+  default_input: "../assets/average-class-size/district/****-District-Average-Class-Size.xlsx"
+  year_start: 2012
+  year_end: 2025
+  sql_cache_dir: "../sql_cache"
+
+# Column indices (0-based) mapping for the Excel sheet
+column_mappings:
+  district_id: 2   # Column C
+  grade_1_2: 4     # Column E
+  grade_3_4: 5     # Column F
+  grade_5_8: 6     # Column G 

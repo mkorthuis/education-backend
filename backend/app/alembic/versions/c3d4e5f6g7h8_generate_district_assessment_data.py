@@ -10,6 +10,7 @@ import sqlalchemy as sa
 import logging
 import pandas as pd
 import numpy as np
+import os
 
 # Configure logger
 logger = logging.getLogger('alembic.runtime.migration')
@@ -416,30 +417,50 @@ def generate_district_assessment_data(conn, years_range, grades):
 
 
 def upgrade():
-    """Upgrade function to generate district assessment data."""
+    """Upgrade function that generates district assessment data with SQL caching."""
     try:
         conn = op.get_bind()
-        
+
         # Define years range and grades
         years_range = range(2009, 2018)  # 2009 to 2017
         grades = ['3', '4', '5', '6', '7', '8', '11', 'All Grades']
-        
-        # Generate district data
-        insert_statements = generate_district_assessment_data(conn, years_range, grades)
-        
+
+        # Determine cache location
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        cache_dir = os.path.abspath(os.path.join(current_dir, '../sql_cache'))
+        os.makedirs(cache_dir, exist_ok=True)
+        cache_file = os.path.join(cache_dir, f"{revision}_cache.sql")
+
+        if os.path.exists(cache_file):
+            logger.info(f"Using cached SQL file: {cache_file}")
+            with open(cache_file, 'r') as f:
+                raw_sql = f.read()
+            # Split back into list; each statement ends with semicolon and newline in cache
+            insert_statements = [stmt.strip() for stmt in raw_sql.split(';\n') if stmt.strip()]
+        else:
+            logger.info("Cache not found. Generating insert statements.")
+            insert_statements = generate_district_assessment_data(conn, years_range, grades)
+            # Write to cache file (separated by semicolons and newline for readability)
+            with open(cache_file, 'w') as f:
+                f.write(';\n'.join(s.strip() for s in insert_statements) + ';\n')
+            logger.info(f"SQL cache written to {cache_file} ({len(insert_statements)} statements)")
+
         # Execute statements
         executed = 0
         for stmt in insert_statements:
+            if not stmt:
+                continue
             try:
                 conn.execute(sa.text(stmt))
                 executed += 1
+                if executed % 200 == 0:
+                    logger.info(f"Executed {executed} statements so far")
             except Exception as e:
-                logger.error(f"Error executing statement: {e}")
-                logger.error(f"Statement: {stmt[:300]}...")
+                logger.error(f"Error executing statement: {e}\nStatement: {stmt[:300]}...")
                 raise
-        
+
         logger.info(f"Successfully executed {executed} SQL statements")
-        
+
     except Exception as e:
         logger.error(f"Error during migration: {e}")
         raise
