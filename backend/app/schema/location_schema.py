@@ -31,12 +31,20 @@ class SAUGet(BaseModel):
         from_attributes = True
         populate_by_name = True
 
+class GradeGet(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True
+
 class DistrictGet(BaseModel):
     id: int
     name: str
     sau_id_fk: Optional[int] = Field(alias='sau_id')
     is_public: bool
     towns: Optional[List[int]] = None
+    grades: List[GradeGet] = []
 
     class Config:
         from_attributes = True
@@ -50,13 +58,6 @@ class RegionGet(BaseModel):
         from_attributes = True
 
 class SchoolTypeGet(BaseModel):
-    id: int
-    name: str
-
-    class Config:
-        from_attributes = True
-
-class GradeGet(BaseModel):
     id: int
     name: str
 

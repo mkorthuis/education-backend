@@ -74,6 +74,9 @@ class LocationService:
             # Add town IDs list instead of town objects
             district_dict["towns"] = [town.id for town in district.towns] if district.towns else []
             
+            # Add grade list
+            district_dict["grades"] = [GradeGet.from_orm(grade) for grade in district.grades] if district.grades else []
+            
             # Create DistrictGet object from dictionary using Pydantic v2 method
             result.append(DistrictGet.model_validate(district_dict))
             
@@ -95,6 +98,9 @@ class LocationService:
         
         # Add town IDs list instead of town objects
         district_dict["towns"] = [town.id for town in district.towns] if district.towns else []
+        
+        # Add grade list
+        district_dict["grades"] = [GradeGet.from_orm(grade) for grade in district.grades] if district.grades else []
         
         # Create DistrictGet object from dictionary using Pydantic v2 method
         return DistrictGet.model_validate(district_dict)
