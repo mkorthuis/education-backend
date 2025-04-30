@@ -11,13 +11,10 @@ class PostGraduationTypeGet(BaseModel):
 
 class SchoolPostGraduationGet(BaseModel):
     id: int
-    school_id: int = Field(alias="school_id_fk")
+    school_id: int
     year: int
     value: int
     post_graduation_type: PostGraduationTypeGet
-
-    class Config:
-        populate_by_name = True
 
 
 class StatePostGraduationGet(BaseModel):
@@ -31,7 +28,7 @@ class StatePostGraduationGet(BaseModel):
 
 class SchoolEarlyExitGet(BaseModel):
     id: int
-    school_id: int = Field(alias="school_id_fk")
+    school_id: int
     year: int
 
     adjusted_fall_enrollment: Optional[int] = None
@@ -41,12 +38,9 @@ class SchoolEarlyExitGet(BaseModel):
     missing: Optional[int] = None
 
     annual_early_exit_percentage: Optional[float] = None
-    four_year_early_exit_percentage: Optional[float] = Field(alias="4_year_early_exit_percentage", default=None)
+    four_year_early_exit_percentage: Optional[float] = None
     annual_dropout_percentage: Optional[float] = None
-    four_year_dropout_percentage: Optional[float] = Field(alias="4_year_dropout_percentage", default=None)
-
-    class Config:
-        populate_by_name = True
+    four_year_dropout_percentage: Optional[float] = None
 
 
 class StateEarlyExitGet(BaseModel):
@@ -60,9 +54,35 @@ class StateEarlyExitGet(BaseModel):
     missing: Optional[int] = None
 
     annual_early_exit_percentage: Optional[float] = None
-    four_year_early_exit_percentage: Optional[float] = Field(alias="4_year_early_exit_percentage", default=None)
+    four_year_early_exit_percentage: Optional[float] = None
     annual_dropout_percentage: Optional[float] = None
-    four_year_dropout_percentage: Optional[float] = Field(alias="4_year_dropout_percentage", default=None)
+    four_year_dropout_percentage: Optional[float] = None
 
-    class Config:
-        populate_by_name = True 
+
+# -------------------- District Post-Graduation Schema --------------------
+
+
+class DistrictPostGraduationGet(BaseModel):
+    district_id: int
+    year: int
+    value: int
+    post_graduation_type: PostGraduationTypeGet
+
+
+# -------------------- District Early Exit Schema --------------------
+
+
+class DistrictEarlyExitGet(BaseModel):
+    district_id: int
+    year: int
+
+    adjusted_fall_enrollment: Optional[int] = None
+    earned_hiset: Optional[int] = None
+    enrolled_in_college: Optional[int] = None
+    dropped_out: Optional[int] = None
+    missing: Optional[int] = None
+
+    annual_early_exit_percentage: Optional[float] = None
+    four_year_early_exit_percentage: Optional[float] = None
+    annual_dropout_percentage: Optional[float] = None
+    four_year_dropout_percentage: Optional[float] = None 

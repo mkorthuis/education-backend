@@ -4,7 +4,7 @@ from .base import BaseMixin
 
 # Use TYPE_CHECKING to avoid circular imports
 if TYPE_CHECKING:
-    from .location import School
+    from .location import School, District
 
 # -------------------- Early Exit Models --------------------
 
@@ -80,4 +80,63 @@ class StatePostGraduation(BaseMixin, table=True):
     value: int
 
     # Relationships
-    post_graduation_type: PostGraduationType = Relationship(back_populates="state_post_graduation_records", sa_relationship_kwargs={"foreign_keys": "StatePostGraduation.post_graduation_type_id_fk"}) 
+    post_graduation_type: PostGraduationType = Relationship(back_populates="state_post_graduation_records", sa_relationship_kwargs={"foreign_keys": "StatePostGraduation.post_graduation_type_id_fk"})
+
+
+# -------------------- Materialized View Models --------------------
+
+class DistrictEarlyExit(SQLModel, table=True):
+    """Materialized view for district-level early exit data."""
+    __tablename__ = "district_early_exit"
+
+    # Composite primary key (district, year)
+    district_id_fk: int = Field(primary_key=True)
+    year: int = Field(primary_key=True)
+
+    adjusted_fall_enrollment: Optional[int] = None
+    earned_hiset: Optional[int] = None
+    enrolled_in_college: Optional[int] = None
+    dropped_out: Optional[int] = None
+    missing: Optional[int] = None
+
+    annual_early_exit_percentage: Optional[float] = None
+    four_year_early_exit_percentage: Optional[float] = None
+    annual_dropout_percentage: Optional[float] = None
+    four_year_dropout_percentage: Optional[float] = None
+
+    # One-way relationship to District – no inverse relationship
+    district: "District" = Relationship(
+        sa_relationship_kwargs={
+            "foreign_keys": "DistrictEarlyExit.district_id_fk",
+            "primaryjoin": "DistrictEarlyExit.district_id_fk == District.id",
+            "viewonly": True,
+        }
+    )
+
+
+class DistrictPostGraduation(SQLModel, table=True):
+    """Materialized view for district-level post-graduation outcomes."""
+    __tablename__ = "district_post_graduation"
+
+    # Composite primary key (district, type, year)
+    district_id_fk: int = Field(primary_key=True)
+    post_graduation_type_id_fk: int = Field(primary_key=True, foreign_key="post_graduation_type.id")
+    year: int = Field(primary_key=True)
+
+    value: Optional[int] = None
+
+    # Relationships
+    district: "District" = Relationship(
+        sa_relationship_kwargs={
+            "foreign_keys": "DistrictPostGraduation.district_id_fk",
+            "primaryjoin": "DistrictPostGraduation.district_id_fk == District.id",
+            "viewonly": True,
+        }
+    )
+    post_graduation_type: PostGraduationType = Relationship(
+        sa_relationship_kwargs={
+            "foreign_keys": "DistrictPostGraduation.post_graduation_type_id_fk",
+            "primaryjoin": "DistrictPostGraduation.post_graduation_type_id_fk == PostGraduationType.id",
+            "viewonly": True,
+        }
+    ) 
