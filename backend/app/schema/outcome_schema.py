@@ -59,8 +59,30 @@ class StateEarlyExitGet(BaseModel):
     four_year_dropout_percentage: Optional[float] = None
 
 
-# -------------------- District Post-Graduation Schema --------------------
+# -------------------- Cohort Graduation Schemas --------------------
 
+class SchoolGraduationCohortGet(BaseModel):
+    id: int
+    school_id: int
+    year: int
+
+    cohort_size: Optional[int] = None
+    graduate: Optional[int] = None
+    earned_hiset: Optional[int] = None
+    dropped_out: Optional[int] = None
+
+
+class StateGraduationCohortGet(BaseModel):
+    id: int
+    year: int
+
+    cohort_size: Optional[int] = None
+    graduate: Optional[int] = None
+    earned_hiset: Optional[int] = None
+    dropped_out: Optional[int] = None
+
+
+# -------------------- District Post-Graduation Schema --------------------
 
 class DistrictPostGraduationGet(BaseModel):
     district_id: int
@@ -70,7 +92,6 @@ class DistrictPostGraduationGet(BaseModel):
 
 
 # -------------------- District Early Exit Schema --------------------
-
 
 class DistrictEarlyExitGet(BaseModel):
     district_id: int
@@ -85,4 +106,16 @@ class DistrictEarlyExitGet(BaseModel):
     annual_early_exit_percentage: Optional[float] = None
     four_year_early_exit_percentage: Optional[float] = None
     annual_dropout_percentage: Optional[float] = None
-    four_year_dropout_percentage: Optional[float] = None 
+    four_year_dropout_percentage: Optional[float] = None
+
+
+# -------------------- District Cohort Graduation Schema --------------------
+
+class DistrictGraduationCohortGet(BaseModel):
+    district_id: int
+    year: int
+
+    cohort_size: Optional[int] = None
+    graduate: Optional[int] = None
+    earned_hiset: Optional[int] = None
+    dropped_out: Optional[int] = None 

@@ -46,6 +46,34 @@ class StateEarlyExit(BaseMixin, table=True):
     four_year_dropout_percentage: Optional[float] = None
 
 
+# -------------------- Cohort Graduation Models --------------------
+
+class SchoolGraduationCohort(BaseMixin, table=True):
+    __tablename__ = "school_graduation_cohort"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    year: int
+
+    cohort_size: Optional[int] = None
+    graduate: Optional[int] = None
+    earned_hiset: Optional[int] = None
+    dropped_out: Optional[int] = None
+
+    # Relationships
+    school: "School" = Relationship(sa_relationship_kwargs={"foreign_keys": "SchoolGraduationCohort.school_id_fk", "viewonly": True})
+
+
+class StateGraduationCohort(BaseMixin, table=True):
+    __tablename__ = "state_graduation_cohort"
+
+    year: int
+
+    cohort_size: Optional[int] = None
+    graduate: Optional[int] = None
+    earned_hiset: Optional[int] = None
+    dropped_out: Optional[int] = None
+
+
 # -------------------- Post-Graduation Outcome Models --------------------
 
 class PostGraduationType(BaseMixin, table=True):
@@ -109,6 +137,29 @@ class DistrictEarlyExit(SQLModel, table=True):
         sa_relationship_kwargs={
             "foreign_keys": "DistrictEarlyExit.district_id_fk",
             "primaryjoin": "DistrictEarlyExit.district_id_fk == District.id",
+            "viewonly": True,
+        }
+    )
+
+
+class DistrictGraduationCohort(SQLModel, table=True):
+    """Materialized view for district-level cohort graduation data."""
+    __tablename__ = "district_graduation_cohort"
+
+    # Composite primary key (district, year)
+    district_id_fk: int = Field(primary_key=True)
+    year: int = Field(primary_key=True)
+
+    cohort_size: Optional[int] = None
+    graduate: Optional[int] = None
+    earned_hiset: Optional[int] = None
+    dropped_out: Optional[int] = None
+
+    # One-way relationship to District – no inverse relationship
+    district: "District" = Relationship(
+        sa_relationship_kwargs={
+            "foreign_keys": "DistrictGraduationCohort.district_id_fk",
+            "primaryjoin": "DistrictGraduationCohort.district_id_fk == District.id",
             "viewonly": True,
         }
     )

@@ -10,6 +10,9 @@ from app.schema.outcome_schema import (
     SchoolEarlyExitGet,
     StateEarlyExitGet,
     DistrictEarlyExitGet,
+    SchoolGraduationCohortGet,
+    StateGraduationCohortGet,
+    DistrictGraduationCohortGet,
 )
 from app.service.public.outcome_service import outcome_service
 
@@ -116,3 +119,53 @@ def get_state_early_exit(
     year: Optional[int] = Query(default=None),
 ):
     return outcome_service.get_state_early_exit(session=session, year=year)
+
+# -------------------- Cohort Graduation --------------------
+
+@router.get(
+    "/graduation-cohort/school",
+    response_model=List[SchoolGraduationCohortGet],
+    summary="Get school cohort graduation data",
+)
+def get_school_graduation_cohort(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None),
+    school_id: Optional[int] = Query(default=None),
+    district_id: Optional[int] = Query(default=None),
+):
+    return outcome_service.get_school_graduation_cohort(
+        session=session,
+        year=year,
+        school_id=school_id,
+        district_id=district_id,
+    )
+
+@router.get(
+    "/graduation-cohort/district",
+    response_model=List[DistrictGraduationCohortGet],
+    summary="Get district cohort graduation data",
+)
+def get_district_graduation_cohort(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None),
+    district_id: Optional[int] = Query(default=None),
+):
+    return outcome_service.get_district_graduation_cohort(
+        session=session,
+        year=year,
+        district_id=district_id,
+    )
+
+@router.get(
+    "/graduation-cohort/state",
+    response_model=List[StateGraduationCohortGet],
+    summary="Get state cohort graduation data",
+)
+def get_state_graduation_cohort(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None),
+):
+    return outcome_service.get_state_graduation_cohort(
+        session=session,
+        year=year,
+    )

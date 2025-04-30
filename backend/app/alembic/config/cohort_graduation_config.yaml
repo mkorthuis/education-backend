@@ -1,0 +1,12 @@
+file_settings:
+  default_input: "../assets/cohort-graduation/****-Cohort Counts By School.xlsx"
+  year_start: 2012
+  year_end: 2024
+  sql_cache_dir: "../sql_cache"
+
+column_mappings:
+  school_name: 3           # Column D
+  cohort_size: 4
+  cohort_graduated: 5
+  earned_hiset: 7
+  dropped_out: 8 

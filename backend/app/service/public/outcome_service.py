@@ -11,6 +11,9 @@ from app.model.outcome import (
     StateEarlyExit,
     DistrictPostGraduation,
     DistrictEarlyExit,
+    SchoolGraduationCohort,
+    StateGraduationCohort,
+    DistrictGraduationCohort,
 )
 from app.model.location import School
 from app.schema.outcome_schema import (
@@ -21,6 +24,9 @@ from app.schema.outcome_schema import (
     SchoolEarlyExitGet,
     StateEarlyExitGet,
     DistrictEarlyExitGet,
+    SchoolGraduationCohortGet,
+    StateGraduationCohortGet,
+    DistrictGraduationCohortGet,
 )
 
 logger = logging.getLogger(__name__)
@@ -231,5 +237,96 @@ class OutcomeService:
         except Exception as e:
             logger.error(f"Error fetching district early exit: {e}")
             raise HTTPException(status_code=500, detail="Failed to fetch district early exit")
+
+    # School cohort graduation
+    def get_school_graduation_cohort(
+        self,
+        session: Session,
+        year: Optional[int] = None,
+        school_id: Optional[int] = None,
+        district_id: Optional[int] = None,
+    ) -> List[SchoolGraduationCohortGet]:
+        try:
+            stmt = select(SchoolGraduationCohort).join(School, School.id == SchoolGraduationCohort.school_id_fk)
+            if year is not None:
+                stmt = stmt.where(SchoolGraduationCohort.year == year)
+            if school_id is not None:
+                stmt = stmt.where(SchoolGraduationCohort.school_id_fk == school_id)
+            if district_id is not None:
+                stmt = stmt.where(School.district_id_fk == district_id)
+            result = session.exec(stmt).all()
+            data = []
+            for cohort in result:
+                item = {
+                    "id": cohort.id,
+                    "school_id": cohort.school_id_fk,
+                    "year": cohort.year,
+                    "cohort_size": cohort.cohort_size,
+                    "graduate": cohort.graduate,
+                    "earned_hiset": cohort.earned_hiset,
+                    "dropped_out": cohort.dropped_out,
+                }
+                data.append(SchoolGraduationCohortGet.model_validate(item))
+            return data
+        except Exception as e:
+            logger.error(f"Error fetching school graduation cohort: {e}")
+            raise HTTPException(status_code=500, detail="Failed to fetch school graduation cohort")
+
+    # State cohort graduation
+    def get_state_graduation_cohort(
+        self,
+        session: Session,
+        year: Optional[int] = None,
+    ) -> List[StateGraduationCohortGet]:
+        try:
+            stmt = select(StateGraduationCohort)
+            if year is not None:
+                stmt = stmt.where(StateGraduationCohort.year == year)
+            result = session.exec(stmt).all()
+            data = []
+            for cohort in result:
+                item = {
+                    "id": cohort.id,
+                    "year": cohort.year,
+                    "cohort_size": cohort.cohort_size,
+                    "graduate": cohort.graduate,
+                    "earned_hiset": cohort.earned_hiset,
+                    "dropped_out": cohort.dropped_out,
+                }
+                data.append(StateGraduationCohortGet.model_validate(item))
+            return data
+        except Exception as e:
+            logger.error(f"Error fetching state graduation cohort: {e}")
+            raise HTTPException(status_code=500, detail="Failed to fetch state graduation cohort")
+
+    # District cohort graduation
+    def get_district_graduation_cohort(
+        self,
+        session: Session,
+        year: Optional[int] = None,
+        district_id: Optional[int] = None,
+    ) -> List[DistrictGraduationCohortGet]:
+        try:
+            stmt = select(DistrictGraduationCohort)
+            if year is not None:
+                stmt = stmt.where(DistrictGraduationCohort.year == year)
+            if district_id is not None:
+                stmt = stmt.where(DistrictGraduationCohort.district_id_fk == district_id)
+            result = session.exec(stmt).all()
+            data = []
+            for cohort in result:
+                item = {
+                    "district_id": cohort.district_id_fk,
+                    "year": cohort.year,
+                    "cohort_size": cohort.cohort_size,
+                    "graduate": cohort.graduate,
+                    "earned_hiset": cohort.earned_hiset,
+                    "dropped_out": cohort.dropped_out,
+                }
+                data.append(DistrictGraduationCohortGet.model_validate(item))
+            return data
+        except Exception as e:
+            logger.error(f"Error fetching district graduation cohort: {e}")
+            raise HTTPException(status_code=500, detail="Failed to fetch district graduation cohort")
 
 outcome_service = OutcomeService() 
