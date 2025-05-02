@@ -2,7 +2,7 @@ file_settings:
   # Supports both .xlsx and .xls extensions
   teacher_salary_file: '../assets/staff/teacher-average-salary/****-Teacher-Salary'
   # Automatically using the first sheet in each Excel file
-  start_row: 8
+  start_row: 1
   years: [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
   legacy_years: [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
   modern_years: [2023, 2024, 2025]

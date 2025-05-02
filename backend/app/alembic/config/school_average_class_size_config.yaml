@@ -1,0 +1,11 @@
+file_settings:
+  default_input: "../assets/average-class-size/school/****-School-Average-Class-Size.xlsx"
+  year_start: 2012
+  year_end: 2025
+  sql_cache_dir: "../sql_cache"
+
+column_mappings:
+  school_name: 4  # Column E (0-indexed)
+  grade_1_2: 5    # Column F
+  grade_3_4: 6    # Column G
+  grade_5_8: 7    # Column H 
