@@ -15,8 +15,15 @@ ENV PYTHONUNBUFFERED=1
 ENV PATH="/app/.venv/bin:$PATH"
 ENV PYTHONPATH=/app
 
+# Install Redis
+RUN apt-get update && apt-get install -y redis-server && rm -rf /var/lib/apt/lists/*
+
 RUN uv pip install -r requirements.txt --system
 # CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload", "--ssl-keyfile=./certs/key.pem", "--ssl-certfile=./certs/cert.pem"]
 
 RUN pip install debugpy
-CMD ["python", "-Xfrozen_modules=off", "-m", "debugpy",  "--listen", "0.0.0.0:5678", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload", "--ssl-keyfile=./certs/key.pem", "--ssl-certfile=./certs/cert.pem"]
+
+# Create startup script
+RUN echo '#!/bin/bash\nredis-server --daemonize yes\npython -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 -m uvicorn app.main:app --host 0.0.0.0 --reload --ssl-keyfile=./certs/key.pem --ssl-certfile=./certs/cert.pem' > /app/start.sh && chmod +x /app/start.sh
+
+CMD ["/app/start.sh"]

@@ -15,6 +15,7 @@ from app.schema.outcome_schema import (
     DistrictGraduationCohortGet,
 )
 from app.service.public.outcome_service import outcome_service
+from app.core.cache import cache_response
 
 router = APIRouter(prefix="/outcome", tags=["Outcome"])
 
@@ -25,7 +26,8 @@ router = APIRouter(prefix="/outcome", tags=["Outcome"])
     response_model=List[PostGraduationTypeGet],
     summary="Get post-graduation outcome types",
 )
-def get_post_graduation_types(session: SessionDep):
+@cache_response("outcome_post_graduation_type")
+async def get_post_graduation_types(session: SessionDep):
     return outcome_service.get_post_graduation_types(session=session)
 
 @router.get(
@@ -33,7 +35,8 @@ def get_post_graduation_types(session: SessionDep):
     response_model=List[SchoolPostGraduationGet],
     summary="Get school post-graduation outcomes",
 )
-def get_school_post_graduation(
+@cache_response("outcome_post_graduation_school")
+async def get_school_post_graduation(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     school_id: Optional[int] = Query(default=None),
@@ -53,7 +56,8 @@ def get_school_post_graduation(
     response_model=List[DistrictPostGraduationGet],
     summary="Get district post-graduation outcomes",
 )
-def get_district_post_graduation(
+@cache_response("outcome_post_graduation_district")
+async def get_district_post_graduation(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     district_id: Optional[int] = Query(default=None),
@@ -71,7 +75,8 @@ def get_district_post_graduation(
     response_model=List[StatePostGraduationGet],
     summary="Get state post-graduation outcomes",
 )
-def get_state_post_graduation(
+@cache_response("outcome_post_graduation_state")
+async def get_state_post_graduation(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     post_graduation_type_id: Optional[int] = Query(default=None, description="Filter by post-graduation type id"),
@@ -89,7 +94,8 @@ def get_state_post_graduation(
     response_model=List[SchoolEarlyExitGet],
     summary="Get school early-exit data",
 )
-def get_school_early_exit(
+@cache_response("outcome_early_exit_school")
+async def get_school_early_exit(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     school_id: Optional[int] = Query(default=None),
@@ -102,7 +108,8 @@ def get_school_early_exit(
     response_model=List[DistrictEarlyExitGet],
     summary="Get district early-exit data",
 )
-def get_district_early_exit(
+@cache_response("outcome_early_exit_district")
+async def get_district_early_exit(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     district_id: Optional[int] = Query(default=None),
@@ -114,7 +121,8 @@ def get_district_early_exit(
     response_model=List[StateEarlyExitGet],
     summary="Get state early-exit data",
 )
-def get_state_early_exit(
+@cache_response("outcome_early_exit_state")
+async def get_state_early_exit(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
 ):
@@ -127,7 +135,8 @@ def get_state_early_exit(
     response_model=List[SchoolGraduationCohortGet],
     summary="Get school cohort graduation data",
 )
-def get_school_graduation_cohort(
+@cache_response("outcome_graduation_cohort_school")
+async def get_school_graduation_cohort(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     school_id: Optional[int] = Query(default=None),
@@ -145,7 +154,8 @@ def get_school_graduation_cohort(
     response_model=List[DistrictGraduationCohortGet],
     summary="Get district cohort graduation data",
 )
-def get_district_graduation_cohort(
+@cache_response("outcome_graduation_cohort_district")
+async def get_district_graduation_cohort(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     district_id: Optional[int] = Query(default=None),
@@ -161,7 +171,8 @@ def get_district_graduation_cohort(
     response_model=List[StateGraduationCohortGet],
     summary="Get state cohort graduation data",
 )
-def get_state_graduation_cohort(
+@cache_response("outcome_graduation_cohort_state")
+async def get_state_graduation_cohort(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
 ):

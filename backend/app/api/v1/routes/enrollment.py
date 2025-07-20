@@ -4,6 +4,7 @@ from typing import List, Optional
 from app.api.v1.deps import SessionDep
 from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, TownEnrollmentGet, TownEnrollmentStateGet
 from app.service.public.enrollment_service import enrollment_service
+from app.core.cache import cache_response
 
 router = APIRouter()
 
@@ -12,7 +13,8 @@ router = APIRouter()
     summary="Get school enrollments",
     description="Retrieves enrollment data for a specific school, with optional filtering by year",
     response_description="List of school enrollments")
-def get_school_enrollments(
+@cache_response("enrollment_school")
+async def get_school_enrollments(
     school_id: int, 
     session: SessionDep,
     year: Optional[int] = Query(None, description="Filter enrollments by year")
@@ -37,7 +39,8 @@ def get_school_enrollments(
     summary="Get latest school enrollments",
     description="Retrieves the most recent enrollment data available for a specific school",
     response_description="List of latest school enrollments")
-def get_latest_school_enrollments(
+@cache_response("enrollment_school_latest")
+async def get_latest_school_enrollments(
     school_id: int, 
     session: SessionDep
 ):
@@ -62,7 +65,8 @@ def get_latest_school_enrollments(
     summary="Get town enrollments",
     description="Retrieves enrollment data for towns, with optional filtering by town ID, district ID, and year",
     response_description="List of town enrollments")
-def get_town_enrollments(
+@cache_response("enrollment_town")
+async def get_town_enrollments(
     session: SessionDep,
     town_id: Optional[int] = Query(None, description="Optional town ID to filter by"),
     district_id: Optional[int] = Query(None, description="Optional district ID to filter by. If both district_id and town_id are provided, district_id takes precedence"),
@@ -97,7 +101,8 @@ def get_town_enrollments(
     summary="Get state-level town enrollments",
     description="Retrieves state-level town enrollment data aggregated by year and grade, with optional filtering",
     response_description="List of state-level town enrollment records")
-def get_town_enrollment_state(
+@cache_response("enrollment_town_state")
+async def get_town_enrollment_state(
     session: SessionDep,
     year: Optional[int] = Query(None, description="Optional year to filter by"),
     grade_id: Optional[int] = Query(None, description="Optional grade ID to filter by")
@@ -130,7 +135,8 @@ def get_town_enrollment_state(
     summary="Get state-level enrollments",
     description="Retrieves state-level enrollment data, with optional filtering by year",
     response_description="List of state enrollment records")
-def get_state_enrollments(
+@cache_response("enrollment_state")
+async def get_state_enrollments(
     session: SessionDep,
     year: Optional[int] = Query(None, description="Filter enrollments by year")
 ):

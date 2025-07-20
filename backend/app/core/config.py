@@ -60,6 +60,23 @@ class Settings(BaseSettings):
             path=self.POSTGRES_DB,
         )
 
+    # Redis Cache Configuration
+    REDIS_HOST: str = "localhost"
+    REDIS_PORT: int = 6379
+    REDIS_DB: int = 0
+    REDIS_PASSWORD: str = ""
+    REDIS_SSL: bool = False
+    REDIS_SSL_CERT_REQS: str = "required"
+    REDIS_SSL_CA_CERTS: str = ""
+    REDIS_SSL_CERTFILE: str = ""
+    REDIS_SSL_KEYFILE: str = ""
+    REDIS_SSL_CHECK_HOSTNAME: bool = True
+    
+    # Cache Configuration
+    CACHE_ENABLED: bool = True
+    CACHE_DEFAULT_TTL: int = 3600  # 1 hour default TTL
+    CACHE_KEY_PREFIX: str = "education_api:"
+
     SMTP_HOST: str = "smtp.gmail.com"  # Default to Gmail SMTP
     SMTP_PORT: int = 587
     SMTP_USER: str

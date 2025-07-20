@@ -34,6 +34,7 @@ The backend provides API endpoints for a variety of NH educational data categori
 - Python 3.13
 - Conda (https://docs.anaconda.com/miniconda/)
 - Postgres (brew install postgresql)
+- Redis (for API caching)
 - AI Integration with multiple LLM providers (Claude, OpenAI, Gemini)
 
 ## Development Setup
@@ -70,6 +71,14 @@ SMTP_USER=your-email@gmail.com
 SMTP_PASSWORD=your-app-password
 ADMIN_EMAIL=admin@example.com
 
+# Cache Configuration (Optional)
+CACHE_ENABLED=true
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_DB=0
+REDIS_PASSWORD=
+REDIS_SSL=false
+
 # Optional: AI Integration
 DEFAULT_LLM_PROVIDER=gemini  # Options: claude, openai, gemini
 ```
@@ -94,6 +103,23 @@ docker-compose watch
 docker-compose down -v
 docker-compose watch
 ```
+
+### Cache Management
+
+The application includes a Redis-based caching system for improved API performance. Cache management tools are available:
+
+```bash
+# Check cache statistics
+python scripts/cache_manager.py stats
+
+# Clear all cache
+python scripts/cache_manager.py clear
+
+# Test cache functionality
+python scripts/test_cache.py
+```
+
+For detailed cache documentation, see [CACHE_README.md](backend/CACHE_README.md).
 
 ### SSL Certificate Management
 If you need to create new certificates:

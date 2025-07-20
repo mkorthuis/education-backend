@@ -16,6 +16,7 @@ from app.schema.staff_schema import (
     StateTeacherSalaryBandGet
 )
 from app.service.public.staff_service import staff_service
+from app.core.cache import cache_response
 
 router = APIRouter()
 
@@ -24,7 +25,8 @@ router = APIRouter()
     summary="Get all staff types",
     description="Retrieves a list of all school staff types",
     response_description="List of staff types")
-def get_staff_types(session: SessionDep):
+@cache_response("staff_staff_type")
+async def get_staff_types(session: SessionDep):
     return staff_service.get_staff_types(session=session)
 
 @router.get("/teacher-education-type",
@@ -32,7 +34,8 @@ def get_staff_types(session: SessionDep):
     summary="Get all teacher education types",
     description="Retrieves a list of all teacher education types",
     response_description="List of teacher education types")
-def get_teacher_education_types(session: SessionDep):
+@cache_response("staff_teacher_education_type")
+async def get_teacher_education_types(session: SessionDep):
     return staff_service.get_teacher_education_types(session=session)
 
 @router.get("/teacher-salary-band-type",
@@ -40,7 +43,8 @@ def get_teacher_education_types(session: SessionDep):
     summary="Get all teacher salary band types",
     description="Retrieves a list of all teacher salary band types",
     response_description="List of teacher salary band types")
-def get_teacher_salary_band_types(session: SessionDep):
+@cache_response("staff_teacher_salary_band_type")
+async def get_teacher_salary_band_types(session: SessionDep):
     return staff_service.get_teacher_salary_band_types(session=session)
 
 @router.get("/district/staff",
@@ -48,7 +52,8 @@ def get_teacher_salary_band_types(session: SessionDep):
     summary="Get district staff data",
     description="Retrieves district staff data with optional filters",
     response_description="List of district staff data")
-def get_district_staff(
+@cache_response("staff_district_staff")
+async def get_district_staff(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -66,7 +71,8 @@ def get_district_staff(
     summary="Get state staff data",
     description="Retrieves state-level staff data with optional filters",
     response_description="List of state staff data")
-def get_state_staff(
+@cache_response("staff_state_staff")
+async def get_state_staff(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     staff_type_id: Optional[int] = Query(default=None, description="Filter by staff type ID")
@@ -82,7 +88,8 @@ def get_state_staff(
     summary="Get district teacher education data",
     description="Retrieves district teacher education data with optional filters",
     response_description="List of district teacher education data")
-def get_district_teacher_education(
+@cache_response("staff_district_teacher_education")
+async def get_district_teacher_education(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -100,7 +107,8 @@ def get_district_teacher_education(
     summary="Get state teacher education data",
     description="Retrieves state-level teacher education data with optional filters",
     response_description="List of state teacher education data")
-def get_state_teacher_education(
+@cache_response("staff_state_teacher_education")
+async def get_state_teacher_education(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     teacher_type_id: Optional[int] = Query(default=None, description="Filter by teacher education type ID")
@@ -116,7 +124,8 @@ def get_state_teacher_education(
     summary="Get district teacher average salary data",
     description="Retrieves district teacher average salary data with optional filters",
     response_description="List of district teacher average salary data")
-def get_district_teacher_average_salary(
+@cache_response("staff_district_teacher_average_salary")
+async def get_district_teacher_average_salary(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID")
@@ -132,7 +141,8 @@ def get_district_teacher_average_salary(
     summary="Get state teacher average salary data",
     description="Retrieves state-level teacher average salary data with optional filters",
     response_description="List of state teacher average salary data")
-def get_state_teacher_average_salary(
+@cache_response("staff_state_teacher_average_salary")
+async def get_state_teacher_average_salary(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year")
 ):
@@ -146,7 +156,8 @@ def get_state_teacher_average_salary(
     summary="Get district teacher salary band data",
     description="Retrieves district teacher salary band data with optional filters",
     response_description="List of district teacher salary band data")
-def get_district_teacher_salary_band(
+@cache_response("staff_district_teacher_salary_band")
+async def get_district_teacher_salary_band(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -164,7 +175,8 @@ def get_district_teacher_salary_band(
     summary="Get state teacher salary band data",
     description="Retrieves state-level teacher salary band data with optional filters",
     response_description="List of state teacher salary band data")
-def get_state_teacher_salary_band(
+@cache_response("staff_state_teacher_salary_band")
+async def get_state_teacher_salary_band(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     salary_band_type_id: Optional[int] = Query(default=None, description="Filter by salary band type ID")

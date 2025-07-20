@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from app.api.v1.routes import util, location, measurement, enrollment, finance, assessment, education_freedom_account, safety, staff, class_size, outcome
+from app.api.v1.routes import util, location, measurement, enrollment, finance, assessment, education_freedom_account, safety, staff, class_size, outcome, cache
 
 api_router = APIRouter()
 api_router.include_router(assessment.router, prefix="/assessment", tags=["Assessment"])
+api_router.include_router(cache.router, prefix="/cache", tags=["Cache"])
 api_router.include_router(class_size.router, prefix="/class-size", tags=["Class Size"])
 api_router.include_router(education_freedom_account.router, prefix="/education-freedom-account", tags=["Education Freedom Account"])
 api_router.include_router(enrollment.router, prefix="/enrollment", tags=["Enrollment"])

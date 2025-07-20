@@ -11,9 +11,15 @@ ENV PYTHONUNBUFFERED=1
 ENV PATH="/app/.venv/bin:$PATH"
 ENV PYTHONPATH=/app
 
+# Install Redis
+RUN apt-get update && apt-get install -y redis-server && rm -rf /var/lib/apt/lists/*
+
 RUN pip install -r requirements.txt
 
 RUN chmod +x /app/scripts/start-heroku.sh
 
+# Create startup script that starts Redis and then the app
+RUN echo '#!/bin/bash\nredis-server --daemonize yes\n/app/scripts/start-heroku.sh' > /app/start.sh && chmod +x /app/start.sh
+
 # Change the CMD to use the startup script
-CMD ["/app/scripts/start-heroku.sh"]
+CMD ["/app/start.sh"]

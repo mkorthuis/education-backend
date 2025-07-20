@@ -4,6 +4,7 @@ from typing import List, Optional
 from app.api.v1.deps import SessionDep
 from app.schema.assessment_schema import AssessmentGet, AssessmentSubgroupGet, AssessmentSubjectGet
 from app.service.public.assessment_service import assessment_service
+from app.core.cache import cache_response
 
 router = APIRouter()
 
@@ -12,7 +13,8 @@ router = APIRouter()
     summary="Get all assessment subgroups",
     description="Retrieves a list of all assessment subgroups",
     response_description="List of assessment subgroups")
-def get_assessment_subgroups(session: SessionDep):
+@cache_response("assessment_subgroups")
+async def get_assessment_subgroups(session: SessionDep):
     return assessment_service.get_assessment_subgroups(session=session)
 
 @router.get("/subject",
@@ -20,7 +22,8 @@ def get_assessment_subgroups(session: SessionDep):
     summary="Get all assessment subjects",
     description="Retrieves a list of all assessment subjects",
     response_description="List of assessment subjects")
-def get_assessment_subjects(session: SessionDep):
+@cache_response("assessment_subjects")
+async def get_assessment_subjects(session: SessionDep):
     return assessment_service.get_assessment_subjects(session=session)
 
 @router.get("/state",
@@ -28,7 +31,8 @@ def get_assessment_subjects(session: SessionDep):
     summary="Get state assessment data",
     description="Retrieves state level assessment data with optional filters",
     response_description="List of state assessment data")
-def get_state_assessments(
+@cache_response("assessment_state")
+async def get_state_assessments(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     assessment_subgroup_id: Optional[int] = Query(default=None, description="Filter by assessment subgroup ID"),
@@ -48,7 +52,8 @@ def get_state_assessments(
     summary="Get district assessment data",
     description="Retrieves district level assessment data with optional filters",
     response_description="List of district assessment data")
-def get_district_assessments(
+@cache_response("assessment_district")
+async def get_district_assessments(
     session: SessionDep,
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
     year: Optional[int] = Query(default=None, description="Filter by year"),
@@ -70,7 +75,8 @@ def get_district_assessments(
     summary="Get school assessment data",
     description="Retrieves school level assessment data with optional filters",
     response_description="List of school assessment data")
-def get_school_assessments(
+@cache_response("assessment_school")
+async def get_school_assessments(
     session: SessionDep,
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),

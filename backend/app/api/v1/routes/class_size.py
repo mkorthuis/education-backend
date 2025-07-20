@@ -8,6 +8,7 @@ from app.schema.class_size_schema import (
     StateClassSizeGet,
 )
 from app.service.public.class_size_service import class_size_service
+from app.core.cache import cache_response
 
 router = APIRouter(prefix="/class-size", tags=["Class Size"])
 
@@ -19,7 +20,8 @@ router = APIRouter(prefix="/class-size", tags=["Class Size"])
     description="Retrieves school class size data with optional filters",
     response_description="List of school class size data",
 )
-def get_school_class_size(
+@cache_response("class_size_school")
+async def get_school_class_size(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -40,7 +42,8 @@ def get_school_class_size(
     description="Retrieves district class size data with optional filters",
     response_description="List of district class size data",
 )
-def get_district_class_size(
+@cache_response("class_size_district")
+async def get_district_class_size(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -59,7 +62,8 @@ def get_district_class_size(
     description="Retrieves state-level class size data with optional filters",
     response_description="List of state class size data",
 )
-def get_state_class_size(
+@cache_response("class_size_state")
+async def get_state_class_size(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
 ):
