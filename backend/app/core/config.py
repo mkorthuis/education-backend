@@ -1,5 +1,5 @@
 import secrets
-from typing import Annotated, Any, Literal
+from typing import Annotated, Any, Literal, Optional
 
 from pydantic import (
     AnyUrl,
@@ -85,5 +85,12 @@ class Settings(BaseSettings):
 
     # Add default LLM provider setting
     DEFAULT_LLM_PROVIDER: Literal["claude", "openai", "gemini"] = "gemini"
+    
+    # Gemini API Configuration
+    GEMINI_API_KEY: str = ""
+    GEMINI_MODEL: str = "gemini-2.0-flash"
+    GEMINI_TEMPERATURE: float = 0.7
+    GEMINI_MAX_TOKENS: Optional[int] = None
+    GEMINI_TOP_P: Optional[float] = 0.95
 
 settings = Settings() 
