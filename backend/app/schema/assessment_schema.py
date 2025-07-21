@@ -46,3 +46,10 @@ class AssessmentGet(BaseModel):
     average_score: Optional[float] = None
     district_name: Optional[str] = None
     school_name: Optional[str] = None
+
+
+class AssessmentGetSummary(AssessmentGet):
+    """Extended AssessmentGet object for summary purposes with additional name fields."""
+    subgroup_name: Optional[str] = None
+    subject_name: Optional[str] = None
+    grade_name: Optional[str] = None

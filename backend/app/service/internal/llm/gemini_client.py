@@ -88,7 +88,18 @@ class GeminiClient:
             Generated response.
         """
         try:
-            logger.debug(f"Sending prompt to Gemini: {prompt[:100]}...")
+            # Log the full prompt being sent to Gemini
+            logger.info(f"=== GEMINI REQUEST ===")
+            logger.info(f"Model: {self.config.model}")
+            logger.info(f"Temperature: {self.config.temperature}")
+            logger.info(f"Max Tokens: {self.config.max_tokens}")
+            logger.info(f"Top P: {self.config.top_p}")
+            logger.info(f"Top K: {self.config.top_k}")
+            logger.info(f"Prompt Length: {len(prompt)} characters")
+            logger.info(f"Full Prompt:")
+            logger.info(f"{'='*50}")
+            logger.info(prompt)
+            logger.info(f"{'='*50}")
             
             response = self.model.generate_content(prompt)
             
@@ -110,7 +121,16 @@ class GeminiClient:
                 finish_reason=getattr(response, "finish_reason", None)
             )
             
-            logger.debug(f"Received response from Gemini: {result.text[:100]}...")
+            # Log the full response from Gemini
+            logger.info(f"=== GEMINI RESPONSE ===")
+            logger.info(f"Response Length: {len(result.text)} characters")
+            logger.info(f"Finish Reason: {result.finish_reason}")
+            logger.info(f"Usage: {usage}")
+            logger.info(f"Full Response:")
+            logger.info(f"{'='*50}")
+            logger.info(result.text)
+            logger.info(f"{'='*50}")
+            
             return result
             
         except Exception as e:
@@ -128,6 +148,22 @@ class GeminiClient:
             Response from Gemini.
         """
         try:
+            # Log the conversation being sent to Gemini
+            logger.info(f"=== GEMINI CHAT REQUEST ===")
+            logger.info(f"Model: {self.config.model}")
+            logger.info(f"Temperature: {self.config.temperature}")
+            logger.info(f"Max Tokens: {self.config.max_tokens}")
+            logger.info(f"Top P: {self.config.top_p}")
+            logger.info(f"Top K: {self.config.top_k}")
+            logger.info(f"Number of Messages: {len(messages)}")
+            logger.info(f"Full Conversation:")
+            logger.info(f"{'='*50}")
+            for i, msg in enumerate(messages):
+                logger.info(f"Message {i+1} ({msg.role}):")
+                logger.info(f"Content: {msg.content}")
+                logger.info(f"---")
+            logger.info(f"{'='*50}")
+            
             # Format messages for Gemini's chat API
             chat = self.model.start_chat(history=[])
             
@@ -157,6 +193,16 @@ class GeminiClient:
                 model=self.config.model,
                 finish_reason=getattr(last_response, "finish_reason", None)
             )
+            
+            # Log the full response from Gemini
+            logger.info(f"=== GEMINI CHAT RESPONSE ===")
+            logger.info(f"Response Length: {len(result.text)} characters")
+            logger.info(f"Finish Reason: {result.finish_reason}")
+            logger.info(f"Usage: {usage}")
+            logger.info(f"Full Response:")
+            logger.info(f"{'='*50}")
+            logger.info(result.text)
+            logger.info(f"{'='*50}")
             
             return result
             
