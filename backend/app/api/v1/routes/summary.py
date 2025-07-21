@@ -114,4 +114,63 @@ async def compare_district_assessments(
             detail=f"Error generating district comparison: {str(e)}"
         )
 
+class ComprehensiveDistrictSummaryRequest(BaseModel):
+    """Request model for comprehensive district summary endpoint."""
+    district_id: int
+    year: Optional[int] = None
+
+class ComprehensiveDistrictSummaryResponse(BaseModel):
+    """Response model for comprehensive district summary endpoint."""
+    comprehensive_summary: Dict[str, Any]
+    academic_summary: Dict[str, Any]
+    financial_summary: Dict[str, Any]
+    graduation_summary: Dict[str, Any]
+    safety_summary: Dict[str, Any]
+    staff_summary: Dict[str, Any]
+    enrollment_summary: Dict[str, Any]
+
+@router.post("/comprehensive-district-summary",
+    summary="Generate comprehensive district summary using all data types",
+    description="Generate a comprehensive district analysis using academic, financial, graduation, safety, staff, and enrollment data, then provide an executive summary",
+    response_description="Comprehensive district analysis from LLM")
+async def generate_comprehensive_district_summary(
+    request: ComprehensiveDistrictSummaryRequest,
+    session: SessionDep
+) -> ComprehensiveDistrictSummaryResponse:
+    """
+    Generate a comprehensive district summary using all available data types.
+    
+    Args:
+        request: The request containing district ID and optional year filter.
+        session: Database session.
+        
+    Returns:
+        A comprehensive district analysis from the LLM provider.
+    """
+    try:
+        summary_service = SummaryService()
+        result = summary_service.generate_comprehensive_district_summary(
+            session=session,
+            district_id=request.district_id,
+            year=request.year
+        )
+        
+        return ComprehensiveDistrictSummaryResponse(
+            comprehensive_summary=result["comprehensive_summary"],
+            academic_summary=result["academic_summary"],
+            financial_summary=result["financial_summary"],
+            graduation_summary=result["graduation_summary"],
+            safety_summary=result["safety_summary"],
+            staff_summary=result["staff_summary"],
+            enrollment_summary=result["enrollment_summary"]
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error generating comprehensive district summary: {str(e)}"
+        )
+
  

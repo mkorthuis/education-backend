@@ -4,6 +4,7 @@ import logging
 from typing import Any, Optional, Union
 from functools import wraps
 import redis
+from pydantic import BaseModel
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
@@ -62,6 +63,33 @@ class CacheService:
         
         return f"{settings.CACHE_KEY_PREFIX}{prefix}:{key_hash}"
 
+    def _serialize_value(self, value: Any) -> str:
+        """Serialize a value to JSON, properly handling Pydantic models"""
+        if isinstance(value, list):
+            # Handle lists of Pydantic models
+            serialized_list = []
+            for item in value:
+                if isinstance(item, BaseModel):
+                    serialized_list.append(item.model_dump())
+                else:
+                    serialized_list.append(item)
+            return json.dumps(serialized_list)
+        elif isinstance(value, BaseModel):
+            # Handle single Pydantic model
+            return json.dumps(value.model_dump())
+        else:
+            # Handle other types
+            return json.dumps(value)
+
+    def _deserialize_value(self, value: str, expected_type: Optional[type] = None) -> Any:
+        """Deserialize a value from JSON"""
+        try:
+            data = json.loads(value)
+            return data
+        except Exception as e:
+            logger.error(f"Error deserializing cached value: {e}")
+            return None
+
     def get(self, key: str) -> Optional[Any]:
         """Get a value from cache"""
         if not self.enabled or not self.redis_client:
@@ -70,7 +98,7 @@ class CacheService:
         try:
             value = self.redis_client.get(key)
             if value:
-                return json.loads(value)
+                return self._deserialize_value(value)
             return None
         except Exception as e:
             logger.error(f"Error getting from cache: {e}")
@@ -82,7 +110,7 @@ class CacheService:
             return False
         
         try:
-            serialized_value = json.dumps(value, default=str)
+            serialized_value = self._serialize_value(value)
             if ttl is not None:
                 return self.redis_client.setex(key, ttl, serialized_value)
             else:

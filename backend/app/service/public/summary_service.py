@@ -6,6 +6,11 @@ from sqlmodel import select
 
 from app.service.internal.llm.llm_factory import LLMFactory
 from app.service.public.assessment_service import AssessmentService
+from app.service.public.finance_service import FinanceService
+from app.service.public.outcome_service import OutcomeService
+from app.service.public.safety_service import SafetyService
+from app.service.public.staff_service import StaffService
+from app.service.public.enrollment_service import EnrollmentService
 from app.schema.assessment_schema import AssessmentGet, AssessmentGetSummary, AssessmentSubgroupGet, AssessmentSubjectGet
 from app.model.assessment import AssessmentState, AssessmentDistrict, AssessmentSubgroup, AssessmentSubject
 from app.model.location import District, Grade
@@ -16,6 +21,11 @@ class SummaryService:
     
     def __init__(self):
         self.assessment_service = AssessmentService()
+        self.finance_service = FinanceService()
+        self.outcome_service = OutcomeService()
+        self.safety_service = SafetyService()
+        self.staff_service = StaffService()
+        self.enrollment_service = EnrollmentService()
     
     def generate_basic_summary(self, message: str) -> Dict[str, Any]:
         """
@@ -46,6 +56,348 @@ class SummaryService:
                 status_code=500,
                 detail=f"Error generating summary: {str(e)}"
             )
+    
+    def generate_comprehensive_district_summary(
+        self,
+        session: Session,
+        district_id: int,
+        year: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """
+        Generate a comprehensive district summary using all available data types.
+        
+        Args:
+            session: Database session
+            district_id: The ID of the district to analyze
+            year: Optional year filter
+            
+        Returns:
+            Dictionary containing comprehensive summary with all data type summaries
+        """
+        try:
+            # Generate summaries for each data type
+            academic_summary = self._generate_academic_summary(session, district_id, year)
+            financial_summary = self._generate_financial_summary(session, district_id, year)
+            graduation_summary = self._generate_graduation_summary(session, district_id, year)
+            safety_summary = self._generate_safety_summary(session, district_id, year)
+            staff_summary = self._generate_staff_summary(session, district_id, year)
+            enrollment_summary = self._generate_enrollment_summary(session, district_id, year)
+            
+            # Combine all summaries and generate final comprehensive summary
+            all_summaries = {
+                "academic": academic_summary,
+                "financial": financial_summary,
+                "graduation": graduation_summary,
+                "safety": safety_summary,
+                "staff": staff_summary,
+                "enrollment": enrollment_summary
+            }
+            
+            # Generate comprehensive summary using LLM
+            comprehensive_summary = self._generate_comprehensive_summary(all_summaries)
+            
+            return {
+                "comprehensive_summary": comprehensive_summary,
+                "academic_summary": academic_summary,
+                "financial_summary": financial_summary,
+                "graduation_summary": graduation_summary,
+                "safety_summary": safety_summary,
+                "staff_summary": staff_summary,
+                "enrollment_summary": enrollment_summary
+            }
+            
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Error generating comprehensive district summary: {str(e)}"
+            )
+    
+    def _generate_academic_summary(
+        self,
+        session: Session,
+        district_id: int,
+        year: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Generate academic assessment summary for a district."""
+        try:
+            # Get district assessment data
+            district_assessments = self._get_district_assessments_with_details(
+                session=session,
+                district_id=district_id,
+                year=year
+            )
+            
+            # Get state assessment data
+            state_assessments = self._get_state_assessments_with_details(
+                session=session,
+                year=year
+            )
+            
+            if not district_assessments:
+                return {"summary": "No academic data available", "data_count": 0}
+            
+            # Format data for LLM
+            district_data = self._format_assessment_data(district_assessments)
+            state_data = self._format_assessment_data(state_assessments)
+            
+            # Generate prompt for academic analysis
+            prompt = f"""
+            Analyze the academic assessment data for this district compared to state averages.
+            
+            DISTRICT DATA:
+            {district_data}
+            
+            STATE DATA:
+            {state_data}
+            
+            Provide a focused analysis of academic performance including:
+            - Overall proficiency levels
+            - Grade-level performance trends
+            - Subject-specific strengths and weaknesses
+            - Comparison to state averages
+            - Key recommendations for improvement
+            """
+            
+            response = LLMFactory.generate_text(prompt)
+            
+            return {
+                "summary": response.text,
+                "provider": response.provider,
+                "model": response.model,
+                "usage": response.usage,
+                "data_count": len(district_assessments)
+            }
+            
+        except Exception as e:
+            return {"summary": f"Error generating academic summary: {str(e)}", "data_count": 0}
+    
+    def _generate_financial_summary(
+        self,
+        session: Session,
+        district_id: int,
+        year: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Generate financial summary for a district."""
+        try:
+            # TODO: Implement financial data retrieval and analysis
+            # This is a stub for now
+            prompt = f"""
+            Analyze the financial data for district {district_id} for year {year or 'all available years'}.
+            
+            Provide analysis of:
+            - Cost per pupil trends
+            - Revenue and expenditure patterns
+            - Financial efficiency metrics
+            - Comparison to state averages
+            - Key financial insights and recommendations
+            """
+            
+            response = LLMFactory.generate_text(prompt)
+            
+            return {
+                "summary": response.text,
+                "provider": response.provider,
+                "model": response.model,
+                "usage": response.usage,
+                "data_count": 0  # TODO: Implement actual data count
+            }
+            
+        except Exception as e:
+            return {"summary": f"Error generating financial summary: {str(e)}", "data_count": 0}
+    
+    def _generate_graduation_summary(
+        self,
+        session: Session,
+        district_id: int,
+        year: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Generate graduation summary for a district."""
+        try:
+            # TODO: Implement graduation data retrieval and analysis
+            # This is a stub for now
+            prompt = f"""
+            Analyze the graduation and post-graduation data for district {district_id} for year {year or 'all available years'}.
+            
+            Provide analysis of:
+            - Graduation rates and trends
+            - Post-graduation outcomes
+            - Early exit/dropout rates
+            - Comparison to state averages
+            - Key insights and recommendations
+            """
+            
+            response = LLMFactory.generate_text(prompt)
+            
+            return {
+                "summary": response.text,
+                "provider": response.provider,
+                "model": response.model,
+                "usage": response.usage,
+                "data_count": 0  # TODO: Implement actual data count
+            }
+            
+        except Exception as e:
+            return {"summary": f"Error generating graduation summary: {str(e)}", "data_count": 0}
+    
+    def _generate_safety_summary(
+        self,
+        session: Session,
+        district_id: int,
+        year: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Generate safety summary for a district."""
+        try:
+            # TODO: Implement safety data retrieval and analysis
+            # This is a stub for now
+            prompt = f"""
+            Analyze the school safety data for district {district_id} for year {year or 'all available years'}.
+            
+            Provide analysis of:
+            - Discipline incidents and trends
+            - Bullying and harassment incidents
+            - Restraint and seclusion data
+            - Truancy rates
+            - Comparison to state averages
+            - Safety recommendations
+            """
+            
+            response = LLMFactory.generate_text(prompt)
+            
+            return {
+                "summary": response.text,
+                "provider": response.provider,
+                "model": response.model,
+                "usage": response.usage,
+                "data_count": 0  # TODO: Implement actual data count
+            }
+            
+        except Exception as e:
+            return {"summary": f"Error generating safety summary: {str(e)}", "data_count": 0}
+    
+    def _generate_staff_summary(
+        self,
+        session: Session,
+        district_id: int,
+        year: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Generate staff summary for a district."""
+        try:
+            # TODO: Implement staff data retrieval and analysis
+            # This is a stub for now
+            prompt = f"""
+            Analyze the staff data for district {district_id} for year {year or 'all available years'}.
+            
+            Provide analysis of:
+            - Staff counts and ratios
+            - Teacher education levels
+            - Teacher salary trends
+            - Staff retention rates
+            - Comparison to state averages
+            - Staffing recommendations
+            """
+            
+            response = LLMFactory.generate_text(prompt)
+            
+            return {
+                "summary": response.text,
+                "provider": response.provider,
+                "model": response.model,
+                "usage": response.usage,
+                "data_count": 0  # TODO: Implement actual data count
+            }
+            
+        except Exception as e:
+            return {"summary": f"Error generating staff summary: {str(e)}", "data_count": 0}
+    
+    def _generate_enrollment_summary(
+        self,
+        session: Session,
+        district_id: int,
+        year: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Generate enrollment summary for a district."""
+        try:
+            # TODO: Implement enrollment data retrieval and analysis
+            # This is a stub for now
+            prompt = f"""
+            Analyze the enrollment data for district {district_id} for year {year or 'all available years'}.
+            
+            Provide analysis of:
+            - Enrollment trends and patterns
+            - Grade-level enrollment distribution
+            - Enrollment growth or decline
+            - Comparison to state trends
+            - Enrollment projections and recommendations
+            """
+            
+            response = LLMFactory.generate_text(prompt)
+            
+            return {
+                "summary": response.text,
+                "provider": response.provider,
+                "model": response.model,
+                "usage": response.usage,
+                "data_count": 0  # TODO: Implement actual data count
+            }
+            
+        except Exception as e:
+            return {"summary": f"Error generating enrollment summary: {str(e)}", "data_count": 0}
+    
+    def _generate_comprehensive_summary(self, all_summaries: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate a comprehensive summary combining all data type summaries."""
+        try:
+            # Create a structured summary of all data types
+            summary_text = f"""
+            ACADEMIC PERFORMANCE:
+            {all_summaries.get('academic', {}).get('summary', 'No data available')}
+            
+            FINANCIAL ANALYSIS:
+            {all_summaries.get('financial', {}).get('summary', 'No data available')}
+            
+            GRADUATION OUTCOMES:
+            {all_summaries.get('graduation', {}).get('summary', 'No data available')}
+            
+            SCHOOL SAFETY:
+            {all_summaries.get('safety', {}).get('summary', 'No data available')}
+            
+            STAFF ANALYSIS:
+            {all_summaries.get('staff', {}).get('summary', 'No data available')}
+            
+            ENROLLMENT TRENDS:
+            {all_summaries.get('enrollment', {}).get('summary', 'No data available')}
+            """
+            
+            prompt = f"""
+            Based on the following comprehensive district analysis, provide an executive summary that:
+            
+            {summary_text}
+            
+            Please provide:
+            1. Executive Summary (2-3 paragraphs)
+            2. Key Strengths (3-5 bullet points)
+            3. Key Challenges (3-5 bullet points)
+            4. Priority Recommendations (3-5 actionable items)
+            5. Overall District Health Assessment (Excellent/Good/Fair/Needs Improvement)
+            
+            Focus on the most important insights and actionable recommendations for district leadership.
+            """
+            
+            response = LLMFactory.generate_text(prompt)
+            
+            return {
+                "summary": response.text,
+                "provider": response.provider,
+                "model": response.model,
+                "usage": response.usage
+            }
+            
+        except Exception as e:
+            return {
+                "summary": f"Error generating comprehensive summary: {str(e)}",
+                "provider": "error",
+                "model": "error",
+                "usage": {}
+            }
     
     def generate_district_comparison(
         self,
