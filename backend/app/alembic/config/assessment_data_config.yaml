@@ -2,7 +2,7 @@ file_settings:
   default_input: "../assets/assessments/assessments-****.csv"
   download_files: false
   year_start: 2019 # 2018 has a different format. 
-  year_end: 2024
+  year_end: 2025
   sql_cache_dir: "../sql_cache"
 
 school_name_translations:
