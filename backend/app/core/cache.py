@@ -1,13 +1,21 @@
 import json
 import hashlib
+import inspect
 import logging
-from typing import Any, Optional, Union
+import types
+from typing import Annotated, Any, Optional, Union, get_args, get_origin, get_type_hints
 from functools import wraps
 import redis
+from fastapi import params
 from pydantic import BaseModel
+from pydantic.fields import FieldInfo
+from sqlalchemy.orm import Session as OrmSession
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
+
+# Argument types that go into the cache key
+_KEYABLE_TYPES = (str, int, float, bool)
 
 class CacheService:
     def __init__(self):
@@ -44,17 +52,23 @@ class CacheService:
             logger.info("Cache is disabled")
 
     def _generate_cache_key(self, prefix: str, *args, **kwargs) -> str:
-        """Generate a unique cache key based on function arguments"""
+        """Generate a unique cache key based on function arguments.
+
+        Only plain values (the parsed path and query parameters) are part of the key.
+        Anything else, such as the database session, is skipped: its string form
+        includes a memory address, which would make every key unique.
+        """
         # Create a string representation of all arguments
         key_parts = [prefix]
-        
+
         # Add positional arguments
         for arg in args:
-            key_parts.append(str(arg))
-        
+            if isinstance(arg, _KEYABLE_TYPES):
+                key_parts.append(str(arg))
+
         # Add keyword arguments (sorted for consistency)
         for key, value in sorted(kwargs.items()):
-            if value is not None:  # Skip None values
+            if value is not None and isinstance(value, _KEYABLE_TYPES):  # Skip None values and non-plain values
                 key_parts.append(f"{key}:{value}")
         
         # Create a hash of the key parts
@@ -170,15 +184,55 @@ class CacheService:
 # Global cache service instance
 cache_service = CacheService()
 
+def _assert_url_only_inputs(func) -> None:
+    """
+    Fail at import time if a cached endpoint takes input the cache key would miss.
+
+    The key is built from plain-value arguments, so every other input must be a
+    path or query parameter with a str/int/float/bool type. A session dependency
+    is allowed because it doesn't change the response. Bodies, headers, cookies,
+    the raw Request and other dependencies would be left out of the key, so two
+    different requests could share a cached response.
+    """
+    hints = get_type_hints(func, include_extras=True)
+    for name, param in inspect.signature(func).parameters.items():
+        hint = hints.get(name, param.annotation)
+        markers = [param.default]
+        if get_origin(hint) is Annotated:
+            hint, *extras = get_args(hint)
+            markers.extend(extras)
+
+        if isinstance(hint, type) and issubclass(hint, OrmSession):
+            continue
+
+        for marker in markers:
+            if isinstance(marker, (params.Depends, FieldInfo)) and not isinstance(marker, (params.Query, params.Path)):
+                raise TypeError(
+                    f"@cache_response on {func.__qualname__}: parameter '{name}' is not a path or query "
+                    f"parameter ({type(marker).__name__}), so it would be left out of the cache key"
+                )
+
+        value_types = [t for t in get_args(hint) if t is not type(None)] if get_origin(hint) in (Union, types.UnionType) else [hint]
+        if not all(isinstance(t, type) and issubclass(t, _KEYABLE_TYPES) for t in value_types):
+            raise TypeError(
+                f"@cache_response on {func.__qualname__}: parameter '{name}' has type {hint!r}; "
+                f"only str, int, float and bool are included in the cache key"
+            )
+
 def cache_response(prefix: str, ttl: Optional[int] = None):
     """
     Decorator to cache API responses
-    
+
     Args:
         prefix: Cache key prefix for this endpoint
-        ttl: Time to live in seconds (None = no expiration)
+        ttl: Time to live in seconds (None = settings.CACHE_DEFAULT_TTL)
     """
+    if ttl is None:
+        ttl = settings.CACHE_DEFAULT_TTL
+
     def decorator(func):
+        _assert_url_only_inputs(func)
+
         @wraps(func)
         async def wrapper(*args, **kwargs):
             # Generate cache key

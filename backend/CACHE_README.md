@@ -6,8 +6,7 @@ This document describes the Redis-based caching system implemented for the Educa
 
 The cache system provides automatic caching for API responses with the following features:
 
-- **No expiration by default**: Cache entries persist until explicitly cleared
-- **Configurable TTL**: Optional time-to-live for specific endpoints
+- **Expiration**: Entries expire after `CACHE_DEFAULT_TTL` seconds (default 3600) unless an endpoint passes its own `ttl`
 - **Pattern-based invalidation**: Clear cache entries matching specific patterns
 - **Health monitoring**: Check cache connection and statistics
 - **Graceful degradation**: API continues working even if Redis is unavailable
@@ -82,8 +81,12 @@ python scripts/cache_manager.py health
 
 Cache keys are automatically generated based on:
 - Function name/prefix
-- All function arguments (positional and keyword)
-- None values are excluded from key generation
+- The endpoint's path and query parameters (plain `str`/`int`/`float`/`bool` values)
+- None values and other arguments (such as the database session) are excluded from key generation
+- Undeclared query parameters are ignored by FastAPI, so they don't create new keys
+
+`@cache_response` raises a `TypeError` at import time if an endpoint takes any other input
+(a body, header, cookie, `Request` or extra dependency), because that input would be left out of the key.
 - Keys are hashed using MD5 for consistent length
 
 Example key: `education_api:assessment_state:abc123def456`
