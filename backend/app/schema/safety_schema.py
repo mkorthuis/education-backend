@@ -285,17 +285,6 @@ class DistrictSeclusionGet(BaseModel):
     closed_investigation: Optional[int] = None
 
 
-TruancyGet = SchoolTruancyGet
-DisciplineIncidentGet = SchoolDisciplineIncidentGet
-DisciplineCountGet = SchoolDisciplineCountGet
-BullyingGet = SchoolBullyingGet
-BullyingClassificationGet = SchoolBullyingClassificationGet
-BullyingImpactGet = SchoolBullyingImpactGet
-HarassmentGet = SchoolHarassmentGet
-RestraintGet = SchoolRestraintGet
-SeclusionGet = SchoolSeclusionGet
-
-
 class SchoolSafetyEnrollmentGet(BaseModel):
     school_id: int
     year: int
