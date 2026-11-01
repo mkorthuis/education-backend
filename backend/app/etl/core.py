@@ -53,6 +53,27 @@ def existing_ids(conn: Connection, table: str) -> set:
     return {row[0] for row in conn.execute(text(f"SELECT id FROM {table}"))}
 
 
+def lookup_ids(conn: Connection, table: str, key_column: str = "name") -> dict:
+    """Map a lookup table's key column (default: name) to its id."""
+    return {row[0]: row[1] for row in conn.execute(text(f"SELECT {key_column}, id FROM {table}"))}
+
+
+def _stage_rows(conn: Connection, table: str, columns: Sequence[str], rows: Sequence[tuple]) -> str:
+    """Copy rows into a temporary table shaped like `table`, keeping their order in an _ord column."""
+    column_list = ", ".join(columns)
+    staging = f"_etl_{table}"
+    conn.execute(text(f"DROP TABLE IF EXISTS {staging}"))
+    conn.execute(text(f"CREATE TEMP TABLE {staging} AS SELECT {column_list} FROM {table} WITH NO DATA"))
+    conn.execute(text(f"ALTER TABLE {staging} ADD COLUMN _ord BIGINT"))
+
+    dbapi_connection = conn.connection.dbapi_connection
+    with dbapi_connection.cursor() as cursor:
+        with cursor.copy(f"COPY {staging} ({column_list}, _ord) FROM STDIN") as copy:
+            for ord_, row in enumerate(rows):
+                copy.write_row((*row, ord_))
+    return staging
+
+
 def upsert_rows(
     conn: Connection,
     table: str,
@@ -72,26 +93,18 @@ def upsert_rows(
     """
     value_columns = [c for c in columns if c not in key_columns]
     column_list = ", ".join(columns)
-    staging = f"_etl_{table}"
+    staging = _stage_rows(conn, table, columns, rows)
 
-    conn.execute(text(
-        f"CREATE TEMP TABLE {staging} AS SELECT {column_list} FROM {table} WITH NO DATA"
-    ))
-    conn.execute(text(f"ALTER TABLE {staging} ADD COLUMN _ord BIGINT"))
-
-    dbapi_connection = conn.connection.dbapi_connection
-    with dbapi_connection.cursor() as cursor:
-        with cursor.copy(f"COPY {staging} ({column_list}, _ord) FROM STDIN") as copy:
-            for ord_, row in enumerate(rows):
-                copy.write_row((*row, ord_))
-
-    changed = " OR ".join(f"{table}.{c} IS DISTINCT FROM EXCLUDED.{c}" for c in value_columns)
-    updates = ", ".join([f"{c} = EXCLUDED.{c}" for c in value_columns] + ["date_updated = CURRENT_TIMESTAMP"])
+    if value_columns:
+        changed = " OR ".join(f"{table}.{c} IS DISTINCT FROM EXCLUDED.{c}" for c in value_columns)
+        updates = ", ".join([f"{c} = EXCLUDED.{c}" for c in value_columns] + ["date_updated = CURRENT_TIMESTAMP"])
+        on_conflict = f"DO UPDATE SET {updates} WHERE {changed}"
+    else:
+        on_conflict = "DO NOTHING"
     result = conn.execute(text(f"""
         INSERT INTO {table} ({column_list})
         SELECT {column_list} FROM {staging} ORDER BY _ord
-        ON CONFLICT ({", ".join(key_columns)}) DO UPDATE SET {updates}
-        WHERE {changed}
+        ON CONFLICT ({", ".join(key_columns)}) {on_conflict}
         RETURNING (xmax = 0) AS inserted
     """))
     flags = [row.inserted for row in result]
@@ -102,6 +115,37 @@ def upsert_rows(
     logger.info(f"{table}: {counts['inserted']} inserted, {counts['updated']} updated, "
                 f"{counts['unchanged']} unchanged")
     return counts
+
+
+def replace_rows(
+    conn: Connection,
+    table: str,
+    columns: Sequence[str],
+    rows: Sequence[tuple],
+    where: Optional[str] = None,
+    params: Optional[dict] = None,
+) -> dict:
+    """
+    Delete the rows matching `where` (e.g. "year = ANY(:years)"), then insert `rows` in order.
+
+    For tables without a unique key to upsert on. With where=None nothing is deleted,
+    which is what a fresh build into an empty table needs. Rows reloaded this way get
+    new ids. Any database error raises.
+
+    Returns counts of deleted and inserted rows.
+    """
+    deleted = 0
+    if where is not None:
+        deleted = conn.execute(text(f"DELETE FROM {table} WHERE {where}"), params or {}).rowcount
+    column_list = ", ".join(columns)
+    staging = _stage_rows(conn, table, columns, rows)
+    inserted = conn.execute(text(
+        f"INSERT INTO {table} ({column_list}) SELECT {column_list} FROM {staging} ORDER BY _ord"
+    )).rowcount
+    conn.execute(text(f"DROP TABLE {staging}"))
+
+    logger.info(f"{table}: {deleted} deleted, {inserted} inserted")
+    return {"deleted": deleted, "inserted": inserted}
 
 
 def refresh_dependent_views(conn: Connection, table: str) -> list:
