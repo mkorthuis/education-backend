@@ -94,24 +94,27 @@ def upsert_rows(
     value_columns = [c for c in columns if c not in key_columns]
     column_list = ", ".join(columns)
     staging = _stage_rows(conn, table, columns, rows)
+    same_key = " AND ".join(f"t.{c} = s.{c}" for c in key_columns)
 
+    # Update changed rows, then insert only new ones. (INSERT ... ON CONFLICT would draw an
+    # id from the sequence for every row, leaving gaps on each reload of unchanged data.)
+    updated = 0
     if value_columns:
-        changed = " OR ".join(f"{table}.{c} IS DISTINCT FROM EXCLUDED.{c}" for c in value_columns)
-        updates = ", ".join([f"{c} = EXCLUDED.{c}" for c in value_columns] + ["date_updated = CURRENT_TIMESTAMP"])
-        on_conflict = f"DO UPDATE SET {updates} WHERE {changed}"
-    else:
-        on_conflict = "DO NOTHING"
-    result = conn.execute(text(f"""
+        changed = " OR ".join(f"t.{c} IS DISTINCT FROM s.{c}" for c in value_columns)
+        updates = ", ".join([f"{c} = s.{c}" for c in value_columns] + ["date_updated = CURRENT_TIMESTAMP"])
+        updated = conn.execute(text(
+            f"UPDATE {table} t SET {updates} FROM {staging} s WHERE {same_key} AND ({changed})"
+        )).rowcount
+    inserted = conn.execute(text(f"""
         INSERT INTO {table} ({column_list})
-        SELECT {column_list} FROM {staging} ORDER BY _ord
-        ON CONFLICT ({", ".join(key_columns)}) {on_conflict}
-        RETURNING (xmax = 0) AS inserted
-    """))
-    flags = [row.inserted for row in result]
+        SELECT {column_list} FROM {staging} s
+        WHERE NOT EXISTS (SELECT 1 FROM {table} t WHERE {same_key})
+        ORDER BY _ord
+    """)).rowcount
     conn.execute(text(f"DROP TABLE {staging}"))
 
-    counts = {"inserted": sum(flags), "updated": len(flags) - sum(flags)}
-    counts["unchanged"] = len(rows) - len(flags)
+    counts = {"inserted": inserted, "updated": updated}
+    counts["unchanged"] = len(rows) - inserted - updated
     logger.info(f"{table}: {counts['inserted']} inserted, {counts['updated']} updated, "
                 f"{counts['unchanged']} unchanged")
     return counts

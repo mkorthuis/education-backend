@@ -135,16 +135,23 @@ PYTHONPATH=. alembic revision --autogenerate -m "migration_name"
 ```
 
 #### Loading a New Year of Data
-Datasets ported to `app/etl` (currently: enrollment, location) are loaded with the ETL command, not by editing migrations:
-1. Add the new file to `app/alembic/assets/...` and raise `year_end` in the dataset's config in `app/alembic/config/`.
+Data is loaded with the ETL command in `app/etl`, not by editing migrations. The data migrations call the same loaders, so a fresh database (`alembic upgrade head`) gets every configured year.
+
+1. Add the new file under `app/alembic/assets/...` and raise `year_end` in the dataset's config in `app/alembic/config/` (measurement: add the workbook to the end of its `files` list).
 2. Preview, then load (from `backend/`):
 ```bash
-PYTHONPATH=. python -m app.etl load enrollment --year 2026 --dry-run
-PYTHONPATH=. python -m app.etl load enrollment --year 2026
+PYTHONPATH=. python -m app.etl load assessment --year 2026 --dry-run
+PYTHONPATH=. python -m app.etl load assessment --year 2026
 ```
-Existing rows are updated, so loading a year twice is safe. Dependent materialized views are refreshed. `location` (schools, districts, SAUs, towns) loads the state's current school, district and SAU lists as one year: schools missing from a newer list are kept, SAU staff and grade/town links are replaced by the list. Load it before the year's other datasets so new schools exist. Fresh databases get every configured year from the migrations, which call the same loader. On Heroku, run it in a one-off dyno (`heroku run`), then restart the web dynos to clear the API cache.
+3. Read the warnings: rows for schools, districts or towns that aren't in the database are skipped and listed.
+4. On Heroku, run it in a one-off dyno (`heroku run`), then restart the web dynos to clear the API cache.
 
-Assessment results (`load assessment`): save the file as `assets/assessments/assessments-YYYY.csv` and raise `year_end` in `assessment_data_config.yaml`. The file's state, district and school rows replace that year's rows (reloaded rows get new ids, since "all grades" rows have a NULL grade and can't be upserted). District and state rows are generated from school rows only for 2009-2017, whose files have school rows only. Rows for districts and schools whose names don't match the database are skipped and listed in a warning; check it, since those schools won't appear in the API.
+Datasets: `location`, `enrollment`, `town-enrollment`, `measurement`, `measurement-state-target`, `class-size`, `assessment`, `finance`, `cost-per-pupil`, `state-expenditure`, `education-freedom-account`, `safety`, `staff`, `teacher-education`, `teacher-salary`, `teacher-salary-band`, `early-exit`, `post-graduation`, `graduation-cohort`.
+
+- Most datasets update existing rows and insert new ones, so loading a year twice changes nothing. `assessment` and `measurement` replace the year's rows instead (their keys contain NULLs), so reloaded rows get new ids.
+- Dependent materialized views are refreshed. `safety` also rebuilds that year's state and district totals; `finance` recomputes the state revenue and expenditure totals.
+- `location` loads the state's current school, district and SAU lists. Schools missing from a newer list are kept; SAU staff and grade/town links are replaced by the list. Load it before a year's other datasets so new schools exist.
+- `assessment`: save the file as `assets/assessments/assessments-YYYY.csv`. District and state rows are generated from school rows only for 2009–2017, whose files have school rows only.
 
 ### Dependency Management
 
