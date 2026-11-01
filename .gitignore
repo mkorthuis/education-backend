@@ -5,3 +5,6 @@ __pycache__/
 
 # Alembic SQL cache
 backend/app/alembic/sql_cache/
+
+# ETL cache of parsed source files (app/etl/cache.py)
+backend/.etl_cache/

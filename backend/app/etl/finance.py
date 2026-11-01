@@ -10,11 +10,15 @@ import os
 from collections import Counter
 from typing import Iterable, Optional, Sequence
 
+import openpyxl
 import pandas as pd
 from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
-from app.etl.core import config_path, configured_years, load_config, refresh_dependent_views, upsert_rows
+from app.etl.cache import cached, fingerprint
+from app.etl.core import (
+    CONFIG_DIR, config_path, configured_years, load_config, refresh_dependent_views, upsert_rows
+)
 
 logger = logging.getLogger("app.etl")
 
@@ -32,6 +36,10 @@ STATEMENTS = {
     "expenditure": ("expenditure_data", "expenditure_super_category_type", "expenditure_category_type"),
 }
 VALUE_TABLES = {"balance": "balance_sheet", "revenue": "revenue", "expenditure": "expenditure"}
+
+with open(__file__, "rb") as _source, open(os.path.join(CONFIG_DIR, CONFIG), "rb") as _config:
+    # Parsed forms are cached; any change to this code, the config or the readers invalidates them
+    PARSER_FINGERPRINT = fingerprint(_source.read(), _config.read(), pd.__version__, openpyxl.__version__)
 
 
 def statement_types(config: dict, name: str) -> dict:
@@ -144,6 +152,28 @@ def parse_form(path: str, config: dict, district_id: int, year: int, skipped: Co
     return form
 
 
+def parse_form_cached(path: str, config: dict, district_id: int, year: int, skipped: Counter) -> Optional[dict]:
+    """
+    parse_form, cached on disk (app.etl.cache): reading the workbooks is most of a finance load.
+
+    The cache key covers the workbook's contents, this module's code, the config file, the
+    pandas and openpyxl versions, the district and the year, so any change re-reads the file.
+    """
+    def compute():
+        form_skipped = Counter()
+        return {"form": parse_form(path, config, district_id, year, form_skipped), "skipped": dict(form_skipped)}
+
+    result = cached("finance", path, fingerprint(PARSER_FINGERPRINT, district_id, year), compute)
+    skipped.update(result["skipped"])
+    form = result["form"]
+    if form is None:
+        return None
+    # JSON stores tuples as lists
+    form = {name: [tuple(value) for value in values] for name, values in form.items() if name != "adm"} | {
+        "adm": tuple(form["adm"]) if form["adm"] is not None else None}
+    return form
+
+
 def delete_other_rows(conn: Connection, table: str, key_columns: Sequence[str], rows: Sequence[tuple],
                       form_ids: Sequence[int]) -> int:
     """
@@ -224,7 +254,7 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
             if os.path.basename(path) in config["file_settings"]["unreadable_files"].get(year, []):
                 skipped["unreadable files (see config)"] += 1
                 continue
-            form = parse_form(path, config, district_id, year, skipped)
+            form = parse_form_cached(path, config, district_id, year, skipped)
             if form is not None:
                 forms.append(((district_id, year), form))
         if not found:
