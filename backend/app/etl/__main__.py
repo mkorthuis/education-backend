@@ -14,10 +14,14 @@ import logging
 import sys
 
 from app.core.db import engine
-from app.etl import enrollment
+from app.etl import (
+    enrollment,
+    location,
+)
 
 DATASETS = {
     "enrollment": enrollment,
+    "location": location,
 }
 
 

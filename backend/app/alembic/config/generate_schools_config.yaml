@@ -1,13 +1,16 @@
+# Each year is a snapshot of the state's current lists; years are loaded in order,
+# so schools that later close keep their rows
 file_settings:
+  year_start: "2025"
+  year_end: "2025"
   school_file:
-    path: "../assets/2025-school-list.xls"
+    default_input: "../assets/****-school-list.xls"
     start_row: 2  # 0-based index, skip header row
   district_file:
-    path: "../assets/2025-district-list.csv"
+    default_input: "../assets/****-district-list.csv"
   sau_file:
-    path: "../assets/2025-sau-list.xls"
+    default_input: "../assets/****-sau-list.xls"
     start_row: 4  # 0-based index, skip header row
-  sql_cache_dir: "../sql_cache"
 
 column_mappings:
   # School file mappings
@@ -41,12 +44,3 @@ column_mappings:
   admin_type: 27  
   group_id: 28
   webpage: 30
-
-district_file_mappings:
-  district_id: "District Id"
-  district_name: "District"
-  town_id: "Town Id"
-  town_name: "Town"
-  sau_id: "sau_id"
-  sau_name: "sau_name"
-  

@@ -135,14 +135,14 @@ PYTHONPATH=. alembic revision --autogenerate -m "migration_name"
 ```
 
 #### Loading a New Year of Data
-Datasets ported to `app/etl` (currently: enrollment) are loaded with the ETL command, not by editing migrations:
+Datasets ported to `app/etl` (currently: enrollment, location) are loaded with the ETL command, not by editing migrations:
 1. Add the new file to `app/alembic/assets/...` and raise `year_end` in the dataset's config in `app/alembic/config/`.
 2. Preview, then load (from `backend/`):
 ```bash
 PYTHONPATH=. python -m app.etl load enrollment --year 2026 --dry-run
 PYTHONPATH=. python -m app.etl load enrollment --year 2026
 ```
-Existing rows are updated, so loading a year twice is safe. Dependent materialized views are refreshed. Fresh databases get every configured year from the migrations, which call the same loader. On Heroku, run it in a one-off dyno (`heroku run`), then restart the web dynos to clear the API cache.
+Existing rows are updated, so loading a year twice is safe. Dependent materialized views are refreshed. `location` (schools, districts, SAUs, towns) loads the state's current school, district and SAU lists as one year: schools missing from a newer list are kept, SAU staff and grade/town links are replaced by the list. Load it before the year's other datasets so new schools exist. Fresh databases get every configured year from the migrations, which call the same loader. On Heroku, run it in a one-off dyno (`heroku run`), then restart the web dynos to clear the API cache.
 
 ### Dependency Management
 
