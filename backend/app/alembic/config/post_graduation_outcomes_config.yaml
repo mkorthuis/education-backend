@@ -2,7 +2,6 @@ file_settings:
   default_input: "../assets/completers/****-Completers.xlsx"
   year_start: 2012
   year_end: 2024
-  sql_cache_dir: "../sql_cache"
 
 column_mappings:
   school_id: 4            # Column E
