@@ -3,6 +3,5 @@ file_settings:
   download_files: false
   year_start: 2010
   year_end: 2024
-  sql_cache_dir: "../sql_cache"
 
 

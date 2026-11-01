@@ -4,7 +4,12 @@ file_settings:
   sheet_name: "DOE25"
   year_start: 2010
   year_end: 2024
-  sql_cache_dir: "../sql_cache"
+  # One workbook per district and year; {district} is the district name in lower case with dashes
+  default_input: "../assets/finance/****/{district}-doe-25-****.xlsx"
+  # Files that cannot be opened (password protected); the district has no form that year
+  unreadable_files:
+    2010: ["warren-doe-25-2010.xlsx"]
+    2014: ["hales-location-doe-25-2014.xlsx"]
 
 initial_data: 
   balance_entry_super_category_type:
