@@ -22,7 +22,7 @@ class SummaryResponse(BaseModel):
     summary="Generate summary using LLM",
     description="Send a message to the LLM provider (Gemini) and get a summary response",
     response_description="Summary response from LLM")
-async def generate_summary(request: SummaryRequest) -> SummaryResponse:
+def generate_summary(request: SummaryRequest) -> SummaryResponse:
     """
     Generate a summary using the configured LLM provider.
     
@@ -72,7 +72,7 @@ class DistrictComparisonResponse(BaseModel):
     summary="Compare district assessment data with state data using LLM",
     description="Get district and state assessment data, then use Gemini to compare and provide feedback on how the district compares to state averages",
     response_description="Comparison analysis from LLM")
-async def compare_district_assessments(
+def compare_district_assessments(
     request: DistrictComparisonRequest,
     session: SessionDep
 ) -> DistrictComparisonResponse:
@@ -133,7 +133,7 @@ class ComprehensiveDistrictSummaryResponse(BaseModel):
     summary="Generate comprehensive district summary using all data types",
     description="Generate a comprehensive district analysis using academic, financial, graduation, safety, staff, and enrollment data, then provide an executive summary",
     response_description="Comprehensive district analysis from LLM")
-async def generate_comprehensive_district_summary(
+def generate_comprehensive_district_summary(
     request: ComprehensiveDistrictSummaryRequest,
     session: SessionDep
 ) -> ComprehensiveDistrictSummaryResponse:

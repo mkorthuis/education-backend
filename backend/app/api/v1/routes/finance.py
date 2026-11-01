@@ -19,7 +19,7 @@ router = APIRouter()
     description="Retrieves a comprehensive financial report for a specific district and year, including DOE form data and all related financial data.",
     response_description="Financial report with DOE form and related financial data")
 @cache_response("finance_report")
-async def get_financial_report(
+def get_financial_report(
     session: SessionDep,
     district_id: int = Query(..., description="District ID"),
     year: Optional[int] = Query(None, description="Optional year to filter by")
@@ -47,7 +47,7 @@ async def get_financial_report(
     description="Retrieves all entry types (balance, revenue, expenditure) with their categories and super categories.",
     response_description="All entry types with categories and super categories")
 @cache_response("finance_entry_types")
-async def get_all_entry_types(
+def get_all_entry_types(
     session: SessionDep
 ):
     """
@@ -66,7 +66,7 @@ async def get_all_entry_types(
     description="Retrieves all fund types (balance, revenue, expenditure).",
     response_description="All fund types")
 @cache_response("finance_fund_types")
-async def get_all_fund_types(
+def get_all_fund_types(
     session: SessionDep
 ):
     """
@@ -85,7 +85,7 @@ async def get_all_fund_types(
     description="Retrieves state level per pupil costs, optionally filtered by year.",
     response_description="State level per pupil costs")
 @cache_response("finance_per_pupil_state")
-async def get_state_per_pupil_costs(
+def get_state_per_pupil_costs(
     session: SessionDep,
     year: Optional[int] = Query(None, description="Optional year to filter by")
 ):
@@ -105,7 +105,7 @@ async def get_state_per_pupil_costs(
     description="Retrieves district level per pupil costs, optionally filtered by district ID and year.",
     response_description="District level per pupil costs")
 @cache_response("finance_per_pupil_district")
-async def get_district_per_pupil_costs(
+def get_district_per_pupil_costs(
     session: SessionDep,
     district_id: Optional[int] = Query(None, description="Optional district ID to filter by"),
     year: Optional[int] = Query(None, description="Optional year to filter by")
@@ -128,7 +128,7 @@ async def get_district_per_pupil_costs(
     description="Retrieves state level expenditure totals, optionally filtered by year. Pulled from https://www.education.nh.gov/who-we-are/division-of-educator-and-analytic-resources/bureau-of-education-statistics/financial-reports: State Average Cost Per Pupil and Total Expenditures",
     response_description="State level expenditure totals")
 @cache_response("finance_state_expenditure_rollup")
-async def get_state_expenditure_rollup(
+def get_state_expenditure_rollup(
     session: SessionDep,
     year: Optional[int] = Query(None, description="Optional year to filter by")
 ):
@@ -154,7 +154,7 @@ async def get_state_expenditure_rollup(
     description="Retrieves state level expenditure totals, optionally filtered by year and expenditure entry type.",
     response_description="State level expenditure totals by entry type")
 @cache_response("finance_state_expenditure")
-async def get_state_expenditure(
+def get_state_expenditure(
     session: SessionDep,
     year: Optional[int] = Query(None, description="Optional year to filter by"),
     expenditure_entry_type_id: Optional[int] = Query(None, description="Optional expenditure entry type ID to filter by")
@@ -183,7 +183,7 @@ async def get_state_expenditure(
     description="Retrieves state level revenue totals, optionally filtered by year and revenue entry type.",
     response_description="State level revenue totals")
 @cache_response("finance_state_revenue")
-async def get_state_revenue(
+def get_state_revenue(
     session: SessionDep,
     year: Optional[int] = Query(None, description="Optional year to filter by"),
     revenue_entry_type_id: Optional[int] = Query(None, description="Optional revenue entry type ID to filter by")
@@ -212,7 +212,7 @@ async def get_state_revenue(
     description="Retrieves state level Average Daily Membership (ADM) data in finance data, optionally filtered by year.",
     response_description="State level ADM data")
 @cache_response("finance_state_adm")
-async def get_state_adm(
+def get_state_adm(
     session: SessionDep,
     year: Optional[int] = Query(None, description="Optional year to filter by")
 ):

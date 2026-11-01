@@ -17,7 +17,7 @@ router = APIRouter()
     description="Retrieves a list of all School Administrative Units (SAUs), with optional filtering by district ID",
     response_description="List of SAUs")
 @cache_response("location_sau")
-async def get_saus(
+def get_saus(
     session: SessionDep,
     district_id: Optional[int] = Query(None, description="Filter SAUs by district ID")
 ):
@@ -29,7 +29,7 @@ async def get_saus(
     description="Retrieves a specific School Administrative Unit by its ID",
     response_description="SAU details")
 @cache_response("location_sau_by_id")
-async def get_sau(sau_id: int, session: SessionDep):
+def get_sau(sau_id: int, session: SessionDep):
     return location_service.get_sau_by_id(session=session, sau_id=sau_id)
 
 @router.get("/district", 
@@ -38,7 +38,7 @@ async def get_sau(sau_id: int, session: SessionDep):
     description="Retrieves a list of all school districts, with optional filtering by public status.",
     response_description="List of districts")
 @cache_response("location_district")
-async def get_districts(
+def get_districts(
     session: SessionDep,
     is_public: Optional[bool] = Query(None, description="Filter districts by public status (true/false)"),
     school_id: Optional[int] = Query(None, description="Filter districts by school ID")
@@ -54,7 +54,7 @@ async def get_districts(
     description="Retrieves a specific school district by its ID",
     response_description="District details")
 @cache_response("location_district_by_id")
-async def get_district(district_id: int, session: SessionDep):
+def get_district(district_id: int, session: SessionDep):
     return location_service.get_district_by_id(session=session, district_id=district_id)
 
 @router.get("/school", 
@@ -63,7 +63,7 @@ async def get_district(district_id: int, session: SessionDep):
     description="Retrieves a list of all schools, with optional filtering by district ID",
     response_description="List of schools")
 @cache_response("location_school")
-async def get_schools(
+def get_schools(
     session: SessionDep,
     district_id: Optional[int] = Query(None, description="Filter schools by district ID")
 ):
@@ -75,7 +75,7 @@ async def get_schools(
     description="Retrieves a specific school by its ID",
     response_description="School details")
 @cache_response("location_school_by_id")
-async def get_school(school_id: int, session: SessionDep):
+def get_school(school_id: int, session: SessionDep):
     return location_service.get_school_by_id(session=session, school_id=school_id)
 
 @router.get("/region", 
@@ -84,7 +84,7 @@ async def get_school(school_id: int, session: SessionDep):
     description="Retrieves a list of all regions",
     response_description="List of regions")
 @cache_response("location_region")
-async def get_regions(session: SessionDep):
+def get_regions(session: SessionDep):
     return location_service.get_regions(session=session)
 
 @router.get("/region/{region_id}", 
@@ -93,7 +93,7 @@ async def get_regions(session: SessionDep):
     description="Retrieves a specific region by its ID",
     response_description="Region details")
 @cache_response("location_region_by_id")
-async def get_region(region_id: int, session: SessionDep):
+def get_region(region_id: int, session: SessionDep):
     return location_service.get_region_by_id(session=session, region_id=region_id)
 
 @router.get("/school-type", 
@@ -102,7 +102,7 @@ async def get_region(region_id: int, session: SessionDep):
     description="Retrieves a list of all school types",
     response_description="List of school types")
 @cache_response("location_school_type")
-async def get_school_types(session: SessionDep):
+def get_school_types(session: SessionDep):
     return location_service.get_school_types(session=session)
 
 @router.get("/school-type/{school_type_id}", 
@@ -111,7 +111,7 @@ async def get_school_types(session: SessionDep):
     description="Retrieves a specific school type by its ID",
     response_description="School type details")
 @cache_response("location_school_type_by_id")
-async def get_school_type(school_type_id: int, session: SessionDep):
+def get_school_type(school_type_id: int, session: SessionDep):
     return location_service.get_school_type_by_id(session=session, school_type_id=school_type_id)
 
 @router.get("/grade", 
@@ -120,7 +120,7 @@ async def get_school_type(school_type_id: int, session: SessionDep):
     description="Retrieves a list of all grades",
     response_description="List of grades")
 @cache_response("location_grade")
-async def get_grades(session: SessionDep):
+def get_grades(session: SessionDep):
     return location_service.get_grades(session=session)
 
 @router.get("/grade/{grade_id}", 
@@ -129,7 +129,7 @@ async def get_grades(session: SessionDep):
     description="Retrieves a specific grade by its ID",
     response_description="Grade details")
 @cache_response("location_grade_by_id")
-async def get_grade(grade_id: int, session: SessionDep):
+def get_grade(grade_id: int, session: SessionDep):
     return location_service.get_grade_by_id(session=session, grade_id=grade_id)
 
 @router.get("/town", 
@@ -138,7 +138,7 @@ async def get_grade(grade_id: int, session: SessionDep):
     description="Retrieves a list of all towns, with optional filtering by district ID",
     response_description="List of towns")
 @cache_response("location_town")
-async def get_towns(
+def get_towns(
     session: SessionDep,
     district_id: Optional[int] = Query(None, description="Filter towns by district ID")
 ):
@@ -150,5 +150,5 @@ async def get_towns(
     description="Retrieves a specific town by its ID",
     response_description="Town details")
 @cache_response("location_town_by_id")
-async def get_town(town_id: int, session: SessionDep):
+def get_town(town_id: int, session: SessionDep):
     return location_service.get_town_by_id(session=session, town_id=town_id) 

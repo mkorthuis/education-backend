@@ -16,7 +16,7 @@ router = APIRouter()
     description="Retrieves a list of all measurement type categories",
     response_description="List of measurement categories")
 @cache_response("measurement_category")
-async def get_measurement_categories(session: SessionDep):
+def get_measurement_categories(session: SessionDep):
     return measurement_service.get_measurement_type_categories(session=session)
 
 @router.get("/category/{category_id}", 
@@ -25,7 +25,7 @@ async def get_measurement_categories(session: SessionDep):
     description="Retrieves a specific measurement type category by its ID",
     response_description="Measurement category details")
 @cache_response("measurement_category_by_id")
-async def get_measurement_category(category_id: int, session: SessionDep):
+def get_measurement_category(category_id: int, session: SessionDep):
     return measurement_service.get_measurement_type_category_by_id(session=session, category_id=category_id)
 
 @router.get("/type", 
@@ -34,7 +34,7 @@ async def get_measurement_category(category_id: int, session: SessionDep):
     description="Retrieves a list of measurement types, optionally filtered by category",
     response_description="List of measurement types")
 @cache_response("measurement_type")
-async def get_measurement_types(
+def get_measurement_types(
     session: SessionDep,
     category_id: Optional[int] = Query(None, description="Filter by category ID")
 ):
@@ -46,7 +46,7 @@ async def get_measurement_types(
     description="Retrieves a specific measurement type by its ID",
     response_description="Measurement type details")
 @cache_response("measurement_type_by_id")
-async def get_measurement_type(type_id: int, session: SessionDep):
+def get_measurement_type(type_id: int, session: SessionDep):
     return measurement_service.get_measurement_type_by_id(session=session, type_id=type_id)
 
 @router.get("", 
@@ -55,7 +55,7 @@ async def get_measurement_type(type_id: int, session: SessionDep):
     description="Retrieves a list of measurements with optional filtering by district, school, type, and year",
     response_description="List of measurements")
 @cache_response("measurement")
-async def get_measurements(
+def get_measurements(
     session: SessionDep,
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -76,7 +76,7 @@ async def get_measurements(
     description="Retrieves the most recent year of measurements for a district or school",
     response_description="List of latest measurements")
 @cache_response("measurement_latest")
-async def get_latest_measurements(
+def get_latest_measurements(
     session: SessionDep,
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID")
@@ -93,5 +93,5 @@ async def get_latest_measurements(
     description="Retrieves a specific measurement by its ID",
     response_description="Measurement details")
 @cache_response("measurement_by_id")
-async def get_measurement(measurement_id: int, session: SessionDep):
+def get_measurement(measurement_id: int, session: SessionDep):
     return measurement_service.get_measurement_by_id(session=session, measurement_id=measurement_id) 

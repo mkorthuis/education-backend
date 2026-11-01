@@ -55,6 +55,12 @@ class Settings(BaseSettings):
             path=self.POSTGRES_DB,
         )
 
+    # Database connection pool, per uvicorn worker. Requests run in a threadpool, so several
+    # can query at once; keep workers x (pool size + overflow) below the plan's connection
+    # limit (Heroku essential-1: 20) with room for migrations and psql sessions.
+    DB_POOL_SIZE: int = 5
+    DB_MAX_OVERFLOW: int = 3
+
     # Redis Cache Configuration
     REDIS_HOST: str = "localhost"
     REDIS_PORT: int = 6379

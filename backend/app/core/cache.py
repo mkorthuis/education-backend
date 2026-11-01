@@ -233,23 +233,34 @@ def cache_response(prefix: str, ttl: Optional[int] = None):
     def decorator(func):
         _assert_url_only_inputs(func)
 
-        @wraps(func)
-        async def wrapper(*args, **kwargs):
-            # Generate cache key
-            cache_key = cache_service._generate_cache_key(prefix, *args, **kwargs)
-            
-            # Try to get from cache first
-            cached_result = cache_service.get(cache_key)
-            if cached_result is not None:
-                logger.info(f"Cache hit for key: {cache_key}")
-                return cached_result
-            
-            # Execute function and cache result
-            result = await func(*args, **kwargs)
-            cache_service.set(cache_key, result, ttl)
-            logger.info(f"Cache miss for key: {cache_key}, cached result")
-            
-            return result
+        # Plain `def` endpoints get a plain wrapper, so FastAPI still runs them in its
+        # threadpool; an async wrapper would put their blocking database calls on the event loop
+        if inspect.iscoroutinefunction(func):
+            @wraps(func)
+            async def wrapper(*args, **kwargs):
+                cache_key = cache_service._generate_cache_key(prefix, *args, **kwargs)
+                cached_result = cache_service.get(cache_key)
+                if cached_result is not None:
+                    logger.info(f"Cache hit for key: {cache_key}")
+                    return cached_result
+
+                result = await func(*args, **kwargs)
+                cache_service.set(cache_key, result, ttl)
+                logger.info(f"Cache miss for key: {cache_key}, cached result")
+                return result
+        else:
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                cache_key = cache_service._generate_cache_key(prefix, *args, **kwargs)
+                cached_result = cache_service.get(cache_key)
+                if cached_result is not None:
+                    logger.info(f"Cache hit for key: {cache_key}")
+                    return cached_result
+
+                result = func(*args, **kwargs)
+                cache_service.set(cache_key, result, ttl)
+                logger.info(f"Cache miss for key: {cache_key}, cached result")
+                return result
         return wrapper
     return decorator
 

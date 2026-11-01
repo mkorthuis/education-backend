@@ -27,7 +27,7 @@ router = APIRouter(prefix="/outcome", tags=["Outcome"])
     summary="Get post-graduation outcome types",
 )
 @cache_response("outcome_post_graduation_type")
-async def get_post_graduation_types(session: SessionDep):
+def get_post_graduation_types(session: SessionDep):
     return outcome_service.get_post_graduation_types(session=session)
 
 @router.get(
@@ -36,7 +36,7 @@ async def get_post_graduation_types(session: SessionDep):
     summary="Get school post-graduation outcomes",
 )
 @cache_response("outcome_post_graduation_school")
-async def get_school_post_graduation(
+def get_school_post_graduation(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     school_id: Optional[int] = Query(default=None),
@@ -57,7 +57,7 @@ async def get_school_post_graduation(
     summary="Get district post-graduation outcomes",
 )
 @cache_response("outcome_post_graduation_district")
-async def get_district_post_graduation(
+def get_district_post_graduation(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     district_id: Optional[int] = Query(default=None),
@@ -76,7 +76,7 @@ async def get_district_post_graduation(
     summary="Get state post-graduation outcomes",
 )
 @cache_response("outcome_post_graduation_state")
-async def get_state_post_graduation(
+def get_state_post_graduation(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     post_graduation_type_id: Optional[int] = Query(default=None, description="Filter by post-graduation type id"),
@@ -95,7 +95,7 @@ async def get_state_post_graduation(
     summary="Get school early-exit data",
 )
 @cache_response("outcome_early_exit_school")
-async def get_school_early_exit(
+def get_school_early_exit(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     school_id: Optional[int] = Query(default=None),
@@ -109,7 +109,7 @@ async def get_school_early_exit(
     summary="Get district early-exit data",
 )
 @cache_response("outcome_early_exit_district")
-async def get_district_early_exit(
+def get_district_early_exit(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     district_id: Optional[int] = Query(default=None),
@@ -122,7 +122,7 @@ async def get_district_early_exit(
     summary="Get state early-exit data",
 )
 @cache_response("outcome_early_exit_state")
-async def get_state_early_exit(
+def get_state_early_exit(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
 ):
@@ -136,7 +136,7 @@ async def get_state_early_exit(
     summary="Get school cohort graduation data",
 )
 @cache_response("outcome_graduation_cohort_school")
-async def get_school_graduation_cohort(
+def get_school_graduation_cohort(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     school_id: Optional[int] = Query(default=None),
@@ -155,7 +155,7 @@ async def get_school_graduation_cohort(
     summary="Get district cohort graduation data",
 )
 @cache_response("outcome_graduation_cohort_district")
-async def get_district_graduation_cohort(
+def get_district_graduation_cohort(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
     district_id: Optional[int] = Query(default=None),
@@ -172,7 +172,7 @@ async def get_district_graduation_cohort(
     summary="Get state cohort graduation data",
 )
 @cache_response("outcome_graduation_cohort_state")
-async def get_state_graduation_cohort(
+def get_state_graduation_cohort(
     session: SessionDep,
     year: Optional[int] = Query(default=None),
 ):

@@ -34,7 +34,7 @@ router = APIRouter()
     description="Retrieves a list of all school safety types",
     response_description="List of school safety types")
 @cache_response("safety_school_safety_type")
-async def get_school_safety_types(session: SessionDep):
+def get_school_safety_types(session: SessionDep):
     return safety_service.get_safety_types(session=session)
 
 @router.get("/discipline-incident-type",
@@ -43,7 +43,7 @@ async def get_school_safety_types(session: SessionDep):
     description="Retrieves a list of all discipline incident types",
     response_description="List of discipline incident types")
 @cache_response("safety_discipline_incident_type")
-async def get_discipline_incident_types(session: SessionDep):
+def get_discipline_incident_types(session: SessionDep):
     return safety_service.get_discipline_incident_types(session=session)
 
 @router.get("/discipline-count-type",
@@ -52,7 +52,7 @@ async def get_discipline_incident_types(session: SessionDep):
     description="Retrieves a list of all discipline count types",
     response_description="List of discipline count types")
 @cache_response("safety_discipline_count_type")
-async def get_discipline_count_types(session: SessionDep):
+def get_discipline_count_types(session: SessionDep):
     return safety_service.get_discipline_count_types(session=session)
 
 @router.get("/bullying-type",
@@ -61,7 +61,7 @@ async def get_discipline_count_types(session: SessionDep):
     description="Retrieves a list of all bullying types",
     response_description="List of bullying types")
 @cache_response("safety_bullying_type")
-async def get_bullying_types(session: SessionDep):
+def get_bullying_types(session: SessionDep):
     return safety_service.get_bullying_types(session=session)
 
 @router.get("/bullying-classification-type",
@@ -70,7 +70,7 @@ async def get_bullying_types(session: SessionDep):
     description="Retrieves a list of all bullying classification types",
     response_description="List of bullying classification types")
 @cache_response("safety_bullying_classification_type")
-async def get_bullying_classification_types(session: SessionDep):
+def get_bullying_classification_types(session: SessionDep):
     return safety_service.get_bullying_classification_types(session=session)
 
 @router.get("/bullying-impact-type",
@@ -79,7 +79,7 @@ async def get_bullying_classification_types(session: SessionDep):
     description="Retrieves a list of all bullying impact types",
     response_description="List of bullying impact types")
 @cache_response("safety_bullying_impact_type")
-async def get_bullying_impact_types(session: SessionDep):
+def get_bullying_impact_types(session: SessionDep):
     return safety_service.get_bullying_impact_types(session=session)
 
 @router.get("/harassment-classification",
@@ -88,7 +88,7 @@ async def get_bullying_impact_types(session: SessionDep):
     description="Retrieves a list of all harassment classifications",
     response_description="List of harassment classifications")
 @cache_response("safety_harassment_classification")
-async def get_harassment_classifications(session: SessionDep):
+def get_harassment_classifications(session: SessionDep):
     return safety_service.get_harassment_classifications(session=session)
 
 @router.get("/school/safety",
@@ -97,7 +97,7 @@ async def get_harassment_classifications(session: SessionDep):
     description="Retrieves school safety data with optional filters",
     response_description="List of school safety data")
 @cache_response("safety_school_safety")
-async def get_school_safety(
+def get_school_safety(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -118,7 +118,7 @@ async def get_school_safety(
     description="Retrieves school truancy data with optional filters",
     response_description="List of school truancy data")
 @cache_response("safety_school_truancy")
-async def get_school_truancy(
+def get_school_truancy(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -137,7 +137,7 @@ async def get_school_truancy(
     description="Retrieves school discipline incident data with optional filters",
     response_description="List of school discipline incident data")
 @cache_response("safety_school_discipline_incident")
-async def get_school_discipline_incidents(
+def get_school_discipline_incidents(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -158,7 +158,7 @@ async def get_school_discipline_incidents(
     description="Retrieves school discipline count data with optional filters",
     response_description="List of school discipline count data")
 @cache_response("safety_school_discipline_count")
-async def get_school_discipline_counts(
+def get_school_discipline_counts(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -179,7 +179,7 @@ async def get_school_discipline_counts(
     description="Retrieves school bullying data with optional filters",
     response_description="List of school bullying data")
 @cache_response("safety_school_bullying")
-async def get_school_bullying(
+def get_school_bullying(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -200,7 +200,7 @@ async def get_school_bullying(
     description="Retrieves school bullying classification data with optional filters",
     response_description="List of school bullying classification data")
 @cache_response("safety_school_bullying_classification")
-async def get_school_bullying_classifications(
+def get_school_bullying_classifications(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -221,7 +221,7 @@ async def get_school_bullying_classifications(
     description="Retrieves school bullying impact data with optional filters",
     response_description="List of school bullying impact data")
 @cache_response("safety_school_bullying_impact")
-async def get_school_bullying_impacts(
+def get_school_bullying_impacts(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -242,7 +242,7 @@ async def get_school_bullying_impacts(
     description="Retrieves school harassment data with optional filters",
     response_description="List of school harassment data")
 @cache_response("safety_school_harassment")
-async def get_school_harassment(
+def get_school_harassment(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -263,7 +263,7 @@ async def get_school_harassment(
     description="Retrieves school restraint data with optional filters",
     response_description="List of school restraint data")
 @cache_response("safety_school_restraint")
-async def get_school_restraint(
+def get_school_restraint(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -282,7 +282,7 @@ async def get_school_restraint(
     description="Retrieves school seclusion data with optional filters",
     response_description="List of school seclusion data")
 @cache_response("safety_school_seclusion")
-async def get_school_seclusion(
+def get_school_seclusion(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -301,7 +301,7 @@ async def get_school_seclusion(
     description="Retrieves school-level safety enrollment data with optional filters",
     response_description="List of school safety enrollment data")
 @cache_response("safety_school_enrollment")
-async def get_school_safety_enrollment(
+def get_school_safety_enrollment(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     school_id: Optional[int] = Query(default=None, description="Filter by school ID"),
@@ -320,7 +320,7 @@ async def get_school_safety_enrollment(
     description="Retrieves state-level safety data with optional filters",
     response_description="List of state safety data")
 @cache_response("safety_state_safety")
-async def get_state_safety(
+def get_state_safety(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     safety_type_id: Optional[int] = Query(default=None, description="Filter by safety type ID")
@@ -337,7 +337,7 @@ async def get_state_safety(
     description="Retrieves state-level truancy data with optional filters",
     response_description="List of state truancy data")
 @cache_response("safety_state_truancy")
-async def get_state_truancy(
+def get_state_truancy(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year")
 ):
@@ -352,7 +352,7 @@ async def get_state_truancy(
     description="Retrieves state-level discipline incident data with optional filters",
     response_description="List of state discipline incident data")
 @cache_response("safety_state_discipline_incident")
-async def get_state_discipline_incidents(
+def get_state_discipline_incidents(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     discipline_incident_type_id: Optional[int] = Query(default=None, description="Filter by discipline incident type ID")
@@ -369,7 +369,7 @@ async def get_state_discipline_incidents(
     description="Retrieves state-level discipline count data with optional filters",
     response_description="List of state discipline count data")
 @cache_response("safety_state_discipline_count")
-async def get_state_discipline_counts(
+def get_state_discipline_counts(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     discipline_count_type_id: Optional[int] = Query(default=None, description="Filter by discipline count type ID")
@@ -386,7 +386,7 @@ async def get_state_discipline_counts(
     description="Retrieves state-level bullying data with optional filters",
     response_description="List of state bullying data")
 @cache_response("safety_state_bullying")
-async def get_state_bullying(
+def get_state_bullying(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     bullying_type_id: Optional[int] = Query(default=None, description="Filter by bullying type ID")
@@ -403,7 +403,7 @@ async def get_state_bullying(
     description="Retrieves state-level bullying classification data with optional filters",
     response_description="List of state bullying classification data")
 @cache_response("safety_state_bullying_classification")
-async def get_state_bullying_classifications(
+def get_state_bullying_classifications(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     bullying_classification_type_id: Optional[int] = Query(default=None, description="Filter by bullying classification type ID")
@@ -420,7 +420,7 @@ async def get_state_bullying_classifications(
     description="Retrieves state-level bullying impact data with optional filters",
     response_description="List of state bullying impact data")
 @cache_response("safety_state_bullying_impact")
-async def get_state_bullying_impacts(
+def get_state_bullying_impacts(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     bullying_impact_type_id: Optional[int] = Query(default=None, description="Filter by bullying impact type ID")
@@ -437,7 +437,7 @@ async def get_state_bullying_impacts(
     description="Retrieves state-level harassment data with optional filters",
     response_description="List of state harassment data")
 @cache_response("safety_state_harassment")
-async def get_state_harassment(
+def get_state_harassment(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     harassment_classification_id: Optional[int] = Query(default=None, description="Filter by harassment classification ID")
@@ -454,7 +454,7 @@ async def get_state_harassment(
     description="Retrieves state-level restraint data with optional filters",
     response_description="List of state restraint data")
 @cache_response("safety_state_restraint")
-async def get_state_restraint(
+def get_state_restraint(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year")
 ):
@@ -469,7 +469,7 @@ async def get_state_restraint(
     description="Retrieves state-level seclusion data with optional filters",
     response_description="List of state seclusion data")
 @cache_response("safety_state_seclusion")
-async def get_state_seclusion(
+def get_state_seclusion(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year")
 ):
@@ -484,7 +484,7 @@ async def get_state_seclusion(
     description="Retrieves state-level safety enrollment data with optional filter",
     response_description="List of state safety enrollment data")
 @cache_response("safety_state_enrollment")
-async def get_state_safety_enrollment(
+def get_state_safety_enrollment(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year")
 ):
@@ -499,7 +499,7 @@ async def get_state_safety_enrollment(
     description="Retrieves district-level safety data with optional filters",
     response_description="List of district safety data")
 @cache_response("safety_district_safety")
-async def get_district_safety(
+def get_district_safety(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -518,7 +518,7 @@ async def get_district_safety(
     description="Retrieves district-level truancy data with optional filters",
     response_description="List of district truancy data")
 @cache_response("safety_district_truancy")
-async def get_district_truancy(
+def get_district_truancy(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID")
@@ -535,7 +535,7 @@ async def get_district_truancy(
     description="Retrieves district-level discipline incident data with optional filters",
     response_description="List of district discipline incident data")
 @cache_response("safety_district_discipline_incident")
-async def get_district_discipline_incidents(
+def get_district_discipline_incidents(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -554,7 +554,7 @@ async def get_district_discipline_incidents(
     description="Retrieves district-level discipline count data with optional filters",
     response_description="List of district discipline count data")
 @cache_response("safety_district_discipline_count")
-async def get_district_discipline_counts(
+def get_district_discipline_counts(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -573,7 +573,7 @@ async def get_district_discipline_counts(
     description="Retrieves district-level bullying data with optional filters",
     response_description="List of district bullying data")
 @cache_response("safety_district_bullying")
-async def get_district_bullying(
+def get_district_bullying(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -592,7 +592,7 @@ async def get_district_bullying(
     description="Retrieves district-level bullying classification data with optional filters",
     response_description="List of district bullying classification data")
 @cache_response("safety_district_bullying_classification")
-async def get_district_bullying_classifications(
+def get_district_bullying_classifications(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -611,7 +611,7 @@ async def get_district_bullying_classifications(
     description="Retrieves district-level bullying impact data with optional filters",
     response_description="List of district bullying impact data")
 @cache_response("safety_district_bullying_impact")
-async def get_district_bullying_impacts(
+def get_district_bullying_impacts(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -630,7 +630,7 @@ async def get_district_bullying_impacts(
     description="Retrieves district-level harassment data with optional filters",
     response_description="List of district harassment data")
 @cache_response("safety_district_harassment")
-async def get_district_harassment(
+def get_district_harassment(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID"),
@@ -649,7 +649,7 @@ async def get_district_harassment(
     description="Retrieves district-level restraint data with optional filters",
     response_description="List of district restraint data")
 @cache_response("safety_district_restraint")
-async def get_district_restraint(
+def get_district_restraint(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID")
@@ -666,7 +666,7 @@ async def get_district_restraint(
     description="Retrieves district-level seclusion data with optional filters",
     response_description="List of district seclusion data")
 @cache_response("safety_district_seclusion")
-async def get_district_seclusion(
+def get_district_seclusion(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID")
@@ -683,7 +683,7 @@ async def get_district_seclusion(
     description="Retrieves district-level safety enrollment data with optional filters",
     response_description="List of district safety enrollment data")
 @cache_response("safety_district_enrollment")
-async def get_district_safety_enrollment(
+def get_district_safety_enrollment(
     session: SessionDep,
     year: Optional[int] = Query(default=None, description="Filter by year"),
     district_id: Optional[int] = Query(default=None, description="Filter by district ID")
