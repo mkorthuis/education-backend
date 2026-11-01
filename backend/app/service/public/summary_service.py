@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from sqlmodel import select
 
 from app.service.internal.llm.llm_factory import LLMFactory
-from app.service.public.assessment_service import AssessmentService
+from app.service.public.assessment_service import AssessmentService, apply_assessment_filters, assessment_data as build_assessment_data
 from app.service.public.finance_service import FinanceService
 from app.service.public.outcome_service import OutcomeService
 from app.service.public.safety_service import SafetyService
@@ -598,7 +598,7 @@ class SummaryService:
             )
             
             # Apply common filters
-            statement = self._apply_common_filters(
+            statement = apply_assessment_filters(
                 statement, 
                 AssessmentDistrict, 
                 year, 
@@ -615,7 +615,7 @@ class SummaryService:
             
             assessments = []
             for district_assmt, district, subgroup, subject, grade in result:
-                assessment_data = self._create_assessment_data(
+                assessment_data = build_assessment_data(
                     district_assmt,
                     district_name=district.name,
                     district_id=district_assmt.district_id_fk
@@ -664,7 +664,7 @@ class SummaryService:
             )
             
             # Apply common filters
-            statement = self._apply_common_filters(
+            statement = apply_assessment_filters(
                 statement, 
                 AssessmentState, 
                 year, 
@@ -677,7 +677,7 @@ class SummaryService:
             
             assessments = []
             for state, subgroup, subject, grade in result:
-                assessment_data = self._create_assessment_data(state)
+                assessment_data = build_assessment_data(state)
                 # Add subgroup and grade information
                 assessment_data.update({
                     "subgroup_name": subgroup.name,
@@ -692,58 +692,3 @@ class SummaryService:
                 status_code=500,
                 detail=f"Failed to fetch state assessment data: {str(e)}"
             )
-    
-    def _apply_common_filters(self, statement, model, year=None, assessment_subgroup_id=None, 
-                             assessment_subject_id=None, grade_id=None):
-        """Apply common filters to assessment queries"""
-        if year is not None:
-            statement = statement.where(model.year == year)
-            
-        if assessment_subgroup_id is not None:
-            statement = statement.where(model.assessment_subgroup_id_fk == assessment_subgroup_id)
-            
-        if assessment_subject_id is not None:
-            statement = statement.where(model.assessment_subject_id_fk == assessment_subject_id)
-            
-        if grade_id is not None:
-            if grade_id == 999:
-                # Special case: grade_id 999 searches for NULL grade_id_fk
-                statement = statement.where(model.grade_id_fk.is_(None))
-            else:
-                statement = statement.where(model.grade_id_fk == grade_id)
-            
-        return statement
-    
-    def _create_assessment_data(self, 
-                               assessment_model,
-                               district_name: Optional[str] = None,
-                               school_name: Optional[str] = None,
-                               district_id: Optional[int] = None,
-                               school_id: Optional[int] = None) -> Dict[str, Any]:
-        """Create assessment data dictionary from assessment model"""
-        return {
-            "id": assessment_model.id,
-            "year": assessment_model.year,
-            "district_id": district_id,
-            "school_id": school_id,
-            "assessment_subgroup_id": assessment_model.assessment_subgroup_id_fk,
-            "assessment_subject_id": assessment_model.assessment_subject_id_fk,
-            "grade_id": assessment_model.grade_id_fk,
-            "total_fay_students_low": assessment_model.total_fay_students_low,
-            "total_fay_students_high": assessment_model.total_fay_students_high,
-            "level_1_percentage": assessment_model.level_1_percentage,
-            "level_1_percentage_exception": assessment_model.level_1_percentage_exception,
-            "level_2_percentage": assessment_model.level_2_percentage,
-            "level_2_percentage_exception": assessment_model.level_2_percentage_exception,
-            "level_3_percentage": assessment_model.level_3_percentage,
-            "level_3_percentage_exception": assessment_model.level_3_percentage_exception,
-            "level_4_percentage": assessment_model.level_4_percentage,
-            "level_4_percentage_exception": assessment_model.level_4_percentage_exception,
-            "above_proficient_percentage": assessment_model.above_proficient_percentage,
-            "above_proficient_percentage_exception": assessment_model.above_proficient_percentage_exception,
-            "participate_percentage": assessment_model.participate_percentage,
-            "mean_sgp": assessment_model.mean_sgp,
-            "average_score": assessment_model.average_score,
-            "district_name": district_name,
-            "school_name": school_name
-        } 

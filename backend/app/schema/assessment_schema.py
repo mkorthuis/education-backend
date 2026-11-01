@@ -1,12 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List
-from enum import Enum
 
-
-class AssessmentException(str, Enum):
-    TOO_FEW_SAMPLES = "TOO_FEW_SAMPLES"
-    SCORE_UNDER_10 = "SCORE_UNDER_10"
-    SCORE_OVER_90 = "SCORE_OVER_90"
+from app.model.assessment import AssessmentException
 
 
 class AssessmentSubgroupGet(BaseModel):
