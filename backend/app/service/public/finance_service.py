@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Dict, List, Optional
 from sqlmodel import Session, select
 from fastapi import HTTPException
 
@@ -26,20 +26,18 @@ from app.schema.finance_schema import (
 )
 
 class FinanceService:
-    def get_balance_sheets(self, session: Session, doe_form_id: int) -> List[BalanceSheet]:
-        """Get balance sheets for a DOE form."""
-        statement = select(BalanceSheet).where(BalanceSheet.doe_form_id_fk == doe_form_id)
-        return session.exec(statement).all()
-    
-    def get_revenues(self, session: Session, doe_form_id: int) -> List[Revenue]:
-        """Get revenues for a DOE form."""
-        statement = select(Revenue).where(Revenue.doe_form_id_fk == doe_form_id)
-        return session.exec(statement).all()
-    
-    def get_expenditures(self, session: Session, doe_form_id: int) -> List[Expenditure]:
-        """Get expenditures for a DOE form."""
-        statement = select(Expenditure).where(Expenditure.doe_form_id_fk == doe_form_id)
-        return session.exec(statement).all()
+    def _rows_by_form(self, session: Session, model, doe_form_ids: List[int], order_columns: tuple) -> Dict[int, list]:
+        """
+        One query for the rows of all given DOE forms, grouped by form.
+
+        Within a form, rows are ordered by order_columns: the table's unique index columns,
+        which is the order the per-form index scans returned before this was batched.
+        """
+        statement = select(model).where(model.doe_form_id_fk.in_(doe_form_ids)).order_by(*order_columns)
+        rows_by_form: Dict[int, list] = {}
+        for row in session.exec(statement).all():
+            rows_by_form.setdefault(row.doe_form_id_fk, []).append(row)
+        return rows_by_form
     
     def _enhance_balance_sheets(self, balance_sheets: List[BalanceSheet]) -> List[BalanceSheetGet]:
         """Enhance balance sheets with related data."""
@@ -76,7 +74,7 @@ class FinanceService:
         Args:
             session: The database session
             district_id: The district ID to get the report for
-            year: Optional year to filter by. If not provided, returns the most recent report.
+            year: Optional year to filter by. If not provided, returns every year's report, newest first.
         
         Returns:
             List[FinancialReportGet]: A list of comprehensive financial reports for the district
@@ -95,7 +93,7 @@ class FinanceService:
                     detail=f"Financial report not found for district ID {district_id} and year {year}"
                 )
         else:
-            # If year is not provided, get the most recent DOE form for the district
+            # If year is not provided, get all of the district's DOE forms, newest first
             statement = select(DOEForm).where(
                 DOEForm.district_id_fk == district_id
             ).order_by(DOEForm.year.desc())
@@ -107,16 +105,22 @@ class FinanceService:
                     detail=f"No financial reports found for district ID {district_id}"
                 )
         
+        # Related data for all forms at once (one query per table instead of four per form)
+        form_ids = [doe_form.id for doe_form in doe_forms]
+        balance_sheets_by_form = self._rows_by_form(session, BalanceSheet, form_ids, (
+            BalanceSheet.doe_form_id_fk, BalanceSheet.balance_entry_type_id_fk, BalanceSheet.balance_fund_type_id_fk))
+        revenues_by_form = self._rows_by_form(session, Revenue, form_ids, (
+            Revenue.doe_form_id_fk, Revenue.revenue_entry_type_id_fk, Revenue.revenue_fund_type_id_fk))
+        expenditures_by_form = self._rows_by_form(session, Expenditure, form_ids, (
+            Expenditure.doe_form_id_fk, Expenditure.expenditure_entry_type_id_fk, Expenditure.expenditure_fund_type_id_fk))
+        adm_by_form = self._rows_by_form(session, DOEFormADM, form_ids, (DOEFormADM.doe_form_id_fk, DOEFormADM.id))
+
         results = []
         for doe_form in doe_forms:
-            # Get related data
-            balance_sheets = self.get_balance_sheets(session, doe_form.id)
-            revenues = self.get_revenues(session, doe_form.id)
-            expenditures = self.get_expenditures(session, doe_form.id)
-            
-            # Get ADM data if available
-            statement = select(DOEFormADM).where(DOEFormADM.doe_form_id_fk == doe_form.id)
-            adm = session.exec(statement).first()
+            balance_sheets = balance_sheets_by_form.get(doe_form.id, [])
+            revenues = revenues_by_form.get(doe_form.id, [])
+            expenditures = expenditures_by_form.get(doe_form.id, [])
+            adm = adm_by_form.get(doe_form.id, [None])[0]
             
             # Enhance data with related entities
             enhanced_balance_sheets = self._enhance_balance_sheets(balance_sheets)

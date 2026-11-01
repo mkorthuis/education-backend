@@ -48,16 +48,16 @@ class MeasurementService:
         # Extract unique (measurement_type_id, year) pairs
         type_year_pairs = set((m.measurement_type_id_fk, m.year) for m in measurements)
         
-        # Query for state targets
+        # One query for every pair's target (unique per type and year) instead of one per pair
+        statement = select(MeasurementStateTarget).where(
+            MeasurementStateTarget.measurement_type_id_fk.in_({type_id for type_id, _ in type_year_pairs}),
+            MeasurementStateTarget.year.in_({year for _, year in type_year_pairs})
+        )
         targets = {}
-        for type_id, year in type_year_pairs:
-            statement = select(MeasurementStateTarget).where(
-                MeasurementStateTarget.measurement_type_id_fk == type_id,
-                MeasurementStateTarget.year == year
-            )
-            target = session.exec(statement).first()
-            if target:
-                targets[(type_id, year)] = target.field
+        for target in session.exec(statement).all():
+            key = (target.measurement_type_id_fk, target.year)
+            if key in type_year_pairs:
+                targets[key] = target.field
                 
         return targets
 
