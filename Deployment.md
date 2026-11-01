@@ -9,7 +9,7 @@ brew install heroku/brew/heroku
 heroku login
 
 # Create new Heroku app
-heroku create nh-facts
+heroku create education-backend --team nh-facts
 
 # Set stack to container
 heroku stack:set container
@@ -103,7 +103,7 @@ heroku pg:diagnose
 
 #Connecting locally to the database
 # Displays maintenance database,host, port, user, and password
-heroku pg:credentials:url DATABASE -a nh-facts
+heroku pg:credentials:url DATABASE -a education-backend
 
 ```
 
@@ -119,9 +119,10 @@ heroku ps
 ## 7. Important Notes
 
 1. **Process Management**:
-   - The application runs using the start.sh script
-   - Uvicorn runs with 4 workers
+   - The application runs using the start.sh script (Redis, then `scripts/start-heroku.sh`)
+   - Uvicorn runs with 2 workers
    - The PORT is automatically set by Heroku
+   - Migrations (`alembic upgrade head`) run in the release phase defined in `heroku.yml`: once per deploy, before the new web dynos start. If they fail, the deploy stops and the previous release keeps serving; see `heroku releases` and `heroku releases:output`.
 
 2. **Database**:
    - Using Heroku Postgres essential-1 tier
@@ -137,7 +138,7 @@ heroku ps
 4. **Troubleshooting**:
    - Check logs for startup issues
    - Verify environment variables with `heroku config`
-   - Ensure database migrations are complete
+   - Check the release phase output for migration errors: `heroku releases:output`
    - Monitor process status for crashes
 
 ## 8. Useful Commands

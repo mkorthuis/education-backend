@@ -6,9 +6,7 @@ echo "Current directory: $(pwd)"
 echo "Python path: $PYTHONPATH"
 echo "Port: $PORT"
 
-# Run migrations
-echo "Running database migrations..."
-python -m alembic upgrade head &
+# Migrations run in Heroku's release phase (heroku.yml), once per deploy, before this starts
 
 # Run uvicorn with reduced workers and optimized timeout flags
 echo "Starting uvicorn with optimized settings..."

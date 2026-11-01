@@ -7,3 +7,10 @@ setup:
 build:
   docker:
     web: ./backend/Dockerfile.heroku
+
+# Runs once per deploy, in the web image, before the new web dynos start.
+# If the migrations fail, the deploy stops and the running release keeps serving.
+release:
+  image: web
+  command:
+    - python -m alembic upgrade head
