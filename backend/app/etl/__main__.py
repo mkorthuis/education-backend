@@ -16,6 +16,7 @@ import sys
 from app.core.db import engine
 from app.etl import (
     assessment,
+    education_freedom_account,
     enrollment,
     location,
     measurement,
@@ -24,6 +25,7 @@ from app.etl import (
 
 DATASETS = {
     "assessment": assessment,
+    "education-freedom-account": education_freedom_account,
     "enrollment": enrollment,
     "location": location,
     "measurement": measurement,
