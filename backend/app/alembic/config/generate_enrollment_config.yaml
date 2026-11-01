@@ -2,8 +2,6 @@ file_settings:
   default_input: "../assets/enrollments/****-School Enrollments by Grade Public.xlsx"
   year_start: "2016"
   year_end: "2025"
-  default_output: "output/enrollment_data.sql"
-  sql_cache_dir: "../sql_cache"
   
 excel_settings:
   data_start_row: 9
