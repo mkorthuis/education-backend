@@ -22,6 +22,10 @@ from app.etl import (
     measurement,
     measurement_state_target,
     safety,
+    staff,
+    teacher_education,
+    teacher_salary,
+    teacher_salary_band,
     town_enrollment,
 )
 
@@ -33,6 +37,10 @@ DATASETS = {
     "measurement": measurement,
     "measurement-state-target": measurement_state_target,
     "safety": safety,
+    "staff": staff,
+    "teacher-education": teacher_education,
+    "teacher-salary": teacher_salary,
+    "teacher-salary-band": teacher_salary_band,
     "town-enrollment": town_enrollment,
 }
 

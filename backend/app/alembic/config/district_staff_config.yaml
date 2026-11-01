@@ -1,9 +1,9 @@
 file_settings:
-  district_staff_file: '../assets/staff/staff-count/****-FTE-Staff.xlsx'
+  default_input: '../assets/staff/staff-count/****-FTE-Staff.xlsx'
   sheet_name: 'Staff Full-time Equivalent by D'
   start_row: 8
-  years: [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
-  sql_cache_dir: '../sql_cache'
+  year_start: 2012
+  year_end: 2025
 
 column_mappings:
   district_id: 2

@@ -1,9 +1,12 @@
 file_settings:
-  teacher_salary_band_file: '../assets/staff/teacher-starting-salary/****-Teacher-Starting.xlsx'
+  # The first of these extensions that exists is used
+  default_input: '../assets/staff/teacher-starting-salary/****-Teacher-Starting'
+  extensions: ['.xlsx', '.xls']
   # We'll process the first sheet by default
   start_row: 8
-  years: [2024]  # Currently only processing 2024, can add more years in the future
-  sql_cache_dir: '../sql_cache'
+  # Currently only processing 2024, can add more years in the future
+  year_start: 2024
+  year_end: 2024
 
 column_mappings:
   district_id: 2
