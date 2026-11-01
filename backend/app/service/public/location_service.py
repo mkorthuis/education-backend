@@ -1,5 +1,6 @@
-from typing import List, Optional
-from sqlmodel import Session, select
+from typing import Dict, List, Optional
+from sqlalchemy.orm import selectinload
+from sqlmodel import Session, func, select
 from fastapi import HTTPException
 
 from app.model.location import SAU, District, Region, SchoolType, Grade, Town, School
@@ -29,7 +30,8 @@ class LocationService:
             return []
         
         # If no district_id filter, return all SAUs
-        return [SAUGet.from_orm(sau) for sau in session.exec(select(SAU)).all()]
+        statement = select(SAU).options(selectinload(SAU.staff))
+        return [SAUGet.from_orm(sau) for sau in session.exec(statement).all()]
 
     def get_sau_by_id(self, session: Session, sau_id: int) -> SAUGet:
         """Get SAU by ID."""
@@ -46,7 +48,8 @@ class LocationService:
     ) -> List[DistrictGet]:
         """Get districts, optionally filtering by public status and/or school ID."""
         
-        statement = select(District)
+        # Towns and grades are loaded for all districts at once instead of per district
+        statement = select(District).options(selectinload(District.towns), selectinload(District.grades))
         
         # Apply filters
         if is_public is not None:
@@ -110,17 +113,19 @@ class LocationService:
         district_id: Optional[int] = None
     ) -> List[SchoolGet]:
         """Get all schools, optionally filtering by district ID."""
-        statement = select(School)
+        # Grades and school type are loaded for all schools at once instead of per school
+        statement = select(School).options(selectinload(School.grades), selectinload(School.school_type))
         
         if district_id is not None:
             statement = statement.where(School.district_id_fk == district_id)
             
         schools = session.exec(statement).all()
+        enrollments = self._enrollments_by_school(session, [school.id for school in schools])
         result = []
         
         for school in schools:
             school_data = SchoolGet.from_orm(school)
-            self._add_latest_enrollment_data(session, school_data)
+            self._set_latest_enrollment(school_data, enrollments.get(school.id, []))
             result.append(school_data)
             
         return result
@@ -132,20 +137,31 @@ class LocationService:
             raise HTTPException(status_code=404, detail="School not found")
         
         school_data = SchoolGet.from_orm(school)
-        self._add_latest_enrollment_data(session, school_data)
+        enrollments = self._enrollments_by_school(session, [school.id])
+        self._set_latest_enrollment(school_data, enrollments.get(school.id, []))
         return school_data
 
-    def _add_latest_enrollment_data(self, session: Session, school_data: SchoolGet) -> None:
-        """Add latest enrollment data to school information."""
-        # Get all enrollment data for this school in a single query
+    def _enrollments_by_school(self, session: Session, school_ids: List[int]) -> Dict[int, list]:
+        """The given schools' (enrollment, grade) rows for each school's latest year, in one query, grouped by school."""
+        if not school_ids:
+            return {}
+        latest = select(
+            SchoolEnrollment.school_id_fk, func.max(SchoolEnrollment.year).label("year")
+        ).where(
+            SchoolEnrollment.school_id_fk.in_(school_ids)
+        ).group_by(SchoolEnrollment.school_id_fk).subquery()
         statement = select(SchoolEnrollment, Grade).join(
             Grade, SchoolEnrollment.grade_id_fk == Grade.id
-        ).where(
-            SchoolEnrollment.school_id_fk == school_data.id
+        ).join(
+            latest, (SchoolEnrollment.school_id_fk == latest.c.school_id_fk) & (SchoolEnrollment.year == latest.c.year)
         )
-        
-        enrollments = session.exec(statement).all()
-        
+        by_school: Dict[int, list] = {}
+        for enrollment, grade in session.exec(statement).all():
+            by_school.setdefault(enrollment.school_id_fk, []).append((enrollment, grade))
+        return by_school
+
+    def _set_latest_enrollment(self, school_data: SchoolGet, enrollments: list) -> None:
+        """Set a school's enrollment by grade for its latest year, from its (enrollment, grade) rows."""
         if not enrollments:
             school_data.latest_enrollment = {}
             school_data.enrollment = {}
@@ -228,13 +244,13 @@ class LocationService:
             
             # Then get the towns with those IDs
             if town_ids:
-                statement = select(Town).where(Town.id.in_(town_ids))
+                statement = select(Town).where(Town.id.in_(town_ids)).options(selectinload(Town.districts))
                 towns = session.exec(statement).all()
             else:
                 towns = []
         else:
             # If no district_id filter, get all towns
-            towns = session.exec(select(Town)).all()
+            towns = session.exec(select(Town).options(selectinload(Town.districts))).all()
         
         result = []
         

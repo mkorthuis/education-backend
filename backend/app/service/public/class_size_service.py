@@ -22,25 +22,25 @@ logger = logging.getLogger(__name__)
 class ClassSizeService:
     MEASUREMENT_NAME = "Average Class Size"
 
-    # Helper to fetch measurement value
-    def _fetch_all_grade(self, session: Session, *, year: int, school_id: Optional[int] = None, district_id: Optional[int] = None) -> Optional[float]:
-        try:
-            stmt = select(Measurement.field).join(
-                MeasurementType, Measurement.measurement_type_id_fk == MeasurementType.id
-            ).where(
-                MeasurementType.name == self.MEASUREMENT_NAME,
-                Measurement.year == year,
-            )
-            if school_id is not None:
-                stmt = stmt.where(Measurement.school_id_fk == school_id)
-            if district_id is not None:
-                stmt = stmt.where(Measurement.district_id_fk == district_id)
-
-            result = session.exec(stmt).first()
-            return result if result is not None else None
-        except Exception as e:
-            logger.error(f"Error fetching measurement value: {e}")
-            return None
+    def _all_grades_by_entity(self, session: Session, entity_column, entity_ids: set, years: set) -> dict:
+        """
+        "Average Class Size" measurement values for the given schools or districts and years, in one
+        query, keyed by (entity id, year). entity_column is Measurement.school_id_fk or
+        Measurement.district_id_fk. The first value per key wins, as the per-row lookup's .first() did.
+        """
+        if not entity_ids:
+            return {}
+        stmt = select(entity_column, Measurement.year, Measurement.field).join(
+            MeasurementType, Measurement.measurement_type_id_fk == MeasurementType.id
+        ).where(
+            MeasurementType.name == self.MEASUREMENT_NAME,
+            entity_column.in_(entity_ids),
+            Measurement.year.in_(years),
+        )
+        values = {}
+        for entity_id, year, value in session.exec(stmt).all():
+            values.setdefault((entity_id, year), value)
+        return values
 
     # School-level
     def get_school_class_size(
@@ -62,14 +62,13 @@ class ClassSizeService:
             if school_id is not None:
                 stmt = stmt.where(SchoolClassSize.school_id_fk == school_id)
 
-            result = session.exec(stmt)
+            rows = session.exec(stmt).all()
+            all_grades = self._all_grades_by_entity(
+                session, Measurement.school_id_fk, {cs.school_id_fk for cs, _ in rows}, {cs.year for cs, _ in rows}
+            )
             response: List[SchoolClassSizeGet] = []
-            for cs, school in result:
-                all_grade_val = self._fetch_all_grade(
-                    session,
-                    year=cs.year,
-                    school_id=cs.school_id_fk,
-                )
+            for cs, school in rows:
+                all_grade_val = all_grades.get((cs.school_id_fk, cs.year))
                 data = {
                     "id": cs.id,
                     "school_id": cs.school_id_fk,
@@ -101,14 +100,13 @@ class ClassSizeService:
             if district_id is not None:
                 stmt = stmt.where(DistrictClassSize.district_id_fk == district_id)
 
-            result = session.exec(stmt)
+            rows = session.exec(stmt).all()
+            all_grades = self._all_grades_by_entity(
+                session, Measurement.district_id_fk, {cs.district_id_fk for cs in rows}, {cs.year for cs in rows}
+            )
             response: List[DistrictClassSizeGet] = []
-            for cs in result:
-                all_grade_val = self._fetch_all_grade(
-                    session,
-                    year=cs.year,
-                    district_id=cs.district_id_fk,
-                )
+            for cs in rows:
+                all_grade_val = all_grades.get((cs.district_id_fk, cs.year))
                 data = {
                     "id": cs.id,
                     "district_id": cs.district_id_fk,
