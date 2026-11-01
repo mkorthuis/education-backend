@@ -78,22 +78,24 @@ class CacheService:
         return f"{settings.CACHE_KEY_PREFIX}{prefix}:{key_hash}"
 
     def _serialize_value(self, value: Any) -> str:
-        """Serialize a value to JSON, properly handling Pydantic models"""
+        """
+        Serialize a value to JSON.
+
+        Pydantic models are dumped in JSON mode (datetimes become ISO strings) and by alias, so a
+        cache hit validates against the response model on the same keys as the original response.
+        Anything else JSON can't encode (e.g. a datetime in a plain dict) is written with str().
+        """
+        return json.dumps(self._to_jsonable(value), default=str)
+
+    def _to_jsonable(self, value: Any) -> Any:
+        """Dump Pydantic models (also inside lists and dicts) to JSON-compatible values."""
+        if isinstance(value, BaseModel):
+            return value.model_dump(mode="json", by_alias=True)
         if isinstance(value, list):
-            # Handle lists of Pydantic models
-            serialized_list = []
-            for item in value:
-                if isinstance(item, BaseModel):
-                    serialized_list.append(item.model_dump())
-                else:
-                    serialized_list.append(item)
-            return json.dumps(serialized_list)
-        elif isinstance(value, BaseModel):
-            # Handle single Pydantic model
-            return json.dumps(value.model_dump())
-        else:
-            # Handle other types
-            return json.dumps(value)
+            return [self._to_jsonable(item) for item in value]
+        if isinstance(value, dict):
+            return {key: self._to_jsonable(item) for key, item in value.items()}
+        return value
 
     def _deserialize_value(self, value: str, expected_type: Optional[type] = None) -> Any:
         """Deserialize a value from JSON"""
@@ -173,7 +175,7 @@ class CacheService:
             return {
                 "enabled": True,
                 "connected": True,
-                "total_keys": info.get("db0", {}).get("keys", 0),
+                "total_keys": info.get(f"db{settings.REDIS_DB}", {}).get("keys", 0),
                 "memory_usage": info.get("used_memory_human", "N/A"),
                 "uptime": info.get("uptime_in_seconds", 0)
             }
