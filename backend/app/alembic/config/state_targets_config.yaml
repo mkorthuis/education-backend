@@ -1,3 +1,6 @@
 file_settings:
+  # One file holds every year's targets
+  year_start: "2019"
+  year_end: "2024"
   state_targets_file:
-    path: "../assets/state_targets.csv" 
+    path: "../assets/state_targets.csv"

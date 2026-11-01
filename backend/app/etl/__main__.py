@@ -17,11 +17,15 @@ from app.core.db import engine
 from app.etl import (
     enrollment,
     location,
+    measurement,
+    measurement_state_target,
 )
 
 DATASETS = {
     "enrollment": enrollment,
     "location": location,
+    "measurement": measurement,
+    "measurement-state-target": measurement_state_target,
 }
 
 
