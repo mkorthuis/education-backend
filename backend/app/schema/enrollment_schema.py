@@ -1,6 +1,6 @@
-from typing import List, Optional, Dict
+from typing import Optional
 from pydantic import BaseModel, Field
-from app.schema.location_schema import GradeGet, SchoolGet, TownGet
+from app.schema.location_schema import GradeGet
 from datetime import datetime
 
 class SchoolEnrollmentGet(BaseModel):

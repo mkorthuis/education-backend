@@ -64,13 +64,6 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=yourpassword
 POSTGRES_DB=education
 
-# Email
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
-SMTP_PASSWORD=your-app-password
-ADMIN_EMAIL=admin@example.com
-
 # Cache Configuration (Optional)
 CACHE_ENABLED=true
 REDIS_HOST=localhost
@@ -79,8 +72,8 @@ REDIS_DB=0
 REDIS_PASSWORD=
 REDIS_SSL=false
 
-# Optional: AI Integration
-DEFAULT_LLM_PROVIDER=gemini  # Options: claude, openai, gemini
+# Optional: AI Integration (summary endpoints)
+GEMINI_API_KEY=your-gemini-api-key
 ```
 
 ### Running the Application

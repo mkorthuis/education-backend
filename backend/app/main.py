@@ -24,7 +24,6 @@ logger.info("Starting application...")
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.api.v1.main import api_router

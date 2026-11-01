@@ -11,7 +11,7 @@ from app.service.public.outcome_service import OutcomeService
 from app.service.public.safety_service import SafetyService
 from app.service.public.staff_service import StaffService
 from app.service.public.enrollment_service import EnrollmentService
-from app.schema.assessment_schema import AssessmentGet, AssessmentGetSummary, AssessmentSubgroupGet, AssessmentSubjectGet
+from app.schema.assessment_schema import AssessmentGetSummary
 from app.model.assessment import AssessmentState, AssessmentDistrict, AssessmentSubgroup, AssessmentSubject
 from app.model.location import District, Grade
 

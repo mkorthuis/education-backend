@@ -1,6 +1,5 @@
-from fastapi import APIRouter, Query, Path, HTTPException
+from fastapi import APIRouter, Query
 from typing import List, Optional
-from uuid import UUID
 
 from app.api.v1.deps import SessionDep
 from app.schema.education_freedom_account_schema import (

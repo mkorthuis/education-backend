@@ -1,4 +1,4 @@
-from typing import List, Optional, Dict, Any
+from typing import List, Optional
 from sqlmodel import Session, select
 from fastapi import HTTPException
 
@@ -14,7 +14,6 @@ from app.model.finance import (
     ExpenditureStateRollup, RevenueStateTotal, ExpenditureStateTotal,
     DOEFormADM, DOEFormADMState
 )
-from app.model.location import District
 from app.schema.finance_schema import (
     DOEFormGet, BalanceSheetGet, RevenueGet, ExpenditureGet,
     FinancialReportGet, AllEntryTypesGet,
@@ -25,17 +24,8 @@ from app.schema.finance_schema import (
     ExpenditureStateRollupGet, RevenueStateTotalGet, ExpenditureStateTotalGet,
     DOEFormADMGet, DOEFormADMStateGet
 )
-from app.schema.location_schema import DistrictGet
 
 class FinanceService:
-    def get_doe_form(self, session: Session, district_id: int, year: int) -> Optional[DOEForm]:
-        """Get DOE form by district_id and year."""
-        statement = select(DOEForm).where(
-            DOEForm.district_id_fk == district_id,
-            DOEForm.year == year
-        )
-        return session.exec(statement)
-    
     def get_balance_sheets(self, session: Session, doe_form_id: int) -> List[BalanceSheet]:
         """Get balance sheets for a DOE form."""
         statement = select(BalanceSheet).where(BalanceSheet.doe_form_id_fk == doe_form_id)
@@ -51,43 +41,7 @@ class FinanceService:
         statement = select(Expenditure).where(Expenditure.doe_form_id_fk == doe_form_id)
         return session.exec(statement).all()
     
-    def get_adm_data(self, session: Session, district_id: int, year: Optional[int] = None) -> List[DOEFormADMGet]:
-        """
-        Get Average Daily Membership (ADM) data for a district, optionally filtered by year.
-        
-        Args:
-            session: The database session
-            district_id: The district ID to get ADM data for
-            year: Optional year to filter by. If not provided, returns data for all years.
-            
-        Returns:
-            List[DOEFormADMGet]: A list of ADM data objects
-        """
-        # Build a join query to get ADM data along with DOE form info
-        statement = select(DOEFormADM).join(DOEForm, DOEFormADM.doe_form_id_fk == DOEForm.id).where(
-            DOEForm.district_id_fk == district_id
-        )
-        
-        # Filter by year if provided
-        if year is not None:
-            statement = statement.where(DOEForm.year == year)
-            
-        # Order by year (most recent first)
-        statement = statement.order_by(DOEForm.year.desc())
-        
-        # Execute query
-        results = session.exec(statement).all()
-        
-        if not results and year is not None:
-            raise HTTPException(
-                status_code=404,
-                detail=f"ADM data not found for district ID {district_id} and year {year}"
-            )
-            
-        # Convert to response schema
-        return [DOEFormADMGet.model_validate(result.model_dump()) for result in results]
-    
-    def _enhance_balance_sheets(self, session: Session, balance_sheets: List[BalanceSheet]) -> List[BalanceSheetGet]:
+    def _enhance_balance_sheets(self, balance_sheets: List[BalanceSheet]) -> List[BalanceSheetGet]:
         """Enhance balance sheets with related data."""
         result = []
         for bs in balance_sheets:
@@ -96,7 +50,7 @@ class FinanceService:
             
         return result
     
-    def _enhance_revenues(self, session: Session, revenues: List[Revenue]) -> List[RevenueGet]:
+    def _enhance_revenues(self, revenues: List[Revenue]) -> List[RevenueGet]:
         """Enhance revenues with related data."""
         result = []
         for rev in revenues:
@@ -105,7 +59,7 @@ class FinanceService:
             
         return result
     
-    def _enhance_expenditures(self, session: Session, expenditures: List[Expenditure]) -> List[ExpenditureGet]:
+    def _enhance_expenditures(self, expenditures: List[Expenditure]) -> List[ExpenditureGet]:
         """Enhance expenditures with related data."""
         result = []
         for exp in expenditures:
@@ -165,9 +119,9 @@ class FinanceService:
             adm = session.exec(statement).first()
             
             # Enhance data with related entities
-            enhanced_balance_sheets = self._enhance_balance_sheets(session, balance_sheets)
-            enhanced_revenues = self._enhance_revenues(session, revenues)
-            enhanced_expenditures = self._enhance_expenditures(session, expenditures)
+            enhanced_balance_sheets = self._enhance_balance_sheets(balance_sheets)
+            enhanced_revenues = self._enhance_revenues(revenues)
+            enhanced_expenditures = self._enhance_expenditures(expenditures)
             
             doe_form_dto = DOEFormGet.model_validate(doe_form.model_dump())
             

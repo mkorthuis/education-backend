@@ -1,5 +1,5 @@
 from typing import List, Optional
-from sqlmodel import Session, select, func
+from sqlmodel import Session, select
 from fastapi import HTTPException
 
 from app.model.education_freedom_account import (
@@ -8,7 +8,7 @@ from app.model.education_freedom_account import (
     EducationFreedomAccountEntry,
     EducationFreedomAccountEntryState
 )
-from app.model.location import Town, TownDistrictLink
+from app.model.location import TownDistrictLink
 from app.schema.education_freedom_account_schema import (
     EducationFreedomAccountEntryGet,
     EFAEntryTypeGet,

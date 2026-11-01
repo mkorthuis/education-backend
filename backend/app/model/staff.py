@@ -1,11 +1,10 @@
 from typing import Optional, List, TYPE_CHECKING
 from sqlmodel import Field, Relationship, SQLModel
-from decimal import Decimal
 from .base import BaseMixin
 
 # Use TYPE_CHECKING to avoid circular imports
 if TYPE_CHECKING:
-    from .location import School, District
+    from .location import District
 
 
 # -------------------- Type/Classification Models --------------------

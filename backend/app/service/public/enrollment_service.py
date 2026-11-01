@@ -1,9 +1,9 @@
 from typing import List, Optional
-from sqlmodel import Session, select, func, and_, join
+from sqlmodel import Session, select, func, and_
 from fastapi import HTTPException
 
 from app.model.enrollment import SchoolEnrollment, StateEnrollment, TownEnrollment, TownEnrollmentState
-from app.model.location import Town, TownDistrictLink
+from app.model.location import TownDistrictLink
 from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, TownEnrollmentGet, TownEnrollmentStateGet
 
 class EnrollmentService:

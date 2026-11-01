@@ -1,5 +1,4 @@
-import secrets
-from typing import Annotated, Any, Literal, Optional
+from typing import Annotated, Any, Optional
 
 from pydantic import (
     AnyUrl,
@@ -25,10 +24,6 @@ class Settings(BaseSettings):
         extra="ignore",
     )
     API_V1_STR: str = "/api/v1"
-    SECRET_KEY: str = secrets.token_urlsafe(32)
-    # 60 minutes * 24 hours * 8 days = 8 days
-    ACCESS_TOKEN_EXPIRE_SECONDS: int = 60 * 15
-    REFRESH_TOKEN_EXPIRE_SECONDS: int = 60 * 60 * 24
     PROJECT_NAME: str
     FRONTEND_HOST: str = "https://localhost:5174"
 
@@ -77,15 +72,6 @@ class Settings(BaseSettings):
     CACHE_DEFAULT_TTL: int = 3600  # 1 hour default TTL
     CACHE_KEY_PREFIX: str = "education_api:"
 
-    SMTP_HOST: str = "smtp.gmail.com"  # Default to Gmail SMTP
-    SMTP_PORT: int = 587
-    SMTP_USER: str
-    SMTP_PASSWORD: str
-    ADMIN_EMAIL: str
-
-    # Add default LLM provider setting
-    DEFAULT_LLM_PROVIDER: Literal["claude", "openai", "gemini"] = "gemini"
-    
     # Gemini API Configuration
     GEMINI_API_KEY: str = ""
     GEMINI_MODEL: str = "gemini-2.0-flash"

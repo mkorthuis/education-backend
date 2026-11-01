@@ -1,7 +1,7 @@
 from sqlmodel import Field, Relationship, SQLModel
 from .base import BaseMixin
 from .location import School, Grade, Town
-from typing import Optional, List, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .location import Town

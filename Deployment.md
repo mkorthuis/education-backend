@@ -34,7 +34,6 @@ heroku config:set PROJECT_NAME="NH Facts"
 heroku config:set STACK_NAME=nh-facts-ai
 heroku config:set FRONTEND_HOST=https://nh-facts.michaelkorthuis.com
 heroku config:set BACKEND_CORS_ORIGINS="http://localhost,http://localhost:5174,https://localhost,https://localhost:5174,https://nh-facts.michaelkorthuis.com,https://www.nh-facts.com"
-heroku config:set SECRET_KEY=updatethis
 
 # Get DATABASE_URL parts and set database configuration
 db_host=$(heroku config:get DATABASE_URL | sed 's/.*@\([^:]*\).*/\1/')
@@ -55,17 +54,8 @@ heroku config:set DOCKER_IMAGE_BACKEND=nh-facts-backend
 heroku config:set PYTHONPATH=/app
 heroku config:set PYTHONUNBUFFERED=1
 
-# Default LLM provider
-heroku config:set DEFAULT_LLM_PROVIDER=claude
-
 heroku config:set WEB_CONCURRENCY=4 WORKER_CLASS=uvicorn.workers.UvicornWorker TIMEOUT=120
 
-# SMTP
-heroku config:set SMTP_HOST=smtp.gmail.com
-heroku config:set SMTP_PORT=587
-heroku config:set SMTP_USER=me@michaelkorthuis.com
-heroku config:set SMTP_PASSWORD=wcyevfbquomivgip
-heroku config:set ADMIN_EMAIL=me@michaelkorthuis.com
 
 # Verify configuration
 heroku config

@@ -1,5 +1,5 @@
-from typing import Optional, TYPE_CHECKING, List
-from sqlmodel import Field, Relationship, SQLModel
+from typing import Optional, TYPE_CHECKING
+from sqlmodel import Field, Relationship
 from .base import BaseMixin
 
 # Avoid circular imports for type hints

@@ -8,7 +8,7 @@ from app.model.class_size import (
     DistrictClassSize,
     StateClassSize,
 )
-from app.model.location import School, District
+from app.model.location import School
 from app.model.measurement import Measurement, MeasurementType
 from app.schema.class_size_schema import (
     SchoolClassSizeGet,

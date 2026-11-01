@@ -1,8 +1,7 @@
-from typing import List, Optional, Dict
-from sqlmodel import Session, select, func
+from typing import List, Optional
+from sqlmodel import Session, select
 from fastapi import HTTPException
 
-from app.core.context import UserContext
 from app.model.location import SAU, District, Region, SchoolType, Grade, Town, School
 from app.model.enrollment import SchoolEnrollment
 from app.schema.location_schema import (
