@@ -15,6 +15,7 @@ import sys
 
 from app.core.db import engine
 from app.etl import (
+    assessment,
     enrollment,
     location,
     measurement,
@@ -22,6 +23,7 @@ from app.etl import (
 )
 
 DATASETS = {
+    "assessment": assessment,
     "enrollment": enrollment,
     "location": location,
     "measurement": measurement,

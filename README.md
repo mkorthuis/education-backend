@@ -144,6 +144,8 @@ PYTHONPATH=. python -m app.etl load enrollment --year 2026
 ```
 Existing rows are updated, so loading a year twice is safe. Dependent materialized views are refreshed. `location` (schools, districts, SAUs, towns) loads the state's current school, district and SAU lists as one year: schools missing from a newer list are kept, SAU staff and grade/town links are replaced by the list. Load it before the year's other datasets so new schools exist. Fresh databases get every configured year from the migrations, which call the same loader. On Heroku, run it in a one-off dyno (`heroku run`), then restart the web dynos to clear the API cache.
 
+Assessment results (`load assessment`): save the file as `assets/assessments/assessments-YYYY.csv` and raise `year_end` in `assessment_data_config.yaml`. The file's state, district and school rows replace that year's rows (reloaded rows get new ids, since "all grades" rows have a NULL grade and can't be upserted). District and state rows are generated from school rows only for 2009-2017, whose files have school rows only. Rows for districts and schools whose names don't match the database are skipped and listed in a warning; check it, since those schools won't appear in the API.
+
 ### Dependency Management
 
 Updating requirements.txt:
