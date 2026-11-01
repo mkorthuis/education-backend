@@ -21,6 +21,7 @@ from app.etl import (
     location,
     measurement,
     measurement_state_target,
+    safety,
 )
 
 DATASETS = {
@@ -30,6 +31,7 @@ DATASETS = {
     "location": location,
     "measurement": measurement,
     "measurement-state-target": measurement_state_target,
+    "safety": safety,
 }
 
 
