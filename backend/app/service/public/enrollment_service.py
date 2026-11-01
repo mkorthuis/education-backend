@@ -1,4 +1,5 @@
 from typing import List, Optional
+from sqlalchemy.orm import selectinload
 from sqlmodel import Session, select, func, and_
 from fastapi import HTTPException
 
@@ -24,7 +25,9 @@ class EnrollmentService:
         Returns:
             List of school enrollments
         """
-        statement = select(SchoolEnrollment).where(SchoolEnrollment.school_id_fk == school_id)
+        statement = select(SchoolEnrollment).where(
+            SchoolEnrollment.school_id_fk == school_id
+        ).options(selectinload(SchoolEnrollment.grade))
         
         if year is not None:
             statement = statement.where(SchoolEnrollment.year == year)
@@ -37,29 +40,19 @@ class EnrollmentService:
         session: Session,
         school_id: int
     ) -> List[SchoolEnrollmentGet]:
-        # First check if the school exists
-        school_exists = session.exec(
-            select(func.count()).where(SchoolEnrollment.school_id_fk == school_id)
-        ).one()
-        
-        if school_exists == 0:
-            raise HTTPException(status_code=404, detail="No enrollment data found for this school")
-        
-        # Get the latest year for which we have enrollment data for this school
-        latest_year = session.exec(
-            select(func.max(SchoolEnrollment.year)).where(SchoolEnrollment.school_id_fk == school_id)
-        ).one()
-        
-        if latest_year is None:
-            return []
-        
-        # Get enrollments for the latest year
+        # Enrollments for the school's latest year, in one query (grades loaded in one batch)
+        latest_year = select(func.max(SchoolEnrollment.year)).where(
+            SchoolEnrollment.school_id_fk == school_id
+        ).scalar_subquery()
         statement = select(SchoolEnrollment).where(
             SchoolEnrollment.school_id_fk == school_id,
             SchoolEnrollment.year == latest_year
-        )
+        ).options(selectinload(SchoolEnrollment.grade))
         
         enrollments = session.exec(statement).all()
+        if not enrollments:
+            # The school has no enrollment rows at all
+            raise HTTPException(status_code=404, detail="No enrollment data found for this school")
         return [SchoolEnrollmentGet.from_orm(enrollment) for enrollment in enrollments]
 
     def get_town_enrollments(
@@ -98,27 +91,18 @@ class EnrollmentService:
                     detail=f"Town ID {town_id} is not part of District ID {district_id}"
                 )
         
+        district_towns = select(TownDistrictLink.town_id_fk).where(
+            TownDistrictLink.district_id_fk == district_id
+        )
         if district_id is not None:
-            # Get towns in the district
-            subquery = select(TownDistrictLink.town_id_fk).where(
-                TownDistrictLink.district_id_fk == district_id
-            ).distinct()
-            
-            town_ids = session.exec(subquery).all()
-            
-            if not town_ids:
-                raise HTTPException(
-                    status_code=404, 
-                    detail=f"No towns found in district ID {district_id}"
-                )
-            
-            # Build query with town IDs from the district
+            # Towns in the district, as a subquery (one round trip)
             statement = select(TownEnrollment).where(
-                TownEnrollment.town_id_fk.in_(town_ids)
+                TownEnrollment.town_id_fk.in_(district_towns)
             )
         else:
             # Standard query with no district filter
             statement = select(TownEnrollment)
+        statement = statement.options(selectinload(TownEnrollment.grade))
         
         # Apply additional filters
         if town_id is not None and district_id is None:
@@ -139,6 +123,11 @@ class EnrollmentService:
         # If filtering and nothing found, return 404
         if not enrollments:
             if district_id is not None:
+                if session.exec(district_towns.limit(1)).first() is None:
+                    raise HTTPException(
+                        status_code=404, 
+                        detail=f"No towns found in district ID {district_id}"
+                    )
                 if year is not None:
                     raise HTTPException(
                         status_code=404, 
@@ -210,7 +199,7 @@ class EnrollmentService:
         Returns:
             List of town enrollment state records with grade information
         """
-        statement = select(TownEnrollmentState)
+        statement = select(TownEnrollmentState).options(selectinload(TownEnrollmentState.grade))
         
         # Apply filters if provided
         if year is not None:
