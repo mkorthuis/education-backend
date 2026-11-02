@@ -60,7 +60,8 @@ def fetch_dataset(
     Get one dataset at one level as response dicts.
 
     Selects only the columns the response needs. The joins and filters match the
-    original hand-written queries, so the query plan and row order are unchanged.
+    original hand-written queries. Rows are ordered by id (load order), or by location and
+    year for the materialized views that have no id, so every call returns the same order.
     """
     model = dataset.tables[level]
     label = dataset.level_labels.get(level, f"{level} {dataset.label}")
@@ -107,6 +108,15 @@ def fetch_dataset(
                 statement = statement.where(model.district_id_fk == district_id)
         if type_id is not None:
             statement = statement.where(type_fk == type_id)
+
+        if hasattr(model, "id"):
+            statement = statement.order_by(model.id)
+        else:
+            unit = {"school": "school_id_fk", "district": "district_id_fk"}.get(level)
+            order = ([getattr(model, unit)] if unit else []) + [model.year]
+            if dataset.type_model is not None:
+                order.append(getattr(model, dataset.type_fk))
+            statement = statement.order_by(*order)
 
         rows = []
         for row in session.exec(statement).mappings():

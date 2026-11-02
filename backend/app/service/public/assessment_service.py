@@ -65,7 +65,12 @@ def _assessment_columns(model) -> list:
 
 
 def _rows(session: Session, statement) -> List[Dict[str, Any]]:
-    """Run a statement and return response dicts, with any missing location fields set to None"""
+    """
+    Run a statement and return response dicts, with any missing location fields set to None.
+
+    Callers order by the table's id (load order, i.e. file order): without an ORDER BY,
+    large results come back in a different order on each call when Postgres scans in parallel.
+    """
     empty = {"district_id": None, "school_id": None, "district_name": None, "school_name": None}
     return [{**empty, **row} for row in session.exec(statement).mappings()]
 
@@ -93,7 +98,7 @@ class AssessmentService:
             statement = apply_assessment_filters(
                 statement, AssessmentState, year, assessment_subgroup_id, assessment_subject_id, grade_id
             )
-            return _rows(session, statement)
+            return _rows(session, statement.order_by(AssessmentState.id))
         except Exception:
             raise fail("state assessment data")
 
@@ -124,7 +129,7 @@ class AssessmentService:
             if district_id is not None:
                 statement = statement.where(AssessmentDistrict.district_id_fk == district_id)
 
-            return _rows(session, statement)
+            return _rows(session, statement.order_by(AssessmentDistrict.id))
         except Exception:
             raise fail("district assessment data")
 
@@ -165,7 +170,7 @@ class AssessmentService:
                 # Filter by district through the School model
                 statement = statement.where(School.district_id_fk == district_id)
 
-            return _rows(session, statement)
+            return _rows(session, statement.order_by(AssessmentSchool.id))
         except Exception:
             raise fail("school assessment data")
 
