@@ -195,16 +195,29 @@ def _name(value):
     return " ".join(value.split())
 
 
-def _district_lookup(conn: Connection) -> dict:
-    """District ids by name; the first id wins."""
+def _check_alias_ids(conn: Connection, table: str, ids) -> None:
+    """Fail if the config aliases a name to an id the table doesn't have."""
+    missing = sorted(set(ids) - existing_ids(conn, table))
+    if missing:
+        raise ValueError(f"{CONFIG} aliases names to {table} ids that aren't in the database: {missing}")
+
+
+def _district_lookup(conn: Connection, aliases: dict) -> dict:
+    """District ids by name (the first id wins), plus the config's older names of renamed districts."""
     ids = {}
     for district_id, name in conn.execute(text("SELECT id, name FROM district ORDER BY id")):
         ids.setdefault(_name(name), district_id)
+    _check_alias_ids(conn, "district", aliases.values())
+    ids.update({_name(name): district_id for name, district_id in aliases.items()})
     return ids
 
 
-def _school_lookups(conn: Connection) -> tuple:
-    """School ids by (school name, district name) and by school name; the first id wins."""
+def _school_lookups(conn: Connection, aliases: dict) -> tuple:
+    """
+    School ids by (school name, district name) and by school name; the first id wins. The
+    config's aliases add (school name, district name) pairs from the files for schools since
+    renamed or moved to another district.
+    """
     by_district, by_name = {}, {}
     for school_id, name, district in conn.execute(text(
         "SELECT s.id, s.name, d.name FROM school s LEFT JOIN district d ON s.district_id_fk = d.id ORDER BY s.id"
@@ -212,6 +225,9 @@ def _school_lookups(conn: Connection) -> tuple:
         by_name.setdefault(_name(name), school_id)
         if district is not None:
             by_district.setdefault((_name(name), _name(district)), school_id)
+    _check_alias_ids(conn, "school", [i for schools in aliases.values() for i in schools.values()])
+    by_district.update({(_name(name), _name(district)): school_id
+                        for district, schools in aliases.items() for name, school_id in schools.items()})
     return by_district, by_name
 
 
@@ -264,6 +280,23 @@ def _merge_rows(merged: dict, lookups: tuple, skipped: Counter) -> list:
     return rows
 
 
+def _check_not_found(config: dict, districts: set, schools: set) -> None:
+    """
+    Fail if a file names a district, or a (school, district) pair, that matches nothing and isn't
+    in the config's skipped_districts or skipped_schools (a skipped district's schools are skipped too).
+    """
+    skipped_districts = {_name(d) for d in config.get("skipped_districts") or []}
+    skipped_schools = {(_name(school), _name(district))
+                       for district, schools in (config.get("skipped_schools") or {}).items() for school in schools}
+    unknown = sorted(d for d in districts if _name(d) not in skipped_districts)
+    unknown += sorted(f"{school} ({district})" for school, district in schools
+                      if _name(district) not in skipped_districts
+                      and (_name(school), _name(district)) not in skipped_schools)
+    if unknown:
+        raise ValueError(f"Assessment files name districts or schools that match nothing in the database; add each "
+                         f"to the aliases or skipped lists in {CONFIG}: {unknown}")
+
+
 def load_files(conn: Connection, years: Iterable[int]) -> dict:
     """
     Replace the given years' state, district and school rows with the rows in their files.
@@ -279,12 +312,13 @@ def load_files(conn: Connection, years: Iterable[int]) -> dict:
 
     subgroups = Subgroups(conn)
     grade_ids = lookup_ids(conn, "grades")
-    district_ids = _district_lookup(conn)
+    district_ids = _district_lookup(conn, config.get("district_id_aliases") or {})
     known_districts, known_schools = existing_ids(conn, "district"), known_school_ids(conn)
-    schools = _school_lookups(conn)
+    schools = _school_lookups(conn, config.get("school_id_aliases") or {})
 
     rows = {table: [] for table in TABLES}
     merged, skipped, not_found = {}, Counter(), defaultdict(set)
+    unmatched_districts, unmatched_schools = set(), set()
     for year in years:
         path, encoding, layout = _source(year)
         df = pd.read_csv(path, dtype=str, encoding=encoding)
@@ -344,6 +378,7 @@ def load_files(conn: Connection, years: Iterable[int]) -> dict:
                 if district_id is None:
                     skipped["district not in the database"] += 1
                     not_found["district"].add(row["District"])
+                    unmatched_districts.add(row["District"])
                 else:
                     rows["assessment_district"].append((district_id, *values))
             else:
@@ -360,10 +395,12 @@ def load_files(conn: Connection, years: Iterable[int]) -> dict:
                 if school_id is None:
                     skipped["school not in the database"] += 1
                     not_found["school"].add(f"{name} ({row['District']})")
+                    unmatched_schools.add((name, row["District"]))
                 else:
                     rows["assessment_school"].append((school_id, *values))
 
     rows["assessment_school"].extend(_merge_rows(merged, schools, skipped))
+    _check_not_found(config, unmatched_districts, unmatched_schools)
     if skipped:
         # Rows for districts and schools missing from the database are skipped, as the original migrations did
         logger.warning(f"Assessments {years}: skipped rows: {dict(skipped)}; not found: "

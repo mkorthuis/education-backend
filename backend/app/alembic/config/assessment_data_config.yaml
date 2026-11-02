@@ -11,3 +11,59 @@ school_name_translations:
   "West Running Brook Middle School": "West Running Brook Intermediate School"
   "Allenstown Elementary School": "Allenstown Community School"
   "Armand R. Dupont School": "Allenstown Community School" 
+
+# From 2019 the files name districts and schools instead of numbering them. A row matches the
+# district, or the school in that district, whose current name is the same (ignoring extra
+# spaces). The lists below cover every name in the files that doesn't; any other name stops
+# the load, so a district or school renamed by a newer list can't silently lose its history.
+
+# Older names of renamed districts, by id. Each id is listed next to the name in the 2018
+# assessment file, or for Kreiva (whose files add " District") in the enrollment files.
+district_id_aliases:
+  "Granite State Arts Academy Charter School": 702        # Arts Academy of New Hampshire Chartered Public High School
+  "Kreiva Academy Public Charter School District": 708    # Kreiva Academy Public Charter School
+  "Mill Falls Charter School": 729                        # Mill Falls Montessori Chartered Public School
+
+# Schools by the files' district name and school name, for schools since renamed or moved to
+# another district. Each id is listed next to the name in the 2018 assessment file or the
+# 2019-2025 enrollment files.
+school_id_aliases:
+  "Dover":
+    "Horne Street School": 20445                          # Frances G. Hopkins Elementary School at Horne Street
+  "Granite State Arts Academy Charter School":
+    "Granite State Arts Academy Charter School": 29153    # Arts Academy of New Hampshire Chartered Public High School
+  "Great Bay Charter School":
+    "Great Bay Charter School (M)": 28620                 # Great Bay Charter School (E)
+  "Heartwood Public Charter School":
+    "Heartwood Public Charter School": 29244              # Heartwood Chartered Public School
+  "Kreiva Academy Public Charter School District":
+    "Kreiva Academy Public Charter School (H)": 29192
+    "Kreiva Academy Public Charter School (M)": 29191
+  "Manchester":
+    "Henry J. McLaughlin Middle School": 27595            # Henry J. McLaughlin Jr. Middle School
+    "Weston School": 21515                                # Weston Elementary School
+    "Wilson School": 21640                                # Henry Wilson Elementary School (former)
+  "Conway":
+    "Mountainside Intermediate School": 29271             # Conway Intermediate School
+  "MicroSociety Academy Charter School Foundation":
+    "MicroSociety Academy Charter School Foundation": 29167  # Riverwood Academy Chartered Public School
+  "Mill Falls Charter School":
+    "Mill Falls Charter School": 29040                    # Mill Falls Montessori Chartered Public School
+  "Monadnock Regional":
+    "Cutler School": 21715                                # Cutler Elementary School
+    "Gilsum Elementary School": 21670                     # Gilsum STEAM Academy
+  "Newfound Area":
+    "Bridgewater-Hebron Village School": 27685            # moved to Pasquaney
+    "Bristol Elementary School": 20090                    # Newfound Elementary School at Bristol
+    "New Hampton Community School": 20105                 # Newfound Elementary School at New Hampton
+  "Robert Frost Charter School":
+    "Robert Frost Charter School": 29070                  # Robert Frost Charter School (E)
+  "White Mountains Regional":
+    "White Mountains Regional High School": 21480         # White Mountains Regional Middle High School
+
+# Districts and schools in the files that are deliberately not loaded, as `- "name"` under
+# skipped_districts, and by the files' district name under skipped_schools. The schools of a
+# skipped district are skipped too. Since the former districts and schools were added (D2),
+# every name in the files is loaded.
+skipped_districts: []
+skipped_schools: {}
