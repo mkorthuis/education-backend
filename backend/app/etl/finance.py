@@ -115,8 +115,9 @@ def parse_values(df: pd.DataFrame, config: dict, name: str, year: int, skipped: 
 def parse_adm(df: pd.DataFrame, skipped: Counter) -> Optional[tuple]:
     """
     Average daily membership (elementary, middle, high, total) from columns F-I of the first
-    "AVE DAILY MEMBERSHIP" row; empty cells count as 0. None when the row is missing, or when a
-    cell holds text that isn't a number (the original migration left those forms without ADM).
+    "AVE DAILY MEMBERSHIP" row. Empty cells, and cells with no digits at all (a space, "s", "."
+    typed into an empty cell), count as 0. None when the row is missing, or when a cell holds
+    other text that isn't a number.
     """
     rows = df[df.iloc[:, 0].astype(str).str.strip().str.lower() == "ave daily membership"]
     if rows.empty:
@@ -124,7 +125,8 @@ def parse_adm(df: pd.DataFrame, skipped: Counter) -> Optional[tuple]:
         return None
     cells = [rows.iloc[0, i] for i in (5, 6, 7, 8)]
     try:
-        return tuple(0.0 if pd.isna(cell) else float(cell.replace(',', '')) if isinstance(cell, str) else float(cell)
+        return tuple(0.0 if pd.isna(cell) or (isinstance(cell, str) and not any(c.isdigit() for c in cell))
+                     else float(cell.replace(',', '')) if isinstance(cell, str) else float(cell)
                      for cell in cells)
     except ValueError:
         skipped["forms without ADM: text in an ADM cell"] += 1
@@ -135,17 +137,16 @@ def parse_form(path: str, config: dict, district_id: int, year: int, skipped: Co
     """
     One district's DOE-25 for a year: its values per statement and its ADM.
 
-    The district number is in cell B2. When it is blank the file is taken as the district's;
-    when it names another district the form is skipped, as the original migration did.
+    The district number is in cell B2. The file is named after its district, and when B2 is
+    blank or names another district the file name is used: every such number seen so far is a
+    typo (e.g. Hopkinton's 263 typed as 236), with the form's own heading naming the file's district.
     """
     df = pd.read_excel(path, sheet_name=config["file_settings"]["sheet_name"], engine="openpyxl")
     file_district_id = df.iloc[0, 1]
     if pd.isna(file_district_id):
         skipped["forms without a district number (file name used)"] += 1
     elif int(file_district_id) != district_id:
-        # Typos in the file's district number; the form is skipped, as the original migration did
-        skipped[f"forms skipped, {os.path.basename(path)} has district number {int(file_district_id)}"] += 1
-        return None
+        skipped[f"{os.path.basename(path)} has district number {int(file_district_id)} (file name used)"] += 1
 
     form = {name: parse_values(df, config, name, year, skipped) for name in STATEMENTS}
     form["adm"] = parse_adm(df, skipped)
