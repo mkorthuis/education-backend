@@ -95,36 +95,50 @@ def parse_state_year(df: pd.DataFrame, year: int, config: dict) -> Optional[tupl
     return None
 
 
-def school_ids_by_name(conn: Connection) -> dict:
+def school_ids_by_name(conn: Connection) -> tuple:
     """
-    Map lower-cased, trimmed school names to ids.
+    School ids by (district id, lower-cased trimmed name), and by name alone for names that
+    belong to only one school.
 
-    A few names belong to more than one school (e.g. "Memorial School"). The original
-    migration took the first match of an unordered, sequentially scanned lookup, i.e.
-    the first in table order; reading the table the same way keeps that choice.
+    A few names belong to more than one school ("Memorial School" in Bedford and Sanborn
+    Regional, "Maple Avenue School" in Claremont and Goffstown), so a name alone can't tell
+    them apart.
     """
-    ids = {}
-    for school_id, name in conn.execute(text("SELECT id, lower(trim(name)) FROM school")):
-        ids.setdefault(name, school_id)
-    return ids
+    by_district, by_name, schools_per_name = {}, {}, {}
+    for school_id, district_id, name in conn.execute(text(
+        "SELECT id, district_id_fk, lower(trim(name)) FROM school ORDER BY id"
+    )):
+        by_district.setdefault((district_id, name), school_id)
+        by_name.setdefault(name, school_id)
+        schools_per_name[name] = schools_per_name.get(name, 0) + 1
+    unique_names = {name: school_id for name, school_id in by_name.items() if schools_per_name[name] == 1}
+    return by_district, unique_names
 
 
-def parse_school_year(df: pd.DataFrame, year: int, config: dict, school_ids: dict) -> tuple:
+def parse_school_year(df: pd.DataFrame, year: int, config: dict, school_ids: tuple) -> tuple:
     """
     School rows of (school_id, year, grade_1_2, grade_3_4, grade_5_8) from one year's
     workbook, in file order, and the names not found in the school table.
 
-    Schools are matched by name, ignoring case and surrounding spaces. Only the first
-    row matched to each school counts, even when it has no values.
+    Schools are matched by the row's district id and name, ignoring case and surrounding
+    spaces, then by name alone when only one school has it (e.g. a school that has since
+    moved to another district). Only the first row matched to each school counts, even when
+    it has no values.
     """
     mappings = config["column_mappings"]
+    by_district, unique_names = school_ids
     rows, seen, unknown = [], set(), set()
     for _, row in df.iterrows():
         raw_name = row.iloc[mappings["school_name"]] if len(row) > mappings["school_name"] else None
         if pd.isna(raw_name) or str(raw_name).strip() == "":
             continue
         name = str(raw_name).strip()
-        school_id = school_ids.get(name.lower())
+        raw_district = row.iloc[mappings["district_id"]] if len(row) > mappings["district_id"] else None
+        try:
+            district_id = int(float(raw_district)) if pd.notna(raw_district) else None
+        except (ValueError, TypeError):
+            district_id = None
+        school_id = by_district.get((district_id, name.lower()), unique_names.get(name.lower()))
         if school_id is None:
             unknown.add(name)
             continue

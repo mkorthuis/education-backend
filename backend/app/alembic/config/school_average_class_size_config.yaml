@@ -4,7 +4,8 @@ file_settings:
   year_end: 2026
 
 column_mappings:
-  school_name: 4  # Column E (0-indexed)
+  district_id: 2  # Column C (0-indexed)
+  school_name: 4  # Column E
   grade_1_2: 5    # Column F
   grade_3_4: 6    # Column G
   grade_5_8: 7    # Column H 
