@@ -186,23 +186,39 @@ def _source(year: int) -> tuple:
     raise ValueError(f"No assessment file is configured for {year}; loadable years: {loadable_years()}")
 
 
+def _name(value):
+    """A district or school name for matching, with outer spaces removed and inner runs of spaces
+    collapsed; the state's files and lists sometimes pad names (e.g. "Newfound Area ")."""
+    if not isinstance(value, str):
+        return value
+    return " ".join(value.split())
+
+
+def _district_lookup(conn: Connection) -> dict:
+    """District ids by name; the first id wins."""
+    ids = {}
+    for district_id, name in conn.execute(text("SELECT id, name FROM district ORDER BY id")):
+        ids.setdefault(_name(name), district_id)
+    return ids
+
+
 def _school_lookups(conn: Connection) -> tuple:
     """School ids by (school name, district name) and by school name; the first id wins."""
     by_district, by_name = {}, {}
     for school_id, name, district in conn.execute(text(
         "SELECT s.id, s.name, d.name FROM school s LEFT JOIN district d ON s.district_id_fk = d.id ORDER BY s.id"
     )):
-        by_name.setdefault(name, school_id)
+        by_name.setdefault(_name(name), school_id)
         if district is not None:
-            by_district.setdefault((name, district), school_id)
+            by_district.setdefault((_name(name), _name(district)), school_id)
     return by_district, by_name
 
 
 def _school_id(lookups: tuple, name: str, district) -> Optional[int]:
     by_district, by_name = lookups
     if district and not pd.isna(district):
-        return by_district.get((name, district))
-    return by_name.get(name)
+        return by_district.get((_name(name), _name(district)))
+    return by_name.get(_name(name))
 
 
 def _code(value) -> Optional[int]:
@@ -257,12 +273,12 @@ def load_files(conn: Connection, years: Iterable[int]) -> dict:
     """
     years = list(years)
     config = load_config(CONFIG)
-    translations = config["school_name_translations"]
+    translations = {_name(k): _name(v) for k, v in config["school_name_translations"].items()}
     merged_names = {t for t in translations.values() if list(translations.values()).count(t) > 1}
 
     subgroups = Subgroups(conn)
     grade_ids = lookup_ids(conn, "grades")
-    district_ids = lookup_ids(conn, "district")
+    district_ids = _district_lookup(conn)
     known_districts, known_schools = existing_ids(conn, "district"), existing_ids(conn, "school")
     schools = _school_lookups(conn)
 
@@ -322,7 +338,7 @@ def load_files(conn: Connection, years: Iterable[int]) -> dict:
                     skipped[f"{level} not in the database"] += 1
                     not_found[level].add(unit_id)
             elif level == "district":
-                district_id = district_ids.get(row["District"])
+                district_id = district_ids.get(_name(row["District"]))
                 if district_id is None:
                     skipped["district not in the database"] += 1
                     not_found["district"].add(row["District"])
@@ -333,6 +349,7 @@ def load_files(conn: Connection, years: Iterable[int]) -> dict:
                 if pd.isna(name) or not name:
                     skipped["school row without a school name"] += 1
                     continue
+                name = _name(name)
                 name = translations.get(name, name)
                 if name in merged_names:
                     _add_to_merged(merged, (name, year, subject_id, grade_id, subgroup_id), values, row["District"])
