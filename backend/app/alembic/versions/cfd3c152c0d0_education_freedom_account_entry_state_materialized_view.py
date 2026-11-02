@@ -50,6 +50,12 @@ def upgrade():
         ON education_freedom_account_entry_state (education_freedom_account_entry_type_id_fk)
     """)
 
+    # One row per year and entry type; unique, so the ETL can refresh the view CONCURRENTLY (without blocking reads)
+    op.execute("""
+        CREATE UNIQUE INDEX idx_efa_entry_state_year_type 
+        ON education_freedom_account_entry_state (year, education_freedom_account_entry_type_id_fk)
+    """)
+
     logger.info("Education Freedom Account Entry State Materialized View migration upgrade completed successfully")
 
 

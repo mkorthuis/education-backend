@@ -152,15 +152,24 @@ def replace_rows(
 
 
 def refresh_dependent_views(conn: Connection, table: str) -> list:
-    """Refresh the materialized views built on a table, if any exist yet."""
-    views = [row[0] for row in conn.execute(text("""
-        SELECT DISTINCT v.oid::regclass::text
+    """
+    Refresh the materialized views built on a table, if any exist yet.
+
+    A view with a plain unique index (no expressions, no WHERE) is refreshed CONCURRENTLY,
+    which lets the API keep reading it while the load runs. Any other view gets a plain
+    refresh, which blocks reads of that view until the load commits.
+    """
+    views = conn.execute(text("""
+        SELECT DISTINCT v.oid::regclass::text,
+               EXISTS (SELECT 1 FROM pg_index i
+                       WHERE i.indrelid = v.oid AND i.indisunique AND i.indisvalid
+                         AND i.indpred IS NULL AND i.indexprs IS NULL) AND v.relispopulated
         FROM pg_depend d
         JOIN pg_rewrite r ON r.oid = d.objid
         JOIN pg_class v ON v.oid = r.ev_class AND v.relkind = 'm'
         WHERE d.refobjid = CAST(:table AS regclass)
-    """), {"table": table})]
-    for view in views:
-        conn.execute(text(f"REFRESH MATERIALIZED VIEW {view}"))
-        logger.info(f"Refreshed materialized view {view}")
-    return views
+    """), {"table": table}).all()
+    for view, concurrently in views:
+        conn.execute(text(f"REFRESH MATERIALIZED VIEW {'CONCURRENTLY ' if concurrently else ''}{view}"))
+        logger.info(f"Refreshed materialized view {view}{' concurrently' if concurrently else ''}")
+    return [view for view, _ in views]

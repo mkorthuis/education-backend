@@ -50,10 +50,11 @@ def upgrade():
         """
     )
 
+    # Unique, so the ETL can refresh the view CONCURRENTLY (without blocking reads)
     logger.info("Creating index for district_early_exit")
     op.execute(
         """
-        CREATE INDEX idx_district_early_exit_district_year
+        CREATE UNIQUE INDEX idx_district_early_exit_district_year
         ON district_early_exit (district_id_fk, year)
         """
     )
@@ -78,10 +79,11 @@ def upgrade():
         """
     )
 
+    # Unique, so the ETL can refresh the view CONCURRENTLY (without blocking reads)
     logger.info("Creating index for district_post_graduation")
     op.execute(
         """
-        CREATE INDEX idx_district_post_graduation_district_type_year
+        CREATE UNIQUE INDEX idx_district_post_graduation_district_type_year
         ON district_post_graduation (district_id_fk, post_graduation_type_id_fk, year)
         """
     )

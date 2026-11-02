@@ -49,10 +49,10 @@ def upgrade():
             se.year
     """)
 
-    # Add index for school_safety_enrollment
+    # Add index for school_safety_enrollment (unique, so the ETL can refresh the view CONCURRENTLY (without blocking reads))
     logger.info("Creating index for school_safety_enrollment")
     op.execute("""
-        CREATE INDEX idx_school_safety_enrollment_school_year 
+        CREATE UNIQUE INDEX idx_school_safety_enrollment_school_year 
         ON school_safety_enrollment (school_id_fk, year)
     """)
 
@@ -79,10 +79,10 @@ def upgrade():
             se.year
     """)
 
-    # Add index for state_safety_enrollment
+    # Add index for state_safety_enrollment (unique, so the ETL can refresh the view CONCURRENTLY (without blocking reads))
     logger.info("Creating index for state_safety_enrollment")
     op.execute("""
-        CREATE INDEX idx_state_safety_enrollment_year 
+        CREATE UNIQUE INDEX idx_state_safety_enrollment_year 
         ON state_safety_enrollment (year)
     """)
 
@@ -112,10 +112,10 @@ def upgrade():
             se.year
     """)
 
-    # Add index for district_safety_enrollment
+    # Add index for district_safety_enrollment (unique, so the ETL can refresh the view CONCURRENTLY (without blocking reads))
     logger.info("Creating index for district_safety_enrollment")
     op.execute("""
-        CREATE INDEX idx_district_safety_enrollment_district_year 
+        CREATE UNIQUE INDEX idx_district_safety_enrollment_district_year 
         ON district_safety_enrollment (district_id_fk, year)
     """)
 

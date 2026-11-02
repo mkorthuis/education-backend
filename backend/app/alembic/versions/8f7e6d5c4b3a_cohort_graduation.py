@@ -99,6 +99,8 @@ def upgrade():
         GROUP BY d.id, sgc.year
         """
     )
+    # One row per district and year; unique, so the ETL can refresh the view CONCURRENTLY (without blocking reads)
+    op.execute("CREATE UNIQUE INDEX idx_district_graduation_cohort_district_year ON district_graduation_cohort(district_id_fk, year)")
 
     logger.info("Cohort Graduation migration upgrade completed successfully")
 

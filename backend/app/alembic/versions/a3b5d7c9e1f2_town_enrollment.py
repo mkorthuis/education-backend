@@ -87,6 +87,8 @@ def upgrade():
     logger.info("Creating indexes on town_enrollment_state materialized view")
     op.execute("CREATE INDEX idx_town_enrollment_state_year ON town_enrollment_state(year)")
     op.execute("CREATE INDEX idx_town_enrollment_state_grade ON town_enrollment_state(grade_id_fk)")
+    # One row per year and grade; unique, so the ETL can refresh the view CONCURRENTLY (without blocking reads)
+    op.execute("CREATE UNIQUE INDEX idx_town_enrollment_state_year_grade ON town_enrollment_state(year, grade_id_fk)")
     logger.info("Successfully created indexes on town_enrollment_state materialized view")
     
     logger.info("Migration completed successfully")

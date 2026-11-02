@@ -42,10 +42,10 @@ def upgrade():
             df.year
     """)
 
-    # Add index for doe_form_adm_state
+    # Add index for doe_form_adm_state (unique, so the ETL can refresh the view CONCURRENTLY (without blocking reads))
     logger.info("Creating index for doe_form_adm_state")
     op.execute("""
-        CREATE INDEX idx_doe_form_adm_state_year 
+        CREATE UNIQUE INDEX idx_doe_form_adm_state_year 
         ON doe_form_adm_state (year)
     """)
 
