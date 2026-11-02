@@ -35,13 +35,14 @@ def upgrade():
         FROM
             school_enrollment se
         WHERE
-            se.school_id_fk IN (
+            -- Only the school-years that have safety data (a school_restraint row), so the
+            -- enrollment matches the years the safety counts cover
+            (se.school_id_fk, se.year) IN (
                 SELECT
-                    sr.school_id_fk
+                    sr.school_id_fk,
+                    sr.year
                 FROM
                     school_restraint sr
-                GROUP BY 
-                    sr.school_id_fk
             )
         GROUP BY 
             se.school_id_fk, 
@@ -65,13 +66,14 @@ def upgrade():
         FROM
             school_enrollment se
         WHERE
-            se.school_id_fk IN (
+            -- Only the school-years that have safety data (a school_restraint row), so the
+            -- enrollment matches the years the safety counts cover
+            (se.school_id_fk, se.year) IN (
                 SELECT
-                    sr.school_id_fk
+                    sr.school_id_fk,
+                    sr.year
                 FROM
                     school_restraint sr
-                GROUP BY 
-                    sr.school_id_fk
             )
         GROUP BY 
             se.year
@@ -96,13 +98,14 @@ def upgrade():
             school_enrollment se
             JOIN school s ON se.school_id_fk = s.id
         WHERE
-            se.school_id_fk IN (
+            -- Only the school-years that have safety data (a school_restraint row), so the
+            -- enrollment matches the years the safety counts cover
+            (se.school_id_fk, se.year) IN (
                 SELECT
-                    sr.school_id_fk
+                    sr.school_id_fk,
+                    sr.year
                 FROM
                     school_restraint sr
-                GROUP BY 
-                    sr.school_id_fk
             )
         GROUP BY 
             s.district_id_fk, 
