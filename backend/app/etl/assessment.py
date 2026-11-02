@@ -246,25 +246,51 @@ def _code(value) -> Optional[int]:
 
 
 def _add_to_merged(merged: dict, key: tuple, values: tuple, district) -> None:
-    """Collect a merged school's numbers: counts, then the non-null percentages and scores."""
+    """
+    Collect a merged school's numbers: counts, each level's (percentage, exception) from the
+    rows that report either, and the non-null participation, mean SGP and average score.
+    """
     low, high = values[4], values[5]
-    numbers = values[6:16:2] + values[16:19]
-    data = merged.setdefault(key, {"low": 0, "high": 0, "values": [[] for _ in numbers], "district": district})
+    levels = list(zip(values[6:16:2], values[7:16:2]))
+    others = values[16:19]
+    data = merged.setdefault(key, {"low": 0, "high": 0, "levels": [[] for _ in levels],
+                                   "values": [[] for _ in others], "district": district})
     data["low"] += low or 0
     data["high"] += high or 0
-    for collected, number in zip(data["values"], numbers):
+    for collected, (number, exception) in zip(data["levels"], levels):
+        if number is not None or exception is not None:
+            collected.append((number, exception))
+    for collected, number in zip(data["values"], others):
         if number is not None:
             collected.append(number)
     if not data["district"] and district:
         data["district"] = district
 
 
+def _merged_level(reported: list) -> tuple:
+    """
+    One level's (percentage, exception) for a merged school, from its rows that report it.
+
+    The percentages are averaged when every row has one. When none has one and they share an
+    exception ("<10", ">90", too few students), that exception is kept. Anything else (a number
+    next to a suppressed value, or different exceptions) can't be combined and is left empty,
+    rather than publishing one school's number as the merged school's.
+    """
+    numbers = [number for number, _ in reported if number is not None]
+    if reported and len(numbers) == len(reported):
+        return sum(numbers) / len(numbers), None
+    exceptions = {exception for _, exception in reported}
+    if not numbers and len(exceptions) == 1:
+        return None, exceptions.pop()
+    return None, None
+
+
 def _merge_rows(merged: dict, lookups: tuple, skipped: Counter) -> list:
     """
     One school row per merged school (several file schools mapped to one school by the config).
 
-    Counts are summed and percentages averaged over the rows that have a number; exceptions
-    are dropped, as in the original migration.
+    Counts are summed; levels are combined by _merged_level; participation, mean SGP and
+    average score are averaged over the rows that have a number.
     """
     rows = []
     for (name, year, subject_id, grade_id, subgroup_id), data in merged.items():
@@ -272,11 +298,11 @@ def _merge_rows(merged: dict, lookups: tuple, skipped: Counter) -> list:
         if school_id is None:
             skipped[f"merged school not found: {name}"] += 1
             continue
+        levels = [x for reported in data["levels"] for x in _merged_level(reported)]
         averages = [sum(v) / len(v) if v else None for v in data["values"]]
         low, high = data["low"], data["high"]
-        levels = [x for average in averages[:5] for x in (average, None)]
         rows.append((school_id, subject_id, year, grade_id, subgroup_id,
-                     low if low > 0 else None, high if high > 0 else None, *levels, *averages[5:]))
+                     low if low > 0 else None, high if high > 0 else None, *levels, *averages))
     return rows
 
 
