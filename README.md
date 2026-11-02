@@ -150,7 +150,7 @@ Datasets: `location`, `enrollment`, `town-enrollment`, `measurement`, `measureme
 
 - Most datasets update existing rows and insert new ones, so loading a year twice changes nothing. `assessment` and `measurement` replace the year's rows instead (their keys contain NULLs), so reloaded rows get new ids.
 - Dependent materialized views are refreshed. `safety` also rebuilds that year's state and district totals; `finance` recomputes the state revenue and expenditure totals.
-- `location` loads the state's current school, district and SAU lists. Schools missing from a newer list are kept; SAU staff and grade/town links are replaced by the list. Load it before a year's other datasets so new schools exist.
+- `location` loads the state's current school, district and SAU lists. Schools missing from a newer list are kept; SAU staff and grade/town links are replaced by the list. Load it before a year's other datasets so new schools exist. Districts and schools in the latest list (`year_end`) are marked `is_current`; the API's district and school lists return only those unless `include_former=true`.
 - `finance` reads about 2,600 workbooks, so parsed forms are cached in `backend/.etl_cache` (git-ignored). The cache key includes each file's contents, the parsing code and the config, so changes are picked up automatically; deleting the folder is always safe. Set `ETL_CACHE_DIR` to move it, or to an empty value to turn it off. A full `alembic upgrade head` takes about 4 minutes the first time and under a minute after that.
 - `assessment`: save the file as `assets/assessments/assessments-YYYY.csv`. District and state rows are generated from school rows only for 2009–2017, whose files have school rows only.
 

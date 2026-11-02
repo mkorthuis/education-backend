@@ -64,6 +64,7 @@ class District(BaseMixin, table=True):
     sau_id_fk: Optional[int] = Field(foreign_key="sau.id")
     sau: Optional["SAU"] = Relationship(back_populates="districts")
     is_public: bool = Field(default=True)
+    is_current: bool = Field(default=True)  # in the state's latest district list
     schools: List["School"] = Relationship(back_populates="district")
     towns: List["Town"] = Relationship(back_populates="districts", link_model=TownDistrictLink)
     grades: List["Grade"] = Relationship(back_populates="districts", link_model=DistrictGradeLink)
@@ -117,6 +118,7 @@ class School(BaseMixin, table=True):
     email: Optional[str] = Field(max_length=255)
     county: Optional[str] = Field(max_length=100)
     webpage: Optional[str] = Field(max_length=255)
+    is_current: bool = Field(default=True)  # in the state's latest school list
     
     sau: Optional["SAU"] = Relationship(back_populates="schools")
     district: Optional["District"] = Relationship(back_populates="schools")

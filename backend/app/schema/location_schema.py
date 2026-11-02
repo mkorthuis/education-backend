@@ -43,6 +43,7 @@ class DistrictGet(BaseModel):
     name: str
     sau_id_fk: Optional[int] = Field(alias='sau_id')
     is_public: bool
+    is_current: bool = True
     towns: Optional[List[int]] = None
     grades: List[GradeGet] = []
 
@@ -102,6 +103,7 @@ class SchoolGet(BaseModel):
     email: Optional[str]
     county: Optional[str]
     webpage: Optional[str]
+    is_current: bool = True
     school_type: Optional[SchoolTypeGet] = None
     grades: List[GradeGet] = []
     enrollment: Optional[Dict[int, int]] = None

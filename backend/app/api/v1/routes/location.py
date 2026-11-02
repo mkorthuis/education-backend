@@ -35,18 +35,20 @@ def get_sau(sau_id: int, session: SessionDep):
 @router.get("/district", 
     response_model=List[DistrictGet],
     summary="Gets districts",
-    description="Retrieves a list of all school districts, with optional filtering by public status.",
+    description="Retrieves the school districts in the state's current list, with optional filtering by public status.",
     response_description="List of districts")
 @cache_response("location_district")
 def get_districts(
     session: SessionDep,
     is_public: Optional[bool] = Query(None, description="Filter districts by public status (true/false)"),
-    school_id: Optional[int] = Query(None, description="Filter districts by school ID")
+    school_id: Optional[int] = Query(None, description="Filter districts by school ID"),
+    include_former: bool = Query(False, description="Also include districts no longer in the state's list")
 ):
     """
     Retrieves a list of districts, optionally filtered by public status and/or school ID.
     """
-    return location_service.get_districts(session=session, is_public=is_public, school_id=school_id)
+    return location_service.get_districts(session=session, is_public=is_public, school_id=school_id,
+                                          include_former=include_former)
 
 @router.get("/district/{district_id}", 
     response_model=DistrictGet,
@@ -60,14 +62,15 @@ def get_district(district_id: int, session: SessionDep):
 @router.get("/school", 
     response_model=List[SchoolGet],
     summary="Get schools",
-    description="Retrieves a list of all schools, with optional filtering by district ID",
+    description="Retrieves the schools in the state's current list, with optional filtering by district ID",
     response_description="List of schools")
 @cache_response("location_school")
 def get_schools(
     session: SessionDep,
-    district_id: Optional[int] = Query(None, description="Filter schools by district ID")
+    district_id: Optional[int] = Query(None, description="Filter schools by district ID"),
+    include_former: bool = Query(False, description="Also include schools no longer in the state's list")
 ):
-    return location_service.get_schools(session=session, district_id=district_id)
+    return location_service.get_schools(session=session, district_id=district_id, include_former=include_former)
 
 @router.get("/school/{school_id}", 
     response_model=SchoolGet,

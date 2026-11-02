@@ -7,6 +7,9 @@ Towns, SAUs, districts and schools keep the state's ids. Each year's files are a
 snapshot of the current lists, so a load adds and updates rows but never deletes a
 school, district, SAU or town (closed schools keep their history). SAU staff and the
 grade/district links of everything in the files are replaced by the snapshot.
+
+Districts and schools in the latest configured year's lists are marked is_current;
+the API lists only those.
 """
 import logging
 from typing import Iterable, Optional
@@ -285,7 +288,6 @@ def read_year(config: dict, year: int) -> dict:
         ],
         # Owners whose links the snapshot replaces
         'owners': {
-            'town_district_xref': [_id(town_id) for town_id in towns],
             'school_grade_xref': [_id(school_id) for school_id in schools],
             'district_grade_xref': [_id(district_id) for district_id in districts],
         },
@@ -314,8 +316,12 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     """Load the given years' lists (default: every configured year, oldest first)."""
     config = load_config(CONFIG)
     counts = {}
+    latest_year = int(config['file_settings']['year_end'])
+    latest = None
     for year in configured_years(config['file_settings'], years):
         data = read_year(config, year)
+        if year == latest_year:
+            latest = data
         owners = data['owners']
         # Same table order as the original migration: parents before the rows that refer to them
         counts[year] = {
@@ -324,8 +330,11 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
             # Staff have no key: the list replaces every SAU's staff
             'sau_staff': replace_rows(conn, "sau_staff", SAU_STAFF_COLUMNS, data['sau_staff'], where="TRUE"),
             'district': upsert_rows(conn, "district", DISTRICT_COLUMNS, ("id",), data['district']),
+            # The district/town list is complete, so it replaces the links of every town,
+            # including towns it no longer lists (e.g. Gonic, a village of Rochester, from 2026)
             'town_district_xref': sync_links(conn, "town_district_xref", "town_id_fk", "district_id_fk",
-                                             owners['town_district_xref'], data['town_district_xref']),
+                                             conn.execute(text("SELECT id FROM town")).scalars().all(),
+                                             data['town_district_xref']),
             'region': upsert_rows(conn, "region", ("id", "name"), ("id",), data['region']),
             'school_type': upsert_rows(conn, "school_type", ("id", "name"), ("id",), data['school_type']),
             'grades': upsert_rows(conn, "grades", ("id", "name"), ("id",), data['grades']),
@@ -335,6 +344,32 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
             'district_grade_xref': sync_links(conn, "district_grade_xref", "district_id_fk", "grade_id_fk",
                                               owners['district_grade_xref'], data['district_grade_xref']),
         }
+    counts["current"] = mark_current(conn, latest or read_year(config, latest_year))
     # The district views also read school, so they are refreshed with it
     counts["views_refreshed"] = refresh_dependent_views(conn, "school")
+    return counts
+
+
+def mark_current(conn: Connection, latest: dict) -> dict:
+    """
+    Set is_current on districts and schools: true for those in the latest lists, false for
+    the rest. Skipped while the column does not exist yet (the migration that loads the
+    lists runs before the one that adds it; that migration calls this itself).
+    """
+    counts = {}
+    for table in ("district", "school"):
+        has_column = conn.execute(text("""
+            SELECT EXISTS (SELECT 1 FROM information_schema.columns
+                           WHERE table_name = :table AND column_name = 'is_current')
+        """), {"table": table}).scalar()
+        if not has_column:
+            continue
+        ids = [row[0] for row in latest[table]]
+        changed = conn.execute(text(f"""
+            UPDATE {table} SET is_current = (id = ANY(:ids)), date_updated = CURRENT_TIMESTAMP
+            WHERE is_current IS DISTINCT FROM (id = ANY(:ids))
+        """), {"ids": ids}).rowcount
+        former = conn.execute(text(f"SELECT count(*) FROM {table} WHERE NOT is_current")).scalar()
+        logger.info(f"{table}: {len(ids)} current, {former} former ({changed} changed)")
+        counts[table] = {"current": len(ids), "former": former, "changed": changed}
     return counts

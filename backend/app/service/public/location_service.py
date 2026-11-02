@@ -44,9 +44,15 @@ class LocationService:
         self, 
         session: Session, 
         is_public: Optional[bool] = None,
-        school_id: Optional[int] = None
+        school_id: Optional[int] = None,
+        include_former: bool = False
     ) -> List[DistrictGet]:
-        """Get districts, optionally filtering by public status and/or school ID."""
+        """
+        Get districts, optionally filtering by public status and/or school ID.
+
+        Only districts in the state's current list, unless include_former is set; a school's
+        district is returned whether or not it is current.
+        """
         
         # Towns and grades are loaded for all districts at once instead of per district
         statement = select(District).options(selectinload(District.towns), selectinload(District.grades))
@@ -54,6 +60,9 @@ class LocationService:
         # Apply filters
         if is_public is not None:
             statement = statement.where(District.is_public == is_public)
+
+        if school_id is None and not include_former:
+            statement = statement.where(District.is_current)
         
         if school_id is not None:
             school = session.get(School, school_id)
@@ -70,7 +79,8 @@ class LocationService:
                 "id": district.id,
                 "name": district.name,
                 "sau_id_fk": district.sau_id_fk,
-                "is_public": district.is_public
+                "is_public": district.is_public,
+                "is_current": district.is_current
             }
             
             # Add town IDs list instead of town objects
@@ -95,7 +105,8 @@ class LocationService:
             "id": district.id,
             "name": district.name,
             "sau_id_fk": district.sau_id_fk,
-            "is_public": district.is_public
+            "is_public": district.is_public,
+            "is_current": district.is_current
         }
         
         # Add town IDs list instead of town objects
@@ -110,14 +121,18 @@ class LocationService:
     def get_schools(
         self, 
         session: Session,
-        district_id: Optional[int] = None
+        district_id: Optional[int] = None,
+        include_former: bool = False
     ) -> List[SchoolGet]:
-        """Get all schools, optionally filtering by district ID."""
+        """Get schools in the state's current list (or all, with include_former), optionally by district ID."""
         # Grades and school type are loaded for all schools at once instead of per school
         statement = select(School).options(selectinload(School.grades), selectinload(School.school_type))
         
         if district_id is not None:
             statement = statement.where(School.district_id_fk == district_id)
+
+        if not include_former:
+            statement = statement.where(School.is_current)
             
         schools = session.exec(statement).all()
         enrollments = self._enrollments_by_school(session, [school.id for school in schools])
