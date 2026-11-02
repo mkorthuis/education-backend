@@ -39,11 +39,6 @@ TABLES = {
     "school_seclusion": (None, ("generated", "active_investigation", "closed_investigation")),
 }
 
-# school_safety keeps only counts above zero; every other table stores zeros too. This is how
-# the data was first loaded and is pending a decision (review item S7), so keep it as is.
-SKIP_ZERO_COUNTS = {"school_safety"}
-
-
 def _typed(table: str, offset: int, names: list) -> list:
     """One output per type name, each reading the column after the previous one."""
     return [(table, name, (offset + i,)) for i, name in enumerate(names)]
@@ -237,7 +232,7 @@ def load(
 
     years = configured_years(config["file_settings"], years)
     rows = {table: [] for table in TABLES}
-    unknown_schools, zero_counts = set(), 0
+    unknown_schools = set()
     for year in years:
         sheets = resolve_types(SHEETS_2016 if year == 2016 else SHEETS, type_ids)
         path = year_file(config["file_settings"], year)
@@ -245,9 +240,6 @@ def load(
         for kind, sheet_name in find_sheets(workbook, path).items():
             df = pd.read_excel(workbook, sheet_name=sheet_name)
             for table, row in parse_sheet(df, sheet_name, sheets[kind], year, known_schools, unknown_schools):
-                if table in SKIP_ZERO_COUNTS and row[-1] <= 0:
-                    zero_counts += 1
-                    continue
                 rows[table].append(row)
 
     if unknown_schools:
@@ -255,7 +247,6 @@ def load(
         school_ids = sorted({school_id for _, school_id in unknown_schools})
         logger.warning(f"Skipped {len(unknown_schools)} school-years for {len(school_ids)} schools "
                        f"not in the school table: {school_ids}")
-    logger.info(f"school_safety: {zero_counts} zero counts not stored")
 
     counts = {table: upsert_rows(conn, table, key_columns(table) + TABLES[table][1], key_columns(table), table_rows)
               for table, table_rows in rows.items()}
