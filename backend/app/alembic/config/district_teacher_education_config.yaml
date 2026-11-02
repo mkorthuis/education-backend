@@ -3,7 +3,7 @@ file_settings:
   sheet_name: 'Teacher Attainment'
   start_row: 8
   year_start: 2012
-  year_end: 2025
+  year_end: 2026
 
 column_mappings:
   district_id: 2

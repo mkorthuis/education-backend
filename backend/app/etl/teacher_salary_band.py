@@ -17,6 +17,7 @@ logger = logging.getLogger("app.etl")
 
 CONFIG = "district_teacher_salary_band_config.yaml"
 TABLE = "district_teacher_salary_band"
+TYPE_TABLE = "teacher_salary_band_type"
 COLUMNS = ("district_id_fk", "teacher_salary_band_type_id_fk", "year", "min_salary", "max_salary", "steps")
 KEY = ("district_id_fk", "teacher_salary_band_type_id_fk", "year")
 
@@ -86,7 +87,11 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
         rows += year_rows
     log_skips(skips, "Teacher salary bands")
 
+    # Band types the config adds after the original migration's six (e.g. MA45) must exist first
+    types = upsert_rows(conn, TYPE_TABLE, ("id", "name", "description"), ("id",),
+                        [tuple(band_type) for band_type in config["salary_band_types"]])
     counts = upsert_rows(conn, TABLE, COLUMNS, KEY, rows)
+    counts[TYPE_TABLE] = types
     # The state_teacher_salary_band view; it does not exist yet when the migration loads the table
     counts["views_refreshed"] = refresh_dependent_views(conn, TABLE)
     return counts

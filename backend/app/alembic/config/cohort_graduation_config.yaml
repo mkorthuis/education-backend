@@ -1,7 +1,7 @@
 file_settings:
   default_input: "../assets/cohort-graduation/****-Cohort Counts By School.xlsx"
   year_start: 2012
-  year_end: 2024
+  year_end: 2025
 
 column_mappings:
   school_name: 3           # Column D

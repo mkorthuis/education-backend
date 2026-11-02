@@ -2,4 +2,4 @@ file_settings:
   default_input: "../assets/state-expenditure/state-expenditures-****.csv"
   download_files: false
   year_start: 2010
-  year_end: 2024
+  year_end: 2025

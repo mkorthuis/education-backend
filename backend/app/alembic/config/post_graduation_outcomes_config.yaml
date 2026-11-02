@@ -1,7 +1,7 @@
 file_settings:
   default_input: "../assets/completers/****-Completers.xlsx"
   year_start: 2012
-  year_end: 2024
+  year_end: 2025
 
 column_mappings:
   school_id: 4            # Column E

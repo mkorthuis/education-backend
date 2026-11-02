@@ -15,8 +15,9 @@ CONFIG = "generate_town_enrollments.yaml"
 TABLE = "town_enrollment"
 COLUMNS = ("town_id_fk", "grade_id_fk", "year", "enrollment")
 KEY = ("town_id_fk", "grade_id_fk", "year")
-# Columns C to O (Kindergarten to Grade 12); a column's index is its grade id
-GRADE_COLUMNS = range(2, 15)
+# Grade column headers and their grade ids: Kindergarten to Grade 12. From 2026 the report
+# also has PS and PG columns; they are not loaded, so every year covers the same grades.
+GRADE_HEADERS = {"KG": 2, **{f"G{grade}": grade + 2 for grade in range(1, 13)}}
 
 
 def parse_year(df: pd.DataFrame, year: int) -> tuple:
@@ -27,16 +28,21 @@ def parse_year(df: pd.DataFrame, year: int) -> tuple:
     A row is a town when its first column (Town ID) is a whole number. Blank and zero
     grade counts are skipped; other values are truncated to integers.
     """
-    if df.shape[1] <= max(GRADE_COLUMNS):
-        raise ValueError(f"Town enrollment file for {year} has {df.shape[1]} columns; "
-                         f"expected grades in columns {GRADE_COLUMNS.start}-{max(GRADE_COLUMNS)}")
+    header = next((row for _, row in df.iterrows() if str(row.iloc[0]).strip() == "Town ID"), None)
+    if header is None:
+        raise ValueError(f"Town enrollment file for {year} has no 'Town ID' header row")
+    grade_columns = {position: GRADE_HEADERS[str(label).strip()]
+                     for position, label in enumerate(header) if str(label).strip() in GRADE_HEADERS}
+    if len(grade_columns) != len(GRADE_HEADERS):
+        raise ValueError(f"Town enrollment file for {year} is missing grade columns: "
+                         f"{sorted(set(GRADE_HEADERS) - {str(label).strip() for label in header})}")
     rows, invalid = [], 0
     for _, row in df.iterrows():
         town_id = row.iloc[0]
         if not (pd.notna(town_id) and isinstance(town_id, (int, float)) and town_id == int(town_id)):
             continue
-        for grade_id in GRADE_COLUMNS:
-            value = row.iloc[grade_id]
+        for position, grade_id in grade_columns.items():
+            value = row.iloc[position]
             if pd.isna(value) or value == "" or value == 0:
                 continue
             try:

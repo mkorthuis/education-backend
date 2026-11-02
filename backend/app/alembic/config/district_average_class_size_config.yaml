@@ -2,7 +2,7 @@ file_settings:
   # Excel files path template; **** will be replaced by year
   default_input: "../assets/average-class-size/district/****-District-Average-Class-Size.xlsx"
   year_start: 2012
-  year_end: 2025
+  year_end: 2026
 
 # Column indices (0-based) mapping for the Excel sheet
 column_mappings:

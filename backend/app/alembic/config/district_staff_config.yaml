@@ -1,9 +1,9 @@
 file_settings:
   default_input: '../assets/staff/staff-count/****-FTE-Staff.xlsx'
-  sheet_name: 'Staff Full-time Equivalent by D'
+  sheet_name: 0  # the first (only) sheet; its name changed in 2026
   start_row: 8
   year_start: 2012
-  year_end: 2025
+  year_end: 2026
 
 column_mappings:
   district_id: 2

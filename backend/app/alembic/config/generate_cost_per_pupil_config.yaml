@@ -2,6 +2,6 @@ file_settings:
   default_input: "../assets/cost-per-pupil/cost-per-pupil-****.csv"
   download_files: false
   year_start: 2010
-  year_end: 2024
+  year_end: 2025
 
 

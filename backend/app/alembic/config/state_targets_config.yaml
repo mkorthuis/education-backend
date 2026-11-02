@@ -1,6 +1,8 @@
 file_settings:
-  # One file holds every year's targets
+  # One file holds every year's targets: Table 1 of NH's ESSA consolidated state plan
+  # (assets/state-targets-source), shifted two years later by the approved 2022 COVID-19
+  # addendum (the plan's 2019 target applies to 2019 and 2021), rounded to one decimal
   year_start: "2019"
-  year_end: "2024"
+  year_end: "2027"
   state_targets_file:
     path: "../assets/state_targets.csv"

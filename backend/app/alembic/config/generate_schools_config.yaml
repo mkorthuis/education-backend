@@ -2,7 +2,7 @@
 # so schools that later close keep their rows
 file_settings:
   year_start: "2025"
-  year_end: "2025"
+  year_end: "2026"
   school_file:
     default_input: "../assets/****-school-list.xls"
     start_row: 2  # 0-based index, skip header row

@@ -5,7 +5,7 @@ file_settings:
   # Automatically using the first sheet in each Excel file
   start_row: 1
   year_start: 2008
-  year_end: 2025
+  year_end: 2026
   # Years up to this one use the legacy layout (districts by name); later years use district ids
   legacy_year_end: 2022
 

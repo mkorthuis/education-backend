@@ -1,6 +1,6 @@
 file_settings:
   year_start: "2016"
-  year_end: "2024"
+  year_end: "2025"
   # Each workbook holds three years. Files are read in this order, which sets the
   # insert order (and so the ids) of a fresh build: add new workbooks at the end.
   files:
@@ -10,6 +10,8 @@ file_settings:
       years: [2019, 2020, 2021]
     - path: "../assets/2018-school-metrics.xlsx"
       years: [2016, 2017, 2018]
+    - path: "../assets/2025-school-metrics.xlsx"
+      years: [2025]  # also holds 2023 and 2024, which the 2024 workbook already loads
 
 column_mappings:
   entity_id: "Entity ID"
