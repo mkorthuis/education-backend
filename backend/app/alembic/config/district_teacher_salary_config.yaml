@@ -19,7 +19,47 @@ column_mappings:
   legacy_district_name_col0: 0
   legacy_salary_col0: 2
   legacy_district_name_col1: 1
-  legacy_salary_col1: 3 
+  legacy_salary_col1: 3
+
+# Legacy years name districts instead of numbering them. A name matches the district whose
+# name is the same after cleaning (lowercase, no "school district"/"schools"/"sd" suffix).
+# These are the file's other spellings of a district, by district id.
+legacy_district_aliases:
+  academy for science and design: 725
+  academy of science and design: 725
+  birches academy for academic and art: 731
+  birches academy for academics and art: 731
+  the birches academy of academics & art: 731
+  gate city charter school for the arts district: 742
+  great bay elearning charter school: 709
+  kreiva academy public charter: 708
+  ledyard charter academy: 719
+  making community connections: 733
+  microsociety academy charter school: 744
+  microsociety academy charter school of southern nh: 744
+  mill falls charter: 729
+  mill falls charter school: 729
+  the founders academy charter: 741
+  wilton-lyndeborough: 572
+  wilton-lyndeborough coop: 572
+
+# Legacy names that are deliberately not loaded: closed charters and former districts that
+# aren't in the district lists. Any other name that matches no district or alias stops the
+# load, so a district renamed by a newer list can't silently lose its 2008-2022 salaries.
+legacy_skipped_names:
+  - capital city public charter school
+  - cocheco academy for the arts
+  - cocheco arts and technology
+  - cocheco arts and technology academy
+  - cocheco arts and technology charter academy
+  - franklin career academy charter school
+  - goshen-lempster cooperative
+  - granite state arts academy charter school
+  - leaf charter school
+  - lyndeborough
+  - new hampshire charter equestrian academy
+  - pace career academy charter school
+  - wilton
 
 # Settings for identifying and processing state-level data
 state_data_settings:

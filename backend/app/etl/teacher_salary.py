@@ -38,41 +38,40 @@ def clean_district_name(name) -> Optional[str]:
     return re.sub(r"\s+", " ", name.strip())
 
 
-def district_ids_by_name(conn: Connection, names: set) -> dict:
+def district_ids_by_name(conn: Connection, aliases: dict) -> dict:
     """
-    Map cleaned names to the first district whose name contains them, in table order.
+    Map cleaned district names to district ids: every district by its own cleaned name, plus the
+    config's aliases for the legacy files' other spellings.
 
-    This is the original migration's lookup (LIKE '%name%' ... LIMIT 1 with no ORDER BY, i.e. the
-    first match in physical order, made explicit here with ctid), kept so fresh builds get the same
-    rows. Physical order is load order as long as district rows are never updated in place. It is
-    a loose match: e.g. "dover" finds Andover and "northwood" finds Coe-Brown Northwood Academy.
+    Names must match exactly. The original migration matched any district whose name contained
+    the file's name, which attached Northwood's salaries to Coe-Brown Northwood Academy and
+    Unity's to Making Community Connections, and dropped Dover, Hill, Stark and Wentworth
+    because Andover, Haverhill, John Stark and Governor Wentworth matched first.
     """
-    result = conn.execute(text("""
-        SELECT DISTINCT ON (n.name) n.name, d.id
-        FROM unnest(CAST(:names AS text[])) AS n(name)
-        JOIN district d ON LOWER(d.name) LIKE '%' || n.name || '%'
-            OR LOWER(d.name) LIKE '%' || n.name || ' school%'
-            OR LOWER(d.name) LIKE '%' || n.name || ' sd%'
-        ORDER BY n.name, d.ctid
-    """), {"names": sorted(names)})
-    return {name: district_id for name, district_id in result}
+    district_ids = {}
+    for district_id, name in conn.execute(text("SELECT id, name FROM district ORDER BY id")):
+        district_ids.setdefault(clean_district_name(name), district_id)
+    district_ids.update({clean_district_name(name): district_id for name, district_id in aliases.items()})
+    return district_ids
 
 
-def parse_legacy_year(conn: Connection, df: pd.DataFrame, year: int, config: dict, skips: Counter) -> tuple:
+def parse_legacy_year(df: pd.DataFrame, year: int, config: dict, district_ids: dict, skips: Counter,
+                      unknown_names: Counter) -> tuple:
     """
     (district rows, state rows) from a legacy sheet (up to legacy_year_end), in file order.
 
     Districts are named, not numbered: the name is in the first or second column, with the
     salary two columns to its right. Each row tries the first column, then the second. The
     first row matched to a district wins. Some sheets have only three columns, so the second
-    position's salary column can be missing (read as blank).
+    position's salary column can be missing (read as blank). A name with a salary that matches
+    no district is counted in skips if the config lists it in legacy_skipped_names, and in
+    unknown_names otherwise.
     """
     columns = config["column_mappings"]
     positions = [(columns["legacy_district_name_col0"], columns["legacy_salary_col0"]),
                  (columns["legacy_district_name_col1"], columns["legacy_salary_col1"])]
     state_label = config["state_data_settings"]["legacy_state_identifier_text"]
-    names = {clean_district_name(cell(row, name_column)) for _, row in df.iterrows() for name_column, _ in positions}
-    district_ids = district_ids_by_name(conn, {name for name in names if name})
+    skipped_names = {clean_district_name(name) for name in config.get("legacy_skipped_names") or []}
 
     district_rows, state_rows, seen = [], [], set()
     for _, row in df.iterrows():
@@ -88,6 +87,11 @@ def parse_legacy_year(conn: Connection, df: pd.DataFrame, year: int, config: dic
                 break
             district_id = district_ids.get(clean_district_name(name))
             if district_id is None:
+                if valid_salary(cell(row, salary_column)) is not None:
+                    if clean_district_name(name) in skipped_names:
+                        skips["legacy rows for closed or former districts"] += 1
+                    else:
+                        unknown_names[clean_district_name(name)] += 1
                 continue
             if district_id in seen:
                 break
@@ -136,19 +140,25 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     config = load_config(CONFIG)
     file_settings = config["file_settings"]
     districts = existing_ids(conn, "district")
+    legacy_district_ids = district_ids_by_name(conn, config.get("legacy_district_aliases") or {})
 
-    district_rows, state_rows, skips = [], [], Counter()
+    district_rows, state_rows, skips, unknown_names = [], [], Counter(), Counter()
     for year in configured_years(file_settings, years):
         path = year_file_any_extension(file_settings, year)
         df = pd.read_excel(path, skiprows=file_settings["start_row"] - 1)
         if year <= int(file_settings["legacy_year_end"]):
-            year_district_rows, year_state_rows = parse_legacy_year(conn, df, year, config, skips)
+            year_district_rows, year_state_rows = parse_legacy_year(df, year, config, legacy_district_ids,
+                                                                    skips, unknown_names)
         else:
             year_district_rows, year_state_rows = parse_year(df, year, config, districts, skips)
         if not year_district_rows or not year_state_rows:
             raise ValueError(f"No district or state average salary found in {path}; has the layout changed?")
         district_rows += year_district_rows
         state_rows += year_state_rows
+    if unknown_names:
+        raise ValueError(f"Teacher average salary: names in the legacy files match no district; add each to "
+                         f"legacy_district_aliases or legacy_skipped_names in {CONFIG}: "
+                         + ", ".join(f"{name!r} ({count} rows)" for name, count in sorted(unknown_names.items())))
     log_skips(skips, "Teacher average salary")
 
     return {
