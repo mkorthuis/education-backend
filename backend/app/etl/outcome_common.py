@@ -7,9 +7,11 @@ import pandas as pd
 from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
-from app.etl.core import known_school_ids
+from app.etl.core import known_school_ids, load_config
 
 logger = logging.getLogger("app.etl")
+
+ALIASES_CONFIG = "outcome_school_name_aliases.yaml"
 
 
 def cell(row: pd.Series, position: int):
@@ -37,6 +39,7 @@ class Schools:
     Names are matched as lower(trim(name)). The original loaders used
     "WHERE lower(trim(name)) = ... LIMIT 1", which returns the first match in table order,
     so for a name shared by several schools the first one in table order is used here too.
+    Older names of renamed schools match through outcome_school_name_aliases.yaml.
     """
 
     def __init__(self, conn: Connection):
@@ -47,6 +50,12 @@ class Schools:
                 self.shared_names.add(name)
             else:
                 self.names[name] = school_id
+        aliases = {name.strip().lower(): school_id
+                   for name, school_id in load_config(ALIASES_CONFIG)["school_name_aliases"].items()}
+        missing = sorted(school_id for school_id in aliases.values() if school_id not in self.ids)
+        if missing:
+            raise ValueError(f"{ALIASES_CONFIG}: school ids not in the school table: {missing}")
+        self.names.update({name: school_id for name, school_id in aliases.items() if name not in self.names})
         self.unknown = set()
         self.shared_matched = set()
 

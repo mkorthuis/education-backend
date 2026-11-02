@@ -1,0 +1,12 @@
+# Older names of schools in the outcome files (early exit, graduation cohort), by school id.
+# The early exit and graduation cohort files name schools; the state has since renamed these,
+# so their old names no longer match the school table. Each id comes from the 2012-2019 early
+# exit files, which list the school id next to the name.
+# Names are compared lowercase with spaces trimmed.
+school_name_aliases:
+  colebrook academy: 20185                          # Colebrook Academy and Elementary School (H)
+  conant high school: 22265                         # Conant Middle High School (H)
+  granite state arts academy charter school: 29153  # Arts Academy of New Hampshire Chartered Public High School
+  great bay elearning charter school: 28445         # Great Bay Charter School (H)
+  great bay elearning charter school (h): 28445
+  white mountains regional high school: 21480       # White Mountains Regional Middle High School
