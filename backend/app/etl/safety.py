@@ -14,7 +14,7 @@ from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
 from app.etl.core import (
-    configured_years, existing_ids, load_config, lookup_ids, refresh_dependent_views, upsert_rows, year_file
+    configured_years, known_school_ids, load_config, lookup_ids, refresh_dependent_views, upsert_rows, year_file
 )
 
 logger = logging.getLogger("app.etl")
@@ -144,7 +144,7 @@ def find_sheets(workbook: pd.ExcelFile, path: str) -> dict:
 
 
 def parse_sheet(df: pd.DataFrame, sheet_name: str, outputs: list, year: int,
-                known_schools: set, unknown_schools: set) -> list:
+                known_schools: dict, unknown_schools: set) -> list:
     """
     (table, row) pairs from one sheet, in sheet order.
 
@@ -174,6 +174,7 @@ def parse_sheet(df: pd.DataFrame, sheet_name: str, outputs: list, year: int,
         if school_id not in known_schools:
             unknown_schools.add((year, school_id))
             continue
+        school_id = known_schools[school_id]
         counts = [clean_count(value) for value in row.iloc[school_column:]]
         for table, type_id, offsets in outputs:
             values = tuple(0 if offset is None else counts[offset] for offset in offsets)
@@ -229,7 +230,7 @@ def load(
     refreshed when they exist (not yet during the data migration).
     """
     config = load_config(CONFIG)
-    known_schools = existing_ids(conn, "school")
+    known_schools = known_school_ids(conn)
 
     type_ids = {table: lookup_ids(conn, type_table_prefix + type_table)
                 for table, (type_table, _) in TABLES.items() if type_table}

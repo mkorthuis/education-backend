@@ -16,7 +16,8 @@ from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
 from app.etl.core import (
-    config_path, configured_years, existing_ids, load_config, refresh_dependent_views, replace_rows
+    config_path, configured_years, existing_ids, known_school_ids, load_config, refresh_dependent_views,
+    replace_rows
 )
 
 logger = logging.getLogger("app.etl")
@@ -148,7 +149,7 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
 
     counts = add_missing_types(conn, list(categories), list(types.items()))
     type_ids = ids_by_name(conn, "measurement_type")
-    known = {"school": existing_ids(conn, "school"), "district": existing_ids(conn, "district")}
+    known = {"school": known_school_ids(conn), "district": existing_ids(conn, "district")}
 
     rows, skipped = [], {}
     for key, entity in entities.items():
@@ -159,7 +160,7 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
             skipped_ids = skipped.setdefault(entity["type"], {})
             skipped_ids[entity_id] = skipped_ids.get(entity_id, 0) + len(entity["values"])
             continue
-        school_id = entity_id if entity["type"] == "school" else None
+        school_id = known["school"][entity_id] if entity["type"] == "school" else None
         district_id = entity_id if entity["type"] == "district" else None
         for indicator, year, value in entity["values"]:
             rows.append((school_id, district_id, type_ids[indicator], year, value))

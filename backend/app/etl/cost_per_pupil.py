@@ -98,6 +98,10 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     """Load the given years (default: every configured year) into district_cost_per_pupil and state_cost_per_pupil."""
     config = load_config(CONFIG)
     known_districts = existing_ids(conn, "district")
+    aliases = config.get("district_id_aliases") or {}
+    missing = sorted(set(aliases.values()) - known_districts)
+    if missing:
+        raise ValueError(f"{CONFIG} aliases district ids to ids that aren't in the database: {missing}")
 
     district_rows, state_rows, unknown_districts = [], [], set()
     for year in configured_years(config["file_settings"], years):
@@ -105,6 +109,7 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
         if not districts and state is None:
             raise ValueError(f"Cost per pupil {year}: no district or state rows found")
         for row in districts:
+            row = (aliases.get(row[0], row[0]), *row[1:])
             if row[0] in known_districts:
                 district_rows.append(row)
             else:

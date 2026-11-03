@@ -5,3 +5,8 @@ file_settings:
   year_end: 2025
 
 
+
+# Ids the files used for a district before its current one. The 2009-2022 files list Gorham
+# Randolph Shelburne Coop as 201; from 2023 it is 203, its id in the district lists.
+district_id_aliases:
+  201: 203

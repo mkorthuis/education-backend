@@ -26,7 +26,8 @@ from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
 from app.etl.core import (
-    configured_years, existing_ids, load_config, lookup_ids, refresh_dependent_views, replace_rows, year_file
+    configured_years, existing_ids, known_school_ids, load_config, lookup_ids, refresh_dependent_views,
+    replace_rows, year_file
 )
 
 logger = logging.getLogger("app.etl")
@@ -279,7 +280,7 @@ def load_files(conn: Connection, years: Iterable[int]) -> dict:
     subgroups = Subgroups(conn)
     grade_ids = lookup_ids(conn, "grades")
     district_ids = _district_lookup(conn)
-    known_districts, known_schools = existing_ids(conn, "district"), existing_ids(conn, "school")
+    known_districts, known_schools = existing_ids(conn, "district"), known_school_ids(conn)
     schools = _school_lookups(conn)
 
     rows = {table: [] for table in TABLES}
@@ -333,6 +334,7 @@ def load_files(conn: Connection, years: Iterable[int]) -> dict:
             elif layout is REPLEVEL:
                 unit_id = _code(row["discode"] if level == "district" else row["schcode"])
                 if unit_id in (known_districts if level == "district" else known_schools):
+                    unit_id = unit_id if level == "district" else known_schools[unit_id]
                     rows[f"assessment_{level}"].append((unit_id, *values))
                 else:
                     skipped[f"{level} not in the database"] += 1

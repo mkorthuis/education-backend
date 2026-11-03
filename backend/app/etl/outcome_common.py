@@ -7,7 +7,7 @@ import pandas as pd
 from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
-from app.etl.core import existing_ids
+from app.etl.core import known_school_ids
 
 logger = logging.getLogger("app.etl")
 
@@ -40,7 +40,7 @@ class Schools:
     """
 
     def __init__(self, conn: Connection):
-        self.ids = existing_ids(conn, "school")
+        self.ids = known_school_ids(conn)
         self.names, self.shared_names = {}, set()
         for name, school_id in conn.execute(text("SELECT lower(trim(name)), id FROM school ORDER BY ctid")):
             if name in self.names:
@@ -52,7 +52,7 @@ class Schools:
 
     def by_id(self, school_id: Optional[int], year: int) -> Optional[int]:
         if school_id in self.ids:
-            return school_id
+            return self.ids[school_id]
         self.unknown.add((year, school_id))
         return None
 

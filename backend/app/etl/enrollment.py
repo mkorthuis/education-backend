@@ -6,7 +6,7 @@ import pandas as pd
 from sqlalchemy.engine import Connection
 
 from app.etl.core import (
-    configured_years, existing_ids, load_config, refresh_dependent_views, upsert_rows, year_file
+    configured_years, known_school_ids, load_config, refresh_dependent_views, upsert_rows, year_file
 )
 
 logger = logging.getLogger("app.etl")
@@ -42,13 +42,13 @@ def parse_year(df: pd.DataFrame, year: int, config: dict) -> list:
 def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     """Load the given years (default: every configured year) into school_enrollment."""
     config = load_config(CONFIG)
-    known_schools = existing_ids(conn, "school")
+    known_schools = known_school_ids(conn)
 
     rows, unknown_schools = [], set()
     for year in configured_years(config["file_settings"], years):
         for row in parse_year(pd.read_excel(year_file(config["file_settings"], year)), year, config):
             if row[0] in known_schools:
-                rows.append(row)
+                rows.append((known_schools[row[0]], *row[1:]))
             else:
                 unknown_schools.add((year, row[0]))
 

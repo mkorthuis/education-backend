@@ -1,0 +1,87 @@
+# Districts and schools that closed or merged before the 2025 lists, so no list has them, but
+# other datasets have rows for them. They are added with the name and district they were last
+# listed under, so their history loads; is_current marks them former. The lists win: an id
+# here that a list also has keeps the list's values.
+#
+# Taken from the files that list ids next to names: the 2009-2018 assessment files (discode,
+# disname, schcode, schname) and the 2016-2025 enrollment files. The comment on each entry
+# gives the files and years it appears in, and other names it had.
+districts:
+  207: {name: "Goshen-Lempster Cooperative", is_public: true}  # assessments 2009-2015
+  329: {name: "Lyndeborough", is_public: true}  # assessments 2009-2010
+  571: {name: "Wilton", is_public: true}  # assessments 2009-2010
+  706: {name: "LEAF Charter School", is_public: false}  # assessments and enrollment 2018-2024
+  707: {name: "Cocheco Academy for the Arts", is_public: false}  # assessments and enrollment 2009-2022
+  710: {name: "Capital City Public Charter School", is_public: false}  # enrollment 2019-2020
+  715: {name: "New Hampshire Charter Equestrian Academy", is_public: false}  # assessments 2009-2010
+  720: {name: "Coastal Waters Chartered Public School", is_public: false}  # enrollment 2023-2024
+  728: {name: "PACE Career Academy Charter School", is_public: false}  # assessments and enrollment 2013-2021
+  739: {name: "TEAMS Charter School", is_public: false}  # assessments and enrollment 2015-2017
+  1092: {name: "SAU #23 French Pond", is_public: false}  # enrollment 2023
+  1093: {name: "SAU #23 King Street School", is_public: false}  # enrollment 2023
+
+schools:
+  20055: {name: "Brown Elementary School", district: 51}  # assessments and enrollment 2009-2019
+  20060: {name: "Bartlett Elementary School", district: 51}  # assessments 2009
+  20255: {name: "Rumford School", district: 111}  # assessments 2009-2010
+  20275: {name: "Walker School", district: 111}  # assessments 2009
+  20315: {name: "Eastman School", district: 111}  # assessments 2009-2011
+  20330: {name: "Pine Tree Elementary School", district: 113}  # assessments and enrollment 2009-2024
+  20335: {name: "John H. Fuller School", district: 113}  # assessments and enrollment 2009-2024
+  20340: {name: "Conway Elementary School", district: 113}  # assessments and enrollment 2009-2024
+  20380: {name: "Derry Village School", district: 131}  # assessments and enrollment 2009-2024
+  20640: {name: "Bessie C. Rowell School", district: 185}  # assessments 2009-2011
+  21160: {name: "Jonathan M. Daniels School", district: 279}  # assessments and enrollment 2009-2016
+  21340: {name: "School Street School", district: 295}  # assessments 2009
+  21365: {name: "Seminary Hill School", district: 295}  # assessments 2009-2012
+  21470: {name: "Jefferson Elementary School", district: 568}  # assessments and enrollment 2009-2018
+  21625: {name: "Hallsville School", district: 335}  # assessments and enrollment 2009-2021
+  21640: {name: "Henry Wilson Elementary School", district: 335}  # assessments and enrollment 2009-2024; also "Wilson School"
+  21685: {name: "Sullivan Central School", district: 363}  # assessments 2009-2012
+  21890: {name: "Elm Street Middle School", district: 371}  # assessments and enrollment 2009-2024
+  21965: {name: "Goshen-Lempster Cooperative School", district: 207}  # assessments 2009-2015
+  21990: {name: "Towle Elementary School", district: 401}  # assessments and enrollment 2009-2016
+  22575: {name: "Armand R. Dupont School", district: 9}  # assessments and enrollment 2009-2024
+  22580: {name: "Allenstown Elementary School", district: 9}  # assessments and enrollment 2009-2024
+  22625: {name: "Pembroke Village School", district: 427}  # enrollment 2016-2019
+  22660: {name: "Nancy Loud School", district: 461}  # assessments and enrollment 2009-2023
+  22715: {name: "Maple Street School", district: 461}  # assessments 2009-2012
+  22815: {name: "Hilltop School", district: 491}  # assessments 2009-2011
+  22945: {name: "Union Sanborn School", district: 582}  # assessments and enrollment 2009-2022
+  22980: {name: "N. Charlestown Community School", district: 174}  # assessments and enrollment 2009-2024
+  23030: {name: "Greenville Elementary School", district: 342}  # assessments 2009-2011
+  23045: {name: "Appleton Elementary School", district: 342}  # assessments 2009-2011
+  23055: {name: "New Ipswich Central School", district: 342}  # assessments 2009-2011
+  26555: {name: "Walter F. Haigh School", district: 473}  # assessments 2009-2015
+  26575: {name: "Inter-Lakes Middle Tier", district: 269}  # assessments and enrollment 2009-2018
+  26590: {name: "Sacred Heart Public School", district: 295}  # assessments 2009
+  26645: {name: "Stratford Public School (High)", district: 509}  # assessments 2009-2011
+  26795: {name: "Franklin - Pre School Program", district: 185}  # enrollment 2016-2019
+  27065: {name: "West Running Brook Middle School", district: 131}  # assessments and enrollment 2009-2024
+  27325: {name: "Daniel J. Bakie Sch-Pre School Program", district: 476}  # safety 2024
+  27445: {name: "Windham Preschool", district: 575}  # enrollment 2016-2017
+  27930: {name: "SAU #23 French Pond", district: 1092}  # enrollment 2023
+  28200: {name: "SAU #23 King Street School", district: 1093}  # enrollment 2023
+  28455: {name: "Cocheco Academy for the Arts", district: 707}  # assessments and enrollment 2009-2022; also "Cocheco Arts and Technology Charter Academy"
+  28510: {name: "Academy for Equine Sciences Charter School", district: 715}  # assessments 2009-2010; also "New Hampshire Equestrian Academy Charter School"
+  28625: {name: "The Phoenix Program (M)", district: 371}  # assessments 2009-2010
+  28630: {name: "The Phoenix Program (H)", district: 371}  # assessments 2010
+  28645: {name: "North Country CLASS", district: 568}  # assessments and enrollment 2009-2016
+  29035: {name: "PACE Career Academy Charter School", district: 728}  # assessments and enrollment 2013-2021
+  29060: {name: "Making Community Connections Charter School (H)", district: 733}  # assessments and enrollment 2013-2021
+  29075: {name: "TEAMS Charter School", district: 739}  # assessments and enrollment 2015-2017
+  29100: {name: "Making Community Connections Charter School (M)", district: 733}  # assessments and enrollment 2013-2021
+  29184: {name: "Claremont Preschool Center", district: 101}  # enrollment 2017-2025
+  29189: {name: "LEAF Charter School", district: 706}  # assessments and enrollment 2018-2024
+  29194: {name: "Capital City Public Charter School (E)", district: 710}  # enrollment 2019-2020
+  29195: {name: "Capital City Public Charter School (H)", district: 710}  # enrollment 2020
+  29245: {name: "Coastal Waters Chartered Public School (E)", district: 720}  # enrollment 2023-2024
+  29248: {name: "Coastal Waters Chartered Public School (H)", district: 720}  # enrollment 2023-2024
+
+# Schools the state gave a new id in 2019, keeping their name and district. Each old id's last
+# year is 2018 and the new id's first is 2019 (assessment and enrollment files). Loaders that
+# match schools by id load the old id's rows under the current school.
+renumbered_schools:
+  20025: 29200  # Inter-Lakes Elementary School (Inter-Lakes Cooperative)
+  22820: 29203  # Maple Wood Elementary School (Somersworth)
+  28985: 29202  # Idlehurst Elementary School (Somersworth)

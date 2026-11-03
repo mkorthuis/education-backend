@@ -30,7 +30,11 @@ legacy_district_aliases:
   birches academy for academic and art: 731
   birches academy for academics and art: 731
   the birches academy of academics & art: 731
+  cocheco arts and technology: 707
+  cocheco arts and technology academy: 707
+  cocheco arts and technology charter academy: 707
   gate city charter school for the arts district: 742
+  granite state arts academy charter school: 702
   great bay elearning charter school: 709
   kreiva academy public charter: 708
   ledyard charter academy: 719
@@ -43,23 +47,11 @@ legacy_district_aliases:
   wilton-lyndeborough: 572
   wilton-lyndeborough coop: 572
 
-# Legacy names that are deliberately not loaded: closed charters and former districts that
-# aren't in the district lists. Any other name that matches no district or alias stops the
-# load, so a district renamed by a newer list can't silently lose its 2008-2022 salaries.
+# Legacy names that are deliberately not loaded: districts with no id in any of our files. Any
+# other name that matches no district or alias stops the load, so a district renamed by a newer
+# list can't silently lose its 2008-2022 salaries.
 legacy_skipped_names:
-  - capital city public charter school
-  - cocheco academy for the arts
-  - cocheco arts and technology
-  - cocheco arts and technology academy
-  - cocheco arts and technology charter academy
   - franklin career academy charter school
-  - goshen-lempster cooperative
-  - granite state arts academy charter school
-  - leaf charter school
-  - lyndeborough
-  - new hampshire charter equestrian academy
-  - pace career academy charter school
-  - wilton
 
 # Settings for identifying and processing state-level data
 state_data_settings:

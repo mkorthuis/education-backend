@@ -8,6 +8,9 @@ snapshot of the current lists, so a load adds and updates rows but never deletes
 school, district, SAU or town (closed schools keep their history). SAU staff and the
 grade/district links of everything in the files are replaced by the snapshot.
 
+Districts and schools that closed before the earliest list are added from
+former_schools_config.yaml, so their history in other datasets loads.
+
 Districts and schools in the latest configured year's lists are marked is_current;
 the API lists only those.
 """
@@ -19,7 +22,8 @@ from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
 from app.etl.core import (
-    configured_years, load_config, refresh_dependent_views, replace_rows, upsert_rows, year_file
+    FORMER_SCHOOLS_CONFIG, configured_years, existing_ids, load_config, refresh_dependent_views, replace_rows,
+    upsert_rows, year_file
 )
 
 logger = logging.getLogger("app.etl")
@@ -344,10 +348,28 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
             'district_grade_xref': sync_links(conn, "district_grade_xref", "district_id_fk", "grade_id_fk",
                                               owners['district_grade_xref'], data['district_grade_xref']),
         }
+    counts["former"] = add_former(conn)
     counts["current"] = mark_current(conn, latest or read_year(config, latest_year))
     # The district views also read school, so they are refreshed with it
     counts["views_refreshed"] = refresh_dependent_views(conn, "school")
     return counts
+
+
+def add_former(conn: Connection) -> dict:
+    """
+    Add the districts and schools in former_schools_config.yaml that the lists don't have.
+    Ids the lists have are left as the lists made them.
+    """
+    former = load_config(FORMER_SCHOOLS_CONFIG)
+    known_districts, known_schools = existing_ids(conn, "district"), existing_ids(conn, "school")
+    districts = [(district_id, d["name"], d["is_public"]) for district_id, d in former["districts"].items()
+                 if district_id not in known_districts]
+    schools = [(school_id, s["name"], s["district"]) for school_id, s in former["schools"].items()
+               if school_id not in known_schools]
+    return {
+        "district": upsert_rows(conn, "district", ("id", "name", "is_public"), ("id",), districts),
+        "school": upsert_rows(conn, "school", ("id", "name", "district_id_fk"), ("id",), schools),
+    }
 
 
 def mark_current(conn: Connection, latest: dict) -> dict:

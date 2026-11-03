@@ -15,6 +15,7 @@ from sqlalchemy.engine import Connection
 logger = logging.getLogger("app.etl")
 
 CONFIG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "alembic", "config"))
+FORMER_SCHOOLS_CONFIG = "former_schools_config.yaml"
 
 
 def load_config(name: str) -> dict:
@@ -51,6 +52,21 @@ def year_file(file_settings: dict, year: int) -> str:
 def existing_ids(conn: Connection, table: str) -> set:
     """All ids in a lookup table, fetched once instead of checking row by row."""
     return {row[0] for row in conn.execute(text(f"SELECT id FROM {table}"))}
+
+
+def known_school_ids(conn: Connection) -> dict:
+    """
+    The school id for each id the state's files use: every school's own id, plus the old ids of
+    schools the state renumbered (renumbered_schools in former_schools_config.yaml), so their
+    earlier rows load under the current school.
+    """
+    ids = {school_id: school_id for school_id in existing_ids(conn, "school")}
+    renumbered = load_config(FORMER_SCHOOLS_CONFIG).get("renumbered_schools") or {}
+    missing = sorted(new for new in renumbered.values() if new not in ids)
+    if missing:
+        raise ValueError(f"{FORMER_SCHOOLS_CONFIG} renumbers schools to ids that aren't in the database: {missing}")
+    ids.update(renumbered)
+    return ids
 
 
 def lookup_ids(conn: Connection, table: str, key_column: str = "name") -> dict:
