@@ -57,6 +57,11 @@ SUBJECT_IDS = {"mat": 1, "rea": 2, "sci": 3, "Math": 1, "Reading": 2, "Science":
 ALL_GRADES = {"0", "all", "all grades"}  # stored as grade_id_fk NULL
 ALL_STUDENTS = "All students"
 
+# A spreadsheet turned the "10 - 15" student range into a date: "15-Oct" in the 2009-2018 and
+# 2024 files, and its serial number 43753 (2019-10-15) in 2019. None of those years has a
+# "10 - 15" otherwise, and every other year does.
+DATE_MANGLED_STUDENTS = {"15-oct": (10, 15), "43753": (10, 15)}
+
 # Values of the assessment_exception enum (AssessmentException names)
 TOO_FEW_SAMPLES, SCORE_UNDER_10, SCORE_OVER_90 = "TOO_FEW_SAMPLES", "SCORE_UNDER_10", "SCORE_OVER_90"
 
@@ -112,6 +117,8 @@ def parse_students(value) -> tuple:
     """(low, high) from a student count range like "35 - 40", or a single count."""
     if pd.isna(value) or value == "" or value == "-":
         return None, None
+    if value.strip().lower() in DATE_MANGLED_STUDENTS:
+        return DATE_MANGLED_STUDENTS[value.strip().lower()]
     value = value.replace(",", "")
     match = re.search(r"(\d+)\s*-\s*(\d+)", value)
     if match:
@@ -119,9 +126,6 @@ def parse_students(value) -> tuple:
     try:
         count = int(float(re.sub(r"[^0-9.]", "", value)))
     except ValueError:
-        return None, None
-    if count == 43753:
-        # A spreadsheet turned some 2019 ranges into this date
         return None, None
     return count, count
 

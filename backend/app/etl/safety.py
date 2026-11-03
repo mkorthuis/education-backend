@@ -121,6 +121,11 @@ def clean_count(value) -> int:
         return 0
 
 
+def has_number(value) -> bool:
+    """Whether a cell holds a count, as opposed to being blank or a note like "Not Reported"."""
+    return not pd.isna(value) and any(c.isdigit() for c in str(value))
+
+
 def find_sheets(workbook: pd.ExcelFile, path: str) -> dict:
     """Sheet name for each kind of data, matched by keyword (some years spell it "Harrassment")."""
     found = {}
@@ -139,14 +144,16 @@ def find_sheets(workbook: pd.ExcelFile, path: str) -> dict:
 
 
 def parse_sheet(df: pd.DataFrame, sheet_name: str, outputs: list, year: int,
-                known_schools: dict, unknown_schools: set) -> list:
+                known_schools: dict, unknown_schools: set, not_reported: set) -> list:
     """
     (table, row) pairs from one sheet, in sheet order.
 
     The header row has "SAU" in its first column and the school id column is the first one
     whose header mentions "school"; the counts are found by offset from it. Rows without a
     school id (blank and note rows) are skipped, and so are schools missing from the school
-    table (collected in unknown_schools).
+    table (collected in unknown_schools) and schools whose count cells are all blank or notes
+    like "Not Reported" or "Data Not Yet Submitted" (collected in not_reported), so they
+    don't read as zero incidents.
     """
     header = next((i for i, value in enumerate(df.iloc[:, 0]) if isinstance(value, str) and "sau" in value.lower()),
                   None)
@@ -156,7 +163,8 @@ def parse_sheet(df: pd.DataFrame, sheet_name: str, outputs: list, year: int,
                           and "school" in value.lower()), None)
     if school_column is None:
         raise ValueError(f"{year} sheet {sheet_name!r}: no school id column in the header row")
-    last_offset = max(offset for _, _, offsets in outputs for offset in offsets if offset is not None)
+    count_offsets = sorted({offset for _, _, offsets in outputs for offset in offsets if offset is not None})
+    last_offset = count_offsets[-1]
     if school_column + last_offset >= df.shape[1]:
         raise ValueError(f"{year} sheet {sheet_name!r}: expected {last_offset} columns after the school id column, "
                          f"found {df.shape[1] - school_column - 1}")
@@ -170,6 +178,9 @@ def parse_sheet(df: pd.DataFrame, sheet_name: str, outputs: list, year: int,
             unknown_schools.add((year, school_id))
             continue
         school_id = known_schools[school_id]
+        if not any(has_number(row.iloc[school_column + offset]) for offset in count_offsets):
+            not_reported.add((year, school_id))
+            continue
         counts = [clean_count(value) for value in row.iloc[school_column:]]
         for table, type_id, offsets in outputs:
             values = tuple(0 if offset is None else counts[offset] for offset in offsets)
@@ -232,14 +243,15 @@ def load(
 
     years = configured_years(config["file_settings"], years)
     rows = {table: [] for table in TABLES}
-    unknown_schools = set()
+    unknown_schools, not_reported = set(), set()
     for year in years:
         sheets = resolve_types(SHEETS_2016 if year == 2016 else SHEETS, type_ids)
         path = year_file(config["file_settings"], year)
         workbook = pd.ExcelFile(path)
         for kind, sheet_name in find_sheets(workbook, path).items():
             df = pd.read_excel(workbook, sheet_name=sheet_name)
-            for table, row in parse_sheet(df, sheet_name, sheets[kind], year, known_schools, unknown_schools):
+            for table, row in parse_sheet(df, sheet_name, sheets[kind], year, known_schools, unknown_schools,
+                                          not_reported):
                 rows[table].append(row)
 
     if unknown_schools:
@@ -247,6 +259,9 @@ def load(
         school_ids = sorted({school_id for _, school_id in unknown_schools})
         logger.warning(f"Skipped {len(unknown_schools)} school-years for {len(school_ids)} schools "
                        f"not in the school table: {school_ids}")
+    if not_reported:
+        logger.warning(f"Skipped {len(not_reported)} school-years the files mark as not reported: "
+                       f"{sorted(not_reported)}")
 
     counts = {table: upsert_rows(conn, table, key_columns(table) + TABLES[table][1], key_columns(table), table_rows)
               for table, table_rows in rows.items()}

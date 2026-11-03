@@ -204,7 +204,7 @@ def parse_schools(df: pd.DataFrame, config: dict, districts: dict, saus: dict, m
     Schools from the school list, keyed by school id.
 
     SAUs and districts the other lists don't have are added (districts as not public).
-    A blank region leaves the school without a region.
+    A blank region is stored as "Unknown".
     """
     mappings = config['column_mappings']
     schools = {}
@@ -234,7 +234,7 @@ def parse_schools(df: pd.DataFrame, config: dict, districts: dict, saus: dict, m
         schools[school_id] = {
             'row': (
                 _id(school_id), _text(value('school_name')), _id(sau_id), _id(district_id),
-                REGIONS.get(value('region_name') or 'Unknown'), SCHOOL_TYPES.get(value('school_type_desc')),
+                REGIONS[_text(value('region_name')) or 'Unknown'], SCHOOL_TYPES.get(value('school_type_desc')),
                 _text(value('principal_first_name')), _text(value('principal_last_name')),
                 _text(value('address1')), _text(value('address2')), _text(value('city')),
                 matcher.find(value('city')),
