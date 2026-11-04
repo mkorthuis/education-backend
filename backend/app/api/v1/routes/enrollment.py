@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query
 from typing import List, Optional
 
 from app.api.v1.deps import SessionDep
-from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, TownEnrollmentGet, TownEnrollmentStateGet
+from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, StateSchoolCountGet, TownEnrollmentGet, TownEnrollmentStateGet
 from app.service.public.enrollment_service import enrollment_service
 from app.core.cache import cache_response
 
@@ -129,6 +129,20 @@ def get_town_enrollment_state(
         year=year, 
         grade_id=grade_id
     )
+
+@router.get("/school-counts/state",
+    response_model=List[StateSchoolCountGet],
+    summary="Get the number of public schools and districts by year",
+    description="Counts, for each year, the public schools with students in kindergarten to grade 12, and the public school districts they belong to",
+    response_description="One row per year, oldest first")
+@cache_response("enrollment_school_counts_state")
+def get_state_school_counts(session: SessionDep):
+    """
+    Get the number of public schools and school districts with K-12 students, by year.
+
+    Returns one row per year: the year, the number of schools and the number of districts.
+    """
+    return enrollment_service.get_state_school_counts(session=session)
 
 @router.get("/state", 
     response_model=List[StateEnrollmentGet],

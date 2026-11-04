@@ -4,8 +4,8 @@ from sqlmodel import Session, select, func, and_
 from fastapi import HTTPException
 
 from app.model.enrollment import SchoolEnrollment, StateEnrollment, TownEnrollment, TownEnrollmentState
-from app.model.location import TownDistrictLink
-from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, TownEnrollmentGet, TownEnrollmentStateGet
+from app.model.location import District, Grade, School, TownDistrictLink
+from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, StateSchoolCountGet, TownEnrollmentGet, TownEnrollmentStateGet
 
 class EnrollmentService:
     def get_school_enrollments(
@@ -151,6 +151,32 @@ class EnrollmentService:
                     )
             
         return [TownEnrollmentGet.from_orm(enrollment) for enrollment in enrollments]
+
+    def get_state_school_counts(self, session: Session) -> List[StateSchoolCountGet]:
+        """
+        Count, for each year, the public schools with any students in kindergarten to grade 12 and
+        the public school districts those schools belong to (districts that run their own schools).
+        Preschool-only programs and charter schools (which are their own, non-public districts)
+        aren't counted.
+
+        Returns:
+            One row per year, oldest first
+        """
+        statement = (
+            select(
+                SchoolEnrollment.year,
+                func.count(func.distinct(SchoolEnrollment.school_id_fk)).label("schools"),
+                func.count(func.distinct(School.district_id_fk)).label("districts"),
+            )
+            .join(School, School.id == SchoolEnrollment.school_id_fk)
+            .join(District, and_(District.id == School.district_id_fk, District.is_public))
+            .join(Grade, and_(Grade.id == SchoolEnrollment.grade_id_fk, Grade.name != "Preschool"))
+            .where(SchoolEnrollment.enrollment > 0)
+            .group_by(SchoolEnrollment.year)
+            .order_by(SchoolEnrollment.year)
+        )
+        return [StateSchoolCountGet(year=year, schools=schools, districts=districts)
+                for year, schools, districts in session.exec(statement).all()]
 
     def get_state_enrollments(
         self,

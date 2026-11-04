@@ -38,6 +38,12 @@ class TownEnrollmentStateGet(BaseModel):
         from_attributes = True
         populate_by_name = True
 
+class StateSchoolCountGet(BaseModel):
+    """How many public schools and school districts had students in kindergarten to grade 12 in a year"""
+    year: int
+    schools: int
+    districts: int
+
 class StateEnrollmentGet(BaseModel):
     """State-level enrollment data by year and grade level"""
     id: int
