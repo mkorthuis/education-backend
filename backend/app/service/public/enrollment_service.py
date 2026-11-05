@@ -3,9 +3,22 @@ from sqlalchemy.orm import selectinload
 from sqlmodel import Session, select, func, and_
 from fastapi import HTTPException
 
-from app.model.enrollment import SchoolEnrollment, StateEnrollment, TownEnrollment, TownEnrollmentState
+from app.model.enrollment import (
+    DistrictEnglishLearner, DistrictReducedLunch, SchoolEnrollment, SchoolReducedLunch, StateEnglishLearner,
+    StateEnrollment, StateReducedLunch, TownEnrollment, TownEnrollmentState,
+)
 from app.model.location import District, Grade, School, TownDistrictLink
 from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, StateSchoolCountGet, TownEnrollmentGet, TownEnrollmentStateGet
+
+from app.service.dataset_query import Dataset, fetch_dataset
+
+REDUCED_LUNCH = Dataset(
+    {"school": SchoolReducedLunch, "district": DistrictReducedLunch, "state": StateReducedLunch},
+    ("enrollment", "eligible"), "reduced lunch eligibility")
+ENGLISH_LEARNER = Dataset(
+    {"district": DistrictEnglishLearner, "state": StateEnglishLearner},
+    ("enrollment", "eligible", "monitor"), "English learners")
+
 
 class EnrollmentService:
     def get_school_enrollments(
@@ -261,5 +274,25 @@ class EnrollmentService:
                 )
             
         return [TownEnrollmentStateGet.from_orm(record) for record in state_records]
+
+    # Free and reduced-price lunch eligibility
+    def get_school_reduced_lunch(self, session: Session, year: Optional[int] = None,
+                                 school_id: Optional[int] = None, district_id: Optional[int] = None) -> List[dict]:
+        return fetch_dataset(session, REDUCED_LUNCH, "school", year, school_id, district_id)
+
+    def get_district_reduced_lunch(self, session: Session, year: Optional[int] = None,
+                                   district_id: Optional[int] = None) -> List[dict]:
+        return fetch_dataset(session, REDUCED_LUNCH, "district", year, district_id=district_id)
+
+    def get_state_reduced_lunch(self, session: Session, year: Optional[int] = None) -> List[dict]:
+        return fetch_dataset(session, REDUCED_LUNCH, "state", year)
+
+    # English learners
+    def get_district_english_learner(self, session: Session, year: Optional[int] = None,
+                                     district_id: Optional[int] = None) -> List[dict]:
+        return fetch_dataset(session, ENGLISH_LEARNER, "district", year, district_id=district_id)
+
+    def get_state_english_learner(self, session: Session, year: Optional[int] = None) -> List[dict]:
+        return fetch_dataset(session, ENGLISH_LEARNER, "state", year)
 
 enrollment_service = EnrollmentService() 

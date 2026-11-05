@@ -56,3 +56,54 @@ class TownEnrollmentState(SQLModel, table=True):
             "viewonly": True
         }
     ) 
+
+# -------------------- Free and reduced-price lunch eligibility --------------------
+# K-12 students, and those eligible for free or reduced-price lunch, as of October 1
+
+class SchoolReducedLunch(BaseMixin, table=True):
+    __tablename__ = "school_reduced_lunch"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+
+
+class DistrictReducedLunch(BaseMixin, table=True):
+    __tablename__ = "district_reduced_lunch"
+
+    district_id_fk: int = Field(foreign_key="district.id")
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+
+
+class StateReducedLunch(BaseMixin, table=True):
+    __tablename__ = "state_reduced_lunch"
+
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+
+
+# -------------------- English learners --------------------
+# Students enrolled, English learners (eligible) and former English learners being monitored,
+# as of October 1; the state reports them by district only
+
+class DistrictEnglishLearner(BaseMixin, table=True):
+    __tablename__ = "district_english_learner"
+
+    district_id_fk: int = Field(foreign_key="district.id")
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+    monitor: Optional[int] = None
+
+
+class StateEnglishLearner(BaseMixin, table=True):
+    __tablename__ = "state_english_learner"
+
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+    monitor: Optional[int] = None

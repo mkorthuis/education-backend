@@ -1,0 +1,16 @@
+# iPlatform › Free and Reduced School Lunch Eligibility › Free Reduced K-12 School Lunch Eligibility Rates by School
+# Export → Excel for each school year; the file for 2025-26 is 2026-....xlsx
+file_settings:
+  default_input: "../assets/reduced-lunch/****-Free Reduced K-12 School Lunch Eligibility.xlsx"
+  year_start: 2012
+  year_end: 2026
+
+column_mappings:
+  district_id: 2        # Column C, "District #"
+  school_id: 4          # Column E, "School #"
+  school_name: 5        # Column F; "District Total:" on a district's subtotal row
+  enrollment: 6         # Column G, "Enroll (1)"
+  eligible: 7           # Column H, "Free and Reduced Eligible (1)"
+
+# The statewide row: public district schools, public academies, charter and interstate schools
+state_label: "Total State Average"

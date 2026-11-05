@@ -49,6 +49,19 @@ def year_file(file_settings: dict, year: int) -> str:
     return path
 
 
+def whole_number(value) -> Optional[int]:
+    """A spreadsheet cell as an int, or None when it is blank or not a whole number."""
+    if value is None or isinstance(value, str) and not value.strip():
+        return None
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    if number != number:  # NaN, pandas' blank cell
+        return None
+    return int(number) if number == int(number) else None
+
+
 def existing_ids(conn: Connection, table: str) -> set:
     """All ids in a lookup table, fetched once instead of checking row by row."""
     return {row[0] for row in conn.execute(text(f"SELECT id FROM {table}"))}

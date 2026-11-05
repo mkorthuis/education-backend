@@ -30,6 +30,12 @@ class MeasurementGet(BaseModel):
         from_attributes = True
         populate_by_name = True
 
+class MeasurementStateGet(BaseModel):
+    """A percentage measure for the whole state in a year: the districts' values weighted by their enrollment"""
+    year: int
+    field: float
+    districts: int
+
 class MeasurementFilter(BaseModel):
     district_id: Optional[int] = None
     measurement_type_id: Optional[int] = None

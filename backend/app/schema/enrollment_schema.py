@@ -57,3 +57,44 @@ class StateEnrollmentGet(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class SchoolReducedLunchGet(BaseModel):
+    """A school's K-12 students and those eligible for free or reduced-price lunch, as of October 1"""
+    id: int
+    school_id: int
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+
+class DistrictReducedLunchGet(BaseModel):
+    """A district's K-12 students and those eligible for free or reduced-price lunch: its schools' sum"""
+    id: int
+    district_id: int
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+
+class StateReducedLunchGet(BaseModel):
+    """Every public school's K-12 students and those eligible for free or reduced-price lunch"""
+    id: int
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+
+class DistrictEnglishLearnerGet(BaseModel):
+    """A district's students, English learners (eligible) and former English learners being monitored"""
+    id: int
+    district_id: int
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+    monitor: Optional[int] = None
+
+class StateEnglishLearnerGet(BaseModel):
+    """Statewide students, English learners (eligible) and former English learners being monitored"""
+    id: int
+    year: int
+    enrollment: Optional[int] = None
+    eligible: Optional[int] = None
+    monitor: Optional[int] = None

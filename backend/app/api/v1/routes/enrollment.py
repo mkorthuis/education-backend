@@ -2,7 +2,11 @@ from fastapi import APIRouter, Query
 from typing import List, Optional
 
 from app.api.v1.deps import SessionDep
-from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, StateSchoolCountGet, TownEnrollmentGet, TownEnrollmentStateGet
+from app.schema.enrollment_schema import (
+    DistrictEnglishLearnerGet, DistrictReducedLunchGet, SchoolEnrollmentGet, SchoolReducedLunchGet,
+    StateEnglishLearnerGet, StateEnrollmentGet, StateReducedLunchGet, StateSchoolCountGet, TownEnrollmentGet,
+    TownEnrollmentStateGet,
+)
 from app.service.public.enrollment_service import enrollment_service
 from app.core.cache import cache_response
 
@@ -143,6 +147,69 @@ def get_state_school_counts(session: SessionDep):
     Returns one row per year: the year, the number of schools and the number of districts.
     """
     return enrollment_service.get_state_school_counts(session=session)
+
+# -------------------- Free and reduced-price lunch eligibility --------------------
+
+@router.get("/reduced-lunch/school",
+    response_model=List[SchoolReducedLunchGet],
+    summary="Get free and reduced-price lunch eligibility by school",
+    description="K-12 students and those eligible for free or reduced-price lunch, as of October 1, by school and year")
+@cache_response("enrollment_reduced_lunch_school")
+def get_school_reduced_lunch(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None),
+    school_id: Optional[int] = Query(default=None),
+    district_id: Optional[int] = Query(default=None),
+):
+    return enrollment_service.get_school_reduced_lunch(session=session, year=year, school_id=school_id, district_id=district_id)
+
+@router.get("/reduced-lunch/district",
+    response_model=List[DistrictReducedLunchGet],
+    summary="Get free and reduced-price lunch eligibility by district",
+    description="K-12 students and those eligible for free or reduced-price lunch, as of October 1: each district's schools added up")
+@cache_response("enrollment_reduced_lunch_district")
+def get_district_reduced_lunch(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None),
+    district_id: Optional[int] = Query(default=None),
+):
+    return enrollment_service.get_district_reduced_lunch(session=session, year=year, district_id=district_id)
+
+@router.get("/reduced-lunch/state",
+    response_model=List[StateReducedLunchGet],
+    summary="Get statewide free and reduced-price lunch eligibility",
+    description="K-12 students in every public school (including academies, charter and interstate schools) and those eligible for free or reduced-price lunch, as of October 1")
+@cache_response("enrollment_reduced_lunch_state")
+def get_state_reduced_lunch(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None),
+):
+    return enrollment_service.get_state_reduced_lunch(session=session, year=year)
+
+# -------------------- English learners --------------------
+
+@router.get("/english-learner/district",
+    response_model=List[DistrictEnglishLearnerGet],
+    summary="Get English learners by district",
+    description="Students enrolled, English learners (eligible) and former English learners being monitored, as of October 1, by district and year")
+@cache_response("enrollment_english_learner_district")
+def get_district_english_learner(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None),
+    district_id: Optional[int] = Query(default=None),
+):
+    return enrollment_service.get_district_english_learner(session=session, year=year, district_id=district_id)
+
+@router.get("/english-learner/state",
+    response_model=List[StateEnglishLearnerGet],
+    summary="Get statewide English learners",
+    description="Students enrolled, English learners (eligible) and former English learners being monitored, as of October 1, for the state")
+@cache_response("enrollment_english_learner_state")
+def get_state_english_learner(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None),
+):
+    return enrollment_service.get_state_english_learner(session=session, year=year)
 
 @router.get("/state", 
     response_model=List[StateEnrollmentGet],

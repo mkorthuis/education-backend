@@ -4,8 +4,11 @@ from fastapi import HTTPException
 
 from app.model.measurement import Measurement, MeasurementType, MeasurementTypeCategory, MeasurementStateTarget
 from app.schema.measurement_schema import (
-    MeasurementGet, MeasurementTypeGet, MeasurementTypeCategoryGet
+    MeasurementGet, MeasurementStateGet, MeasurementTypeGet, MeasurementTypeCategoryGet
 )
+
+# The district measure each district's percentage is weighted by for a statewide figure
+TOTAL_ENROLLMENT = "Total Enrollment"
 
 class MeasurementService:
     def get_measurement_type_categories(self, session: Session) -> List[MeasurementTypeCategoryGet]:
@@ -187,6 +190,49 @@ class MeasurementService:
             result.append(measurement_dto)
             
         return result
+
+    def get_state_measurements(self, session: Session, measurement_type_id: int) -> List[MeasurementStateGet]:
+        """
+        A percentage measure for the whole state, by year: each district's percentage weighted by its
+        total enrollment that year. Only districts that report both the measure and their enrollment
+        count. The data has no statewide figures of its own for these measures.
+
+        Returns:
+            One row per year, oldest first
+        """
+        from sqlalchemy import func
+        from sqlalchemy.orm import aliased
+
+        measurement_type = session.get(MeasurementType, measurement_type_id)
+        if not measurement_type:
+            raise HTTPException(status_code=404, detail="Measurement type not found")
+        if not measurement_type.name.endswith("(%)"):
+            raise HTTPException(status_code=400, detail="Statewide figures are only available for percentage measures")
+
+        enrollment_type = session.exec(select(MeasurementType).where(MeasurementType.name == TOTAL_ENROLLMENT)).first()
+        if not enrollment_type:
+            return []
+
+        enrollment = aliased(Measurement)
+        statement = (
+            select(
+                Measurement.year,
+                (func.sum(Measurement.field * enrollment.field) / func.sum(enrollment.field)).label("field"),
+                func.count(Measurement.district_id_fk).label("districts"),
+            )
+            .join(enrollment, (enrollment.district_id_fk == Measurement.district_id_fk) & (enrollment.year == Measurement.year))
+            .where(
+                Measurement.measurement_type_id_fk == measurement_type_id,
+                Measurement.district_id_fk.is_not(None),
+                Measurement.field.is_not(None),
+                enrollment.measurement_type_id_fk == enrollment_type.id,
+                enrollment.field > 0,
+            )
+            .group_by(Measurement.year)
+            .order_by(Measurement.year)
+        )
+        return [MeasurementStateGet(year=year, field=round(field, 2), districts=districts)
+                for year, field, districts in session.exec(statement).all()]
 
 # Create singleton instance
 measurement_service = MeasurementService() 

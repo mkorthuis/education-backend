@@ -3,7 +3,7 @@ from typing import List, Optional
 
 from app.api.v1.deps import SessionDep
 from app.schema.measurement_schema import (
-    MeasurementGet, MeasurementTypeGet, MeasurementTypeCategoryGet
+    MeasurementGet, MeasurementStateGet, MeasurementTypeGet, MeasurementTypeCategoryGet
 )
 from app.service.public.measurement_service import measurement_service
 from app.core.cache import cache_response
@@ -86,6 +86,18 @@ def get_latest_measurements(
         district_id=district_id,
         school_id=school_id
     )
+
+@router.get("/state",
+    response_model=List[MeasurementStateGet],
+    summary="Get a percentage measure for the whole state by year",
+    description="Weights each district's percentage by its total enrollment, for percentage measures such as Economically Disadvantaged Students (%)",
+    response_description="One row per year, oldest first")
+@cache_response("measurement_state")
+def get_state_measurements(
+    session: SessionDep,
+    measurement_type_id: int = Query(description="The percentage measure's type ID")
+):
+    return measurement_service.get_state_measurements(session=session, measurement_type_id=measurement_type_id)
 
 @router.get("/{measurement_id}", 
     response_model=MeasurementGet,

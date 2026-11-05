@@ -1,0 +1,16 @@
+# iPlatform › Enrollments - Demographic Categories › Limited English Proficiency Enrollment
+# Export → Excel for each school year; the file for 2025-26 is 2026-....xlsx. The 2012 and 2013
+# reports have no English learner counts (every district is 0), so loading starts in 2014.
+file_settings:
+  default_input: "../assets/english-learner/****-Limited English Proficiency Enrollment.xlsx"
+  year_start: 2014
+  year_end: 2026
+
+column_mappings:
+  district_id: 2        # Column C, "District #"
+  district_name: 3      # Column D; "State Total" on the statewide row
+  enrollment: 4         # Column E, "Enroll Count"
+  eligible: 5           # Column F, "EL Eligible": receiving services, or eligible but not served
+  monitor: 6            # Column G, "EL Monitor": proficient, monitored for four years after
+
+state_label: "State Total"
