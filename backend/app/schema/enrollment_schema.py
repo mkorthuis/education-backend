@@ -98,3 +98,16 @@ class StateEnglishLearnerGet(BaseModel):
     enrollment: Optional[int] = None
     eligible: Optional[int] = None
     monitor: Optional[int] = None
+
+
+class EnrollmentTypeGet(BaseModel):
+    id: int
+    name: str
+
+class StateEnrollmentTypeGet(BaseModel):
+    """Statewide October 1 enrollment for one type of school and grade"""
+    id: int
+    year: int
+    enrollment_type: EnrollmentTypeGet
+    grade: GradeGet
+    enrollment: int

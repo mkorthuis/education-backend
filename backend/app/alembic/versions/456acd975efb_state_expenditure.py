@@ -104,9 +104,10 @@ def upgrade():
     for statement in generate_table_creation_statements():
         op.execute(sa.text(statement))
 
-    # Every year in app/alembic/config/state_expenditure_config.yaml. The table is created here as
-    # expenditure_state_total; 49358ad1275f renames it to expenditure_state_rollup.
-    state_expenditure.load(op.get_bind(), expenditure_table='expenditure_state_total')
+    # Every year in app/alembic/config/state_expenditure_config.yaml. The tables are created here as
+    # expenditure_state_total and state_enrollment; 49358ad1275f renames the first to
+    # expenditure_state_rollup, and e4b7c1d9a2f6 the second to state_enrollment_level.
+    state_expenditure.load(op.get_bind(), expenditure_table='expenditure_state_total', enrollment_table='state_enrollment')
 
 
 def downgrade():

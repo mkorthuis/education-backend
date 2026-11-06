@@ -17,7 +17,7 @@ CONFIG = "state_expenditure_config.yaml"
 EXPENDITURE_TABLE = "expenditure_state_rollup"
 EXPENDITURE_COLUMNS = ("year", "operating_elementary", "operating_middle", "operating_high", "operating_total",
                        "current_elementary", "current_middle", "current_high", "current_total", "total")
-ENROLLMENT_TABLE = "state_enrollment"
+ENROLLMENT_TABLE = "state_enrollment_level"
 ENROLLMENT_COLUMNS = ("year", "elementary", "middle", "high", "total")
 KEY = ("year",)
 
@@ -65,7 +65,8 @@ def parse_year(df: pd.DataFrame, year: int) -> tuple:
     return expenditure, enrollment
 
 
-def load(conn: Connection, years: Optional[Iterable[int]] = None, expenditure_table: str = EXPENDITURE_TABLE) -> dict:
+def load(conn: Connection, years: Optional[Iterable[int]] = None, expenditure_table: str = EXPENDITURE_TABLE,
+         enrollment_table: str = ENROLLMENT_TABLE) -> dict:
     """Load the given years (default: every configured year) into the state expenditure and enrollment tables."""
     config = load_config(CONFIG)
     expenditure_rows, enrollment_rows = [], []
@@ -76,8 +77,8 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None, expenditure_ta
 
     counts = {
         expenditure_table: upsert_rows(conn, expenditure_table, EXPENDITURE_COLUMNS, KEY, expenditure_rows),
-        ENROLLMENT_TABLE: upsert_rows(conn, ENROLLMENT_TABLE, ENROLLMENT_COLUMNS, KEY, enrollment_rows),
+        enrollment_table: upsert_rows(conn, enrollment_table, ENROLLMENT_COLUMNS, KEY, enrollment_rows),
     }
     counts["views_refreshed"] = (refresh_dependent_views(conn, expenditure_table)
-                                 + refresh_dependent_views(conn, ENROLLMENT_TABLE))
+                                 + refresh_dependent_views(conn, enrollment_table))
     return counts

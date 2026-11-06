@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from app.api.v1.deps import SessionDep
 from app.schema.enrollment_schema import (
+    StateEnrollmentTypeGet,
     DistrictEnglishLearnerGet, DistrictReducedLunchGet, SchoolEnrollmentGet, SchoolReducedLunchGet,
     StateEnglishLearnerGet, StateEnrollmentGet, StateReducedLunchGet, StateSchoolCountGet, TownEnrollmentGet,
     TownEnrollmentStateGet,
@@ -147,6 +148,19 @@ def get_state_school_counts(session: SessionDep):
     Returns one row per year: the year, the number of schools and the number of districts.
     """
     return enrollment_service.get_state_school_counts(session=session)
+
+# -------------------- October 1 enrollment by type of school --------------------
+
+@router.get("/type/state",
+    response_model=List[StateEnrollmentTypeGet],
+    summary="Get statewide enrollment by type of school",
+    description="October 1 enrollment by type of school (public district, public academy and joint maintenance agreement, public charter, interstate, nonpublic) and grade, statewide, by year")
+@cache_response("enrollment_type_state")
+def get_state_enrollment_by_type(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None),
+):
+    return enrollment_service.get_state_enrollment_by_type(session=session, year=year)
 
 # -------------------- Free and reduced-price lunch eligibility --------------------
 

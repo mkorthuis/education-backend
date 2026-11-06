@@ -10,7 +10,7 @@ from .measurement import (
 )
 from .enrollment import (
     SchoolEnrollment, SchoolReducedLunch, DistrictReducedLunch, StateReducedLunch,
-    DistrictEnglishLearner, StateEnglishLearner
+    DistrictEnglishLearner, StateEnglishLearner, EnrollmentType, StateEnrollmentType
 )
 from .assessment import (
     AssessmentSubject, AssessmentSubgroup, AssessmentDistrict, 

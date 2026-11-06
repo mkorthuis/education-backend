@@ -1,0 +1,41 @@
+# iPlatform › Enrollment Data › State Totals › State Totals Ten Years Public and Private Fall Enrollments
+# Each export covers the ten school years ending in the year chosen (2027: 2017-18 through 2026-27).
+# Files are read in this order, so where two cover the same year the later one's counts are kept:
+# add each new export at the end.
+file_settings:
+  year_start: 2008
+  year_end: 2027
+  files:
+    - path: "../assets/state-enrollment-type/2017-State Totals Ten Years Public and Private Fall Enrollments.xlsx"
+      year_range: [2008, 2017]  # first and last school year it covers
+    - path: "../assets/state-enrollment-type/2027-State Totals Ten Years Public and Private Fall Enrollments.xlsx"
+      year_range: [2018, 2027]
+
+# Report sections loaded, by the start of their title, and the enrollment type each is stored as.
+# "Total Public Schools" and "Total All Schools" are sums of these and aren't loaded.
+sections:
+  "Public District Schools": "Public District Schools"
+  "Public Academies": "Public Academies and Joint Maintenance Agreement Schools"
+  "Public Charter Schools": "Public Charter Schools"
+  "Total Interstate Schools": "Interstate Schools"
+  "Total Nonpublic Schools": "Nonpublic Schools"
+
+# Report grade labels and the grade they're stored under. The report says Readiness (a class
+# between kindergarten and grade 1) counts as grade 1; its rows are added to grade 1's.
+grades:
+  "Preschool": "Preschool"
+  "Kindergarten": "Kindergarten"
+  "Readiness": "Grade 1"
+  "Grade 1": "Grade 1"
+  "Grade 2": "Grade 2"
+  "Grade 3": "Grade 3"
+  "Grade 4": "Grade 4"
+  "Grade 5": "Grade 5"
+  "Grade 6": "Grade 6"
+  "Grade 7": "Grade 7"
+  "Grade 8": "Grade 8"
+  "Grade 9": "Grade 9"
+  "Grade 10": "Grade 10"
+  "Grade 11": "Grade 11"
+  "Grade 12": "Grade 12"
+  "Post graduate": "Post Graduate"

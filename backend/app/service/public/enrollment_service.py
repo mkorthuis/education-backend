@@ -4,8 +4,9 @@ from sqlmodel import Session, select, func, and_
 from fastapi import HTTPException
 
 from app.model.enrollment import (
+    EnrollmentType, StateEnrollmentType,
     DistrictEnglishLearner, DistrictReducedLunch, SchoolEnrollment, SchoolReducedLunch, StateEnglishLearner,
-    StateEnrollment, StateReducedLunch, TownEnrollment, TownEnrollmentState,
+    StateEnrollmentLevel, StateReducedLunch, TownEnrollment, TownEnrollmentState,
 )
 from app.model.location import District, Grade, School, TownDistrictLink
 from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, StateSchoolCountGet, TownEnrollmentGet, TownEnrollmentStateGet
@@ -206,13 +207,13 @@ class EnrollmentService:
         Returns:
             List of state enrollment records
         """
-        statement = select(StateEnrollment)
+        statement = select(StateEnrollmentLevel)
         
         if year is not None:
-            statement = statement.where(StateEnrollment.year == year)
+            statement = statement.where(StateEnrollmentLevel.year == year)
             
         # Order by year descending to get most recent first
-        statement = statement.order_by(StateEnrollment.year.desc())
+        statement = statement.order_by(StateEnrollmentLevel.year.desc())
             
         enrollments = session.exec(statement).all()
         
@@ -274,6 +275,28 @@ class EnrollmentService:
                 )
             
         return [TownEnrollmentStateGet.from_orm(record) for record in state_records]
+
+    # October 1 enrollment by type of school
+    def get_state_enrollment_by_type(self, session: Session, year: Optional[int] = None) -> List[dict]:
+        """Statewide October 1 enrollment by type of school and grade, oldest year first."""
+        statement = (
+            select(StateEnrollmentType, EnrollmentType, Grade)
+            .join(EnrollmentType, EnrollmentType.id == StateEnrollmentType.enrollment_type_id_fk)
+            .join(Grade, Grade.id == StateEnrollmentType.grade_id_fk)
+            .order_by(StateEnrollmentType.year, EnrollmentType.id, Grade.id)
+        )
+        if year is not None:
+            statement = statement.where(StateEnrollmentType.year == year)
+        return [
+            {
+                "id": row.id,
+                "year": row.year,
+                "enrollment_type": {"id": kind.id, "name": kind.name},
+                "grade": {"id": grade.id, "name": grade.name},
+                "enrollment": row.enrollment,
+            }
+            for row, kind, grade in session.exec(statement).all()
+        ]
 
     # Free and reduced-price lunch eligibility
     def get_school_reduced_lunch(self, session: Session, year: Optional[int] = None,

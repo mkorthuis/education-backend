@@ -29,9 +29,9 @@ class TownEnrollment(BaseMixin, table=True):
     town: Town = Relationship()
     grade: Grade = Relationship()
 
-class StateEnrollment(BaseMixin, table=True):
-    """State-level enrollment data by year and grade level"""
-    __tablename__ = "state_enrollment"
+class StateEnrollmentLevel(BaseMixin, table=True):
+    """Statewide average daily membership by school level (elementary, middle, high) and in total"""
+    __tablename__ = "state_enrollment_level"
     
     year: int = Field(index=True)
     elementary: Optional[float] = Field(default=None)
@@ -107,3 +107,22 @@ class StateEnglishLearner(BaseMixin, table=True):
     enrollment: Optional[int] = None
     eligible: Optional[int] = None
     monitor: Optional[int] = None
+
+
+# -------------------- October 1 enrollment by type of school --------------------
+
+class EnrollmentType(BaseMixin, table=True):
+    """A type of school in the state's enrollment totals, such as Public Charter Schools"""
+    __tablename__ = "enrollment_type"
+
+    name: str = Field(max_length=255)
+
+
+class StateEnrollmentType(BaseMixin, table=True):
+    """Statewide October 1 enrollment by type of school and grade"""
+    __tablename__ = "state_enrollment_type"
+
+    year: int
+    enrollment_type_id_fk: int = Field(foreign_key="enrollment_type.id")
+    grade_id_fk: int = Field(foreign_key="grades.id")
+    enrollment: int
