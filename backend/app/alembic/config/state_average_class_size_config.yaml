@@ -1,0 +1,27 @@
+# iExplore › COMPARE › Download › "Download Data on Compare": Indicator Name = Average Class Size,
+# Entity A = State of New Hampshire (the default), Download → "*Download Compare" → CSV.
+# https://jwt.nh.gov/?src_route=/iExplore/Explore-Dashboard
+# Each export holds the Year ID chosen and the two years before it (2016, the first, holds only
+# itself). The CSVs are UTF-16 and tab-separated, with a column per entity compared. The state's
+# district and school averages come from the main iExplore export (the measurement dataset).
+# Files are read in this order, so where two cover the same year the later one's value is kept:
+# add each new export at the end.
+file_settings:
+  year_start: 2016
+  year_end: 2025
+  files:
+    - path: "../assets/average-class-size/state/2016-iExplore-Compare-Average-Class-Size.csv"
+      year_range: [2016, 2016]
+    - path: "../assets/average-class-size/state/2019-iExplore-Compare-Average-Class-Size.csv"
+      year_range: [2017, 2019]
+    - path: "../assets/average-class-size/state/2022-iExplore-Compare-Average-Class-Size.csv"
+      year_range: [2020, 2022]
+    - path: "../assets/average-class-size/state/2025-iExplore-Compare-Average-Class-Size.csv"
+      year_range: [2023, 2025]
+
+columns:
+  year: "Year ID"
+  indicator: "Indicator Name"
+  state: "State of New Hampshire"
+
+indicator: "Average Class Size"

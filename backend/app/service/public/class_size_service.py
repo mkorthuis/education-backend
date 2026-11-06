@@ -143,7 +143,7 @@ class ClassSizeService:
                     "grades_1_2": cs.grade_1_2,
                     "grades_3_4": cs.grade_3_4,
                     "grades_5_8": cs.grade_5_8,
-                    "all_grades": None,  # No state-level measurement provided
+                    "all_grades": cs.all_grades,
                 }
                 response.append(StateClassSizeGet.model_validate(data))
             return response

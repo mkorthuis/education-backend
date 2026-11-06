@@ -50,4 +50,6 @@ class StateClassSize(BaseMixin, table=True):
 
     grade_1_2: Optional[float] = None
     grade_3_4: Optional[float] = None
-    grade_5_8: Optional[float] = None 
+    grade_5_8: Optional[float] = None
+    # NH DOE's statewide average for all grades, from iExplore (2016 on); the bands come from the class size reports
+    all_grades: Optional[float] = None 
