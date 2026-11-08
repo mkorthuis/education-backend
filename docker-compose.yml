@@ -52,6 +52,9 @@ services:
         condition: service_completed_successfully
     env_file:
       - .env
+      # Local secrets that must never be committed, such as ANTHROPIC_API_KEY (gitignored; optional)
+      - path: .env.local
+        required: false
     environment:
       - POSTGRES_SERVER=db
     healthcheck:

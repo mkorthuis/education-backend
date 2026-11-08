@@ -56,6 +56,12 @@ heroku config:set PYTHONUNBUFFERED=1
 
 heroku config:set WEB_CONCURRENCY=4 WORKER_CLASS=uvicorn.workers.UvicornWorker TIMEOUT=120
 
+# Ask NH Education Facts: visitors' questions, answered by Claude. Without a key, asking is off and
+# the site says so. Use a key made for production in the Anthropic Console; never commit it.
+heroku config:set ANTHROPIC_API_KEY=<production key>
+# Optional: questions answered per day across the site (default 500); 0 turns asking off
+heroku config:set ASK_DAILY_LIMIT=500
+
 
 # Verify configuration
 heroku config
@@ -135,7 +141,13 @@ heroku ps
    - Check `heroku ps` for process status
    - Monitor database with `heroku pg:info`
 
-4. **Troubleshooting**:
+4. **Ask NH Education Facts** (`POST /api/v1/ask`):
+   - Needs `ANTHROPIC_API_KEY`. `ASK_DAILY_LIMIT` caps questions per day (midnight to midnight in New Hampshire); repeats answered from the cache don't count. `ASK_MODEL` and `ASK_EFFORT` default to `claude-haiku-5-5` at `high`.
+   - The daily count and saved answers are in the dyno's own Redis, so each dyno counts separately and a dyno restart (Heroku restarts dynos daily) starts the count over.
+   - A new answer can take more than Heroku's 30-second request limit, so it's streamed: spaces while Claude works, then the answer. Claude gets about 40 seconds an answer; the site stops waiting at 45.
+   - Each answer logs its time and tokens: `heroku logs --tail | grep "Ask "`.
+
+5. **Troubleshooting**:
    - Check logs for startup issues
    - Verify environment variables with `heroku config`
    - Check the release phase output for migration errors: `heroku releases:output`

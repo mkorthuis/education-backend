@@ -78,6 +78,17 @@ class Settings(BaseSettings):
     CACHE_DEFAULT_TTL: int = 3600  # 1 hour default TTL
     CACHE_KEY_PREFIX: str = "education_api:"
 
+    # Ask NH Education Facts: visitors' questions, answered by Claude from the site's data. With no
+    # API key the endpoint says the feature isn't available.
+    ANTHROPIC_API_KEY: str = ""
+    ASK_MODEL: str = "claude-haiku-5-5"
+    ASK_EFFORT: str = "high"
+    # Questions answered per day across the whole site (cached repeats don't count); 0 turns asking off
+    ASK_DAILY_LIMIT: int = 500
+    ASK_MAX_QUESTION_LENGTH: int = 500
+    # How long an answer is reused for the same question; data reloads clear it sooner
+    ASK_CACHE_TTL: int = 86400
+
     # Gemini API Configuration
     GEMINI_API_KEY: str = ""
     GEMINI_MODEL: str = "gemini-2.0-flash"
