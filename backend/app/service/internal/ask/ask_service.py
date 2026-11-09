@@ -26,6 +26,10 @@ from app.service.internal.ask.data_tools import (
     COMPARE_MEASURES, LEVELS, MAX_COMPARE, RANK_MEASURES, TOPICS, DataToolError, compare_places, find_places, get_data, list_schools,
     rank_districts,
 )
+from app.service.internal.ask.national_tools import (
+    MAX_PLACES, NAEP_GRADES, NAEP_GROUPS, NAEP_MEASURES, NAEP_SUBJECTS, REVENUE_MEASURES, REVENUE_SOURCES, naep_results,
+    state_school_revenue,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +65,7 @@ How to answer:
 - Topics: enrollment (students, English learners, low-income students, and statewide private school students), test_scores (proficiency by year, student group and grade, and the highest level), graduation (graduation rates, dropouts and graduates' plans), spending (cost per student, also after inflation; revenue by source: local, state and federal; spending by category and by line, such as special education, transportation, administration and vocational education), staff (average teacher pay, also after inflation; starting and top salaries from a district's salary schedule; staff counts; class size), safety (truancy, bullying, harassment, suspensions and expulsions), efa (Education Freedom Account students and their estimated state cost by year, aid per student, and a district's students by town). Spending and staff are for districts and the state, not individual schools; EFAs are for the state and for districts, where a town's count is in its district's data.
 - Each dataset's note says what its figures mean; carry what matters into the answer, such as a cost being an estimate or a figure being adjusted for inflation (and into which year's dollars).
 - To compare a few places (two districts, a district and the state, several schools), use compare_places, and chart or tabulate its datasets so the places sit side by side; to rank all districts ("which districts spend the most"), use rank_districts. When a district is compared with nothing else, the state is a useful comparison.
+- How New Hampshire compares with other states and the nation: naep_results has NAEP (the Nation's Report Card) reading and math results in grades 4 and 8 for every state and the national public average, 2003-2024, with NAEP's own significance tests, and New Hampshire's and the nation's results by student group; state_school_revenue has the Census Bureau's school revenue for every state, 2009-10 to 2023-24, from federal, state and local sources and the categories within them, with shares and revenue per pupil. NAEP is run by NCES (the National Center for Education Statistics), not the Census Bureau. On NAEP, call one place or year higher or lower than another only where the tool's significance tests say so, for that year or pair of years; otherwise give the scores and say the difference isn't statistically significant, or that it wasn't tested. NCES says NAEP Proficient does not represent grade-level proficiency, so never describe it as grade level; it is a higher bar than proficient on the state test, so never set the two percentages side by side as one measure. Census revenue per pupil and shares are calculated from Census figures; say so, and don't mix them with the site's cost per pupil (NH DOE's operating spending). These figures aren't on the site's pages yet: name the source (NAEP, the Census Bureau) in the answer, and give references only to site pages that relate to the question.
 - Give the latest year's figure with its year, and the change over time when it helps. Before saying a year was the highest or lowest, counting years, or saying one place was above another every year, check every row of the dataset; prefer stating the figures themselves over your own calculations. Compare like with like (a grade with the same grade, not with all grades). School years are written like 2024-25; graduation classes like "class of 2025". Comparing places is often the most useful answer (a district against the state, or two districts).
 - Start with the direct answer in the first sentence. If the site doesn't have the data, say so in the first sentence and point to the closest page. Then keep it short and plain: 1 to 4 short paragraphs, short sentences, everyday words, no jargon (where an answer first uses the word proficient, explain that it means meeting the grade-level standard; say "students with disabilities" rather than IEP/SWD). Changes in a rate are in percentage points. Don't speculate about causes the data can't show, and stay neutral on policy questions such as EFAs, budgets or school funding.
 - Write in the site's neutral voice ("Concord spent..."): never "I" or "me", call the site "this site", no greetings, no sign-offs, no praise of the question. Answer in English.
@@ -134,6 +139,38 @@ TOOLS = [
                 },
             },
             "required": ["topic", "places"],
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "naep_results",
+        "description": f"NAEP, the Nation's Report Card: reading and math results in grades 4 and 8, 2003-2024, for up to {MAX_PLACES} places (NH, other states, DC, or US for the national public average), by year, with NAEP's significance tests of New Hampshire against each place and against its own earlier years. Leave places empty to rank every state in the latest year. Student groups other than all students are for NH and US only.",
+        "strict": True,
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "subject": {"type": "string", "enum": list(NAEP_SUBJECTS)},
+                "grade": {"type": "integer", "enum": list(NAEP_GRADES)},
+                "measure": {"type": "string", "enum": list(NAEP_MEASURES)},
+                "places": {"type": "array", "items": {"type": "string"}, "description": "Two-letter state codes, or US for the nation; empty to rank every state"},
+                "student_group": {"type": "string", "enum": NAEP_GROUPS},
+            },
+            "required": ["subject", "grade", "measure", "places", "student_group"],
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "state_school_revenue",
+        "description": f"The Census Bureau's school system revenue by state, 2009-10 to 2023-24, for up to {MAX_PLACES} places (NH, other states, DC, or US for the nation): one source (total, federal, state or local) by year, every source in the latest year, and the categories within them (Title I, special education, property taxes...), with shares and revenue per pupil. Leave places empty to rank every state in the latest year.",
+        "strict": True,
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "places": {"type": "array", "items": {"type": "string"}, "description": "Two-letter state codes, or US for the nation; empty to rank every state"},
+                "measure": {"type": "string", "enum": list(REVENUE_MEASURES)},
+                "source": {"type": "string", "enum": list(REVENUE_SOURCES)},
+            },
+            "required": ["places", "measure", "source"],
             "additionalProperties": False,
         },
     },
@@ -357,7 +394,9 @@ class DatasetRegistry:
         for item in result.get("datasets", []):
             item["id"] = f"d{len(self.datasets) + 1}"
             self.datasets[item["id"]] = item
-            self.pages.setdefault(item["page"], item["title"])
+            # National datasets have no site page yet
+            if item["page"]:
+                self.pages.setdefault(item["page"], item["title"])
         return result
 
     def add_ranking(self, result: dict) -> dict:
@@ -386,6 +425,12 @@ def run_tool(session: Session, registry: DatasetRegistry, name: str, tool_input:
         return json.dumps(registry.add_places(list_schools(session, int(tool_input.get("district_id")))))
     if name == "compare_places":
         return json.dumps(registry.add(compare_places(session, tool_input.get("topic"), list(tool_input.get("places") or []))))
+    if name == "naep_results":
+        return json.dumps(registry.add(naep_results(session, tool_input.get("subject"), tool_input.get("grade"), tool_input.get("measure"),
+                                                    list(tool_input.get("places") or []), tool_input.get("student_group") or "All students")))
+    if name == "state_school_revenue":
+        return json.dumps(registry.add(state_school_revenue(session, list(tool_input.get("places") or []), tool_input.get("measure"),
+                                                            tool_input.get("source"))))
     if name == "rank_districts":
         result = rank_districts(session, tool_input.get("measure"), tool_input.get("order", "highest"))
         # Every district in the ranking can be linked; Claude reads only the first pages, to keep it short
@@ -463,7 +508,7 @@ def build_answer(reply: dict, registry: DatasetRegistry) -> dict:
             break
     if not references and reply.get("status") not in ("declined", "general"):
         # Link the pages behind the data used, so every data answer points somewhere to check it
-        for data in list(registry.datasets.values())[:3]:
+        for data in [d for d in registry.datasets.values() if d["page"]][:3]:
             if data["page"] not in [r["path"] for r in references]:
                 references.append({"label": data["title"], "path": data["page"]})
     return {

@@ -292,6 +292,40 @@ class AskTests(unittest.TestCase):
         with self.assertRaises(DataToolError):
             get_data(self.session, "efa", "school", 22510)
 
+    def test_naep_follows_naeps_own_tests_and_keeps_groups_to_new_hampshire_and_the_nation(self):
+        from app.service.internal.ask.national_tools import naep_results
+        trend, against_places, against_years = naep_results(self.session, "math", 8, "average_score", ["NH", "MA", "US"], "All students")["datasets"]
+        self.assertEqual(trend["columns"], ["Year", "New Hampshire", "Massachusetts", "United States"])
+        self.assertEqual(trend["rows"][-1], ["2024", 280, 283, 272])
+        # Against every state at once, Massachusetts isn't significantly higher in 2024; the nation is tested on its own
+        self.assertEqual(against_places["rows"][-1], ["2024", "not significantly different", "higher"])
+        self.assertEqual(len(against_places["rows"]), len(trend["rows"]))
+        # Every place's latest year is tested against its earlier years
+        self.assertEqual(against_years["columns"][1:], ["New Hampshire in 2024 is", "Massachusetts in 2024 is", "United States in 2024 is"])
+        self.assertTrue(all(row[0] < "2024" for row in against_years["rows"]))
+        self.assertIsNone(trend["page"])
+        ranking = naep_results(self.session, "reading", 4, "at_or_above_proficient", [], "All students")["datasets"][0]
+        self.assertEqual(len(ranking["rows"]), 52)  # the states, DC and the nation
+        with self.assertRaises(DataToolError):
+            naep_results(self.session, "math", 4, "average_score", ["MA"], "Female")
+
+    def test_school_revenue_by_state_is_per_pupil_with_shares_by_source(self):
+        from app.service.internal.ask.national_tools import state_school_revenue
+        trend, by_source, categories = state_school_revenue(self.session, ["NH", "US"], "per_pupil", "total")["datasets"]
+        self.assertEqual(trend["rows"][-1][:2], ["2023-24", 25828.63])
+        self.assertEqual(by_source["rows"][0][5:8], [8.26, 28.35, 63.39])  # federal, state and local shares
+        self.assertIn("Federal: Title I", [row[0] for row in categories["rows"]])
+        with self.assertRaises(DataToolError):
+            state_school_revenue(self.session, ["NH"], "share_of_total", "total")
+
+    def test_answers_from_national_data_link_no_site_page(self):
+        from app.service.internal.ask.national_tools import state_school_revenue
+        registry = DatasetRegistry()
+        registry.add(state_school_revenue(self.session, ["NH"], "per_pupil", "local"))
+        answer = build_answer({"status": "answered", "answer": ["New Hampshire's local revenue per pupil..."], "references": []}, registry)
+        self.assertEqual(answer["references"], [])
+        self.assertNotIn(None, registry.pages)
+
     def test_data_tools_check_places(self):
         with self.assertRaises(DataToolError):
             get_data(self.session, "staff", "school", 27010)
