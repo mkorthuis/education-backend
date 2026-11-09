@@ -2210,12 +2210,12 @@ Strategy type 1 (local practices that each district sets and no state dataset re
    - place: district Bethlehem
    - note: Page text: "Please be advised that the 2025-2026 Preschool Class is FULL. Contact Nicole Kerstetter at the email below to put your child's name on the rolling waitlist." Handbook 2025-26 gives preschool arrival time 8:00. NH DOE Oct 1 2026: 6 preschoolers at Bethlehem Elementary School. Raw copy: raw/districts/batch-4/bethlehem-pages.txt
 11. The Bow School District has a public preschool: NH DOE counted 20 children at Bow Preschool on October 1, 2026, and the Town of Bow's schools page lists a special education preschool at Bow High School. No program details or tuition were found on the SAU 67 site.
-   - citation: Town of Bow - Schools page; NH DOE iPlatform Preschool Enrollments 2026-2027 (raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx)
+   - citation: Town of Bow - Schools page; NH DOE iPlatform Preschool Enrollments 2026-2027
    - source: https://bownh.gov/257/Schools
    - as_of: 2026-11-08
    - review_by: 2027-11-08
    - place: district Bow
-   - note: Page text: "Bow High School (Grades 9-12 & Special Ed Preschool)" Town of Bow's separate Celebrating Children Preschool is a town recreation program, not the school district's. An NH DOE 2023 letter about Bow's preschool program could not be retrieved (403, no Wayback copy). Raw copy: raw/districts/batch-5/bow-town-schools-page.txt
+   - note: The DOE file is raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. Page text: "Bow High School (Grades 9-12 & Special Ed Preschool)" Town of Bow's separate Celebrating Children Preschool is a town recreation program, not the school district's. An NH DOE 2023 letter about Bow's preschool program could not be retrieved (403, no Wayback copy). Raw copy: raw/districts/batch-5/bow-town-schools-page.txt
 12. The Brentwood School District runs a community preschool at Swasey Central School for children ages 3 to 5, with community peers and children with specialized learning needs; children must turn 3 by September 30. Tuition for community peers is $1,300 per year, billed at the start of the school year and in January, with tuition assistance considered for families in need.
    - citation: Swasey Central School - Preschool
    - source: https://www.sau16.org/pages/dae2e181-d7a7-4d85-9f4d-066eac5debfd

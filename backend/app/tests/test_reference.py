@@ -164,6 +164,13 @@ class ReferenceDatabaseTests(unittest.TestCase):
                                "charts": [{"dataset": "d1", "kind": "line", "title": "NAEP", "series": ["New Hampshire"]}]}, registry)
         self.assertEqual([s["site"] for s in answer["sources"]], ["nationsreportcard.gov"])
 
+    def test_facts_about_this_site_are_used_but_not_linked(self):
+        fact = self.session.exec(select(ReferenceFact).where(ReferenceFact.source_url == "https://nhfacts.com")).first()
+        slug = self.session.get(ReferenceTopic, fact.reference_topic_id_fk).slug
+        result = look_up_reference(self.session, [slug])
+        self.assertIn(f"r{fact.id}", [f["id"] for f in result["topics"][0]["facts"]])
+        self.assertNotIn(f"r{fact.id}", result["_sources"])
+
     def test_sites_drop_www(self):
         self.assertEqual(site("https://www.ecfr.gov/current/title-34"), "ecfr.gov")
 

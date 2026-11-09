@@ -721,10 +721,11 @@ Strategy types 5 (what the site's numbers and terms mean) and 6 (how New Hampshi
    - as_of: 2026-11-08
    - review_by: 2027-08-15
 7. NH DOE's test results label the low-income group "SES" (economically disadvantaged); this site calls it "Low-Income (Free or Reduced-Price Meals)."
-   - citation: NH DOE 2025-26 Disaggregated Data File (Subgroup column); NH Education Facts dataset notes (ask/data_tools.py STUDENT_GROUPS)
+   - citation: NH DOE 2025-26 Disaggregated Data File (Subgroup column)
    - source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/publicdisaggregateddata2026_csvformat.csv
    - as_of: 2026-11-08
    - review_by: 2027-11-08
+   - note: also the site's own student-group notes (ask/data_tools.py STUDENT_GROUPS)
 
 ## measure-english-learners: English Learners, Current and Monitored
 
@@ -759,11 +760,11 @@ Strategy types 5 (what the site's numbers and terms mean) and 6 (how New Hampshi
    - as_of: 2026-11-08
    - review_by: 2027-11-08
 6. NH DOE's test results report two English learner groups, "EL - Current" and "EL - Curr + Monitor Yr1-4"; this site labels them "English Learners" and "English Learners, Current and Recently Exited."
-   - citation: NH DOE 2025-26 Disaggregated Data File; NH Education Facts dataset notes (ask/data_tools.py STUDENT_GROUPS)
+   - citation: NH DOE 2025-26 Disaggregated Data File
    - source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/publicdisaggregateddata2026_csvformat.csv
    - as_of: 2026-11-08
    - review_by: 2027-11-08
-   - note: the 2026 file read this session contains "EL - Current"; the combined group appears in earlier years' files the site loads
+   - note: the 2026 file read this session contains "EL - Current"; the combined group appears in earlier years' files the site loads; also the site's own student-group notes (ask/data_tools.py STUDENT_GROUPS)
 7. For state adequacy aid, an "English language learner" is a pupil whose predominant language is not English or who is educationally disadvantaged by limited English proficiency, and who took the annual English proficiency test required by federal law.
    - citation: RSA 198:38, VI
    - source: https://gc.nh.gov/rsa/html/XV/198/198-38.htm
@@ -777,10 +778,11 @@ Strategy types 5 (what the site's numbers and terms mean) and 6 (how New Hampshi
 - description: Who is in the "students with disabilities" group in the site's data. (Special education rights are in `facts-rules-and-rights.md`.)
 
 1. NH DOE's test results label this group "IEP/SWD": students with an individualized education program (IEP); this site calls it "Students with Disabilities (IEP)."
-   - citation: NH DOE 2025-26 Disaggregated Data File (Subgroup column); NH Education Facts dataset notes (ask/data_tools.py STUDENT_GROUPS)
+   - citation: NH DOE 2025-26 Disaggregated Data File (Subgroup column)
    - source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/publicdisaggregateddata2026_csvformat.csv
    - as_of: 2026-11-08
    - review_by: 2027-11-08
+   - note: also the site's own student-group notes (ask/data_tools.py STUDENT_GROUPS)
 2. Under New Hampshire law, a "child with a disability" is a person aged 3 to 21 inclusive whom the school district has identified and evaluated as having one of the listed disabilities (or, from age 3 to under 10, a developmental delay) and who needs special education because of it.
    - citation: RSA 186-C:2, I and I-a
    - source: https://gc.nh.gov/rsa/html/XV/186-C/186-C-2.htm

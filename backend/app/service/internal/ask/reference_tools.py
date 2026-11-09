@@ -21,6 +21,8 @@ from app.service.internal.ask.data_tools import DataToolError
 MAX_TOPICS = 4
 FACT_PREFIX = "r"
 MAX_LABEL = 160
+# Facts about this site's own methods: the Ask may use them, but they aren't outside sources
+OWN_SITE = "nhfacts.com"
 
 
 @lru_cache(maxsize=1)
@@ -107,8 +109,9 @@ def look_up_reference(session: Session, topics: List[str], district_id: Optional
             fact_id = f"{FACT_PREFIX}{fact.id}"
             entry["facts"].append({"id": fact_id, "statement": fact.statement, "citation": fact.citation, "as_of": fact.as_of_text,
                                    "site": site(fact.source_url)})
-            sources[fact_id] = {"label": _label(fact, topic), "url": fact.source_url, "site": site(fact.source_url),
-                                "as_of": fact.as_of.isoformat() if fact.as_of else None}
+            if site(fact.source_url) != OWN_SITE:
+                sources[fact_id] = {"label": _label(fact, topic), "url": fact.source_url, "site": site(fact.source_url),
+                                    "as_of": fact.as_of.isoformat() if fact.as_of else None}
         if expired:
             # Shown in the server log so the facts get checked again
             entry["facts_withheld"] = f"{expired} facts are past their review date and aren't given"
