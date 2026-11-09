@@ -3,6 +3,7 @@ Load published data into the database.
 
     python -m app.etl load enrollment --year 2026            # load one year
     python -m app.etl load enrollment --year 2026 --dry-run  # show what would change, write nothing
+    python -m app.etl fetch naep                             # download a dataset that comes from an online service
 
 To add a new year: put the file in app/alembic/assets, raise year_end in the dataset's
 config, then load that year. Rows are inserted, or updated when they already exist, so
@@ -28,6 +29,7 @@ from app.etl import (
     location,
     measurement,
     measurement_state_target,
+    naep,
     post_graduation,
     reduced_lunch,
     safety,
@@ -54,6 +56,7 @@ DATASETS = {
     "location": location,
     "measurement": measurement,
     "measurement-state-target": measurement_state_target,
+    "naep": naep,
     "post-graduation": post_graduation,
     "reduced-lunch": reduced_lunch,
     "safety": safety,
@@ -76,9 +79,14 @@ def main(argv=None) -> int:
     load.add_argument("--year", type=int, action="append", dest="years",
                       help="year to load (repeatable); default: every configured year")
     load.add_argument("--dry-run", action="store_true", help="report the changes, then roll back")
+    fetch = commands.add_parser("fetch", help="download a dataset's files from its online service into app/alembic/assets")
+    fetch.add_argument("dataset", choices=sorted(name for name, module in DATASETS.items() if hasattr(module, "fetch")))
     args = parser.parse_args(argv)
 
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    if args.command == "fetch":
+        print(f"Saved: {DATASETS[args.dataset].fetch()}")
+        return 0
     with engine.connect() as conn:
         transaction = conn.begin()
         try:

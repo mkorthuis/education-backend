@@ -20,3 +20,6 @@ from .education_freedom_account import (
     EducationFreedomAccountEntryType, EducationFreedomAccountEntryTypeValue,
     EducationFreedomAccountEntry
 )
+from .naep import (
+    Jurisdiction, NaepMeasure, NaepStudentGroup, NaepResult, NaepComparison
+)

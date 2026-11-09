@@ -1,0 +1,120 @@
+# NAEP, the National Assessment of Educational Progress ("the Nation's Report Card"): results for
+# every state, DC, the Department of Defense schools (DoDEA) and the nation's public schools, from
+# NCES's NAEP Data Service (https://www.nationsreportcard.gov/Dataservice/GetAdhocData.aspx), the
+# data behind the NAEP Data Explorer (https://www.nationsreportcard.gov/ndecore/xplore/NDE).
+#
+# `python -m app.etl fetch naep` asks the Data Service for everything below and saves it under
+# assets/naep/ (four files per subject and grade); `python -m app.etl load naep` loads those files.
+# The saved files keep each record's fields that the loader reads, and the query URLs that
+# produced them. Each request takes 15 to 60 seconds; the fetch runs four at a time.
+#
+#   results-<subject>-grade<g>.json        type=data: each measure, place and year
+#   compare-states-<subject>-grade<g>.json type=sigacrossjuris over every state, DC and DoDEA, all years
+#                                          in one request (places are compared within each year). Only
+#                                          New Hampshire's comparisons are kept. These are NAEP's own
+#                                          tests, adjusted for the many comparisons made at once, as in
+#                                          NAEP's state reports.
+#   compare-nation-<subject>-grade<g>.json type=sigacrossjuris for New Hampshire and the national public
+#                                          average alone: a test of the two places only
+#   compare-years-<subject>-grade<g>.json  type=sigacrossyear, the latest year against each earlier year,
+#                                          one pair of years per request, for every place
+#
+# To add a NAEP year: add it to `years`, raise year_end, then fetch and load.
+file_settings:
+  year_start: 2003
+  year_end: 2024
+  directory: "../assets/naep"
+
+# Every state has taken NAEP reading and math in grades 4 and 8 since 2003, in the sample that
+# allows accommodations (R3)
+years: [2003, 2005, 2007, 2009, 2011, 2013, 2015, 2017, 2019, 2022, 2024]
+sample: R3
+
+# Data Service subject → its composite scale, the subject code in its results, and the
+# assessment_subject it's stored under
+subjects:
+  mathematics: { scale: MRPCM, code: MAT, assessment_subject: mat }
+  reading: { scale: RRPCM, code: RED, assessment_subject: rea }
+
+# NAEP grade → the grades row it's stored under
+grades:
+  4: Grade 4
+  8: Grade 8
+
+# Data Service stattype → naep_measure, inserted in this order
+measures:
+  "MN:MN": { name: Average scale score, unit: score }
+  "ALC:AB": { name: At or above NAEP Basic, unit: percent }
+  "ALC:AP": { name: At or above NAEP Proficient, unit: percent }
+  "ALC:AD": { name: At NAEP Advanced, unit: percent }
+
+# Measures with significance tests
+compared_measures: ["MN:MN", "ALC:AP"]
+
+# NAEP student groups (variable, value) loaded; only all students so far
+student_groups:
+  - { variable: TOTAL, value: "1", name: All students }
+
+# Comparisons are kept with this place first ("New Hampshire against Massachusetts")
+focal_jurisdiction: NH
+
+# Error flags a record may carry and still be loaded. 67108864 marks every DoDEA record, in every
+# year; it isn't on any state's. Any other flag stops the load.
+accepted_error_flags: [0, 67108864]
+
+# NAEP place code → jurisdiction, inserted in this order: the nation, then the states and DC
+# alphabetically, then DoDEA. Names are NAEP's labels.
+jurisdictions:
+  NP: { name: National public, kind: nation }
+  AL: { name: Alabama, kind: state }
+  AK: { name: Alaska, kind: state }
+  AZ: { name: Arizona, kind: state }
+  AR: { name: Arkansas, kind: state }
+  CA: { name: California, kind: state }
+  CO: { name: Colorado, kind: state }
+  CT: { name: Connecticut, kind: state }
+  DE: { name: Delaware, kind: state }
+  DC: { name: District of Columbia, kind: state }
+  FL: { name: Florida, kind: state }
+  GA: { name: Georgia, kind: state }
+  HI: { name: Hawaii, kind: state }
+  ID: { name: Idaho, kind: state }
+  IL: { name: Illinois, kind: state }
+  IN: { name: Indiana, kind: state }
+  IA: { name: Iowa, kind: state }
+  KS: { name: Kansas, kind: state }
+  KY: { name: Kentucky, kind: state }
+  LA: { name: Louisiana, kind: state }
+  ME: { name: Maine, kind: state }
+  MD: { name: Maryland, kind: state }
+  MA: { name: Massachusetts, kind: state }
+  MI: { name: Michigan, kind: state }
+  MN: { name: Minnesota, kind: state }
+  MS: { name: Mississippi, kind: state }
+  MO: { name: Missouri, kind: state }
+  MT: { name: Montana, kind: state }
+  NE: { name: Nebraska, kind: state }
+  NV: { name: Nevada, kind: state }
+  NH: { name: New Hampshire, kind: state }
+  NJ: { name: New Jersey, kind: state }
+  NM: { name: New Mexico, kind: state }
+  NY: { name: New York, kind: state }
+  NC: { name: North Carolina, kind: state }
+  ND: { name: North Dakota, kind: state }
+  OH: { name: Ohio, kind: state }
+  OK: { name: Oklahoma, kind: state }
+  OR: { name: Oregon, kind: state }
+  PA: { name: Pennsylvania, kind: state }
+  RI: { name: Rhode Island, kind: state }
+  SC: { name: South Carolina, kind: state }
+  SD: { name: South Dakota, kind: state }
+  TN: { name: Tennessee, kind: state }
+  TX: { name: Texas, kind: state }
+  UT: { name: Utah, kind: state }
+  VT: { name: Vermont, kind: state }
+  VA: { name: Virginia, kind: state }
+  WA: { name: Washington, kind: state }
+  WV: { name: West Virginia, kind: state }
+  WI: { name: Wisconsin, kind: state }
+  WY: { name: Wyoming, kind: state }
+  DS: { name: DoDEA, kind: other }
