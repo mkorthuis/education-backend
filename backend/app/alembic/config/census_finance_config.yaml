@@ -1,0 +1,188 @@
+# U.S. Census Bureau, Annual Survey of School System Finances: revenue of public elementary-
+# secondary school systems by state, from federal, state and local sources and the programs and
+# taxes within them, and the enrollment Census uses for its per-pupil figures.
+# https://www2.census.gov/programs-surveys/school-finances/tables/<year>/secondary-education-finance/
+#
+# `python -m app.etl fetch census-finance` downloads each year's files, adds up the school systems'
+# revenue items by state, checks each state's federal, state and local totals against the Census's
+# own Table 1, and saves the state figures (thousand dollars, as Census publishes them) with each
+# state's enrollment to assets/census-finance/census-finance-<year>.json. `load census-finance`
+# loads those files.
+#
+# - district_file: every school system's data items ("All Data Items" file). Revenue items sit
+#   between TFEDREV, TSTREV, TLOCREV and TOTALEXP in its header.
+# - tables_file: the summary tables. Table 1 has each state's revenue by source; the enrollment
+#   table ("Population, Enrollment, and Personal Income by State") has the fall enrollment Census
+#   divides by for per-pupil amounts. Summed school-system enrollment doesn't always match it (New
+#   Hampshire: 1,177 fewer in 2024), so it's read from the table.
+#
+# To add a year: add it below, raise year_end, then fetch and load.
+file_settings:
+  year_start: 2010
+  year_end: 2024
+  directory: "../assets/census-finance"
+
+source_url: "https://www2.census.gov/programs-surveys/school-finances/tables/{year}/secondary-education-finance/"
+
+years:
+  2010: { district_file: elsec10.txt, tables_file: elsec10_sttables.xls, enrollment_sheet: "18" }
+  2011: { district_file: elsec11.txt, tables_file: elsec11_sttables.xls, enrollment_sheet: "19" }
+  2012: { district_file: elsec12.txt, tables_file: elsec12_sttables.xls, enrollment_sheet: "19" }
+  2013: { district_file: elsec13.txt, tables_file: elsec13_sttables.xls, enrollment_sheet: "19" }
+  2014: { district_file: elsec14.txt, tables_file: elsec14_sttables.xls, enrollment_sheet: "19" }
+  2015: { district_file: elsec15.txt, tables_file: elsec15_sttables.xls, enrollment_sheet: "19" }
+  2016: { district_file: elsec16.txt, tables_file: elsec16_sumtables.xls, enrollment_sheet: "19" }
+  2017: { district_file: elsec17.txt, tables_file: elsec17_sumtables.xls, enrollment_sheet: "19" }
+  2018: { district_file: elsec18.txt, tables_file: elsec18_sumtables.xls, enrollment_sheet: "19" }
+  # 2019 and 2021: Census revised the Excel files and summary tables together (June 2022, April
+  # 2024) but not the text files, whose sums differ from Table 1 in several states
+  2019: { district_file: elsec19.xls, tables_file: elsec19_sumtables.xls, enrollment_sheet: "19" }
+  2020: { district_file: elsec20.txt, tables_file: elsec20_sumtables.xls, enrollment_sheet: "19" }
+  2021: { district_file: elsec21.xls, tables_file: elsec21_sumtables.xls, enrollment_sheet: "19" }
+  # The 2022 text file on the Census site stops after 1,729 school systems; the Excel file is complete
+  2022: { district_file: elsec22.xlsx, tables_file: elsec22_sumtables.xlsx, enrollment_sheet: "19" }
+  2023: { district_file: elsec23.txt, tables_file: elsec23_sumtables.xlsx, enrollment_sheet: "19" }
+  2024: { district_file: elsec24.txt, tables_file: elsec24_sumtables.xlsx, enrollment_sheet: "19" }
+
+# Table 1 is sheet "1" in every year. Columns are counted from 0; the fetch checks each column's
+# heading contains the word given, so a changed layout stops it.
+summary_sheet: "1"
+summary_columns: { federal: 3, state: 4, local: 5 }
+# The enrollment column: this year's fall enrollment, under the "enrollment" heading
+enrollment_column: 4
+
+# Table 1 cells known to be wrong, by year, place and source: the figure Table 1 shows. The check
+# skips a cell only while Table 1 still shows that figure.
+# 2024 Nebraska local: Table 4 and the school systems both give 3,415,577; with Table 1's figure, its
+# states add up to 2,251,235 less than its own U.S. total.
+table_1_errors:
+  2024: { NE: { local: 1164342 } }
+
+# Revenue from other school systems is left out of state totals, as Census does, since it's
+# already counted as the paying system's revenue
+excluded_items: [D11]
+
+# Every revenue item in any year, by Census item code, in display order: its name (as of the latest
+# year it appears), source, and category. The categories are the columns of Census's summary
+# tables 2, 3 and 4, so years line up as programs change. A code not listed here stops the fetch.
+# Checked against tables 2-4 for 2024: 1,091 of 1,094 state figures match. Census's tables regroup
+# three within their source, without a note: Montana's and Nebraska's state special education, and
+# Missouri's parent government contributions. Kansas's federal special education can't be separated
+# (Census's state note), so it's in other federal revenue.
+items:
+  # Federal, distributed through the state
+  C14: { name: Title I, source: federal, category: Title I }
+  C15: { name: "Special education: IDEA, Part B grants to states and preschool grants", source: federal, category: Special education }
+  C25: { name: School meal programs (Child Nutrition Act), source: federal, category: School meals }
+  C19: { name: Career and technical education, source: federal, category: Career and technical education }
+  C22: { name: "Title II, Part A: Supporting Effective Instruction (2020 on)", source: federal, category: Other federal through the state }
+  C23: { name: "Title IV, Part A: Student Support and Academic Enrichment (2020 on)", source: federal, category: Other federal through the state }
+  C26: { name: "Title IV, Part B: 21st Century Community Learning Centers (2020 on)", source: federal, category: Other federal through the state }
+  C27: { name: "Title V, Part B: Rural and Low-Income School Program (2020 on)", source: federal, category: Other federal through the state }
+  B11: { name: "Title III, Part A: English Language Acquisition (bilingual education through 2019)", source: federal, category: Other federal through the state }
+  C16: { name: "Math, science and teacher quality (through 2019)", source: federal, category: Other federal through the state }
+  C17: { name: National activities for school safety (through 2019), source: federal, category: Other federal through the state }
+  C20: { name: All other federal revenue through the state, source: federal, category: Other federal through the state }
+  C36: { name: Nonspecified federal revenue, source: federal, category: Other federal through the state }
+  # Federal, direct
+  B10: { name: Impact Aid, source: federal, category: Impact Aid }
+  B12: { name: "Indian, Native Hawaiian and Alaska Native education", source: federal, category: Other direct federal }
+  B14: { name: "Title V, Part B: Small, Rural School Achievement Program (2020 on)", source: federal, category: Other direct federal }
+  B13: { name: All other direct federal revenue, source: federal, category: Other direct federal }
+  # State
+  C01: { name: General formula assistance, source: state, category: General formula assistance }
+  C06: { name: Compensatory and basic skills attainment programs, source: state, category: Compensatory programs }
+  C05: { name: Special education programs, source: state, category: Special education }
+  C09: { name: Career and technical education programs, source: state, category: Career and technical education }
+  C12: { name: Transportation programs, source: state, category: Transportation }
+  C04: { name: Staff improvement programs, source: state, category: Other state aid }
+  C07: { name: Bilingual education programs, source: state, category: Other state aid }
+  C08: { name: Gifted and talented programs, source: state, category: Other state aid }
+  C10: { name: School meal programs, source: state, category: Other state aid }
+  C11: { name: Capital outlay and debt service programs, source: state, category: Other state aid }
+  C13: { name: All other state revenue, source: state, category: Other state aid }
+  C24: { name: "Census state, NCES local revenue", source: state, category: Other state aid }
+  C35: { name: Nonspecified state revenue, source: state, category: Other state aid }
+  C38: { name: "State payments on behalf of school systems: benefits", source: state, category: Payments on behalf of school systems }
+  C39: { name: "State payments on behalf of school systems: other", source: state, category: Payments on behalf of school systems }
+  # Local
+  T06: { name: Property taxes, source: local, category: Property taxes }
+  T09: { name: General sales or gross receipts taxes, source: local, category: Other taxes }
+  T15: { name: Public utility taxes, source: local, category: Other taxes }
+  T40: { name: Individual and corporate income taxes, source: local, category: Other taxes }
+  T99: { name: All other taxes, source: local, category: Other taxes }
+  T02: { name: Parent government contributions, source: local, category: Parent government contributions }
+  D23: { name: Revenue from cities and counties, source: local, category: Cities and counties }
+  A09: { name: School meal charges, source: local, category: School meal charges }
+  A07: { name: "Tuition fees from pupils, parents and other private sources", source: local, category: Tuition and transportation charges }
+  A08: { name: "Transportation fees from pupils, parents and other private sources", source: local, category: Tuition and transportation charges }
+  A11: { name: Textbook sales and rentals, source: local, category: Other charges }
+  A13: { name: District activity receipts, source: local, category: Other charges }
+  A15: { name: Student fees (nonspecified), source: local, category: Other charges }
+  A20: { name: Other sales and service revenues, source: local, category: Other charges }
+  # Census's Table 4 counts rents and royalties among other charges
+  A40: { name: Rents and royalties, source: local, category: Other charges }
+  U11: { name: Sale of property, source: local, category: Other local revenue }
+  U22: { name: Interest earnings, source: local, category: Other local revenue }
+  U30: { name: Fines and forfeits, source: local, category: Other local revenue }
+  U50: { name: Private contributions, source: local, category: Other local revenue }
+  U97: { name: Miscellaneous other local revenues, source: local, category: Other local revenue }
+
+# Census's state codes (the STATE field: the states and DC in alphabetical order) → jurisdiction
+# codes, with each state's FIPS code, which the fetch checks against the school systems' NCES ids.
+# Names are the jurisdiction table's (NAEP's labels); the summary tables use the same names.
+states:
+  "01": { code: AL, fips: "01", name: Alabama }
+  "02": { code: AK, fips: "02", name: Alaska }
+  "03": { code: AZ, fips: "04", name: Arizona }
+  "04": { code: AR, fips: "05", name: Arkansas }
+  "05": { code: CA, fips: "06", name: California }
+  "06": { code: CO, fips: "08", name: Colorado }
+  "07": { code: CT, fips: "09", name: Connecticut }
+  "08": { code: DE, fips: "10", name: Delaware }
+  "09": { code: DC, fips: "11", name: District of Columbia }
+  "10": { code: FL, fips: "12", name: Florida }
+  "11": { code: GA, fips: "13", name: Georgia }
+  "12": { code: HI, fips: "15", name: Hawaii }
+  "13": { code: ID, fips: "16", name: Idaho }
+  "14": { code: IL, fips: "17", name: Illinois }
+  "15": { code: IN, fips: "18", name: Indiana }
+  "16": { code: IA, fips: "19", name: Iowa }
+  "17": { code: KS, fips: "20", name: Kansas }
+  "18": { code: KY, fips: "21", name: Kentucky }
+  "19": { code: LA, fips: "22", name: Louisiana }
+  "20": { code: ME, fips: "23", name: Maine }
+  "21": { code: MD, fips: "24", name: Maryland }
+  "22": { code: MA, fips: "25", name: Massachusetts }
+  "23": { code: MI, fips: "26", name: Michigan }
+  "24": { code: MN, fips: "27", name: Minnesota }
+  "25": { code: MS, fips: "28", name: Mississippi }
+  "26": { code: MO, fips: "29", name: Missouri }
+  "27": { code: MT, fips: "30", name: Montana }
+  "28": { code: NE, fips: "31", name: Nebraska }
+  "29": { code: NV, fips: "32", name: Nevada }
+  "30": { code: NH, fips: "33", name: New Hampshire }
+  "31": { code: NJ, fips: "34", name: New Jersey }
+  "32": { code: NM, fips: "35", name: New Mexico }
+  "33": { code: NY, fips: "36", name: New York }
+  "34": { code: NC, fips: "37", name: North Carolina }
+  "35": { code: ND, fips: "38", name: North Dakota }
+  "36": { code: OH, fips: "39", name: Ohio }
+  "37": { code: OK, fips: "40", name: Oklahoma }
+  "38": { code: OR, fips: "41", name: Oregon }
+  "39": { code: PA, fips: "42", name: Pennsylvania }
+  "40": { code: RI, fips: "44", name: Rhode Island }
+  "41": { code: SC, fips: "45", name: South Carolina }
+  "42": { code: SD, fips: "46", name: South Dakota }
+  "43": { code: TN, fips: "47", name: Tennessee }
+  "44": { code: TX, fips: "48", name: Texas }
+  "45": { code: UT, fips: "49", name: Utah }
+  "46": { code: VT, fips: "50", name: Vermont }
+  "47": { code: VA, fips: "51", name: Virginia }
+  "48": { code: WA, fips: "53", name: Washington }
+  "49": { code: WV, fips: "54", name: West Virginia }
+  "50": { code: WI, fips: "55", name: Wisconsin }
+  "51": { code: WY, fips: "56", name: Wyoming }
+
+# The nation: every state and DC added up (Census's "United States")
+nation: { code: US, name: United States }

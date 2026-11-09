@@ -23,3 +23,6 @@ from .education_freedom_account import (
 from .naep import (
     Jurisdiction, NaepMeasure, NaepStudentGroup, NaepResult, NaepComparison
 )
+from .census_finance import (
+    CensusRevenueItem, CensusStateRevenue, CensusStateEnrollment
+)

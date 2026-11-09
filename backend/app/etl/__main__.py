@@ -17,6 +17,7 @@ import sys
 from app.core.db import engine
 from app.etl import (
     assessment,
+    census_finance,
     class_size,
     cost_per_pupil,
     early_exit,
@@ -44,6 +45,7 @@ from app.etl import (
 
 DATASETS = {
     "assessment": assessment,
+    "census-finance": census_finance,
     "class-size": class_size,
     "cost-per-pupil": cost_per_pupil,
     "early-exit": early_exit,

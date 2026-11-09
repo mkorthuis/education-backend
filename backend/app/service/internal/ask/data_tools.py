@@ -13,6 +13,7 @@ from typing import Callable, Dict, List, Optional
 from fastapi import HTTPException
 from sqlmodel import Session
 
+from app.service.inflation import in_dollars_of
 from app.service.public.assessment_service import assessment_service
 from app.service.public.class_size_service import class_size_service
 from app.service.public.education_freedom_account_service import education_freedom_account_service
@@ -106,15 +107,6 @@ PUBLIC_ENROLLMENT_TYPES = {
 }
 PRIVATE_ENROLLMENT_TYPE = "Nonpublic Schools"
 
-# The site's inflation adjustment (CPI_BY_YEAR in the frontend's src/utils/calculations.ts; keep the
-# two the same): BLS CPI-U annual averages, U.S. city average, looked up by the year a school year
-# ends. A year outside the table uses the nearest year's.
-CPI_BY_YEAR = {
-    2000: 172.2, 2001: 177.1, 2002: 179.9, 2003: 184.0, 2004: 188.9, 2005: 195.3, 2006: 201.6, 2007: 207.3,
-    2008: 215.3, 2009: 214.5, 2010: 218.1, 2011: 224.9, 2012: 229.6, 2013: 233.0, 2014: 236.7, 2015: 237.0,
-    2016: 240.0, 2017: 245.1, 2018: 251.1, 2019: 255.7, 2020: 258.8, 2021: 271.0, 2022: 292.7, 2023: 304.7,
-    2024: 313.7, 2025: 321.9, 2026: 333.5,
-}
 
 # Revenue sources as the site groups them, by the DOE-25 entry type's super category
 REVENUE_SOURCES = ["Local", "State", "Federal", "Borrowing and transfers"]
@@ -199,13 +191,6 @@ def _per_thousand(count: Optional[float], students: Optional[float]) -> Optional
 
 def _share(part: Optional[float], whole: Optional[float]) -> Optional[float]:
     return _round(100 * part / whole) if part is not None and whole else None
-
-
-def in_dollars_of(amount: Optional[float], from_year: int, to_year: int) -> Optional[float]:
-    """An amount from one year in another year's dollars, as the site's inflation switch shows it."""
-    def cpi(year: int) -> float:
-        return CPI_BY_YEAR[min(max(year, min(CPI_BY_YEAR)), max(CPI_BY_YEAR))]
-    return None if amount is None else round(amount * cpi(to_year) / cpi(from_year))
 
 
 def _once(session: Session, name: str, load: Callable[[], object]):
