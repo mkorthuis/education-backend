@@ -22,9 +22,11 @@ class NaepMeasureGet(BaseModel):
 
 
 class NaepStudentGroupGet(BaseModel):
+    """A NAEP student group: its variable (e.g. ECONDIS, "Economic status") and category"""
     id: int
     variable: str
     value: str
+    variable_name: str
     name: str
 
 

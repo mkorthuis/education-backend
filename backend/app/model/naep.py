@@ -26,11 +26,12 @@ class NaepMeasure(BaseMixin, table=True):
 
 
 class NaepStudentGroup(BaseMixin, table=True):
-    """A NAEP student group, by NAEP's variable and value (TOTAL, 1 is all students)"""
+    """A NAEP student group, by NAEP's variable and value (TOTAL, 1 is all students; GENDER, 2 is female)"""
     __tablename__ = "naep_student_group"
 
     variable: str = Field(max_length=20)
     value: str = Field(max_length=10)
+    variable_name: str = Field(max_length=255)  # e.g. Sex, Economic status
     name: str = Field(max_length=255)
 
 

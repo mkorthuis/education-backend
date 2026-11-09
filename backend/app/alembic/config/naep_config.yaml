@@ -18,6 +18,9 @@
 #                                          average alone: a test of the two places only
 #   compare-years-<subject>-grade<g>.json  type=sigacrossyear, the latest year against each earlier year,
 #                                          one pair of years per request, for every place
+#   groups-results-, groups-compare-nation- and groups-compare-years-<subject>-grade<g>.json: the same
+#                                          for each student group below, for New Hampshire and the
+#                                          national public average (group_jurisdictions)
 #
 # To add a NAEP year: add it to `years`, raise year_end, then fetch and load.
 file_settings:
@@ -51,16 +54,43 @@ measures:
 # Measures with significance tests
 compared_measures: ["MN:MN", "ALC:AP"]
 
-# NAEP student groups (variable, value) loaded; only all students so far
+# NAEP student groups loaded, by NAEP's variable and category codes, inserted in this order. All
+# students are loaded for every place; the other groups for group_jurisdictions, with New Hampshire's
+# tests against the nation and against its own earlier years. These are the groups NAEP reports for
+# New Hampshire in most years. A group NAEP doesn't report for a place and year (too few students to
+# meet its reporting standards) is loaded as not displayable. ECONDIS is NAEP's economically
+# disadvantaged status from 2024; NAEP gives its earlier years from school lunch eligibility (NSLP),
+# which it relabeled. Its third category, "Information not available", isn't loaded.
 student_groups:
-  - { variable: TOTAL, value: "1", name: All students }
+  TOTAL: { name: All students, values: { "1": All students } }
+  GENDER: { name: Sex, values: { "1": Male, "2": Female } }
+  ECONDIS:
+    name: Economic status
+    values: { "1": Economically disadvantaged, "2": Not economically disadvantaged }
+  IEP2009:
+    name: Disability status (a student with only a 504 plan counts as without a disability)
+    values: { "1": Students with disabilities, "2": Students without disabilities }
+  SRACE10:
+    name: Race/ethnicity
+    values:
+      "1": White
+      "2": Black
+      "3": Hispanic
+      "4": Asian
+      "5": American Indian/Alaska Native
+      "6": Native Hawaiian/Other Pacific Islander
+      "7": Two or more races
+  UTOL4: { name: School location, values: { "1": City, "2": Suburb, "3": Town, "4": Rural } }
+  LEP: { name: English learner status, values: { "1": English learners, "2": Not English learners } }
+
+group_jurisdictions: [NH, NP]
 
 # Comparisons are kept with this place first ("New Hampshire against Massachusetts")
 focal_jurisdiction: NH
 
-# Error flags a record may carry and still be loaded. 67108864 marks every DoDEA record, in every
-# year; it isn't on any state's. Any other flag stops the load.
-accepted_error_flags: [0, 67108864]
+# Whether NAEP reports a figure is its isStatDisplayable marker, which the loader follows. A record's
+# errorFlag is a set of NAEP's footnotes (on race, disability status, DoDEA and so on) and isn't
+# loaded; no bit of it matches isStatDisplayable exactly.
 
 # NAEP place code → jurisdiction, inserted in this order: the nation, then the states and DC
 # alphabetically, then DoDEA. Names are NAEP's labels.

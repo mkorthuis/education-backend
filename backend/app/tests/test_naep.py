@@ -28,16 +28,30 @@ def place_test(**fields):
 
 class NaepParseTests(unittest.TestCase):
     def test_results_keep_unrounded_values_and_mark_figures_naep_doesnt_report(self):
-        rows = naep.parse_results([result(), result(jurisdiction="MA", value=99.0, isStatDisplayable=0)], CONFIG)
+        rows = naep.parse_results([result(), result(jurisdiction="MA", value=99.0, isStatDisplayable=0, errorFlag=257)], CONFIG)
         self.assertEqual(rows[(2024, "NH", "mat", "Grade 4", "MN:MN", ("TOTAL", "1"))], (242.3, True))
         self.assertEqual(rows[(2024, "MA", "mat", "Grade 4", "MN:MN", ("TOTAL", "1"))], (None, False))
 
-    def test_unexpected_samples_flags_and_places_stop_the_load(self):
-        for bad in (result(sample="R2"), result(errorFlag=4), result(jurisdiction="XX"), result(stattype="SD:SD")):
+    def test_unexpected_samples_places_measures_and_groups_stop_the_load(self):
+        for bad in (result(sample="R2"), result(jurisdiction="XX"), result(stattype="SD:SD"),
+                    result(variable="ECONDIS", varValue="3"), result(variable="PARED", varValue="1")):
             with self.assertRaises(ValueError):
                 naep.parse_results([bad], CONFIG)
-        # DoDEA's records all carry one flag, which is accepted
-        self.assertTrue(naep.parse_results([result(jurisdiction="DS", errorFlag=67108864)], CONFIG))
+
+    def test_reporting_follows_naeps_displayable_marker_not_its_footnote_flags(self):
+        # A small share at Advanced that NAEP reports, though its footnote flags include bit 256
+        reported = naep.parse_results([result(variable="IEP2009", varValue="1", stattype="ALC:AD", value=0.88,
+                                              errorFlag=33554690)], CONFIG)
+        self.assertEqual(list(reported.values()), [(0.88, True)])
+        withheld = naep.parse_results([result(variable="SRACE10", varValue="2", isStatDisplayable=0, errorFlag=4194561)], CONFIG)
+        self.assertEqual(list(withheld.values()), [(None, False)])
+
+    def test_student_groups_keep_their_variable_and_category(self):
+        rows = naep.parse_results([result(variable="GENDER", varValue="2", value=239.6)], CONFIG)
+        self.assertEqual(rows, {(2024, "NH", "mat", "Grade 4", "MN:MN", ("GENDER", "2")): (239.6, True)})
+        # The fetch keeps only the configured categories, so "Information not available" isn't saved
+        kept = naep.keep("group-results", [result(variable="ECONDIS", varValue="1"), result(variable="ECONDIS", varValue="3")], CONFIG)
+        self.assertEqual([r["varValue"] for r in kept], ["1"])
 
     def test_comparisons_keep_the_basis_and_naeps_verdict(self):
         tests = naep.parse_comparisons("states", [place_test(), place_test(statType="ALC:AP", sig="LOWER", gap=-5.2),
@@ -72,6 +86,8 @@ class NaepApiTests(unittest.TestCase):
         cls.api = TestClient(app)
         cls.url = f"{settings.API_V1_STR}/naep"
         cls.measures = {m["code"]: m["id"] for m in cls.api.get(f"{cls.url}/measure").json()}
+        cls.groups = {(g["variable"], g["value"]): g["id"] for g in cls.api.get(f"{cls.url}/student-group").json()}
+        cls.everyone = cls.groups[("TOTAL", "1")]
 
     def get(self, path, **params):
         response = self.api.get(f"{self.url}/{path}", params=params)
@@ -85,13 +101,15 @@ class NaepApiTests(unittest.TestCase):
         self.assertEqual({p["kind"] for p in places}, {"nation", "state", "other"})
 
     def test_results_cover_every_place_and_year(self):
-        rows = self.get("result", jurisdiction="nh", assessment_subject_id=1, grade_id=6, naep_measure_id=self.measures["MN:MN"])
+        rows = self.get("result", jurisdiction="nh", assessment_subject_id=1, grade_id=6, naep_measure_id=self.measures["MN:MN"],
+                        naep_student_group_id=self.everyone)
         self.assertEqual([r["year"] for r in rows], CONFIG["years"])
         latest = rows[-1]
         self.assertEqual((latest["jurisdiction"]["code"], latest["grade"]["name"], latest["measure"]["unit"]), ("NH", "Grade 4", "score"))
         # NAEP publishes 242 for New Hampshire's 2024 grade 4 math average
         self.assertEqual(round(latest["value"]), 242)
-        one_year = self.get("result", year=2024, assessment_subject_id=2, grade_id=10, naep_measure_id=self.measures["ALC:AP"])
+        one_year = self.get("result", year=2024, assessment_subject_id=2, grade_id=10, naep_measure_id=self.measures["ALC:AP"],
+                            naep_student_group_id=self.everyone)
         self.assertEqual(len(one_year), 53)
 
     def test_comparisons_follow_naeps_all_state_tests(self):
@@ -106,14 +124,32 @@ class NaepApiTests(unittest.TestCase):
                               basis="all_jurisdictions")
         self.assertEqual(len(all_states), 51 * len(CONFIG["compared_measures"]))
         nation = self.get("comparison", year=2024, assessment_subject_id=1, grade_id=6, jurisdiction="NH",
-                          other_jurisdiction="NP", naep_measure_id=self.measures["MN:MN"])
+                          other_jurisdiction="NP", naep_measure_id=self.measures["MN:MN"], naep_student_group_id=self.everyone)
         self.assertEqual([(t["basis"], t["result"]) for t in nation], [("pair", "higher")])
 
     def test_year_comparisons_set_the_latest_year_against_each_earlier_one(self):
         tests = self.get("comparison", year=2024, jurisdiction="NH", other_jurisdiction="NH", assessment_subject_id=2,
-                         grade_id=10, naep_measure_id=self.measures["MN:MN"])
+                         grade_id=10, naep_measure_id=self.measures["MN:MN"], naep_student_group_id=self.everyone)
         self.assertEqual([t["other_year"] for t in tests], CONFIG["years"][:-1])
         self.assertTrue(all(t["basis"] == "pair" for t in tests))
+
+    def test_student_groups_are_loaded_for_new_hampshire_and_the_nation(self):
+        groups = self.get("student-group")
+        self.assertEqual(len(groups), sum(len(g["values"]) for g in CONFIG["student_groups"].values()))
+        self.assertEqual(groups[0]["name"], "All students")
+        low_income = self.get("result", year=2024, assessment_subject_id=1, grade_id=6, naep_measure_id=self.measures["MN:MN"],
+                              naep_student_group_id=self.groups[("ECONDIS", "1")])
+        self.assertEqual(sorted(r["jurisdiction"]["code"] for r in low_income), ["NH", "NP"])
+        self.assertTrue(all(r["is_displayable"] and r["value"] for r in low_income))
+        # Too few Black eighth graders in New Hampshire for NAEP to report their reading results
+        black = self.get("result", year=2024, assessment_subject_id=2, grade_id=10, jurisdiction="NH",
+                         naep_measure_id=self.measures["MN:MN"], naep_student_group_id=self.groups[("SRACE10", "2")])
+        self.assertEqual([(r["is_displayable"], r["value"]) for r in black], [(False, None)])
+        # New Hampshire's groups are tested against the nation's and against their own earlier years
+        for other in ("NP", "NH"):
+            tests = self.get("comparison", year=2024, jurisdiction="NH", other_jurisdiction=other, assessment_subject_id=1,
+                             grade_id=6, naep_measure_id=self.measures["MN:MN"], naep_student_group_id=self.groups[("ECONDIS", "1")])
+            self.assertTrue(tests and all(t["basis"] == "pair" for t in tests))
 
     def test_a_bad_basis_is_refused(self):
         self.assertEqual(self.api.get(f"{self.url}/comparison", params={"basis": "any"}).status_code, 422)

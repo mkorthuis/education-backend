@@ -6,7 +6,8 @@ Data Service:
 
 - jurisdiction: the places NAEP reports on, by NAEP's codes (NH; NP for the national public average)
 - naep_measure: average scale score, and the shares at or above NAEP Basic and Proficient and at Advanced
-- naep_student_group: NAEP's student groups (all students so far)
+- naep_student_group: NAEP's student groups: all students, sex, economic status, disability status,
+  race/ethnicity, school location and English learner status
 - naep_result: each measure for every place and year
 - naep_comparison: NAEP's significance tests of one place and year against another place or year
 
@@ -68,6 +69,7 @@ def upgrade():
             id SERIAL PRIMARY KEY,
             variable VARCHAR(20) NOT NULL,
             value VARCHAR(10) NOT NULL,
+            variable_name VARCHAR(255) NOT NULL,
             name VARCHAR(255) NOT NULL,
             date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

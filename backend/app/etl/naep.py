@@ -8,6 +8,8 @@ from NCES's NAEP Data Service (see naep_config.yaml).
   DoDEA in the same year, adjusted for the many comparisons made at once (basis all_jurisdictions);
   New Hampshire against the national public average alone (basis pair); and each place's latest year
   against each earlier year (basis pair)
+- the same for NAEP's student groups (sex, economic status and so on), for New Hampshire and the
+  national public average, without the all-state tests
 
 `fetch` saves the Data Service's answers under assets/naep/; `load` reads those files.
 """
@@ -54,7 +56,16 @@ FIELDS = {
 }
 FIELDS["nation"] = FIELDS["states"]
 BASIS = {"states": "all_jurisdictions", "nation": "pair", "years": "pair"}
-KINDS = ("results", "states", "nation", "years")
+# Each kind of saved file, the kind of request it holds, and its file name's start
+KINDS = {
+    "results": ("results", "results"),
+    "states": ("states", "compare-states"),
+    "nation": ("nation", "compare-nation"),
+    "years": ("years", "compare-years"),
+    "group-results": ("results", "groups-results"),
+    "group-nation": ("nation", "groups-compare-nation"),
+    "group-years": ("years", "groups-compare-years"),
+}
 
 PARALLEL_REQUESTS = 4
 TRIES = 3
@@ -62,11 +73,11 @@ TRIES = 3
 
 def file_name(kind: str, subject: str, grade: int) -> str:
     """The saved file for one kind of request: results-mathematics-grade4.json, compare-states-..."""
-    return f"{kind if kind == 'results' else 'compare-' + kind}-{subject}-grade{grade}.json"
+    return f"{KINDS[kind][1]}-{subject}-grade{grade}.json"
 
 
-def _url(subject: dict, subject_name: str, grade: int, **params) -> str:
-    query = {"subject": subject_name, "grade": grade, "subscale": subject["scale"], "variable": "TOTAL", **params}
+def _url(subject: dict, subject_name: str, grade: int, variable: str = "TOTAL", **params) -> str:
+    query = {"subject": subject_name, "grade": grade, "subscale": subject["scale"], "variable": variable, **params}
     return f"{DATA_SERVICE}?{urlencode(query, safe=':,')}"
 
 
@@ -77,7 +88,10 @@ def requests_for(config: dict) -> dict:
     nation = next(code for code, place in config["jurisdictions"].items() if place["kind"] == "nation")
     focal = config["focal_jurisdiction"]
     years = sorted(config["years"])
+    all_years = ",".join(map(str, years))
     compared = ",".join(config["compared_measures"])
+    variables = [variable for variable in config["student_groups"] if variable != "TOTAL"]
+    group_places = ",".join(config["group_jurisdictions"])
     plan = {}
     for subject_name, subject in config["subjects"].items():
         for grade in config["grades"]:
@@ -92,6 +106,16 @@ def requests_for(config: dict) -> dict:
             plan[("years", subject_name, grade)] = [_url(**common, type="sigacrossyear", jurisdiction=",".join(places),
                                                          stattype=compared, Year=f"{earlier},{years[-1]}")
                                                     for earlier in years[:-1]]
+            # Student groups, one variable per request
+            plan[("group-results", subject_name, grade)] = [
+                _url(**common, variable=v, type="data", jurisdiction=group_places, stattype=",".join(config["measures"]),
+                     Year=all_years) for v in variables]
+            plan[("group-nation", subject_name, grade)] = [
+                _url(**common, variable=v, type="sigacrossjuris", jurisdiction=f"{focal},{nation}", stattype=compared,
+                     Year=all_years) for v in variables]
+            plan[("group-years", subject_name, grade)] = [
+                _url(**common, variable=v, type="sigacrossyear", jurisdiction=group_places, stattype=compared,
+                     Year=f"{earlier},{years[-1]}") for v in variables for earlier in years[:-1]]
     return plan
 
 
@@ -112,14 +136,18 @@ def _get(url: str) -> List[dict]:
 
 
 def keep(kind: str, records: List[dict], config: dict) -> List[dict]:
-    """The records worth saving, with only the fields the loader reads: New Hampshire's comparisons,
-    and each place's latest year against the others."""
+    """The records worth saving, with only the fields the loader reads: the configured student groups,
+    New Hampshire's comparisons, and each place's latest year against the others."""
+    request = KINDS[kind][0]
     focal, latest = config["focal_jurisdiction"], max(config["years"])
-    if kind in ("states", "nation"):
+    groups = config["student_groups"]
+    records = [r for r in records
+               if str(r.get("varValue", r.get("valValue"))) in groups.get(r["variable"], {}).get("values", {})]
+    if request in ("states", "nation"):
         records = [r for r in records if r["focalJurisdiction"] == focal]
-    elif kind == "years":
+    elif request == "years":
         records = [r for r in records if r["focalYear"] == latest]
-    return [{field: r.get(field) for field in FIELDS[kind]} for r in records]
+    return [{field: r.get(field) for field in FIELDS[request]} for r in records]
 
 
 def _write(path: str, urls: List[str], records: List[dict]) -> None:
@@ -159,20 +187,18 @@ def _subject_and_grade(record: dict, config: dict) -> tuple:
     return config["subjects"][subject]["assessment_subject"], grade
 
 
-def _check(record: dict, config: dict, samples: tuple, flags: tuple) -> None:
+def _check(record: dict, config: dict, samples: tuple) -> None:
     if any(sample != config["sample"] for sample in samples):
         raise ValueError(f"Unexpected NAEP sample {samples}; only {config['sample']} is loaded")
-    if any(flag not in config["accepted_error_flags"] for flag in flags):
-        raise ValueError(f"Unexpected NAEP error flag {flags}: {record}")
     if record["stattype" if "stattype" in record else "statType"] not in config["measures"]:
         raise ValueError(f"Unexpected NAEP measure: {record}")
 
 
 def _group(record: dict, config: dict) -> tuple:
-    group = (record["variable"], str(record.get("varValue", record.get("valValue"))))
-    if group not in {(g["variable"], g["value"]) for g in config["student_groups"]}:
-        raise ValueError(f"Unexpected NAEP student group {group}")
-    return group
+    variable, value = record["variable"], str(record.get("varValue", record.get("valValue")))
+    if value not in config["student_groups"].get(variable, {}).get("values", {}):
+        raise ValueError(f"Unexpected NAEP student group {(variable, value)}")
+    return variable, value
 
 
 def parse_results(records: List[dict], config: dict) -> dict:
@@ -180,7 +206,7 @@ def parse_results(records: List[dict], config: dict) -> dict:
     meet NAEP's reporting standards is kept as not displayable, with no value."""
     results = {}
     for r in records:
-        _check(r, config, (r["sample"],), (r["errorFlag"],))
+        _check(r, config, (r["sample"],))
         if r["jurisdiction"] not in config["jurisdictions"]:
             raise ValueError(f"Unexpected NAEP place {r['jurisdiction']}")
         subject, grade = _subject_and_grade(r, config)
@@ -196,10 +222,10 @@ def parse_comparisons(kind: str, records: List[dict], config: dict) -> dict:
     comparisons = {}
     for r in records:
         if kind == "years":
-            _check(r, config, (r["focalSample"], r["targetSample"]), (r["focalErrorFlag"], r["targetErrorFlag"]))
+            _check(r, config, (r["focalSample"], r["targetSample"]))
             places, years = (r["jurisdiction"], r["jurisdiction"]), (r["focalYear"], r["targetYear"])
         else:
-            _check(r, config, (r["sample"],), (r["focalErrorFlag"], r["targetErrorFlag"]))
+            _check(r, config, (r["sample"],))
             places, years = (r["focalJurisdiction"], r["targetJurisdiction"]), (r["year"], r["year"])
         if not r["isSigDisplayable"]:
             continue
@@ -230,8 +256,10 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
                                     [(code, place["name"], place["kind"]) for code, place in config["jurisdictions"].items()]),
         "naep_measure": upsert_rows(conn, "naep_measure", ("code", "name", "unit"), ("code",),
                                     [(code, m["name"], m["unit"]) for code, m in config["measures"].items()]),
-        "naep_student_group": upsert_rows(conn, "naep_student_group", ("variable", "value", "name"), ("variable", "value"),
-                                          [(g["variable"], g["value"], g["name"]) for g in config["student_groups"]]),
+        "naep_student_group": upsert_rows(conn, "naep_student_group", ("variable", "value", "variable_name", "name"),
+                                          ("variable", "value"),
+                                          [(variable, value, group["name"], name) for variable, group in config["student_groups"].items()
+                                           for value, name in group["values"].items()]),
     }
     places = lookup_ids(conn, "jurisdiction", "code")
     measures = lookup_ids(conn, "naep_measure", "code")
@@ -242,10 +270,12 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     results, comparisons = {}, {}
     for subject_name in config["subjects"]:
         for grade in config["grades"]:
-            results.update(parse_results(read_file(os.path.join(directory, file_name("results", subject_name, grade))), config))
-            for kind in KINDS[1:]:
-                path = os.path.join(directory, file_name(kind, subject_name, grade))
-                comparisons.update(parse_comparisons(kind, read_file(path), config))
+            for kind, (request, _) in KINDS.items():
+                records = read_file(os.path.join(directory, file_name(kind, subject_name, grade)))
+                if request == "results":
+                    results.update(parse_results(records, config))
+                else:
+                    comparisons.update(parse_comparisons(request, records, config))
 
     result_rows = sorted(
         (year, places[place], subjects[subject], grades[grade], measures[measure], groups[group], value, displayable)

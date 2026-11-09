@@ -17,7 +17,8 @@ def _common(subject: AssessmentSubject, grade: Grade, measure: NaepMeasure, grou
         "subject": {"id": subject.id, "name": subject.name, "description": subject.description},
         "grade": {"id": grade.id, "name": grade.name},
         "measure": {"id": measure.id, "code": measure.code, "name": measure.name, "unit": measure.unit},
-        "student_group": {"id": group.id, "variable": group.variable, "value": group.value, "name": group.name},
+        "student_group": {"id": group.id, "variable": group.variable, "value": group.value,
+                          "variable_name": group.variable_name, "name": group.name},
     }
 
 

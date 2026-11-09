@@ -35,7 +35,7 @@ def get_measures(session: SessionDep):
 @router.get("/student-group",
     response_model=List[NaepStudentGroupGet],
     summary="Get the NAEP student groups",
-    description="NAEP's own student groups, which are defined differently from the state assessment's")
+    description="NAEP's own student groups, which are defined differently from the state assessment's. All students are loaded for every place; the others for New Hampshire and the national public average.")
 @cache_response("naep_student_groups")
 def get_student_groups(session: SessionDep):
     return naep_service.get_student_groups(session=session)
@@ -44,7 +44,7 @@ def get_student_groups(session: SessionDep):
 @router.get("/result",
     response_model=List[NaepResultGet],
     summary="Get NAEP results",
-    description="NAEP reading and math results in grades 4 and 8 for every state, DC, DoDEA and the national public average, 2003 on, with optional filters. Values are unrounded; NAEP publishes whole numbers.",
+    description="NAEP reading and math results in grades 4 and 8 for every state, DC, DoDEA and the national public average, 2003 on, with optional filters. Student groups other than all students are for New Hampshire and the national public average; a group NAEP doesn't report (too few students) has is_displayable false and no value. Values are unrounded; NAEP publishes whole numbers.",
     response_description="Results, oldest year first, then by subject, grade, measure and place")
 @cache_response("naep_result")
 def get_results(
