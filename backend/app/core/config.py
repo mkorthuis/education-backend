@@ -82,7 +82,10 @@ class Settings(BaseSettings):
     # API key the endpoint says the feature isn't available.
     ANTHROPIC_API_KEY: str = ""
     ASK_MODEL: str = "claude-haiku-5-5"
-    ASK_EFFORT: str = "high"
+    # Medium answers in about half the time of high with answers of the same quality (the Ask speed
+    # benchmark); a visitor can turn on Deep Think for high
+    ASK_EFFORT: str = "medium"
+    ASK_DEEP_EFFORT: str = "high"
     # Questions answered per day across the whole site (cached repeats don't count); 0 turns asking off
     ASK_DAILY_LIMIT: int = 500
     ASK_MAX_QUESTION_LENGTH: int = 500

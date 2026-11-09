@@ -81,6 +81,28 @@ class AskTests(unittest.TestCase):
         with mock.patch.object(ask_service, "_client", client):
             return self.answer(question), client
 
+    def test_deep_think_uses_high_effort_a_longer_limit_and_its_own_saved_answers(self):
+        payload = {"status": "answered", "answer": ["87.5% graduated."]}
+        question = "How many students graduate in New Hampshire?"
+        # Medium by default
+        _, client = self.run_with([final(payload)], question)
+        self.assertEqual(client.requests[0]["output_config"]["effort"], "medium")
+        # Deep Think: high effort, more time, and not the usual answer from the cache
+        deep_client = FakeClient([final(payload)])
+        with mock.patch.object(ask_service, "_client", deep_client):
+            earlier, saved = ask_service.prepare_question(question, None, deep=True)
+            self.assertIsNone(saved)
+            answer = ask_service.answer_afresh(self.session, question, earlier, deep=True)
+        self.assertEqual(deep_client.requests[0]["output_config"]["effort"], "high")
+        self.assertGreater(deep_client.requests[0]["timeout"], ask_service.TIME_LIMIT)
+        self.assertFalse(answer["cached"])
+        # Each kind is saved for its own next asker
+        self.assertTrue(ask_service.prepare_question(question, None, deep=True)[1]["cached"])
+        self.assertTrue(ask_service.prepare_question(question, None)[1]["cached"])
+
+    def test_charts_are_asked_for_whenever_an_answer_gives_figures(self):
+        self.assertIn("show them in at least one chart or table", ask_service.SYSTEM_PROMPT)
+
     def test_charts_use_the_database_and_links_must_be_real_pages(self):
         graduation = get_data(self.session, "graduation", "state")["datasets"][0]
         answer, client = self.run_with([

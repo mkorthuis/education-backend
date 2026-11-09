@@ -25,10 +25,10 @@ KEEP_ALIVE_SECONDS = 5
 FAILED = "We couldn't answer that question right now. Please try again."
 
 
-async def stream_answer(question: str, earlier: List[dict]):
+async def stream_answer(question: str, earlier: List[dict], deep: bool):
     def answer() -> dict:
         with Session(engine) as session:
-            return answer_afresh(session, question, earlier)
+            return answer_afresh(session, question, earlier, deep)
 
     task = asyncio.ensure_future(run_in_threadpool(answer))
     while True:
@@ -64,11 +64,11 @@ def ask(request: AskRequest):
     if len(question) > settings.ASK_MAX_QUESTION_LENGTH:
         raise HTTPException(status_code=400, detail=f"Questions can be up to {settings.ASK_MAX_QUESTION_LENGTH} characters.")
     try:
-        earlier, saved = prepare_question(question, [turn.model_dump() for turn in request.history])
+        earlier, saved = prepare_question(question, [turn.model_dump() for turn in request.history], request.deep)
     except AskUnavailable:
         raise HTTPException(status_code=503, detail="Asking questions isn't available right now.")
     except AskLimitReached:
         raise HTTPException(status_code=429, detail="We've answered as many questions as we can today. Please try again tomorrow.")
     if saved:
         return saved
-    return StreamingResponse(stream_answer(question, earlier), media_type="application/json")
+    return StreamingResponse(stream_answer(question, earlier, request.deep), media_type="application/json")

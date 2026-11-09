@@ -18,6 +18,7 @@ class AskRequest(BaseModel):
         max_length=20,
         description="The visitor's earlier questions on the page, oldest first, with their answers; the last ten are used to understand a follow-up",
     )
+    deep: bool = Field(default=False, description="Deep Think: Claude thinks longer before answering; slower, for complex questions")
 
 
 class AskChartPoint(BaseModel):

@@ -40,6 +40,9 @@ MAX_ROUNDS = 8
 MAX_TOKENS = 16000
 # Seconds a question may take, all rounds together: the site stops waiting at 45, so stop before then
 TIME_LIMIT = 40
+# Deep Think answers at high effort, which can take over a minute (72 seconds at most in the benchmark);
+# the answer is streamed, so the browser's request stays open
+DEEP_TIME_LIMIT = 90
 MAX_CHARTS = 2
 MAX_TABLES = 2
 MAX_REFERENCES = 5
@@ -76,7 +79,7 @@ How to answer:
 - Write in the site's neutral voice ("Concord spent..."): never "I" or "me", call the site "this site", no greetings, no sign-offs, no praise of the question.
 - Answer in the language the question is written in: the paragraphs, chart and table titles, reference labels, source reasons and follow-up questions. Keep the names of places, schools, laws and programs as written in English, and name datasets' columns exactly as the tools give them.
 - Write paragraphs as plain text: no markdown, no bullet characters, no links or URLs in the text.
-- Charts and tables: pick at most {MAX_CHARTS} charts and {MAX_TABLES} tables, only when they add to the answer. Name a dataset by the id the tools gave it (like "d2") and list which of its columns to show, using the column names exactly; set first_rows to show only the first rows (a ranking's top 10, say), or null for all. Use a line chart for change over years, a bar chart to compare groups or districts at one time. A chart's series must share a unit (each dataset's "units" gives each column's); put counts and percentages in separate charts or a table. Titles are in Title Case like the site's ("Cost per Student, Concord").
+- Charts and tables: when the answer gives figures from the tools, show them in at least one chart or table, so the visitor can see the numbers behind it; leave them out only for an answer without figures, such as a rule or a definition. Pick at most {MAX_CHARTS} charts and {MAX_TABLES} tables. Name a dataset by the id the tools gave it (like "d2") and list which of its columns to show, using the column names exactly; set first_rows to show only the first rows (a ranking's top 10, say), or null for all. Use a line chart for change over years, a bar chart to compare groups or districts at one time. A chart's series must share a unit (each dataset's "units" gives each column's); put counts and percentages in separate charts or a table. Titles are in Title Case like the site's ("Cost per Student, Concord").
 - References: 1 to {MAX_REFERENCES} pages on this site where the visitor can see more, using only paths from the tools' results (the "page" fields) or these: {", ".join(FIXED_PAGES)}. Give each a short label naming the place and topic, like "Concord School District: Graduation".
 - Follow-ups: up to 3 short questions the visitor might ask next that this site can answer.
 - Rules and rights, what terms and the site's measures mean, how New Hampshire schools are run and paid for, what research says works, programs and where families can get help, and a district's own practices (kindergarten, preschool, budget votes, high school options): call look_up_reference first, and answer from the facts it returns, in plain words. Don't add rules, numbers, dates, deadlines or study findings the facts don't give; where they don't cover part of the question, say so and say who to ask (the local school district, the New Hampshire Department of Education). When a fact gives an effective date or says a rule changed recently, say so. On research, give what the studies found and what's uncertain, without taking a side. Set status to "answered" when the facts answer the question.
@@ -333,18 +336,24 @@ def question_message(question: str, earlier: List[dict]) -> str:
     return "\n".join(lines)
 
 
-def _answer_key(question: str, earlier: Optional[List[dict]] = None) -> str:
-    # A new model or effort level answers afresh. A follow-up's earlier questions and answers are part
-    # of its key, so "what about science?" after one place isn't the answer after another, and no one
-    # can plant an earlier answer to change what other visitors get.
+def effort(deep: bool = False) -> str:
+    """How hard Claude thinks: Deep Think's level, or the usual one"""
+    return settings.ASK_DEEP_EFFORT if deep else settings.ASK_EFFORT
+
+
+def _answer_key(question: str, earlier: Optional[List[dict]] = None, deep: bool = False) -> str:
+    # A new model or effort level answers afresh, and Deep Think's answers are kept apart. A
+    # follow-up's earlier questions and answers are part of its key, so "what about science?" after
+    # one place isn't the answer after another, and no one can plant an earlier answer to change what
+    # other visitors get.
     context = json.dumps([[normalize_question(turn["question"]), turn["answer"]] for turn in earlier or []])
-    digest = hashlib.sha256(f"{settings.ASK_MODEL}:{settings.ASK_EFFORT}:{answer_version()}:{normalize_question(question)}:{context}".encode()).hexdigest()
+    digest = hashlib.sha256(f"{settings.ASK_MODEL}:{effort(deep)}:{answer_version()}:{normalize_question(question)}:{context}".encode()).hexdigest()
     # Under the API's cache prefix, so reloading data (which clears that cache) clears answers too
     return f"{settings.CACHE_KEY_PREFIX}ask:{digest}"
 
 
-def cached_answer(question: str, earlier: Optional[List[dict]] = None) -> Optional[dict]:
-    key = _answer_key(question, earlier)
+def cached_answer(question: str, earlier: Optional[List[dict]] = None, deep: bool = False) -> Optional[dict]:
+    key = _answer_key(question, earlier, deep)
     try:
         client = _redis()
         stored = client.get(key) if client else _memory_answers.get(key)
@@ -354,8 +363,8 @@ def cached_answer(question: str, earlier: Optional[List[dict]] = None) -> Option
     return json.loads(stored) if stored else None
 
 
-def store_answer(question: str, answer: dict, earlier: Optional[List[dict]] = None) -> None:
-    key = _answer_key(question, earlier)
+def store_answer(question: str, answer: dict, earlier: Optional[List[dict]] = None, deep: bool = False) -> None:
+    key = _answer_key(question, earlier, deep)
     try:
         client = _redis()
         if client:
@@ -403,7 +412,7 @@ def _anthropic() -> anthropic.Anthropic:
     if not settings.ANTHROPIC_API_KEY:
         raise AskUnavailable("No Anthropic API key is configured")
     if _client is None:
-        # Each request's timeout is what's left of the question's TIME_LIMIT
+        # Each request's timeout is what's left of the question's time limit
         _client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY, max_retries=2)
     return _client
 
@@ -590,7 +599,7 @@ def build_answer(reply: dict, registry: DatasetRegistry) -> dict:
     }
 
 
-def ask_claude(session: Session, question: str, earlier: Optional[List[dict]] = None) -> dict:
+def ask_claude(session: Session, question: str, earlier: Optional[List[dict]] = None, deep: bool = False) -> dict:
     """Run the tool loop for one question and return the built answer."""
     client = _anthropic()
     registry = DatasetRegistry()
@@ -599,19 +608,20 @@ def ask_claude(session: Session, question: str, earlier: Optional[List[dict]] = 
     # Summed over the rounds, for the log
     usage = dict.fromkeys(["input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens"], 0)
     for round_number in range(1, MAX_ROUNDS + 1):
-        remaining = TIME_LIMIT - (time.monotonic() - started)
+        remaining = (DEEP_TIME_LIMIT if deep else TIME_LIMIT) - (time.monotonic() - started)
         if remaining <= 0:
             raise AskFailed("The question took too long")
         try:
             response = client.messages.create(
                 model=settings.ASK_MODEL,
                 max_tokens=MAX_TOKENS,
-                system=SYSTEM_PROMPT,
+                # The instructions and tools are the same for every question: their own cache breakpoint,
+                # so a new question reads them (the top-level one caches the rounds of this one)
+                system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
                 tools=list(all_tools()),
                 messages=messages,
                 thinking={"type": "adaptive"},
-                output_config={"effort": settings.ASK_EFFORT, "format": {"type": "json_schema", "schema": OUTPUT_SCHEMA}},
-                # The system prompt and tools are the same for every question; cache them
+                output_config={"effort": effort(deep), "format": {"type": "json_schema", "schema": OUTPUT_SCHEMA}},
                 cache_control={"type": "ephemeral"},
                 timeout=remaining,
             )
@@ -653,19 +663,19 @@ def ask_claude(session: Session, question: str, earlier: Optional[List[dict]] = 
             except json.JSONDecodeError as error:
                 raise AskFailed("The answer wasn't in the expected form") from error
             answer = build_answer(reply, registry)
-            logger.info("Ask answered: %s, %d datasets, %d rounds, %.1fs, tokens %s",
+            logger.info("Ask answered%s: %s, %d datasets, %d rounds, %.1fs, tokens %s", " (Deep Think)" if deep else "",
                         answer["status"], len(registry.datasets), round_number, time.monotonic() - started, usage)
             return answer
         raise AskFailed(f"The answer stopped early ({response.stop_reason})")
     raise AskFailed("The question needed too many lookups")
 
 
-def prepare_question(question: str, history: Optional[List[dict]] = None) -> Tuple[List[dict], Optional[dict]]:
+def prepare_question(question: str, history: Optional[List[dict]] = None, deep: bool = False) -> Tuple[List[dict], Optional[dict]]:
     """Before answering a visitor's question, which may follow up earlier ones on their page: the
     earlier questions it may refer to, and the saved answer if it was asked before. Without one, the
     question counts against today's limit, or AskUnavailable or AskLimitReached is raised."""
     earlier = earlier_context(history)
-    saved = cached_answer(question, earlier)
+    saved = cached_answer(question, earlier, deep)
     if saved:
         return earlier, {**saved, "cached": True}
     _anthropic()  # Unavailable before counting against the limit
@@ -673,9 +683,9 @@ def prepare_question(question: str, history: Optional[List[dict]] = None) -> Tup
     return earlier, None
 
 
-def answer_afresh(session: Session, question: str, earlier: List[dict]) -> dict:
+def answer_afresh(session: Session, question: str, earlier: List[dict], deep: bool = False) -> dict:
     """Claude's answer, saved for the next visitor who asks the same; declined questions aren't."""
-    answer = ask_claude(session, question, earlier)
+    answer = ask_claude(session, question, earlier, deep)
     if answer["status"] != "declined":
-        store_answer(question, answer, earlier)
+        store_answer(question, answer, earlier, deep)
     return {**answer, "cached": False}
