@@ -21,8 +21,8 @@ from app.model.location import District
 from app.model.reference import ReferenceFact, ReferenceTopic
 from app.service.internal.ask.ask_service import DatasetRegistry, build_answer
 from app.service.internal.ask.data_tools import DataToolError
-from app.service.internal.ask.national_tools import naep_results
-from app.service.internal.ask.reference_tools import look_up_reference, site
+from app.service.internal.ask.national_tools import NAEP_SOURCE, naep_results
+from app.service.internal.ask.reference_tools import look_up_reference, site, tool_definition
 
 CONFIG = load_config(reference.CONFIG)
 
@@ -161,16 +161,36 @@ class ReferenceDatabaseTests(unittest.TestCase):
         result = registry.add_reference(look_up_reference(self.session, ["bullying-school-duties"]))
         self.assertNotIn("_sources", result)
         fact_id = result["topics"][0]["facts"][0]["id"]
-        answer = build_answer({"status": "answered", "answer": ["..."], "sources": [fact_id, "r999999", "https://example.com"]}, registry)
+        cited = [{"id": fact_id, "reason": "  The 48-hour deadline\nto tell both families "}, {"id": "r999999", "reason": "Made up"},
+                 {"id": "https://example.com", "reason": "A link Claude wrote"}]
+        answer = build_answer({"status": "answered", "answer": ["..."], "sources": cited}, registry)
         self.assertEqual(len(answer["sources"]), 1)
         self.assertEqual(answer["sources"][0]["site"], "gc.nh.gov")
+        self.assertEqual(answer["sources"][0]["reasons"], ["The 48-hour deadline to tell both families"])
         # A declined answer links nowhere
-        self.assertEqual(build_answer({"status": "declined", "answer": ["..."], "sources": [fact_id]}, registry)["sources"], [])
+        self.assertEqual(build_answer({"status": "declined", "answer": ["..."], "sources": cited}, registry)["sources"], [])
+        # Facts from the same page share one link, with each fact's reason
+        by_url = {}
+        for ident, source in registry.sources.items():
+            by_url.setdefault(source["url"], []).append(ident)
+        first, second = next(ids for ids in by_url.values() if len(ids) > 1)[:2]
+        answer = build_answer({"status": "answered", "answer": ["..."],
+                               "sources": [{"id": first, "reason": "One thing"}, {"id": second, "reason": "Another"}, {"id": second, "reason": "Another"}]}, registry)
+        self.assertEqual([s["reasons"] for s in answer["sources"]], [["One thing", "Another"]])
+        # Reasons are one short line of plain text, without links
+        for reason, shown in (("See https://example.com", []), ("x" * 300, ["x" * 159 + "…"]), ("", [])):
+            answer = build_answer({"status": "answered", "answer": ["..."], "sources": [{"id": fact_id, "reason": reason}]}, registry)
+            self.assertEqual(answer["sources"][0]["reasons"], shown)
         # A chart from national data brings its source, even uncited
         registry.add(naep_results(self.session, "math", 8, "average_score", ["NH", "MA"], "All students"))
         answer = build_answer({"status": "answered", "answer": ["..."], "sources": [],
                                "charts": [{"dataset": "d1", "kind": "line", "title": "NAEP", "series": ["New Hampshire"]}]}, registry)
         self.assertEqual([s["site"] for s in answer["sources"]], ["nationsreportcard.gov"])
+        self.assertEqual(answer["sources"][0]["reasons"], [])
+        # Cited with a reason, the shared NAEP source is copied, not changed
+        answer = build_answer({"status": "answered", "answer": ["..."], "sources": [{"id": "d1", "reason": "Scores by state"}]}, registry)
+        self.assertEqual(answer["sources"][0]["reasons"], ["Scores by state"])
+        self.assertNotIn("reasons", NAEP_SOURCE)
 
     def test_facts_about_this_site_are_used_but_not_linked(self):
         fact = self.session.exec(select(ReferenceFact).where(ReferenceFact.source_url == "https://nhfacts.com")).first()
@@ -178,6 +198,14 @@ class ReferenceDatabaseTests(unittest.TestCase):
         result = look_up_reference(self.session, [slug])
         self.assertIn(f"r{fact.id}", [f["id"] for f in result["topics"][0]["facts"]])
         self.assertNotIn(f"r{fact.id}", result["_sources"])
+
+    def test_the_tool_checks_its_own_input(self):
+        # Not strict, so the topic list doesn't count toward the API's grammar limit
+        self.assertNotIn("strict", tool_definition())
+        self.assertIn("bullying-school-duties", tool_definition()["input_schema"]["properties"]["topics"]["items"]["enum"])
+        for topics, district_id in (("bullying-school-duties", None), ([1], None), (["bullying-school-duties"], "335")):
+            with self.assertRaises(DataToolError):
+                look_up_reference(self.session, topics, district_id)
 
     def test_sites_drop_www(self):
         self.assertEqual(site("https://www.ecfr.gov/current/title-34"), "ecfr.gov")

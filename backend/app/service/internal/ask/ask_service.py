@@ -44,6 +44,8 @@ MAX_CHARTS = 2
 MAX_TABLES = 2
 MAX_REFERENCES = 5
 MAX_SOURCES = 6
+MAX_REASON = 160
+MAX_REASONS = 4
 
 # Site pages any answer may link to; others must come from the tools' results
 FIXED_PAGES = {
@@ -72,13 +74,13 @@ How to answer:
 - Give the latest year's figure with its year, and the change over time when it helps. Before saying a year was the highest or lowest, counting years, or saying one place was above another every year, check every row of the dataset; prefer stating the figures themselves over your own calculations. Compare like with like (a grade with the same grade, not with all grades). School years are written like 2024-25; graduation classes like "class of 2025". Comparing places is often the most useful answer (a district against the state, or two districts).
 - Start with the direct answer in the first sentence. If the site doesn't have the data, say so in the first sentence and point to the closest page. Then keep it short and plain: 1 to 4 short paragraphs, short sentences, everyday words, no jargon (where an answer first uses the word proficient, explain that it means meeting the grade-level standard; say "students with disabilities" rather than IEP/SWD). Changes in a rate are in percentage points. Don't speculate about causes the data can't show, and stay neutral on policy questions such as EFAs, budgets or school funding.
 - Write in the site's neutral voice ("Concord spent..."): never "I" or "me", call the site "this site", no greetings, no sign-offs, no praise of the question.
-- Answer in the language the question is written in: the paragraphs, chart and table titles, reference labels and follow-up questions. Keep the names of places, schools, laws and programs as written in English, and name datasets' columns exactly as the tools give them.
+- Answer in the language the question is written in: the paragraphs, chart and table titles, reference labels, source reasons and follow-up questions. Keep the names of places, schools, laws and programs as written in English, and name datasets' columns exactly as the tools give them.
 - Write paragraphs as plain text: no markdown, no bullet characters, no links or URLs in the text.
 - Charts and tables: pick at most {MAX_CHARTS} charts and {MAX_TABLES} tables, only when they add to the answer. Name a dataset by the id the tools gave it (like "d2") and list which of its columns to show, using the column names exactly; set first_rows to show only the first rows (a ranking's top 10, say), or null for all. Use a line chart for change over years, a bar chart to compare groups or districts at one time. A chart's series must share a unit (each dataset's "units" gives each column's); put counts and percentages in separate charts or a table. Titles are in Title Case like the site's ("Cost per Student, Concord").
 - References: 1 to {MAX_REFERENCES} pages on this site where the visitor can see more, using only paths from the tools' results (the "page" fields) or these: {", ".join(FIXED_PAGES)}. Give each a short label naming the place and topic, like "Concord School District: Graduation".
 - Follow-ups: up to 3 short questions the visitor might ask next that this site can answer.
 - Rules and rights, what terms and the site's measures mean, how New Hampshire schools are run and paid for, what research says works, programs and where families can get help, and a district's own practices (kindergarten, preschool, budget votes, high school options): call look_up_reference first, and answer from the facts it returns, in plain words. Don't add rules, numbers, dates, deadlines or study findings the facts don't give; where they don't cover part of the question, say so and say who to ask (the local school district, the New Hampshire Department of Education). When a fact gives an effective date or says a rule changed recently, say so. On research, give what the studies found and what's uncertain, without taking a side. Set status to "answered" when the facts answer the question.
-- Sources: list the ids of the reference facts ("r…") and the national datasets (NAEP, Census) the answer relies on; the visitor sees them as links to the original pages, so list only what the answer uses.
+- Sources: for each reference fact ("r…") and national dataset (NAEP, Census) the answer relies on, give its id and a reason: at most 15 words, for the visitor, saying what in the answer it supports, like "What cost per pupil includes and leaves out" or "The 48-hour deadline to tell both families". The visitor sees each as a link to the original page with your reason under it, so list only what the answer uses.
 - General education questions that neither the facts nor the site's data answer (what a term means, how something works, how to help a child with reading): give a short, accurate general explanation in plain language and set status to "general". Don't state New Hampshire rules, eligibility limits, income limits, ages, dates, deadlines, costs or any other number unless it came from your tools; for those, say who to ask, such as the local school district or the New Hampshire Department of Education. When the site's data adds something useful (how many students have EFAs, say), look it up and include it.
 - Link only to pages that relate directly to the question; give no references at all rather than an unrelated page.
 - Set status to "answered" when the site's data or the reference facts answer the question, "partial" when it answers only part, "no_data" when the question asks for New Hampshire school figures the site doesn't have, "general" for a general explanation as above, and "declined" only for questions that aren't about schools or education at all, or that ask about a specific student, teacher or other private person. For declined questions, say briefly what this site can help with instead.
@@ -240,7 +242,15 @@ OUTPUT_SCHEMA = {
             },
         },
         "follow_ups": {"type": "array", "items": {"type": "string"}},
-        "sources": {"type": "array", "items": {"type": "string"}},
+        "sources": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {"id": {"type": "string"}, "reason": {"type": "string"}},
+                "required": ["id", "reason"],
+                "additionalProperties": False,
+            },
+        },
     },
     "required": ["status", "answer", "charts", "tables", "references", "follow_ups", "sources"],
     "additionalProperties": False,
@@ -458,7 +468,7 @@ def run_tool(session: Session, registry: DatasetRegistry, name: str, tool_input:
                                                             tool_input.get("source"))))
     if name == "look_up_reference":
         return json.dumps(registry.add_reference(reference_tools.look_up_reference(
-            session, list(tool_input.get("topics") or []), tool_input.get("district_id"))))
+            session, tool_input.get("topics") or [], tool_input.get("district_id"))))
     if name == "rank_districts":
         result = rank_districts(session, tool_input.get("measure"), tool_input.get("order", "highest"))
         # Every district in the ranking can be linked; Claude reads only the first pages, to keep it short
@@ -469,6 +479,16 @@ def run_tool(session: Session, registry: DatasetRegistry, name: str, tool_input:
 
 def _number(value: Any) -> Optional[float]:
     return float(value) if isinstance(value, (int, float)) and not isinstance(value, bool) else None
+
+
+def _reason(text: Any) -> Optional[str]:
+    """Claude's note on what a source supports: one line of plain text, without links."""
+    if not isinstance(text, str):
+        return None
+    text = " ".join(text.split())
+    if not text or re.search(r"https?://|www\.", text):
+        return None
+    return text if len(text) <= MAX_REASON else text[: MAX_REASON - 1].rstrip() + "…"
 
 
 def _first_rows(rows: list, count: Any) -> list:
@@ -540,14 +560,23 @@ def build_answer(reply: dict, registry: DatasetRegistry) -> dict:
             if data["page"] not in [r["path"] for r in references]:
                 references.append({"label": data["title"], "path": data["page"]})
     # Outside sources: only those the tools returned (reference facts, national datasets), never a link
-    # Claude wrote
-    cited = list(reply.get("sources", []))
-    shown = [item.get("dataset") for item in [*reply.get("charts", []), *reply.get("tables", [])]]
+    # Claude wrote. Each cited one carries Claude's reasons, shown under the link; a dataset's source
+    # added because a chart or table shows it, without being cited, has none.
+    cited = [(item.get("id"), item.get("reason")) for item in reply.get("sources", []) if isinstance(item, dict)]
+    shown = [(item.get("dataset"), None) for item in [*reply.get("charts", []), *reply.get("tables", [])]]
     sources = []
-    for ident in [*cited, *shown]:
+    for ident, reason in [*cited, *shown]:
         source = registry.sources.get(ident) or (registry.datasets.get(ident) or {}).get("source")
-        if source and source["url"] not in [s["url"] for s in sources]:
-            sources.append(source)
+        if not source:
+            continue
+        reason = _reason(reason)
+        same = next((s for s in sources if s["url"] == source["url"]), None)
+        if same is None:
+            # A copy: the national datasets' sources are shared constants
+            sources.append({**source, "reasons": [reason] if reason else []})
+        elif reason and reason not in same["reasons"] and len(same["reasons"]) < MAX_REASONS:
+            # Several facts from one page share its link, which lists what each one supports
+            same["reasons"].append(reason)
     if reply.get("status") == "declined":
         sources = []
     return {

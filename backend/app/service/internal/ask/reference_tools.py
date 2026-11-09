@@ -52,7 +52,9 @@ def tool_definition() -> dict:
             "district's own practices, such as kindergarten, preschool, budget votes and high school options (local; give "
             f"the district's id from find_places). Pick up to {MAX_TOPICS} topics:\n{lines}"
         ),
-        "strict": True,
+        # Not strict: strict tools are compiled into one grammar with the answer's schema, and an enum of
+        # every topic grows with the library past the API's limit. The enum still guides Claude, and
+        # look_up_reference checks the input itself.
         "input_schema": {
             "type": "object",
             "properties": {
@@ -74,6 +76,10 @@ def look_up_reference(session: Session, topics: List[str], district_id: Optional
     """The facts of up to four topics that are within their review date. A fact about one district is
     given only when that district is asked for. Returns what Claude reads, and under "_sources" each
     fact's link, which isn't sent to Claude."""
+    if not isinstance(topics, list) or not all(isinstance(slug, str) for slug in topics):
+        raise DataToolError("topics must be a list of topic names.")
+    if district_id is not None and (isinstance(district_id, bool) or not isinstance(district_id, int)):
+        raise DataToolError("district_id must be a district's id number from find_places, or null.")
     slugs = list(dict.fromkeys(topics))
     if not slugs or len(slugs) > MAX_TOPICS:
         raise DataToolError(f"Pick 1 to {MAX_TOPICS} topics.")

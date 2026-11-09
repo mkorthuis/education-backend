@@ -56,6 +56,8 @@ class AskSource(BaseModel):
     url: str
     site: str
     as_of: Optional[str] = None
+    # What in the answer the source supports, one line per fact, written by AI with the answer
+    reasons: List[str] = []
 
 
 class AskResponse(BaseModel):
