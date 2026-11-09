@@ -19,6 +19,10 @@ class AskRequest(BaseModel):
         description="The visitor's earlier questions on the page, oldest first, with their answers; the last ten are used to understand a follow-up",
     )
     deep: bool = Field(default=False, description="Deep Think: Claude thinks longer before answering; slower, for complex questions")
+    stream: bool = Field(
+        default=False,
+        description='Show the answer as it\'s written: a new answer comes as lines of JSON, {"partial": [paragraphs so far]} while it\'s written, then the answer',
+    )
 
 
 class AskChartPoint(BaseModel):

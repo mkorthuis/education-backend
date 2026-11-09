@@ -37,19 +37,46 @@ def plain(text):
     return final({"status": "answered", "answer": [text], "charts": [], "tables": [], "references": [], "follow_ups": []})
 
 
-class FakeClient:
-    """Plays back Claude's responses in order, each after `delay` seconds, and records each request."""
+class FakeStream:
+    """A streamed response: its text a few characters at a time, `pause` seconds apart, then the whole message."""
 
-    def __init__(self, responses, delay=0):
+    def __init__(self, response, pause=0):
+        self.response = response
+        self.pause = pause
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def __iter__(self):
+        for block in self.response.content:
+            if block.type != "text":
+                continue
+            for start in range(0, len(block.text), 7):
+                time.sleep(self.pause)
+                yield SimpleNamespace(type="text", text=block.text[start:start + 7])
+
+    def get_final_message(self):
+        return self.response
+
+
+class FakeClient:
+    """Plays back Claude's responses in order, each after `delay` seconds (its text `pause` seconds a
+    piece), and records each request."""
+
+    def __init__(self, responses, delay=0, pause=0):
         self.responses = list(responses)
         self.delay = delay
+        self.pause = pause
         self.requests = []
-        self.messages = SimpleNamespace(create=self._create)
+        self.messages = SimpleNamespace(stream=self._stream)
 
-    def _create(self, **kwargs):
+    def _stream(self, **kwargs):
         self.requests.append(kwargs)
         time.sleep(self.delay)
-        return self.responses.pop(0)
+        return FakeStream(self.responses.pop(0), self.pause)
 
 
 class AskTests(unittest.TestCase):
@@ -186,7 +213,7 @@ class AskTests(unittest.TestCase):
     def test_new_answers_stream_while_they_are_written(self):
         api = TestClient(app)
         url = f"{settings.API_V1_STR}/ask"
-        with mock.patch.object(ask_route, "KEEP_ALIVE_SECONDS", 0.01):
+        with mock.patch.object(ask_route, "KEEP_ALIVE_SECONDS", 0.01), mock.patch.object(ask_route, "TEXT_SECONDS", 0.01):
             client = FakeClient([plain("Yes.")], delay=0.1)
             with mock.patch.object(ask_service, "_client", client):
                 response = api.post(url, json={"question": "Is this streamed?"})
@@ -203,6 +230,41 @@ class AskTests(unittest.TestCase):
                 response = api.post(url, json={"question": "Will this fail?"})
             self.assertEqual(response.status_code, 200)
             self.assertEqual(set(response.json()), {"detail"})
+
+    def test_answers_can_be_shown_as_they_re_written(self):
+        api = TestClient(app)
+        url = f"{settings.API_V1_STR}/ask"
+        paragraphs = ["Concord spent $24,351 per student in 2024, more than the state's $21,000.", "That's up 4% from 2023."]
+        with mock.patch.object(ask_route, "TEXT_SECONDS", 0.01):
+            client = FakeClient([final({"status": "answered", "answer": paragraphs})], pause=0.02)
+            with mock.patch.object(ask_service, "_client", client):
+                response = api.post(url, json={"question": "How much does Concord spend?", "stream": True})
+        lines = [json.loads(line) for line in response.text.splitlines() if line.strip()]
+        partials = [line["partial"] for line in lines[:-1]]
+        # The paragraphs grow, each update starting where the one before left off, then the answer
+        self.assertGreater(len(partials), 3)
+        for before, after in zip(partials, partials[1:]):
+            self.assertTrue(len(after) >= len(before) and after[len(before) - 1].startswith(before[-1]))
+        for partial in partials:
+            self.assertTrue(all(paragraph in paragraphs or any(full.startswith(paragraph) for full in paragraphs) for paragraph in partial))
+        self.assertEqual(lines[-1]["answer"], paragraphs)
+
+    def test_the_answer_written_so_far_reads_from_unfinished_json(self):
+        partial = ask_service.partial_answer
+        self.assertEqual(partial('{"status": "answered", "ans'), [])
+        self.assertEqual(partial('{"status": "answered", "answer": ['), [])
+        self.assertEqual(partial('{"status": "answered", "answer": ["Concord sp'), ["Concord sp"])
+        self.assertEqual(partial('{"status": "answered", "answer": ["One.", "Two'), ["One.", "Two"])
+        self.assertEqual(partial('{"status": "answered", "answer": ["One.", "Two."], "charts": [{"title": "x'), ["One.", "Two."])
+        # An escape cut off partway waits for the rest of it
+        self.assertEqual(partial('{"answer": ["The \\"best'), ['The "best'])
+        self.assertEqual(partial('{"answer": ["The \\'), ["The "])
+        self.assertEqual(partial('{"answer": ["Caf\\u00'), ["Caf"])
+        self.assertEqual(partial('{"answer": ["Caf\\u00e9'), ["Café"])
+        self.assertEqual(partial('{"answer": ["C:\\\\'), ["C:\\"])
+        self.assertEqual(partial('{"answer": ["Hi \\ud83d'), ["Hi "])
+        # A declined question shows nothing until its message
+        self.assertEqual(partial('{"status": "declined", "answer": ["This site can'), [])
 
     def test_the_route_refuses_questions_it_cant_take(self):
         api = TestClient(app)

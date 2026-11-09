@@ -15,7 +15,7 @@ import threading
 import time
 from functools import lru_cache
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 from zoneinfo import ZoneInfo
 
 import anthropic
@@ -505,6 +505,48 @@ def _first_rows(rows: list, count: Any) -> list:
     return rows[:count] if isinstance(count, int) and count > 0 else rows
 
 
+_ANSWER_STARTS = re.compile(r'"answer"\s*:\s*\[')
+_DECLINED = re.compile(r'"status"\s*:\s*"declined"')
+_TRAILING_BACKSLASHES = re.compile(r'(\\+)(u[0-9a-fA-F]{0,3})?$')
+
+
+def partial_answer(text: str) -> List[str]:
+    """The answer's paragraphs in the reply Claude has written so far, the last one perhaps unfinished:
+    none before the answer starts, or for a question it declines."""
+    if _DECLINED.search(text):
+        return []
+    match = _ANSWER_STARTS.search(text)
+    if not match:
+        return []
+    paragraphs: List[str] = []
+    position = match.end()
+    while True:
+        while position < len(text) and text[position] in " \t\r\n,":
+            position += 1
+        # The end of the answer, or the rest is still to come
+        if position >= len(text) or text[position] != '"':
+            return paragraphs
+        try:
+            paragraph, position = json.decoder.scanstring(text, position + 1)
+        except json.JSONDecodeError:
+            break
+        paragraphs.append(paragraph)
+    # The paragraph being written: what's there so far, less an escape cut off partway (a lone
+    # backslash, or \u with fewer than four digits)
+    written = text[position + 1:]
+    cut = _TRAILING_BACKSLASHES.search(written)
+    if cut and len(cut.group(1)) % 2:
+        written = written[:cut.end(1) - 1]
+    try:
+        paragraph = json.loads(f'"{written}"')
+    except json.JSONDecodeError:
+        return paragraphs
+    # Half of an emoji's pair waits for the other half
+    if paragraph and "\ud800" <= paragraph[-1] <= "\udbff":
+        paragraph = paragraph[:-1]
+    return paragraphs + [paragraph] if paragraph else paragraphs
+
+
 def build_answer(reply: dict, registry: DatasetRegistry) -> dict:
     """The visitor's answer from Claude's reply: charts and tables filled from the real datasets,
     and only links to pages the site has."""
@@ -599,20 +641,25 @@ def build_answer(reply: dict, registry: DatasetRegistry) -> dict:
     }
 
 
-def ask_claude(session: Session, question: str, earlier: Optional[List[dict]] = None, deep: bool = False) -> dict:
-    """Run the tool loop for one question and return the built answer."""
+def ask_claude(session: Session, question: str, earlier: Optional[List[dict]] = None, deep: bool = False,
+               on_text: Optional[Callable[[List[str]], None]] = None) -> dict:
+    """Run the tool loop for one question and return the built answer. `on_text` is given the answer's
+    paragraphs so far each time Claude writes more of them."""
     client = _anthropic()
     registry = DatasetRegistry()
     messages: List[dict] = [{"role": "user", "content": question_message(question, earlier or [])}]
     started = time.monotonic()
     # Summed over the rounds, for the log
     usage = dict.fromkeys(["input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens"], 0)
+    deadline = started + (DEEP_TIME_LIMIT if deep else TIME_LIMIT)
+    shown: List[str] = []
     for round_number in range(1, MAX_ROUNDS + 1):
-        remaining = (DEEP_TIME_LIMIT if deep else TIME_LIMIT) - (time.monotonic() - started)
+        remaining = deadline - time.monotonic()
         if remaining <= 0:
             raise AskFailed("The question took too long")
         try:
-            response = client.messages.create(
+            # Streamed, so the answer can be shown as it's written
+            with client.messages.stream(
                 model=settings.ASK_MODEL,
                 max_tokens=MAX_TOKENS,
                 # The instructions and tools are the same for every question: their own cache breakpoint,
@@ -623,8 +670,21 @@ def ask_claude(session: Session, question: str, earlier: Optional[List[dict]] = 
                 thinking={"type": "adaptive"},
                 output_config={"effort": effort(deep), "format": {"type": "json_schema", "schema": OUTPUT_SCHEMA}},
                 cache_control={"type": "ephemeral"},
+                # The longest wait for the next part of the reply; the deadline covers the whole
                 timeout=remaining,
-            )
+            ) as stream:
+                written = ""
+                for event in stream:
+                    if time.monotonic() > deadline:
+                        raise AskFailed("The question took too long")
+                    if event.type != "text" or not on_text:
+                        continue
+                    written += event.text
+                    paragraphs = partial_answer(written)
+                    if paragraphs != shown:
+                        shown = paragraphs
+                        on_text(paragraphs)
+                response = stream.get_final_message()
         except anthropic.RateLimitError as error:
             raise AskFailed("The AI service is busy") from error
         except anthropic.APIStatusError as error:
@@ -634,6 +694,9 @@ def ask_claude(session: Session, question: str, earlier: Optional[List[dict]] = 
             raise AskFailed("The question took too long") from error
         except anthropic.APIConnectionError as error:
             raise AskFailed("Couldn't reach the AI service") from error
+        except ValueError as error:
+            # A tool call the SDK couldn't read
+            raise AskFailed("The answer wasn't in the expected form") from error
         for name in usage:
             usage[name] += getattr(response.usage, name, 0) or 0
 
@@ -683,9 +746,10 @@ def prepare_question(question: str, history: Optional[List[dict]] = None, deep: 
     return earlier, None
 
 
-def answer_afresh(session: Session, question: str, earlier: List[dict], deep: bool = False) -> dict:
+def answer_afresh(session: Session, question: str, earlier: List[dict], deep: bool = False,
+                  on_text: Optional[Callable[[List[str]], None]] = None) -> dict:
     """Claude's answer, saved for the next visitor who asks the same; declined questions aren't."""
-    answer = ask_claude(session, question, earlier, deep)
+    answer = ask_claude(session, question, earlier, deep, on_text)
     if answer["status"] != "declined":
         store_answer(question, answer, earlier, deep)
     return {**answer, "cached": False}
