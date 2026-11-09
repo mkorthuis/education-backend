@@ -83,7 +83,7 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: str = ""
     ASK_MODEL: str = "claude-haiku-5-5"
     # Medium answers in about half the time of high with answers of the same quality (the Ask speed
-    # benchmark); a visitor can turn on Deep Think for high
+    # benchmark); a visitor can turn on Take More Time for high
     ASK_EFFORT: str = "medium"
     ASK_DEEP_EFFORT: str = "high"
     # Questions answered per day across the whole site (cached repeats don't count); 0 turns asking off

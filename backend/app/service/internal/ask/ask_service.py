@@ -40,7 +40,7 @@ MAX_ROUNDS = 8
 MAX_TOKENS = 16000
 # Seconds a question may take, all rounds together: the site stops waiting at 45, so stop before then
 TIME_LIMIT = 40
-# Deep Think answers at high effort, which can take over a minute (72 seconds at most in the benchmark);
+# Take More Time answers at high effort, which can take over a minute (72 seconds at most in the benchmark);
 # the answer is streamed, so the browser's request stays open
 DEEP_TIME_LIMIT = 90
 MAX_CHARTS = 2
@@ -337,12 +337,12 @@ def question_message(question: str, earlier: List[dict]) -> str:
 
 
 def effort(deep: bool = False) -> str:
-    """How hard Claude thinks: Deep Think's level, or the usual one"""
+    """How hard Claude thinks: Take More Time's level, or the usual one"""
     return settings.ASK_DEEP_EFFORT if deep else settings.ASK_EFFORT
 
 
 def _answer_key(question: str, earlier: Optional[List[dict]] = None, deep: bool = False) -> str:
-    # A new model or effort level answers afresh, and Deep Think's answers are kept apart. A
+    # A new model or effort level answers afresh, and Take More Time's answers are kept apart. A
     # follow-up's earlier questions and answers are part of its key, so "what about science?" after
     # one place isn't the answer after another, and no one can plant an earlier answer to change what
     # other visitors get.
@@ -726,7 +726,7 @@ def ask_claude(session: Session, question: str, earlier: Optional[List[dict]] = 
             except json.JSONDecodeError as error:
                 raise AskFailed("The answer wasn't in the expected form") from error
             answer = build_answer(reply, registry)
-            logger.info("Ask answered%s: %s, %d datasets, %d rounds, %.1fs, tokens %s", " (Deep Think)" if deep else "",
+            logger.info("Ask answered%s: %s, %d datasets, %d rounds, %.1fs, tokens %s", " (Take More Time)" if deep else "",
                         answer["status"], len(registry.datasets), round_number, time.monotonic() - started, usage)
             return answer
         raise AskFailed(f"The answer stopped early ({response.stop_reason})")

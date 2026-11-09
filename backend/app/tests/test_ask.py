@@ -114,7 +114,7 @@ class AskTests(unittest.TestCase):
         # Medium by default
         _, client = self.run_with([final(payload)], question)
         self.assertEqual(client.requests[0]["output_config"]["effort"], "medium")
-        # Deep Think: high effort, more time, and not the usual answer from the cache
+        # Take More Time: high effort, more time, and not the usual answer from the cache
         deep_client = FakeClient([final(payload)])
         with mock.patch.object(ask_service, "_client", deep_client):
             earlier, saved = ask_service.prepare_question(question, None, deep=True)
