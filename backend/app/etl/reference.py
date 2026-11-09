@@ -40,7 +40,8 @@ def _date(value: str) -> Optional[date]:
 
 def parse_file(text_: str, name: str, config: dict) -> List[dict]:
     """The file's fact topics, each with its facts in order. Sections that aren't fact topics (a
-    heading without a "- kind:" line, such as a number table) are skipped."""
+    heading without a "- kind:" line, such as a number table) are skipped, but a fact with a
+    source in one stops the load, since it would never reach the Ask."""
     topics, topic, fact = [], None, None
     lines = text_.split("\n")
 
@@ -56,6 +57,10 @@ def parse_file(text_: str, name: str, config: dict) -> List[dict]:
                 topics.append(topic)
             continue
         if topic is None:
+            # A sourced fact under a heading that isn't a topic would otherwise be skipped silently
+            field = FACT_FIELD.match(line)
+            if field and field.group(1) == "source":
+                raise problem(number, "a fact with a source is under a heading that isn't a topic (## slug: Title)")
             continue
         field = TOPIC_FIELD.match(line)
         if field and not topic["facts"] and field.group(1) in TOPIC_FIELDS:
@@ -77,6 +82,9 @@ def parse_file(text_: str, name: str, config: dict) -> List[dict]:
             # Anything else after a fact ends it, so a stray line can't join a statement
             fact = None
 
+    for t in topics:
+        if "kind" not in t and any(f.get("source") for f in t["facts"]):
+            raise problem(t["line"], f"topic {t['slug']} has facts with sources but no kind")
     facts_topics = [t for t in topics if "kind" in t]
     for t in facts_topics:
         if t["kind"] not in config["kinds"]:

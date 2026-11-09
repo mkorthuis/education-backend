@@ -95,7 +95,15 @@ class ReferenceParseTests(unittest.TestCase):
         topics = reference.read_library(CONFIG)
         self.assertGreater(len(topics), 150)
         self.assertGreater(sum(len(t["facts"]) for t in topics), 1500)
+        # Every file in the library contributes topics
+        self.assertEqual({t["file"] for t in topics}, set(CONFIG["files"]))
         self.assertEqual(len({t["slug"] for t in topics}), len(topics))
+
+    def test_sourced_facts_outside_a_topic_stop_the_load(self):
+        for heading in ("## How the Taxes and Aid Work", "## bullying-duties: What Schools Must Do About Bullying\n\n- question_type: rules"):
+            text_ = SAMPLE.replace("## bullying-duties: What Schools Must Do About Bullying\n\n- kind: rule\n- question_type: rules", heading)
+            with self.assertRaises(ValueError):
+                reference.parse_file(text_, "sample.md", CONFIG)
 
 
 class ReferenceDatabaseTests(unittest.TestCase):

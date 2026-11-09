@@ -2020,7 +2020,7 @@ Strategy types 5 (what the site's numbers and terms mean) and 6 (how New Hampshi
 
 - kind: how_it_works
 - question_type: governance_money
-- description: The per-pupil amounts the state uses as the "cost of an adequate education," and the extra amounts for some students.
+- description: The per-pupil amounts the state uses as the "cost of an adequate education," and the extra amounts for some students, as written in law and the rates in use this year.
 
 1. New Hampshire law sets the cost of an opportunity for an adequate education at $4,100 per pupil in average daily membership in residence (ADMR), the "base adequacy" amount, for the biennium beginning July 1, 2023, adjusted under RSA 198:40-d.
    - citation: RSA 198:40-a, I and II(a)
@@ -2054,6 +2054,12 @@ Strategy types 5 (what the site's numbers and terms mean) and 6 (how New Hampshi
    - source: https://gc.nh.gov/rsa/html/XV/198/198-38.htm
    - as_of: 2026-11-08
    - review_by: 2027-08-15
+7. The amounts written in the law ($4,100 base and the differentiated aid above) are starting figures that are adjusted each year. For FY2027 (the 2026-27 school year), NH DOE gives the rates in use: $4,351 per pupil base, plus $2,441 for each pupil eligible for free or reduced-price meals, $2,229 for each special education pupil with an IEP and $849 for each English learner receiving English language instruction.
+   - citation: NH DOE, "FY 2027 Adequate Education Aid" explanation
+   - source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+   - as_of: 2026-11-08
+   - review_by: 2027-06-30
+   - note: the FY2028 rates replace these on July 1, 2027
 
 ## money-adequacy-grant-calculation: How a Town's Adequacy Grant Is Calculated and Paid
 

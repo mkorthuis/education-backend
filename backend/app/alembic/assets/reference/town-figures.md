@@ -298,10 +298,11 @@ FY2027 (October 1, 2026 calculation) adequacy grants:
 
 ---
 
-## How the Taxes and Aid Work (reference facts for these figures)
+## money-fy2027-aid-and-tax: School Taxes and Adequacy Aid in 2026-27 (FY2027)
 
 - kind: how_it_works
 - question_type: governance_money
+- description: This year's adequacy aid rates per pupil, the statewide education tax rate, aid for towns with low property value, when aid is estimated and paid, and how to read full value tax rates.
 
 1. The Commissioner of Revenue Administration sets the statewide education property tax rate to raise $363,000,000 a year statewide.
    - citation: RSA 76:3
