@@ -1,0 +1,24 @@
+# The reference library the Ask answers rules, terms, research and help questions from: cited facts
+# about New Hampshire schools, written as Markdown in assets/reference/ (the format is in that
+# folder's README.md) and reviewed in pull requests. Each file's fact topics are loaded: a
+# "## slug: Title" heading followed by "- kind:", "- question_type:" and "- description:" lines, then
+# numbered facts with their citation, source, as_of and review_by. Number tables and other sections
+# ("## Summary", "## Not retrieved") are skipped.
+#
+# `python -m app.etl load reference` replaces the library with the files' contents. Restart the web
+# dynos afterward: the Ask reads its topic list once per process.
+directory: "../assets/reference"
+
+# Loaded in this order, which is the topics' display order
+files:
+  - facts-rules-and-rights.md
+  - facts-terms-and-how-schools-work.md
+  - research-briefs.md
+  - programs-and-help.md
+  - district-practices.md
+  - outcomes-after-high-school.md
+  - national-comparisons.md
+  - town-figures.md
+
+kinds: [rule, term, how_it_works, research, programs, local]
+fact_fields: [citation, source, as_of, review_by, place, note]

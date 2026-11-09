@@ -49,6 +49,15 @@ class AskReference(BaseModel):
     path: str
 
 
+class AskSource(BaseModel):
+    """A page outside this site an answer relies on: a law, a study, an organization's page. Only links
+    stored with the site's reference facts and national datasets appear here."""
+    label: str
+    url: str
+    site: str
+    as_of: Optional[str] = None
+
+
 class AskResponse(BaseModel):
     # general: an explanation from general knowledge, not from the site's data
     status: Literal["answered", "partial", "no_data", "general", "declined"]
@@ -57,4 +66,5 @@ class AskResponse(BaseModel):
     tables: List[AskTable] = []
     references: List[AskReference] = []
     follow_ups: List[str] = []
+    sources: List[AskSource] = []
     cached: bool = False

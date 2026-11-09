@@ -96,8 +96,10 @@ class NaepApiTests(unittest.TestCase):
 
     def test_places_are_the_nation_the_states_dc_and_dodea(self):
         places = self.get("jurisdiction")
-        self.assertEqual(len(places), 53)
+        # NAEP's nation (national public) and the Census's (the United States) share the table
+        self.assertEqual(len(places), 54)
         self.assertEqual(places[0]["code"], "NP")
+        self.assertIn("US", [p["code"] for p in places])
         self.assertEqual({p["kind"] for p in places}, {"nation", "state", "other"})
 
     def test_results_cover_every_place_and_year(self):

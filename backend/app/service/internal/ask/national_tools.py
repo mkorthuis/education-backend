@@ -44,6 +44,19 @@ NAEP_NOTE = (
     "doesn't report it (too few students)."
 )
 
+# The outside page each kind of dataset comes from, shown as a source when an answer uses it
+NAEP_SOURCE = {"label": "NAEP Data Explorer (National Center for Education Statistics)",
+               "url": "https://www.nationsreportcard.gov/ndecore/xplore/NDE", "site": "nationsreportcard.gov", "as_of": None}
+CENSUS_SOURCE = {"label": "U.S. Census Bureau, Annual Survey of School System Finances",
+                 "url": "https://www2.census.gov/programs-surveys/school-finances/tables/", "site": "census.gov", "as_of": None}
+
+
+def _sourced(datasets: List[dict], source: dict) -> dict:
+    for item in datasets:
+        item["source"] = source
+    return {"datasets": datasets}
+
+
 REVENUE_MEASURES = {"per_pupil": "dollars", "share_of_total": "percent", "amount": "dollars"}
 REVENUE_SOURCES = ("total", "federal", "state", "local")
 REVENUE_NOTE = (
@@ -114,12 +127,12 @@ def naep_results(session: Session, subject: str, grade: int, measure: str, place
         verdicts = {t["other_jurisdiction"]["code"]: VERDICTS[t["result"]] for t in naep_service.get_comparisons(
             session, year=latest, other_year=latest, jurisdiction=FOCAL, **filters)}
         ranked = sorted(latest_rows, key=lambda r: -(r["value"] or 0))
-        return {"datasets": [dataset(
+        return _sourced([dataset(
             f"NAEP {what}, {latest}, every state", unit, ["Place", label, "New Hampshire compared with it"],
             [[_label_from(r["jurisdiction"]), value(r), "-" if r["jurisdiction"]["code"] == FOCAL else verdicts.get(r["jurisdiction"]["code"])]
              for r in ranked],
             None, NAEP_NOTE, {"New Hampshire compared with it": "number"},
-        )]}
+        )], NAEP_SOURCE)
 
     by_year: Dict[int, dict] = {}
     for naep_code, tool_code in naep_codes.items():
@@ -152,7 +165,7 @@ def naep_results(session: Session, subject: str, grade: int, measure: str, place
             ["Earlier year", *(f"{_label(chosen[c])} in {latest} is" for c in chosen)],
             [[str(year), *(against_years[year].get(c) for c in chosen)] for year in sorted(against_years)], None, NAEP_NOTE,
         ))
-    return {"datasets": datasets}
+    return _sourced(datasets, NAEP_SOURCE)
 
 
 def _label_from(place: dict) -> str:
@@ -178,10 +191,10 @@ def state_school_revenue(session: Session, places: List[str], measure: str = "pe
         rows = census_finance_service.get_summary(session)
         latest = max(r["year"] for r in rows)
         ranked = sorted((r for r in rows if r["year"] == latest), key=lambda r: -(pick(r[source]) or 0))
-        return {"datasets": [dataset(
+        return _sourced([dataset(
             f"{what}, {school_year(latest)}, every state", unit, ["Place", what], [[_label_from(r["jurisdiction"]), pick(r[source])] for r in ranked],
             None, REVENUE_NOTE,
-        )]}
+        )], CENSUS_SOURCE)
 
     summaries = {code: census_finance_service.get_summary(session, jurisdiction=code) for code in chosen}
     names = [_label(chosen[c]) for c in chosen]
@@ -217,4 +230,4 @@ def state_school_revenue(session: Session, places: List[str], measure: str = "pe
         None, REVENUE_NOTE + " Categories are the columns of Census's summary tables (Title I, property taxes and so on).",
         {f"{n}: share of its source": "percent" for n in names},
     ))
-    return {"datasets": datasets}
+    return _sourced(datasets, CENSUS_SOURCE)

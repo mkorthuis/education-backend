@@ -26,3 +26,6 @@ from .naep import (
 from .census_finance import (
     CensusRevenueItem, CensusStateRevenue, CensusStateEnrollment
 )
+from .reference import (
+    ReferenceTopic, ReferenceFact
+)
