@@ -86,8 +86,9 @@ class Settings(BaseSettings):
     # benchmark); a visitor can turn on Take More Time for high
     ASK_EFFORT: str = "medium"
     ASK_DEEP_EFFORT: str = "high"
-    # Questions answered per day across the whole site (cached repeats don't count); 0 turns asking off
-    ASK_DAILY_LIMIT: int = 500
+    # Questions answered per day across the whole site (cached repeats don't count). Unset, there's no
+    # limit (questions are still counted); a number throttles the site to that many; 0 turns asking off
+    ASK_DAILY_LIMIT: Optional[int] = None
     ASK_MAX_QUESTION_LENGTH: int = 500
     # How long an answer is reused for the same question; data reloads clear it sooner
     ASK_CACHE_TTL: int = 86400

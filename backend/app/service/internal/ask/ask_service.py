@@ -278,7 +278,7 @@ class AskUnavailable(Exception):
 
 
 class AskLimitReached(Exception):
-    """The site has answered its daily limit of questions."""
+    """The site has answered the daily limit of questions set for it."""
 
 
 class AskFailed(Exception):
@@ -287,7 +287,7 @@ class AskFailed(Exception):
 
 # -------------------- Daily limit and answer cache --------------------
 
-# The daily limit starts over at midnight in New Hampshire
+# The daily count starts over at midnight in New Hampshire
 NH_TIME = ZoneInfo("America/New_York")
 
 # Without Redis (or while it's down) each server process keeps its own count and its latest answers
@@ -379,8 +379,9 @@ def store_answer(question: str, answer: dict, earlier: Optional[List[dict]] = No
 
 
 def take_daily_slot() -> None:
-    """Count one question against today's limit for the whole site, or raise AskLimitReached."""
-    if settings.ASK_DAILY_LIMIT <= 0:
+    """Count one of today's questions for the whole site, or raise AskLimitReached past a set limit."""
+    limit = settings.ASK_DAILY_LIMIT
+    if limit is not None and limit <= 0:
         raise AskUnavailable("Asking is turned off")
     key = f"ask_daily:{datetime.now(NH_TIME).date().isoformat()}"
     try:
@@ -398,7 +399,7 @@ def take_daily_slot() -> None:
     except Exception:
         logger.warning("Couldn't count today's questions; allowing this one", exc_info=True)
         return
-    if count > settings.ASK_DAILY_LIMIT:
+    if limit is not None and count > limit:
         raise AskLimitReached()
 
 

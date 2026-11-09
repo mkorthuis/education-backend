@@ -17,7 +17,7 @@ from app.core.config import settings
 from app.core.db import engine
 from app.main import app
 from app.service.internal.ask import ask_service
-from app.service.internal.ask.ask_service import AskFailed, AskLimitReached, DatasetRegistry, build_answer
+from app.service.internal.ask.ask_service import AskFailed, AskLimitReached, AskUnavailable, DatasetRegistry, build_answer
 from app.service.internal.ask.data_tools import DataToolError, get_data
 
 
@@ -177,6 +177,16 @@ class AskTests(unittest.TestCase):
         self.run_with([response()], "Question two?")
         with self.assertRaises(AskLimitReached):
             self.run_with([response()], "Question three?")
+
+    def test_without_a_daily_limit_questions_are_counted_but_never_refused(self):
+        response = lambda: final({"status": "answered", "answer": ["Yes."], "charts": [], "tables": [], "references": [], "follow_ups": []})
+        with mock.patch.object(ask_service.settings, "ASK_DAILY_LIMIT", None):
+            for n in range(3):
+                self.run_with([response()], f"Question {n}?")
+            self.assertEqual(list(ask_service._memory_counts.values()), [3])
+        with mock.patch.object(ask_service.settings, "ASK_DAILY_LIMIT", 0):
+            with self.assertRaises(AskUnavailable):
+                self.run_with([response()], "Question four?")
 
     def test_follow_ups_bring_the_last_ten_earlier_questions_and_are_cached_with_them(self):
         response = lambda: final({"status": "answered", "answer": ["Science was 38%."], "charts": [], "tables": [], "references": [], "follow_ups": []})
