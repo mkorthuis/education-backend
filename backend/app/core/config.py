@@ -93,11 +93,4 @@ class Settings(BaseSettings):
     # How long an answer is reused for the same question; data reloads clear it sooner
     ASK_CACHE_TTL: int = 86400
 
-    # Gemini API Configuration
-    GEMINI_API_KEY: str = ""
-    GEMINI_MODEL: str = "gemini-2.0-flash"
-    GEMINI_TEMPERATURE: float = 0.7
-    GEMINI_MAX_TOKENS: Optional[int] = None
-    GEMINI_TOP_P: Optional[float] = 0.95
-
 settings = Settings() 

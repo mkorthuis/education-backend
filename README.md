@@ -35,7 +35,7 @@ The backend provides API endpoints for a variety of NH educational data categori
 - Conda (https://docs.anaconda.com/miniconda/)
 - Postgres (brew install postgresql)
 - Redis (for API caching)
-- AI Integration with multiple LLM providers (Claude, OpenAI, Gemini)
+- Claude (Anthropic API) for Ask a Question
 
 ## Development Setup
 
@@ -72,8 +72,8 @@ REDIS_DB=0
 REDIS_PASSWORD=
 REDIS_SSL=false
 
-# Optional: AI Integration (summary endpoints)
-GEMINI_API_KEY=your-gemini-api-key
+# Optional: Ask a Question (without a key, asking is off)
+ANTHROPIC_API_KEY=your-anthropic-api-key
 ```
 
 ### Running the Application
