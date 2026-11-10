@@ -5,6 +5,7 @@ Tests for Ask NH Education Facts, run against the local database with a fake Cla
 """
 import io
 import json
+from datetime import timedelta
 import time
 import unittest
 from types import SimpleNamespace
@@ -286,6 +287,14 @@ class AskTests(unittest.TestCase):
         lines = out.getvalue().splitlines()
         self.assertEqual(lines[0], "asked_at_utc,question,earlier_questions,status,cached,more_time,seconds")
         self.assertIn(",Is asking off?,,unavailable,False,False,", lines[1])
+
+    def test_questions_are_kept_for_a_year(self):
+        old = AskQuestion(question="Asked over a year ago?", deep=False, date_created=question_log._utc_now() - timedelta(days=366))
+        recent = AskQuestion(question="Asked this year?", deep=False, date_created=question_log._utc_now() - timedelta(days=364))
+        self.session.add_all([old, recent])
+        self.session.commit()
+        question_log.record_question("Asked today?", [], False)
+        self.assertEqual([row.question for row in self.logged()], ["Asked this year?", "Asked today?"])
 
     def test_a_question_is_answered_when_it_cant_be_logged(self):
         with mock.patch.object(question_log, "Session", side_effect=RuntimeError("database down")):

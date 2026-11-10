@@ -1,7 +1,8 @@
 """
 The log of questions asked on Ask a Question (the ask_question table): each question's text when it
-arrives, then its outcome. Nothing about who asked. A failure to log is logged and never stops a
-question being answered.
+arrives, then its outcome. Nothing about who asked. Questions are kept for a year, as the Privacy
+Policy says of what the site collects. A failure to log is logged and never stops a question being
+answered.
 
 Export it as CSV, newest first:
 
@@ -15,12 +16,15 @@ import sys
 from datetime import datetime, timedelta, timezone
 from typing import List, Optional
 
-from sqlmodel import Session, select
+from sqlmodel import Session, delete, select
 
 from app.core.db import engine
 from app.model.ask import AskQuestion
 
 logger = logging.getLogger(__name__)
+
+# The Privacy Policy keeps what the site collects for no more than a year
+RETENTION_DAYS = 365
 
 
 def _utc_now() -> datetime:
@@ -32,6 +36,8 @@ def record_question(question: str, earlier_questions: List[str], deep: bool) -> 
     """Logs a question as it arrives; its id, for record_outcome, or None if it couldn't be logged"""
     try:
         with Session(engine) as session:
+            # Questions older than the retention period go as new ones arrive
+            session.exec(delete(AskQuestion).where(AskQuestion.date_created < _utc_now() - timedelta(days=RETENTION_DAYS)))
             row = AskQuestion(question=question, earlier_questions=earlier_questions, deep=deep)
             session.add(row)
             session.commit()
