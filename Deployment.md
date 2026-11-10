@@ -147,6 +147,7 @@ heroku ps
    - The daily count and saved answers are in the dyno's own Redis, so each dyno counts separately and a dyno restart (Heroku restarts dynos daily) starts the count over.
    - A new answer can take more than Heroku's 30-second request limit, so it's streamed: spaces while Claude works, then the answer. Claude gets about 40 seconds an answer; the site stops waiting at 45.
    - Each answer logs its time and tokens: `heroku logs --tail | grep "Ask "`.
+   - Every question is kept in the `ask_question` table with its outcome: its text, the earlier questions on the page it may follow up, and whether it was answered, came from the saved answers, failed or was turned away. Nothing about who asked. As CSV, newest first: `heroku run --no-tty -a education-backend python -m app.service.internal.ask.question_log --days 30 > asks.csv`.
 
 5. **Troubleshooting**:
    - Check logs for startup issues

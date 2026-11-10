@@ -3,6 +3,7 @@ Tests for Ask NH Education Facts, run against the local database with a fake Cla
 
     docker exec -w /app education-backend-backend-1 python -m unittest app.tests.test_ask -v
 """
+import io
 import json
 import time
 import unittest
@@ -10,13 +11,15 @@ from types import SimpleNamespace
 from unittest import mock
 
 from fastapi.testclient import TestClient
-from sqlmodel import Session
+from sqlalchemy import delete, func, inspect
+from sqlmodel import Session, select
 
 from app.api.v1.routes import ask as ask_route
 from app.core.config import settings
 from app.core.db import engine
 from app.main import app
-from app.service.internal.ask import ask_service
+from app.model.ask import AskQuestion
+from app.service.internal.ask import ask_service, question_log
 from app.service.internal.ask.ask_service import AskFailed, AskLimitReached, AskUnavailable, DatasetRegistry, build_answer
 from app.service.internal.ask.data_tools import DataToolError, get_data
 
@@ -92,11 +95,20 @@ class AskTests(unittest.TestCase):
             patch.start()
         ask_service._memory_counts.clear()
         ask_service._memory_answers.clear()
+        # Questions the tests log are removed afterwards
+        self.last_logged = self.session.exec(select(func.max(AskQuestion.id))).one() or 0
 
     def tearDown(self):
         for patch in self.patches:
             patch.stop()
+        self.session.exec(delete(AskQuestion).where(AskQuestion.id > self.last_logged))
+        self.session.commit()
         self.session.close()
+
+    def logged(self):
+        """The questions logged during the test, oldest first"""
+        with Session(engine) as session:
+            return session.exec(select(AskQuestion).where(AskQuestion.id > self.last_logged).order_by(AskQuestion.id)).all()
 
     def answer(self, question, history=None):
         """As the route answers: a saved answer, or a new one within the daily limit."""
@@ -240,6 +252,49 @@ class AskTests(unittest.TestCase):
                 response = api.post(url, json={"question": "Will this fail?"})
             self.assertEqual(response.status_code, 200)
             self.assertEqual(set(response.json()), {"detail"})
+
+    def test_every_question_is_logged_with_its_outcome_and_never_who_asked(self):
+        api = TestClient(app)
+        url = f"{settings.API_V1_STR}/ask"
+        history = [{"question": "How did Concord do in math?", "answer": ["Concord was 40% in math."]}]
+        response = lambda: final({"status": "answered", "answer": ["Science was 38%."], "charts": [], "tables": [], "references": [], "follow_ups": []})
+        with mock.patch.object(ask_service, "_client", FakeClient([response()])):
+            api.post(url, json={"question": "What about science?", "history": history, "deep": True})
+        api.post(url, json={"question": "what about SCIENCE", "history": history, "deep": True})
+        with mock.patch.object(ask_service, "_client", FakeClient([reply("max_tokens")])):
+            api.post(url, json={"question": "Will this fail?"})
+        # The limit is two new answers a day here
+        api.post(url, json={"question": "Is the limit reached?"})
+        with mock.patch.object(ask_service.settings, "ASK_DAILY_LIMIT", 0):
+            api.post(url, json={"question": "Is asking off?"})
+        rows = self.logged()
+        self.assertEqual([(row.question, row.earlier_questions, row.deep, row.status, row.cached) for row in rows], [
+            ("What about science?", ["How did Concord do in math?"], True, "answered", False),
+            ("what about SCIENCE", ["How did Concord do in math?"], True, "answered", True),
+            ("Will this fail?", [], False, "failed", False),
+            ("Is the limit reached?", [], False, "limit", False),
+            ("Is asking off?", [], False, "unavailable", False),
+        ])
+        self.assertIsNotNone(rows[0].seconds)
+        self.assertIsNone(rows[1].seconds)
+        # Nothing about who asked
+        columns = {column["name"] for column in inspect(engine).get_columns("ask_question")}
+        self.assertEqual(columns, {"id", "question", "earlier_questions", "deep", "cached", "status", "seconds", "date_created", "date_updated"})
+        # Exported newest first
+        out = io.StringIO()
+        self.assertGreaterEqual(question_log.export_csv(1, out), 5)
+        lines = out.getvalue().splitlines()
+        self.assertEqual(lines[0], "asked_at_utc,question,earlier_questions,status,cached,more_time,seconds")
+        self.assertIn(",Is asking off?,,unavailable,False,False,", lines[1])
+
+    def test_a_question_is_answered_when_it_cant_be_logged(self):
+        with mock.patch.object(question_log, "Session", side_effect=RuntimeError("database down")):
+            self.assertIsNone(question_log.record_question("Is the log down?", [], False))
+            question_log.record_outcome(5, "answered")
+            with mock.patch.object(ask_service, "_client", FakeClient([plain("Yes.")])):
+                response = TestClient(app).post(f"{settings.API_V1_STR}/ask", json={"question": "Is the log down?"})
+        self.assertEqual(response.json()["answer"], ["Yes."])
+        self.assertEqual(self.logged(), [])
 
     def test_answers_can_be_shown_as_they_re_written(self):
         api = TestClient(app)
