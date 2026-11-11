@@ -1272,6 +1272,7 @@ def _district_question_two(session: Session, place: dict) -> List[dict]:
 
 # -------------------- Ranking districts --------------------
 
+ORDERS = ("highest", "lowest")
 # Measures districts can be ranked on: label, unit, topic (for the page) and how to read them
 RANK_MEASURES = {
     "cost_per_student": ("Cost per student", "dollars", "spending"),
@@ -1291,6 +1292,8 @@ def rank_districts(session: Session, measure: str, order: str = "highest") -> di
     """Every public district's latest value of one measure, sorted, with each district's page."""
     if measure not in RANK_MEASURES:
         raise DataToolError(f"Unknown measure {measure}; use one of {', '.join(RANK_MEASURES)}.")
+    if order not in ORDERS:
+        raise DataToolError("Order is highest or lowest.")
     label, unit, topic = RANK_MEASURES[measure]
     names = {d.id: d.name for d in location_service.get_districts(session, is_public=True)}
     values: Dict[int, Dict[int, float]] = defaultdict(dict)  # year -> district -> value
@@ -1381,6 +1384,8 @@ def rank_schools(session: Session, measure: str, order: str = "highest", level: 
         raise DataToolError(f"Unknown measure {measure}; use one of {', '.join(SCHOOL_RANK_MEASURES)}.")
     if level not in SCHOOL_LEVELS:
         raise DataToolError(f"Unknown level {level}; use one of {', '.join(SCHOOL_LEVELS)}.")
+    if order not in ORDERS:
+        raise DataToolError("Order is highest or lowest.")
     label, unit, topic = SCHOOL_RANK_MEASURES[measure]
     level_name, in_level = SCHOOL_LEVELS[level]
     district = _place(session, "district", district_id) if district_id is not None else None

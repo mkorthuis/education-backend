@@ -140,6 +140,12 @@ class AskTests(unittest.TestCase):
         self.assertTrue(ask_service.prepare_question(question, None, deep=True)[1]["cached"])
         self.assertTrue(ask_service.prepare_question(question, None)[1]["cached"])
 
+    def test_only_the_main_tools_are_strict(self):
+        # The API compiles strict tools into one grammar and refuses it past a size limit, which no test
+        # here can reach: a new strict tool needs a real question asked first
+        strict = {tool["name"] for tool in ask_service.all_tools() if tool.get("strict")}
+        self.assertEqual(strict, {"find_places", "get_data", "list_schools", "compare_places"})
+
     def test_charts_are_asked_for_whenever_an_answer_gives_figures(self):
         self.assertIn("show them in at least one chart or table", ask_service.SYSTEM_PROMPT)
 
@@ -580,6 +586,9 @@ class AskTests(unittest.TestCase):
         self.assertTrue(all(row[2].endswith("Grade 12") for row in high["rows"]))
         with self.assertRaises(DataToolError):
             rank_schools(self.session, "cost_per_student", "highest", "all")
+        # Not a strict tool, so it checks the order itself rather than sorting the wrong way
+        with self.assertRaises(DataToolError):
+            rank_schools(self.session, "students", "descending", "all")
         # Ranked through the Ask: every school ranked can be linked to
         from app.service.internal.ask.data_tools import list_schools
         concord_high = next(school["page"] for school in list_schools(self.session, 111) if school["name"] == "Concord High School") + "/enrollment"
