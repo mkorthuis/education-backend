@@ -1122,12 +1122,16 @@ def _efa(session: Session, place: dict) -> List[dict]:
 
 QUESTION_TWO_NOTE = (
     "Ballot Question 2 (HB 1300, 2026 chapter 324): a school district adopts the school property tax cap when 60% or more of the "
-    "votes in all its towns are yes. The same question's 6% cap on SAU central-office spending is decided by the vote across each "
-    "SAU's towns, which isn't in this data."
+    "votes in all its towns are yes, and an SAU adopts the 6% cap on its central-office spending when 60% or more of the votes "
+    "across all its towns are yes. A town's own vote decides neither on its own."
 )
 UNOFFICIAL_NOTE = (
     " These results are unofficial: a district's result is final once its school board ratifies its towns' results and reports "
     "them to the Department of Revenue Administration."
+)
+SAU_LISTING_NOTE = (
+    " The SAU totals are as WMUR lists them, each town under one SAU; where that leaves a town out or puts one in the wrong SAU, "
+    "the SAU's note says so."
 )
 
 
@@ -1150,49 +1154,117 @@ def _yes_no(value: bool) -> str:
     return "Yes" if value else "No"
 
 
+def _unofficial(rows: list) -> str:
+    return "" if all(row.is_official for row in rows) else UNOFFICIAL_NOTE
+
+
+def _notes(rows: list) -> str:
+    """The rows' own notes, for a dataset's note."""
+    return "".join(f" {row.note}" for row in rows if row.note)
+
+
 def _question_two(session: Session, place: dict) -> List[dict]:
-    """Question 2 results: every district's for the state, or one district's by election. There's no
-    page for these on the site yet, so each dataset carries its source instead."""
+    """Question 2 results: for a district, its vote, its SAU's and its towns'; for the state, every
+    district's and SAU's. There's no page for these on the site yet, so each dataset carries its
+    source instead."""
     if place["level"] == "district":
-        rows = question_two_service.get_district_results(session, district_id=place["id"])
-        if not rows:
-            raise DataToolError(f"{place['name']} isn't a school district that voted on Question 2; use find_places for the school districts of the towns it serves.")
-        latest = max(row.year for row in rows)
-        result = dataset(
-            f"Question 2 results, {place['name']}", "count",
-            ["Election", "Yes votes", "No votes", "Yes share", "Adopted the school tax cap", "Official results"],
-            [[str(row.year), row.yes_votes, row.no_votes, row.yes_percentage, _yes_no(row.passed), _yes_no(row.is_official)] for row in rows],
-            None, QUESTION_TWO_NOTE + ("" if all(row.is_official for row in rows) else UNOFFICIAL_NOTE) + " For a district of several towns, its towns' votes are added together.",
-            {"Yes share": "percent"}, key="question_two",
-        )
-        result["source"] = _question_two_source(latest)
-        return [result]
-    rows = question_two_service.get_district_results(session)
-    if not rows:
+        return _district_question_two(session, place)
+    districts = question_two_service.get_district_results(session)
+    if not districts:
         return []
-    by_year: Dict[int, list] = defaultdict(list)
-    for row in rows:
-        by_year[row.year].append(row)
-    latest = max(by_year)
-    official = all(row.is_official for row in by_year[latest])
-    note = (QUESTION_TWO_NOTE + ("" if official else UNOFFICIAL_NOTE) +
-            " Votes aren't added up statewide: voters in a town with both its own school district and a cooperative district voted in each.")
+    saus = question_two_service.get_sau_results(session)
+    latest = max(row.year for row in districts)
+    districts = [row for row in districts if row.year == latest]
+    saus = [row for row in saus if row.year == latest]
+    # SAUs with a voting district but no total in the results (Hampton's SAU 90 in 2026)
+    sau_of = {d.id: _field(d, "sau_id_fk") for d in location_service.get_districts(session, is_public=True)}
+    missing = sorted({sau_of.get(row.district_id) for row in districts} - {row.sau_id for row in saus} - {None})
+    note = QUESTION_TWO_NOTE + _unofficial(districts)
+    sau_note = note + SAU_LISTING_NOTE + (f" The results have no total for SAU {', SAU '.join(map(str, missing))}." if missing else "")
     results = [
         dataset(
-            "Question 2 results, all school districts", "count",
-            ["Election", "School districts", "Adopted the school tax cap", "Didn't adopt it", "Official results"],
-            [[str(year), len(found), sum(row.passed for row in found), sum(not row.passed for row in found), _yes_no(all(row.is_official for row in found))]
-             for year, found in sorted(by_year.items())],
-            None, note,
+            f"Question 2 results statewide, {latest}", "count",
+            ["Cap", "Voted on it", "Adopted it", "Didn't adopt it", "Official results"],
+            [["School tax cap (school districts)", len(districts), sum(r.passed for r in districts), sum(not r.passed for r in districts),
+              _yes_no(all(r.is_official for r in districts))],
+             ["SAU spending cap (SAUs)", len(saus), sum(r.passed for r in saus), sum(not r.passed for r in saus), _yes_no(all(r.is_official for r in saus))]],
+            None, note + " Votes aren't added up statewide: a town's votes count toward each school district it's in, such as its own district and a cooperative district.",
         ),
         dataset(
             f"Question 2 results by school district, {latest}, highest yes share first", "count",
             ["District", "Yes votes", "No votes", "Yes share", "Adopted the school tax cap"],
             [[row.district_name, row.yes_votes, row.no_votes, row.yes_percentage, _yes_no(row.passed)]
-             for row in sorted(by_year[latest], key=lambda row: (-row.yes_percentage, row.district_name))],
+             for row in sorted(districts, key=lambda row: (-row.yes_percentage, row.district_name))],
             None, note, {"Yes share": "percent"},
         ),
+        dataset(
+            f"Question 2 results by SAU, {latest}, highest yes share first", "count",
+            ["SAU", "School districts", "Yes votes", "No votes", "Yes share", "Adopted the SAU spending cap", "Note"],
+            [[f"SAU {row.sau_id}", "; ".join(row.districts), row.yes_votes, row.no_votes, row.yes_percentage, _yes_no(row.passed), row.note or ""]
+             for row in sorted(saus, key=lambda row: (-row.yes_percentage, row.sau_id))],
+            None, sau_note, {"Yes share": "percent"},
+        ),
     ]
+    for item in results:
+        item["source"] = _question_two_source(latest)
+    return results
+
+
+def _towns_of(session: Session, result) -> tuple:
+    """The towns whose votes make up a district's total, each with its own votes, and a note. A part
+    of a town (the part of Concord in Merrimack Valley) is the district's total less its whole towns."""
+    votes = {row.town_name: row for row in question_two_service.get_town_results(session, year=result.year)}
+    rows, parts = [], []
+    for name in result.towns:
+        town = votes.get(name)
+        if town:
+            rows.append([name, town.yes_votes, town.no_votes, town.yes_percentage])
+        else:
+            parts.append(name)
+            rows.append([name, None, None, None])
+    note = ""
+    if len(parts) == 1:
+        yes = result.yes_votes - sum(row[1] for row in rows if row[1] is not None)
+        no = result.no_votes - sum(row[2] for row in rows if row[2] is not None)
+        if yes >= 0 and no >= 0 and yes + no:
+            rows[[row[0] for row in rows].index(parts[0])][1:] = [yes, no, _round(100 * yes / (yes + no))]
+            note = f" {parts[0]}: the district's total less its other towns (derived)."
+    return rows, note
+
+
+def _district_question_two(session: Session, place: dict) -> List[dict]:
+    """A district's Question 2 vote by election, its SAU's vote on the spending cap, and its towns' own votes."""
+    rows = question_two_service.get_district_results(session, district_id=place["id"])
+    if not rows:
+        raise DataToolError(f"{place['name']} isn't a school district that voted on Question 2; use find_places for the school districts of the towns it serves.")
+    latest = max(row.year for row in rows)
+    sau_id = next((_field(d, "sau_id_fk") for d in location_service.get_districts(session, is_public=True) if d.id == place["id"]), None)
+    saus = question_two_service.get_sau_results(session, sau_id=sau_id) if sau_id else []
+    town_rows, town_note = _towns_of(session, next(row for row in rows if row.year == latest))
+    note = QUESTION_TWO_NOTE + _unofficial(rows)
+    results = [dataset(
+        f"Question 2 results, {place['name']}", "count",
+        ["Election", "Yes votes", "No votes", "Yes share", "Adopted the school tax cap", "Official results"],
+        [[str(row.year), row.yes_votes, row.no_votes, row.yes_percentage, _yes_no(row.passed), _yes_no(row.is_official)] for row in rows],
+        None, note + (" For a district of several towns, its towns' votes are added together." if len(town_rows) > 1 else "") + _notes(rows)
+        + ("" if saus or not sau_id else f" The results have no total for its SAU, SAU {sau_id}."),
+        {"Yes share": "percent"}, key="question_two",
+    )]
+    if saus:
+        results.append(dataset(
+            f"Question 2 SAU spending cap, SAU {sau_id} ({'; '.join(saus[-1].districts)})", "count",
+            ["Election", "Yes votes", "No votes", "Yes share", "Adopted the SAU spending cap", "Official results"],
+            [[str(row.year), row.yes_votes, row.no_votes, row.yes_percentage, _yes_no(row.passed), _yes_no(row.is_official)] for row in saus],
+            None, note + SAU_LISTING_NOTE + _notes(saus), {"Yes share": "percent"}, key="question_two_sau",
+        ))
+    if len(town_rows) > 1:
+        results.append(dataset(
+            f"Question 2 votes by town, {latest}, {place['name']}", "count",
+            ["Town", "Yes votes", "No votes", "Yes share"], town_rows,
+            None, note + " The towns whose votes make up the district's total, as the results count them, each with its own vote, "
+            "which counts toward each school district the town is in." + town_note,
+            {"Yes share": "percent"},
+        ))
     for item in results:
         item["source"] = _question_two_source(latest)
     return results

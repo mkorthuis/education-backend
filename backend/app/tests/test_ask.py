@@ -491,8 +491,18 @@ class AskTests(unittest.TestCase):
         self.assertEqual(district["rows"], [["2026", 3160, 2092, 60.2, "Yes", "No"]])
         self.assertIsNone(district["page"])
         self.assertEqual(district["source"]["site"], "wmur.com")
-        summary, by_district = get_data(self.session, "question_two", "state")["datasets"]
-        self.assertEqual(summary["rows"], [["2026", 179, 93, 86, "No"]])
+        summary, by_district, by_sau = get_data(self.session, "question_two", "state")["datasets"]
+        self.assertEqual(summary["rows"], [["School tax cap (school districts)", 179, 93, 86, "No"], ["SAU spending cap (SAUs)", 107, 60, 47, "No"]])
+        self.assertEqual(len(by_sau["rows"]), 107)
+        self.assertIn("no total for SAU 90", by_sau["note"])
+        # A district's SAU and towns: Fall Mountain is SAU 60 on its own
+        sau, towns = get_data(self.session, "question_two", "district", fall_mountain)["datasets"][1:]
+        self.assertEqual(sau["rows"], [["2026", 3160, 2092, 60.2, "Yes", "No"]])
+        self.assertEqual(sum(row[1] for row in towns["rows"]), 3160)
+        # The part of Concord in Merrimack Valley is the district's total less its other towns
+        merrimack_valley = next(place["id"] for place in find_places(self.session, "Merrimack Valley") if place["kind"] == "district")
+        towns = get_data(self.session, "question_two", "district", merrimack_valley)["datasets"][-1]
+        self.assertIn(["Concord (the part in Merrimack Valley)", 1130, 1013, 52.7], towns["rows"])
         shares = [row[3] for row in by_district["rows"]]
         self.assertEqual(len(shares), 179)
         self.assertEqual(shares, sorted(shares, reverse=True))
