@@ -24,8 +24,8 @@ from sqlmodel import Session
 from app.core.cache import cache_service
 from app.core.config import settings
 from app.service.internal.ask.data_tools import (
-    COMPARE_MEASURES, LEVELS, MAX_COMPARE, RANK_MEASURES, TOPICS, DataToolError, compare_places, find_places, get_data, list_schools,
-    rank_districts,
+    COMPARE_MEASURES, LEVELS, MAX_COMPARE, RANK_MEASURES, SCHOOL_LEVELS, SCHOOL_RANK_MEASURES, TOPICS, DataToolError, compare_places,
+    find_places, get_data, list_schools, rank_districts, rank_schools,
 )
 from app.service.internal.ask.national_tools import (
     MAX_PLACES, NAEP_GRADES, NAEP_GROUPS, NAEP_MEASURES, NAEP_SUBJECTS, REVENUE_MEASURES, REVENUE_SOURCES, naep_results,
@@ -70,9 +70,10 @@ SYSTEM_PROMPT = f"""You answer questions from visitors to NH Education Facts (nh
 How to answer:
 - Use only figures from your tools. Look up any named district, school or town with find_places first, then call get_data for each topic and place you need. Never estimate, recall or invent a number; if the tools don't have it, say plainly that the site doesn't have that data and point to the closest page that helps.
 - A town usually has one school district with the same name; when a town belongs to more than one (or to a cooperative district), say which district you used.
-- Topics: enrollment (students, English learners, low-income students, and statewide private school students), test_scores (proficiency by year, student group and grade, and the highest level), graduation (graduation rates, dropouts and graduates' plans), spending (cost per student, also after inflation; revenue by source: local, state and federal; spending by category and by line, such as special education, transportation, administration and vocational education), staff (average teacher pay, also after inflation; starting and top salaries from a district's salary schedule; staff counts; class size), safety (truancy, bullying, harassment, suspensions and expulsions), efa (Education Freedom Account students and their estimated state cost by year, aid per student, and a district's students by town). Spending and staff are for districts and the state, not individual schools; EFAs are for the state and for districts, where a town's count is in its district's data.
+- Topics: enrollment (students, by grade too; English learners, low-income students and students with disabilities; and statewide private school students), test_scores (proficiency by year, student group and grade, and the highest level), graduation (graduation rates, dropouts and graduates' plans), spending (cost per student, also after inflation; revenue by source: local, state and federal; spending by category and by line, such as special education, transportation, administration and vocational education), balance_sheet (a district's fund balance, including unassigned fund balance, and its balance sheet: assets, liabilities and fund balance by line), staff (average teacher pay, also after inflation; starting and top salaries from a district's salary schedule; staff counts; teachers by highest degree; class size), safety (truancy, bullying, also by what it was based on and involved; harassment; suspensions and expulsions, and the incidents that led to suspensions; serious incidents such as firearms and assaults; restraints and seclusions), efa (Education Freedom Account students and their estimated state cost by year, aid per student, and a district's students by town), question_two (ballot Question 2 on the school tax cap: each school district's yes and no votes, yes share and whether it adopted the cap; for the state, every district's results and how many adopted it). Spending and staff are for districts and the state, and balance_sheet for districts only, not individual schools; EFAs and question_two are for the state and for districts, where a town's figures are in its district's data.
+- Question 2: the question_two data is about the school tax cap, which each school district adopts with 60% yes; the SAU spending cap on the same question is decided across each SAU's towns, and the site doesn't have those results. Say whether the results are official, as the data says. These results aren't on the site's pages yet: name the source (WMUR's results page) and cite the dataset as a source; for what the cap does, call look_up_reference.
 - Each dataset's note says what its figures mean; carry what matters into the answer, such as a cost being an estimate or a figure being adjusted for inflation (and into which year's dollars).
-- To compare a few places (two districts, a district and the state, several schools), use compare_places, and chart or tabulate its datasets so the places sit side by side; to rank all districts ("which districts spend the most"), use rank_districts. When a district is compared with nothing else, the state is a useful comparison.
+- To compare a few places (two districts, a district and the state, several schools), use compare_places, and chart or tabulate its datasets so the places sit side by side; to rank all districts ("which districts spend the most"), use rank_districts; to rank schools (all elementary, middle or high schools, or a district's), use rank_schools. When a district is compared with nothing else, the state is a useful comparison.
 - How New Hampshire compares with other states and the nation: naep_results has NAEP (the Nation's Report Card) reading and math results in grades 4 and 8 for every state and the national public average, 2003-2024, with NAEP's own significance tests, and New Hampshire's and the nation's results by student group; state_school_revenue has the Census Bureau's school revenue for every state, 2009-10 to 2023-24, from federal, state and local sources and the categories within them, with shares and revenue per pupil. NAEP is run by NCES (the National Center for Education Statistics), not the Census Bureau. On NAEP, call one place or year higher or lower than another only where the tool's significance tests say so, for that year or pair of years; otherwise give the scores and say the difference isn't statistically significant, or that it wasn't tested. NCES says NAEP Proficient does not represent grade-level proficiency, so never describe it as grade level; it is a higher bar than proficient on the state test, so never set the two percentages side by side as one measure. Census revenue per pupil and shares are calculated from Census figures; say so, and don't mix them with the site's cost per pupil (NH DOE's operating spending). These figures aren't on the site's pages yet: name the source (NAEP, the Census Bureau) in the answer, and give references only to site pages that relate to the question.
 - Give the latest year's figure with its year, and the change over time when it helps. Before saying a year was the highest or lowest, counting years, or saying one place was above another every year, check every row of the dataset; prefer stating the figures themselves over your own calculations. Compare like with like (a grade with the same grade, not with all grades). School years are written like 2024-25; graduation classes like "class of 2025". Comparing places is often the most useful answer (a district against the state, or two districts).
 - Start with the direct answer in the first sentence. If the site doesn't have the data, say so in the first sentence and point to the closest page. Then keep it short and plain: 1 to 4 short paragraphs, short sentences, everyday words, no jargon (where an answer first uses the word proficient, explain that it means meeting the grade-level standard; say "students with disabilities" rather than IEP/SWD). Changes in a rate are in percentage points. Don't speculate about causes the data can't show, and stay neutral on policy questions such as EFAs, budgets or school funding.
@@ -83,7 +84,7 @@ How to answer:
 - References: 1 to {MAX_REFERENCES} pages on this site where the visitor can see more, using only paths from the tools' results (the "page" fields) or these: {", ".join(FIXED_PAGES)}. Give each a short label naming the place and topic, like "Concord School District: Graduation".
 - Follow-ups: up to 3 short questions the visitor might ask next that this site can answer.
 - Rules and rights, what terms and the site's measures mean, how New Hampshire schools are run and paid for, what research says works, programs and where families can get help, and a district's own practices (kindergarten, preschool, budget votes, high school options): call look_up_reference first, and answer from the facts it returns, in plain words. Don't add rules, numbers, dates, deadlines or study findings the facts don't give; where they don't cover part of the question, say so and say who to ask (the local school district, the New Hampshire Department of Education). When a fact gives an effective date or says a rule changed recently, say so. On research, give what the studies found and what's uncertain, without taking a side. Set status to "answered" when the facts answer the question.
-- Sources: for each reference fact ("r…") and national dataset (NAEP, Census) the answer relies on, give its id and a reason: at most 15 words, for the visitor, saying what in the answer it supports, like "What cost per pupil includes and leaves out" or "The 48-hour deadline to tell both families". The visitor sees each as a link to the original page with your reason under it, so list only what the answer uses.
+- Sources: for each reference fact ("r…"), national dataset (NAEP, Census) and Question 2 dataset the answer relies on, give its id and a reason: at most 15 words, for the visitor, saying what in the answer it supports, like "What cost per pupil includes and leaves out" or "The 48-hour deadline to tell both families". The visitor sees each as a link to the original page with your reason under it, so list only what the answer uses.
 - General education questions that neither the facts nor the site's data answer (what a term means, how something works, how to help a child with reading): give a short, accurate general explanation in plain language and set status to "general". Don't state New Hampshire rules, eligibility limits, income limits, ages, dates, deadlines, costs or any other number unless it came from your tools; for those, say who to ask, such as the local school district or the New Hampshire Department of Education. When the site's data adds something useful (how many students have EFAs, say), look it up and include it.
 - Link only to pages that relate directly to the question; give no references at all rather than an unrelated page.
 - Set status to "answered" when the site's data or the reference facts answer the question, "partial" when it answers only part, "no_data" when the question asks for New Hampshire school figures the site doesn't have, "general" for a general explanation as above, and "declined" only for questions that aren't about schools or education at all, or that ask about a specific student, teacher or other private person. For declined questions, say briefly what this site can help with instead.
@@ -182,6 +183,22 @@ TOOLS = [
                 "source": {"type": "string", "enum": list(REVENUE_SOURCES)},
             },
             "required": ["places", "measure", "source"],
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "rank_schools",
+        "description": "Rank current public schools on one measure, for its latest year: all schools of one level (elementary, middle, high or all), or a district's, sorted, with each school's grades, district and page. Use for 'which elementary schools have the highest math scores' and similar.",
+        "strict": True,
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "measure": {"type": "string", "enum": list(SCHOOL_RANK_MEASURES)},
+                "order": {"type": "string", "enum": ["highest", "lowest"]},
+                "level": {"type": "string", "enum": list(SCHOOL_LEVELS)},
+                "district_id": {"type": ["integer", "null"], "description": "From find_places, to rank one district's schools; null for every district"},
+            },
+            "required": ["measure", "order", "level", "district_id"],
             "additionalProperties": False,
         },
     },
@@ -446,8 +463,8 @@ class DatasetRegistry:
 
     def add_ranking(self, result: dict) -> dict:
         self.add(result)
-        for district in result.get("districts", []):
-            self.pages.setdefault(district["page"], district["name"])
+        for place in [*result.get("districts", []), *result.get("schools", [])]:
+            self.pages.setdefault(place["page"], place["name"])
         return result
 
     def add_places(self, places: List[dict]) -> List[dict]:
@@ -484,6 +501,11 @@ def run_tool(session: Session, registry: DatasetRegistry, name: str, tool_input:
         # Every district in the ranking can be linked; Claude reads only the first pages, to keep it short
         registry.add_ranking(result)
         return json.dumps({"datasets": result["datasets"], "district_pages": result["districts"][:15]})
+    if name == "rank_schools":
+        result = rank_schools(session, tool_input.get("measure"), tool_input.get("order", "highest"), tool_input.get("level") or "all",
+                              tool_input.get("district_id"))
+        registry.add_ranking(result)
+        return json.dumps({"datasets": result["datasets"], "school_pages": result["schools"][:15]})
     raise DataToolError(f"Unknown tool {name}")
 
 
@@ -611,7 +633,7 @@ def build_answer(reply: dict, registry: DatasetRegistry) -> dict:
         for data in [d for d in registry.datasets.values() if d["page"]][:3]:
             if data["page"] not in [r["path"] for r in references]:
                 references.append({"label": data["title"], "path": data["page"]})
-    # Outside sources: only those the tools returned (reference facts, national datasets), never a link
+    # Outside sources: only those the tools returned (reference facts, national and Question 2 datasets), never a link
     # Claude wrote. Each cited one carries Claude's reasons, shown under the link; a dataset's source
     # added because a chart or table shows it, without being cited, has none.
     cited = [(item.get("id"), item.get("reason")) for item in reply.get("sources", []) if isinstance(item, dict)]

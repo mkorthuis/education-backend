@@ -8,11 +8,14 @@ the server (Claude only names which dataset to show), so their numbers always co
 database.
 """
 from collections import defaultdict
+from functools import lru_cache
 from typing import Callable, Dict, List, Optional
+from urllib.parse import urlparse
 
 from fastapi import HTTPException
 from sqlmodel import Session
 
+from app.etl.core import load_config
 from app.service.inflation import in_dollars_of
 from app.service.public.assessment_service import assessment_service
 from app.service.public.class_size_service import class_size_service
@@ -20,14 +23,17 @@ from app.service.public.education_freedom_account_service import education_freed
 from app.service.public.enrollment_service import enrollment_service
 from app.service.public.finance_service import finance_service
 from app.service.public.location_service import location_service
+from app.service.public.measurement_service import measurement_service
 from app.service.public.outcome_service import outcome_service
+from app.service.public.question_two_service import question_two_service
 from app.service.public.safety_service import safety_service
 from app.service.public.staff_service import staff_service
 
-TOPICS = ["enrollment", "test_scores", "graduation", "spending", "staff", "safety", "efa"]
+TOPICS = ["enrollment", "test_scores", "graduation", "spending", "balance_sheet", "staff", "safety", "efa", "question_two"]
 LEVELS = ["state", "district", "school"]
 
-# Topics each level has, with the site page that shows them
+# Topics each level has, with the site page that shows them. Question 2 has no page yet, so its
+# datasets name their source instead.
 STATE_PAGES = {
     "enrollment": "/state/enrollment",
     "test_scores": "/state/academic",
@@ -42,6 +48,7 @@ DISTRICT_SECTIONS = {
     "test_scores": "academic",
     "graduation": "outcomes",
     "spending": "financials",
+    "balance_sheet": "financials/balance-sheet",
     "staff": "staff",
     "safety": "safety",
     "efa": "efa",
@@ -106,6 +113,27 @@ PUBLIC_ENROLLMENT_TYPES = {
     "Interstate Schools": "Interstate schools",
 }
 PRIVATE_ENROLLMENT_TYPE = "Nonpublic Schools"
+GRADE_YEARS = 11  # students by grade covers the latest year and the ten before it
+# NH DOE's school profile measure for the share of students with disabilities (with an IEP)
+DISABILITY_MEASURE = "Students with Disability (%)"
+
+# Serious incidents from the School Safety Data Collection, as the Safety pages name them
+INCIDENTS = {
+    "Aggravated Felonious Sexual Assaults": "Aggravated sexual assault",
+    "Arsons": "Arson",
+    "Firearms Incidents Including More Than One Type of Weapon or Firearm": "Firearms: more than one type",
+    "Firearms Possessions or Sales": "Firearm possession or sale",
+    "First Degree Assaults": "First-degree assault",
+    "Handgun Incidents": "Firearms: handgun",
+    "Homicides": "Homicide",
+    "Other Firearms Incidents": "Firearms: other",
+    "Rifles/ Shotguns Incidents": "Firearms: rifle or shotgun",
+    "Robberies": "Robbery",
+}
+DEGREES = {"Bachelor": "Bachelor's", "Masters": "Master's", "Beyond Masters": "Beyond master's", "None": "No degree reported"}
+# Years whose degree counts add up to far more teachers than the staffing report can't be compared
+# with (2011-12 statewide), so they're left out, as on the Staff page
+MAX_DEGREE_COUNT_RATIO = 1.25
 
 
 # Revenue sources as the site groups them, by the DOE-25 entry type's super category
@@ -145,6 +173,10 @@ SUPPORT_LINES = {
     "Business": "Business Services",
 }
 LINE_YEARS = 11  # spending by line covers the latest year and the ten before it
+# The balance sheet's parts, by the DOE-25 entry type's super category
+BALANCE_SECTIONS = {"Assets": "Assets", "Liabilities": "Liabilities", "Fund Equity": "Fund balance"}
+UNASSIGNED = "Unassigned Fund Balance"
+UNASSIGNED_RETAINED = "Unassigned Fund Balance Retained"
 
 
 class DataToolError(Exception):
@@ -166,8 +198,8 @@ def _field(row, name):
 
 
 def _grade_span(school) -> Optional[str]:
-    """A school's grades as "K to 5", or None when it lists none."""
-    grades = [g.name for g in (school.grades or [])]
+    """A school's grades as "Kindergarten to Grade 5", or None when it lists none."""
+    grades = [g.name for g in sorted(school.grades or [], key=lambda g: g.id)]
     return f"{grades[0]} to {grades[-1]}" if grades else None
 
 
@@ -278,17 +310,19 @@ def _place(session: Session, level: str, place_id: Optional[int]) -> dict:
     return {"level": "school", "id": place_id, "name": schools[place_id].name, "district_id": _field(schools[place_id], "district_id_fk")}
 
 
-def page_for(place: dict, topic: str) -> str:
+def page_for(place: dict, topic: str) -> Optional[str]:
+    """The site page showing a topic for a place, or None when no page shows it."""
     if place["level"] == "state":
-        return STATE_PAGES[topic]
-    sections = DISTRICT_SECTIONS if place["level"] == "district" else SCHOOL_SECTIONS
-    return f"/{place['level']}/{place['id']}/{sections[topic]}"
+        return STATE_PAGES.get(topic)
+    section = (DISTRICT_SECTIONS if place["level"] == "district" else SCHOOL_SECTIONS).get(topic)
+    return f"/{place['level']}/{place['id']}/{section}" if section else None
 
 
 # -------------------- Topics --------------------
 
 def _enrollment(session: Session, place: dict) -> List[dict]:
     page = page_for(place, "enrollment")
+    by_grade: Dict[int, Dict[tuple, float]] = defaultdict(lambda: defaultdict(float))  # year -> (grade id, name) -> students
     if place["level"] == "state":
         by_year: Dict[int, dict] = defaultdict(lambda: defaultdict(int))
         private: Dict[int, int] = defaultdict(int)
@@ -296,6 +330,8 @@ def _enrollment(session: Session, place: dict) -> List[dict]:
             kind = PUBLIC_ENROLLMENT_TYPES.get(row["enrollment_type"]["name"])
             if kind:
                 by_year[row["year"]][kind] += row["enrollment"] or 0
+                if row.get("grade"):
+                    by_grade[row["year"]][(row["grade"]["id"], row["grade"]["name"])] += row["enrollment"] or 0
             elif row["enrollment_type"]["name"] == PRIVATE_ENROLLMENT_TYPE:
                 private[row["year"]] += row["enrollment"] or 0
         kinds = list(PUBLIC_ENROLLMENT_TYPES.values())
@@ -314,11 +350,16 @@ def _enrollment(session: Session, place: dict) -> List[dict]:
             page,
             "Every public school student, preschool to grade 12, counted on October 1, as on the statewide Enrollment page.",
             key="students",
-        ), *_student_needs(session, place)]
+        ), *_student_needs(session, place),
+            *_grades(by_grade, place, page, "Every public school student, counted on October 1, as in the statewide Enrollment page's grade table."),
+            *_disabilities(session, place)]
     if place["level"] == "district":
         totals: Dict[int, float] = defaultdict(float)
         for row in enrollment_service.get_town_enrollments(session, district_id=place["id"]):
             totals[_field(row, "year")] += _field(row, "enrollment") or 0
+            grade = _field(row, "grade")
+            if grade:
+                by_grade[_field(row, "year")][(_field(grade, "id"), _field(grade, "name"))] += _field(row, "enrollment") or 0
         return [dataset(
             f"Public school students living in the {place['name']} district's towns", "count",
             ["School year", "Students"],
@@ -326,16 +367,72 @@ def _enrollment(session: Session, place: dict) -> List[dict]:
             page,
             "Students who live in the district's towns, wherever they attend public school, as on the district's Enrollment page.",
             key="students",
-        ), *_student_needs(session, place)]
+        ), *_student_needs(session, place),
+            *_grades(by_grade, place, page, "Students who live in the district's towns, wherever they attend public school, counted on October 1."),
+            *_disabilities(session, place)]
     totals = defaultdict(float)
     for row in enrollment_service.get_school_enrollments(session, school_id=place["id"]):
         totals[_field(row, "year")] += _field(row, "enrollment") or 0
+        grade = _field(row, "grade")
+        if grade:
+            by_grade[_field(row, "year")][(_field(grade, "id"), _field(grade, "name"))] += _field(row, "enrollment") or 0
     return [dataset(
         f"Students at {place['name']} (October 1)", "count",
         ["School year", "Students"],
         [[school_year(year), round(totals[year])] for year in sorted(totals)],
         page, key="students",
-    ), *_student_needs(session, place)]
+    ), *_student_needs(session, place),
+        *_grades(by_grade, place, page, "Students at the school, counted on October 1."),
+        *_disabilities(session, place)]
+
+
+def _grades(by_grade: Dict[int, Dict[tuple, float]], place: dict, page: str, note: str) -> List[dict]:
+    """Students by grade: each grade over the latest years, and the latest year against ten years before."""
+    years = sorted(year for year in by_grade if any(by_grade[year].values()))[-GRADE_YEARS:]
+    if not years:
+        return []
+    grades = sorted({grade for year in years for grade, students in by_grade[year].items() if students})
+    names = [name for _, name in grades]
+    latest, earlier = years[-1], years[0]
+
+    def count(year: int, grade: tuple) -> Optional[int]:
+        return round(by_grade[year][grade]) if grade in by_grade[year] else None
+    rows = [[name, count(latest, grade), count(earlier, grade)] for grade, name in zip(grades, names)]
+    rows.append(["All grades", sum(row[1] or 0 for row in rows), sum(row[2] or 0 for row in rows)])
+    return [
+        dataset(
+            f"Students by grade and year, {place['name']}", "count", ["School year", *names],
+            [[school_year(year), *(count(year, grade) for grade in grades)] for year in years], page, note, key="grades",
+        ),
+        dataset(
+            f"Students by grade, {school_year(latest)}, {place['name']}", "count",
+            ["Grade", "Students", f"Students in {school_year(earlier)}"], rows, page, note,
+        ),
+    ]
+
+
+def _disabilities(session: Session, place: dict) -> List[dict]:
+    """The share of students with disabilities (with an IEP) by year, from NH DOE's school profiles."""
+    types = _once(session, "measurement_types", lambda: {t.name: t.id for t in measurement_service.get_measurement_types(session)})
+    if DISABILITY_MEASURE not in types:
+        return []
+    type_id = types[DISABILITY_MEASURE]
+    if place["level"] == "state":
+        rows = measurement_service.get_state_measurements(session, measurement_type_id=type_id)
+        page = STATE_PAGES["efa"]
+        note = ("Students with an IEP (an individualized education program for a disability) as a share of all students. "
+                "The data has no statewide count, so this is the districts' shares averaged, weighted by enrollment, as on the statewide EFA page.")
+    else:
+        rows = measurement_service.get_measurements(session, measurement_type_id=type_id, **{f"{place['level']}_id": place["id"]})
+        page = page_for(place, "enrollment")
+        note = "Students with an IEP (an individualized education program for a disability) as a share of the students enrolled, from NH DOE's school profiles."
+    values = {_field(row, "year"): _field(row, "field") for row in rows if _field(row, "field") is not None}
+    if not values:
+        return []
+    return [dataset(
+        f"Students with disabilities, {place['name']}", "percent", ["School year", "Share of students"],
+        [[school_year(year), _round(values[year])] for year in sorted(values)], page, note, key="disabilities",
+    )]
 
 
 def _student_needs(session: Session, place: dict) -> List[dict]:
@@ -643,6 +740,61 @@ def _money(session: Session, place: dict, page: str) -> List[dict]:
     return results
 
 
+def _balance_sheet(session: Session, place: dict) -> List[dict]:
+    """A district's DOE-25 balance sheet: fund balance by year, and every line in the latest two years."""
+    if place["level"] != "district":
+        raise DataToolError("Balance sheets are reported for districts, not the state or individual schools; ask for a district.")
+    page = page_for(place, "balance_sheet")
+    types = _once(session, "balance_types", lambda: {t.id: t for t in finance_service.get_balance_entry_types(session)})
+    try:
+        reports = finance_service.get_financial_report(session, district_id=place["id"])
+    except HTTPException:
+        reports = []
+    lines: Dict[int, Dict[tuple, float]] = defaultdict(lambda: defaultdict(float))  # year -> (section, category, line) -> dollars
+    for report in reports:
+        for row in report.balance_sheets or []:
+            entry = types.get(row.balance_entry_type_id_fk)
+            if entry is None or not row.value:
+                continue
+            category = entry.category
+            section = BALANCE_SECTIONS.get(category.super_category.name if category and category.super_category else None, "Other")
+            # The DOE-25 types file the unassigned fund balance under assigned
+            part = "Unassigned" if entry.name == UNASSIGNED else category.name if category else ""
+            lines[report.doe_form.year][(section, part, entry.name)] += row.value
+    if not lines:
+        return []
+    years = sorted(lines)
+
+    def total(year: int, section: str) -> int:
+        return round(sum(value for (part, _, _), value in lines[year].items() if part == section))
+
+    def line(year: int, name: str) -> int:
+        return round(sum(value for (_, _, entry), value in lines[year].items() if entry == name))
+    note = ("From the district's DOE-25 balance sheet at the end of the school year (June 30), all funds added together as on the "
+            "site's Balance Sheet tab. Fund balance is what's left after liabilities, much of it set aside for a purpose; the unassigned "
+            "fund balance is the part not set aside for anything. Assets and liabilities include what the district's funds owe each other "
+            "(interfund), which can be large in some years. Not adjusted for inflation.")
+    results = [dataset(
+        f"Fund balance by year, {place['name']}", "dollars",
+        ["School year", "Unassigned fund balance", "Unassigned fund balance retained", "Total fund balance", "Total assets", "Total liabilities"],
+        [[school_year(year), line(year, UNASSIGNED), line(year, UNASSIGNED_RETAINED), total(year, "Fund balance"), total(year, "Assets"),
+          total(year, "Liabilities")] for year in years],
+        page, note + ' "Unassigned fund balance retained" is the DOE-25 line of that name, under committed fund balance.', key="fund_balance",
+    )]
+    latest, previous = years[-1], (years[-2] if len(years) > 1 else None)
+    order = list(BALANCE_SECTIONS.values())
+    keys = sorted(set(lines[latest]) | set(lines[previous] if previous else ()),
+                  key=lambda key: (order.index(key[0]) if key[0] in order else len(order), key[1], key[2]))
+    results.append(dataset(
+        f"Balance sheet, end of {school_year(latest)}, {place['name']}", "dollars",
+        ["Line", "Section", f"End of {school_year(latest)}", *([f"End of {school_year(previous)}"] if previous else [])],
+        [[name, f"{section}: {category}" if category else section, round(lines[latest].get((section, category, name), 0)),
+          *([round(lines[previous].get((section, category, name), 0))] if previous else [])] for section, category, name in keys],
+        page, note,
+    ))
+    return results
+
+
 def _staff(session: Session, place: dict) -> List[dict]:
     if place["level"] == "school":
         raise DataToolError("Staff figures are reported for districts and the state, not individual schools; ask for the school's district.")
@@ -651,10 +803,12 @@ def _staff(session: Session, place: dict) -> List[dict]:
         salaries = staff_service.get_state_teacher_average_salary(session)
         staff = staff_service.get_state_staff(session)
         class_sizes = class_size_service.get_state_class_size(session)
+        degrees = staff_service.get_state_teacher_education(session)
     else:
         salaries = staff_service.get_district_teacher_average_salary(session, district_id=place["id"])
         staff = staff_service.get_district_staff(session, district_id=place["id"])
         class_sizes = class_size_service.get_district_class_size(session, district_id=place["id"])
+        degrees = staff_service.get_district_teacher_education(session, district_id=place["id"])
     results = []
     salaries = sorted((r for r in salaries if r.get("salary")), key=lambda r: r["year"])
     if salaries:
@@ -680,6 +834,7 @@ def _staff(session: Session, place: dict) -> List[dict]:
             [[school_year(year), *(_round(by_year[year].get(t)) for t in types)] for year in sorted(by_year)],
             page,
         ))
+    results.extend(_degrees(degrees, {year: values.get("Teacher") for year, values in by_year.items()}, place, page))
     size_rows = [[school_year(_field(r, "year")), _field(r, "all_grades"), _field(r, "grades_1_2"), _field(r, "grades_3_4"), _field(r, "grades_5_8")]
                  for r in sorted(class_sizes, key=lambda r: _field(r, "year"))]
     if size_rows:
@@ -688,6 +843,29 @@ def _staff(session: Session, place: dict) -> List[dict]:
             ["School year", "All grades", "Grades 1-2", "Grades 3-4", "Grades 5-8"], size_rows, page, key="class_size",
         ))
     return results
+
+
+def _degrees(rows: list, teachers: Dict[int, Optional[float]], place: dict, page: str) -> List[dict]:
+    """Teachers by highest degree, as full-time equivalents and shares, by year."""
+    by_year: Dict[int, Dict[str, float]] = defaultdict(dict)
+    for row in rows:
+        name = DEGREES.get(row["teacher_type"]["name"], row["teacher_type"]["name"])
+        by_year[row["year"]][name] = (by_year[row["year"]].get(name) or 0) + (row["value"] or 0)
+    names = [name for name in DEGREES.values() if any(name in values for values in by_year.values())]
+    out = []
+    for year in sorted(by_year):
+        total = sum(by_year[year].values())
+        if not total or (teachers.get(year) and total > teachers[year] * MAX_DEGREE_COUNT_RATIO):
+            continue
+        graduate = sum(by_year[year].get(name) or 0 for name in ("Master's", "Beyond master's"))
+        out.append([school_year(year), *(_round(by_year[year].get(name)) for name in names), _share(graduate, total)])
+    if not out:
+        return []
+    return [dataset(
+        f"Teachers by highest degree, {place['name']}", "count", ["School year", *names, "Share with a master's or more"], out, page,
+        "Full-time-equivalent teachers by their highest degree. Years whose degree counts add up to far more teachers than the staffing report are left out.",
+        {"Share with a master's or more": "percent"}, key="degrees",
+    )]
 
 
 def _salary_schedule(session: Session, place: dict, page: str) -> List[dict]:
@@ -724,22 +902,13 @@ def _salary_schedule(session: Session, place: dict, page: str) -> List[dict]:
 def _safety(session: Session, place: dict) -> List[dict]:
     page = page_for(place, "safety")
     level, place_id = place["level"], place["id"]
-    if level == "state":
-        truancy, enrollment = safety_service.get_state_truancy(session), safety_service.get_state_safety_enrollment(session)
-        bullying, harassment = safety_service.get_state_bullying(session), safety_service.get_state_harassment(session)
-        discipline = safety_service.get_state_discipline_counts(session)
-    elif level == "district":
-        truancy = safety_service.get_district_truancy(session, district_id=place_id)
-        enrollment = safety_service.get_district_safety_enrollment(session, district_id=place_id)
-        bullying = safety_service.get_district_bullying(session, district_id=place_id)
-        harassment = safety_service.get_district_harassment(session, district_id=place_id)
-        discipline = safety_service.get_district_discipline_counts(session, district_id=place_id)
-    else:
-        truancy = safety_service.get_school_truancy(session, school_id=place_id)
-        enrollment = safety_service.get_school_safety_enrollment(session, school_id=place_id)
-        bullying = safety_service.get_school_bullying(session, school_id=place_id)
-        harassment = safety_service.get_school_harassment(session, school_id=place_id)
-        discipline = safety_service.get_school_discipline_counts(session, school_id=place_id)
+    # Each safety report for the place: the service's state_, district_ or school_ method of that name
+    where = {} if level == "state" else {f"{level}_id": place_id}
+
+    def report(name: str) -> List[dict]:
+        return getattr(safety_service, f"get_{level}_{name}")(session, **where)
+    truancy, enrollment, bullying, harassment = report("truancy"), report("safety_enrollment"), report("bullying"), report("harassment")
+    discipline = report("discipline_counts")
     students = {row["year"]: row["total_enrollment"] for row in enrollment}
     results = []
     rows = []
@@ -796,7 +965,81 @@ def _safety(session: Session, place: dict) -> List[dict]:
             [[school_year(year), *(actions[year].get(name) for name in names)] for year in sorted(actions)],
             page, "Students who received at least one suspension, or were expelled, during the year.",
         ))
-    return results
+    results.extend(_by_kind(
+        report("discipline_incidents"), "incident_type", students, None,
+        f"Incidents that led to a suspension, by kind, {place['name']}", page,
+        "Incidents schools reported that resulted in a suspension, by the state's kinds.",
+    ))
+    results.extend(_by_kind(
+        report("bullying_classifications"), "classification_type", students, None,
+        f"Confirmed bullying incidents by what they were based on, {place['name']}", page,
+        "Confirmed bullying incidents by the basis schools reported; an incident can have more than one.",
+    ))
+    results.extend(_by_kind(
+        report("bullying_impacts"), "impact_type", students, None,
+        f"Confirmed bullying incidents by what they involved, {place['name']}", page,
+        "Confirmed bullying incidents by what schools reported they involved; an incident can involve more than one.",
+    ))
+    return results + _serious_incidents(report("safety"), students, place, page) + _restraint(report("restraint"), report("seclusion"), students, place, page)
+
+
+def _by_kind(rows: List[dict], kind: str, students: Dict[int, int], labels: Optional[Dict[str, str]], title: str, page: str, note: str) -> List[dict]:
+    """Counts of one safety report by kind and year: rows are kinds, columns the years the place
+    reported to the state (zero where it reported none of a kind)."""
+    counts: Dict[str, Dict[int, float]] = defaultdict(lambda: defaultdict(float))
+    for row in rows:
+        name = row[kind]["name"]
+        counts[(labels or {}).get(name, name)][row["year"]] += row.get("count") or 0
+    years = sorted(set(students) | {year for values in counts.values() for year in values})
+    if not counts:
+        return []
+    order = sorted(counts, key=lambda name: (-sum(counts[name].values()), name))
+    return [dataset(
+        title, "count", ["Kind", *(school_year(year) for year in years)],
+        [[name, *(round(counts[name].get(year, 0)) for year in years)] for name in order], page,
+        note + " Zero means the place reported none that year.",
+    )]
+
+
+def _serious_incidents(rows: List[dict], students: Dict[int, int], place: dict, page: str) -> List[dict]:
+    """Serious incidents (firearms, assaults, robberies and others) by year, and by kind."""
+    firearms: Dict[int, float] = defaultdict(float)
+    other: Dict[int, float] = defaultdict(float)
+    for row in rows:
+        label = INCIDENTS.get(row["safety_type"]["name"], row["safety_type"]["name"])
+        (firearms if label.startswith("Firearm") else other)[row["year"]] += row.get("count") or 0
+    if not rows:
+        return []
+    years = sorted(set(students) | set(firearms) | set(other))
+    return [
+        dataset(
+            f"Serious safety incidents by year, {place['name']}", "count",
+            ["School year", "Firearms incidents", "Other serious incidents", "All serious incidents"],
+            [[school_year(year), round(firearms[year]), round(other[year]), round(firearms[year] + other[year])] for year in years], page,
+            "Serious incidents schools reported to the state: firearms incidents, and assaults, robberies, arsons and homicides. "
+            "Zero means the place reported none that year.", key="incidents",
+        ),
+        *_by_kind(rows, "safety_type", students, INCIDENTS, f"Serious safety incidents by kind, {place['name']}", page,
+                  "Serious incidents schools reported to the state, by kind."),
+    ]
+
+
+def _restraint(restraints: List[dict], seclusions: List[dict], students: Dict[int, int], place: dict, page: str) -> List[dict]:
+    """Restraints and seclusions by year, with rates per 1,000 students."""
+    held = {row["year"]: row.get("generated") or 0 for row in restraints}
+    isolated = {row["year"]: row.get("generated") or 0 for row in seclusions}
+    years = sorted(set(held) | set(isolated))
+    if not years:
+        return []
+    return [dataset(
+        f"Restraints and seclusions, {place['name']}", "count",
+        ["School year", "Restraints", "Seclusions", "Restraints per 1,000 students", "Seclusions per 1,000 students"],
+        [[school_year(year), held.get(year), isolated.get(year), _per_thousand(held.get(year), students.get(year)),
+          _per_thousand(isolated.get(year), students.get(year))] for year in years], page,
+        "Times school staff physically held (restraint) or isolated (seclusion) a student, from the reports schools file with the state. "
+        "One student can be counted many times. Per 1,000 students enrolled.",
+        {"Restraints per 1,000 students": "number", "Seclusions per 1,000 students": "number"}, key="restraint",
+    )]
 
 
 def _efa(session: Session, place: dict) -> List[dict]:
@@ -875,6 +1118,86 @@ def _efa(session: Session, place: dict) -> List[dict]:
     return results
 
 
+# -------------------- Question 2 --------------------
+
+QUESTION_TWO_NOTE = (
+    "Ballot Question 2 (HB 1300, 2026 chapter 324): a school district adopts the school property tax cap when 60% or more of the "
+    "votes in all its towns are yes. The same question's 6% cap on SAU central-office spending is decided by the vote across each "
+    "SAU's towns, which isn't in this data."
+)
+UNOFFICIAL_NOTE = (
+    " These results are unofficial: a district's result is final once its school board ratifies its towns' results and reports "
+    "them to the Department of Revenue Administration."
+)
+
+
+@lru_cache(maxsize=1)
+def _question_two_elections() -> dict:
+    return load_config("question_two_config.yaml")["elections"]
+
+
+def _question_two_source(year: int) -> Optional[dict]:
+    """The page an election's results come from, shown as the answer's source."""
+    election = _question_two_elections().get(year)
+    if not election:
+        return None
+    host = urlparse(election["source_url"]).netloc.lower()
+    return {"label": election["source_label"], "url": election["source_url"], "site": host[4:] if host.startswith("www.") else host,
+            "as_of": str(election["as_of"])}
+
+
+def _yes_no(value: bool) -> str:
+    return "Yes" if value else "No"
+
+
+def _question_two(session: Session, place: dict) -> List[dict]:
+    """Question 2 results: every district's for the state, or one district's by election. There's no
+    page for these on the site yet, so each dataset carries its source instead."""
+    if place["level"] == "district":
+        rows = question_two_service.get_district_results(session, district_id=place["id"])
+        if not rows:
+            raise DataToolError(f"{place['name']} isn't a school district that voted on Question 2; use find_places for the school districts of the towns it serves.")
+        latest = max(row.year for row in rows)
+        result = dataset(
+            f"Question 2 results, {place['name']}", "count",
+            ["Election", "Yes votes", "No votes", "Yes share", "Adopted the school tax cap", "Official results"],
+            [[str(row.year), row.yes_votes, row.no_votes, row.yes_percentage, _yes_no(row.passed), _yes_no(row.is_official)] for row in rows],
+            None, QUESTION_TWO_NOTE + ("" if all(row.is_official for row in rows) else UNOFFICIAL_NOTE) + " For a district of several towns, its towns' votes are added together.",
+            {"Yes share": "percent"}, key="question_two",
+        )
+        result["source"] = _question_two_source(latest)
+        return [result]
+    rows = question_two_service.get_district_results(session)
+    if not rows:
+        return []
+    by_year: Dict[int, list] = defaultdict(list)
+    for row in rows:
+        by_year[row.year].append(row)
+    latest = max(by_year)
+    official = all(row.is_official for row in by_year[latest])
+    note = (QUESTION_TWO_NOTE + ("" if official else UNOFFICIAL_NOTE) +
+            " Votes aren't added up statewide: voters in a town with both its own school district and a cooperative district voted in each.")
+    results = [
+        dataset(
+            "Question 2 results, all school districts", "count",
+            ["Election", "School districts", "Adopted the school tax cap", "Didn't adopt it", "Official results"],
+            [[str(year), len(found), sum(row.passed for row in found), sum(not row.passed for row in found), _yes_no(all(row.is_official for row in found))]
+             for year, found in sorted(by_year.items())],
+            None, note,
+        ),
+        dataset(
+            f"Question 2 results by school district, {latest}, highest yes share first", "count",
+            ["District", "Yes votes", "No votes", "Yes share", "Adopted the school tax cap"],
+            [[row.district_name, row.yes_votes, row.no_votes, row.yes_percentage, _yes_no(row.passed)]
+             for row in sorted(by_year[latest], key=lambda row: (-row.yes_percentage, row.district_name))],
+            None, note, {"Yes share": "percent"},
+        ),
+    ]
+    for item in results:
+        item["source"] = _question_two_source(latest)
+    return results
+
+
 # -------------------- Ranking districts --------------------
 
 # Measures districts can be ranked on: label, unit, topic (for the page) and how to read them
@@ -886,6 +1209,7 @@ RANK_MEASURES = {
     "reading_proficiency": ("Percent proficient in reading", "percent", "test_scores"),
     "science_proficiency": ("Percent proficient in science", "percent", "test_scores"),
     "students": ("Students enrolled", "count", "enrollment"),
+    "question_two_yes_share": ("Question 2 yes share", "percent", "question_two"),
 }
 # Graduation rates for classes smaller than this swing too much from year to year to rank
 MIN_CLASS_SIZE = 20
@@ -920,6 +1244,13 @@ def rank_districts(session: Session, measure: str, order: str = "highest") -> di
             if row["above_proficient_percentage"] is not None:
                 values[row["year"]][row["district_id"]] = _round(row["above_proficient_percentage"], 0)
         note = "All tested grades. Districts the state reports only as under 10% or over 90% are left out."
+    elif measure == "question_two_yes_share":
+        unofficial = set()
+        for row in question_two_service.get_district_results(session):
+            values[row.year][row.district_id] = row.yes_percentage
+            if not row.is_official:
+                unofficial.add(row.year)
+        note = QUESTION_TWO_NOTE + (UNOFFICIAL_NOTE if unofficial and max(unofficial) == max(values) else "")
     else:
         for row in safety_service.get_district_safety_enrollment(session):
             if row["total_enrollment"]:
@@ -930,16 +1261,107 @@ def rank_districts(session: Session, measure: str, order: str = "highest") -> di
         return {"datasets": [], "districts": []}
     highest = order != "lowest"
     ranked = sorted(((names[d], v, d) for d, v in values[latest].items() if d in names), key=lambda item: item[1], reverse=highest)
+    year_text = {"graduation_rate": f"class of {latest}", "question_two_yes_share": f"{latest} election"}.get(measure, school_year(latest))
+    section = DISTRICT_SECTIONS.get(topic)
+    ranking = dataset(
+        f"{label} by district, {year_text}, {'highest' if highest else 'lowest'} first", unit,
+        ["District", label], [[name, value] for name, value, _ in ranked],
+        STATE_PAGES.get(topic), note,
+    )
+    if topic == "question_two":
+        ranking["source"] = _question_two_source(latest)
+    return {
+        "datasets": [ranking],
+        # Each district's page on this measure, for links; Question 2 has no page yet
+        "districts": [{"name": name, "page": f"/district/{district}/{section}"} for name, _, district in ranked] if section else [],
+    }
+
+
+# -------------------- Ranking schools --------------------
+
+SCHOOL_RANK_MEASURES = {
+    "math_proficiency": ("Percent proficient in math", "percent", "test_scores"),
+    "reading_proficiency": ("Percent proficient in reading", "percent", "test_scores"),
+    "science_proficiency": ("Percent proficient in science", "percent", "test_scores"),
+    "graduation_rate": ("Four-year graduation rate", "percent", "graduation"),
+    "students": ("Students enrolled", "count", "enrollment"),
+}
+# Schools by the grades they teach (grade ids: 2 is kindergarten, 3 to 14 grades 1 to 12); K-8
+# schools are elementary schools
+SCHOOL_LEVELS = {
+    "elementary": ("elementary schools", lambda low, high: low <= 4 and 5 <= high <= 10),
+    "middle": ("middle schools", lambda low, high: 7 <= low <= 9 and 10 <= high <= 11),
+    "high": ("high schools", lambda low, high: high >= 14),
+    "all": ("all schools", lambda low, high: True),
+}
+SCHOOL_LEVEL_NOTE = ("Elementary schools start by grade 2 and end between grades 3 and 8 (so K-8 schools count); middle schools "
+                     "start at grade 5, 6 or 7 and end at grade 8 or 9; high schools teach grade 12.")
+# Schools with fewer students tested than this (the state's lower bound) swing too much to rank
+MIN_TESTED = 20
+# Where the state reports only a range, as the site shows it; ranked as just inside the range
+BOUNDS = {"SCORE_UNDER_10": ("<10%", 9.5), "SCORE_OVER_90": (">90%", 90.5)}
+
+
+def rank_schools(session: Session, measure: str, order: str = "highest", level: str = "all", district_id: Optional[int] = None) -> dict:
+    """Current public schools' latest value of one measure, sorted, with each school's page; all
+    schools of one level, or a district's."""
+    if measure not in SCHOOL_RANK_MEASURES:
+        raise DataToolError(f"Unknown measure {measure}; use one of {', '.join(SCHOOL_RANK_MEASURES)}.")
+    if level not in SCHOOL_LEVELS:
+        raise DataToolError(f"Unknown level {level}; use one of {', '.join(SCHOOL_LEVELS)}.")
+    label, unit, topic = SCHOOL_RANK_MEASURES[measure]
+    level_name, in_level = SCHOOL_LEVELS[level]
+    district = _place(session, "district", district_id) if district_id is not None else None
+    districts = {d.id: d.name for d in location_service.get_districts(session, is_public=True)}
+    schools = {}
+    for school in location_service.get_schools(session, district_id=district["id"] if district else None):
+        grades = sorted(g.id for g in (school.grades or []))
+        if _field(school, "district_id_fk") in districts and grades and in_level(grades[0], grades[-1]):
+            schools[school.id] = school
+    values: Dict[int, Dict[int, tuple]] = defaultdict(dict)  # year -> school -> (shown, sort value)
+    notes = [SCHOOL_LEVEL_NOTE]
+    if measure.endswith("_proficiency"):
+        subject = {"math": 1, "reading": 2, "science": 3}[measure.split("_")[0]]
+        for row in assessment_service.get_school_assessments(session, district_id=district["id"] if district else None,
+                                                             assessment_subgroup_id=ALL_STUDENTS, assessment_subject_id=subject, grade_id=999):
+            if row["school_id"] not in schools or (row.get("total_fay_students_low") or 0) < MIN_TESTED:
+                continue
+            exception = getattr(row.get("above_proficient_percentage_exception"), "name", row.get("above_proficient_percentage_exception"))
+            if row["above_proficient_percentage"] is not None:
+                value = _round(row["above_proficient_percentage"], 0)
+                values[row["year"]][row["school_id"]] = (value, value)
+            elif exception in BOUNDS:
+                values[row["year"]][row["school_id"]] = BOUNDS[exception]
+        notes.append(f"All tested grades. Schools with fewer than {MIN_TESTED} students tested are left out; where the state reports only "
+                     "under 10% or over 90%, that's shown and ranked just inside it.")
+    elif measure == "graduation_rate":
+        for row in outcome_service.get_school_graduation_cohort(session, district_id=district["id"] if district else None):
+            if row["school_id"] in schools and row["cohort_size"] and row["cohort_size"] >= MIN_CLASS_SIZE:
+                value = _round(100 * row["graduate"] / row["cohort_size"])
+                values[row["year"]][row["school_id"]] = (value, value)
+        notes.append(f"High schools whose class had at least {MIN_CLASS_SIZE} students. Years are graduating classes.")
+    else:
+        for row in enrollment_service.get_school_enrollment_totals(session):
+            if row["school_id"] in schools and row["enrollment"]:
+                values[row["year"]][row["school_id"]] = (row["enrollment"], row["enrollment"])
+        notes.append("Students at each school on October 1, all grades.")
+    latest = max((year for year, by_school in values.items() if by_school), default=None)
+    if latest is None:
+        return {"datasets": [], "schools": []}
+    highest = order != "lowest"
+    ranked = sorted(values[latest].items(), key=lambda item: (-item[1][1] if highest else item[1][1], schools[item[0]].name))
     year_text = f"class of {latest}" if measure == "graduation_rate" else school_year(latest)
-    section = DISTRICT_SECTIONS[topic]
+    where = f" in {district['name']}" if district else ""
+    section = SCHOOL_SECTIONS[topic]
     return {
         "datasets": [dataset(
-            f"{label} by district, {year_text}, {'highest' if highest else 'lowest'} first", unit,
-            ["District", label], [[name, value] for name, value, _ in ranked],
-            STATE_PAGES[topic], note,
+            f"{label} by school, {level_name}{where}, {year_text}, {'highest' if highest else 'lowest'} first", unit,
+            ["School", "District", "Grades", label],
+            [[schools[i].name.strip(), districts[_field(schools[i], "district_id_fk")], _grade_span(schools[i]), shown] for i, (shown, _) in ranked],
+            page_for(district, topic) if district else STATE_PAGES[topic], " ".join(notes),
         )],
-        # Each district's page on this measure, for links
-        "districts": [{"name": name, "page": f"/district/{district}/{section}"} for name, _, district in ranked],
+        # Each school's page on this measure, for links
+        "schools": [{"name": schools[i].name.strip(), "page": f"/school/{i}/{section}"} for i, _ in ranked],
     }
 
 
@@ -947,15 +1369,19 @@ def rank_districts(session: Session, measure: str, order: str = "highest") -> di
 
 # What compare_places lines up for each topic: (dataset key, column, label)
 COMPARE_MEASURES = {
-    "enrollment": [("students", 1, "Students"), ("low_income", "Share of students", "Low-income share"), ("english_learners", "Share of students", "English learner share")],
+    "enrollment": [("students", 1, "Students"), ("low_income", "Share of students", "Low-income share"), ("english_learners", "Share of students", "English learner share"),
+                   ("disabilities", "Share of students", "Students with disabilities share")],
     "test_scores": [("proficiency", "Math", "Percent proficient in math"), ("proficiency", "Reading", "Percent proficient in reading"), ("proficiency", "Science", "Percent proficient in science")],
     "graduation": [("cohorts", "Graduated", "Four-year graduation rate"), ("cohorts", "Dropped out", "Dropped out"), ("plans", "Four-Year College", "Planning a four-year college")],
     "spending": [("cost", "All grades", "Cost per student"), ("revenue", "Local share", "Share of revenue from local sources"),
                  ("categories", "Special education share", "Special education share of spending")],
+    "balance_sheet": [("fund_balance", "Unassigned fund balance", "Unassigned fund balance"), ("fund_balance", "Total fund balance", "Total fund balance")],
     "staff": [("salary", "Average salary", "Average teacher salary"), ("schedule", "Starting, bachelor's", "Starting teacher salary (bachelor's)"),
-              ("class_size", "Grades 3-4", "Average class size, grades 3-4")],
-    "safety": [("truancy", "Share of students", "Share of students truant"), ("bullying", "Reports per 1,000 students", "Bullying reports per 1,000 students")],
+              ("class_size", "Grades 3-4", "Average class size, grades 3-4"), ("degrees", "Share with a master's or more", "Teachers with a master's or more")],
+    "safety": [("truancy", "Share of students", "Share of students truant"), ("bullying", "Reports per 1,000 students", "Bullying reports per 1,000 students"),
+               ("restraint", "Restraints per 1,000 students", "Restraints per 1,000 students"), ("incidents", "All serious incidents", "Serious safety incidents")],
     "efa": [("efa_students", "EFA students", "EFA students"), ("efa_students", "Share of public school students", "EFA students as a share of public school students")],
+    "question_two": [("question_two", "Yes share", "Question 2 yes share"), ("question_two", "Adopted the school tax cap", "Adopted the school tax cap")],
 }
 MAX_COMPARE = 5
 
@@ -980,7 +1406,7 @@ def compare_places(session: Session, topic: str, places: List[dict]) -> dict:
     latest_units: Dict[str, str] = {}
     for key, column, label in COMPARE_MEASURES[topic]:
         by_label: Dict[str, dict] = defaultdict(dict)
-        unit, first_column = None, None
+        unit, first_column, source = None, None, None
         for name, datasets in found:
             data = datasets.get(key)
             if not data:
@@ -990,6 +1416,8 @@ def compare_places(session: Session, topic: str, places: List[dict]) -> dict:
                 continue
             unit = unit or data["units"][data["columns"][index]]
             first_column = first_column or data["columns"][0]
+            # Data with no site page (Question 2) names its outside source instead
+            source = source or data.get("source")
             for row in data["rows"]:
                 by_label[row[0]][name] = row[index]
         if not by_label:
@@ -998,8 +1426,10 @@ def compare_places(session: Session, topic: str, places: List[dict]) -> dict:
         present = [name for name in names if any(name in values for values in by_label.values())]
         results.append(dataset(
             f"{label} by year: {', '.join(present)}", unit, [first_column, *present],
-            [[x, *(by_label[x].get(name) for name in present)] for x in labels], STATE_PAGES[topic],
+            [[x, *(by_label[x].get(name) for name in present)] for x in labels], STATE_PAGES.get(topic),
         ))
+        if source:
+            results[-1]["source"] = source
         shared = [x for x in labels if all(by_label[x].get(name) is not None for name in present)]
         if shared:
             heading = f"{label} ({shared[-1]})"
@@ -1011,8 +1441,10 @@ def compare_places(session: Session, topic: str, places: List[dict]) -> dict:
         results.append(dataset(
             f"Latest comparison: {', '.join(names)}", "number", ["Place", *columns],
             [[name, *(latest_rows[name].get(heading) for heading in columns)] for name in names if name in latest_rows],
-            STATE_PAGES[topic], "Each measure's latest year that every place has, shown in its column heading.", latest_units,
+            STATE_PAGES.get(topic), "Each measure's latest year that every place has, shown in its column heading.", latest_units,
         ))
+        if any(item.get("source") for item in results):
+            results[-1]["source"] = next(item["source"] for item in results if item.get("source"))
     return {"places": names, "datasets": results}
 
 
@@ -1021,9 +1453,11 @@ TOPIC_FUNCTIONS: Dict[str, Callable[[Session, dict], List[dict]]] = {
     "test_scores": _test_scores,
     "graduation": _graduation,
     "spending": _spending,
+    "balance_sheet": _balance_sheet,
     "staff": _staff,
     "safety": _safety,
     "efa": _efa,
+    "question_two": _question_two,
 }
 
 

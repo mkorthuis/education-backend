@@ -484,6 +484,107 @@ class AskTests(unittest.TestCase):
         self.assertEqual(answer["references"], [])
         self.assertNotIn(None, registry.pages)
 
+    def test_question_two_gives_each_district_s_vote_and_names_its_source(self):
+        from app.service.internal.ask.data_tools import compare_places, find_places, rank_districts
+        fall_mountain = next(place["id"] for place in find_places(self.session, "Fall Mountain") if place["kind"] == "district")
+        district = get_data(self.session, "question_two", "district", fall_mountain)["datasets"][0]
+        self.assertEqual(district["rows"], [["2026", 3160, 2092, 60.2, "Yes", "No"]])
+        self.assertIsNone(district["page"])
+        self.assertEqual(district["source"]["site"], "wmur.com")
+        summary, by_district = get_data(self.session, "question_two", "state")["datasets"]
+        self.assertEqual(summary["rows"], [["2026", 179, 93, 86, "No"]])
+        shares = [row[3] for row in by_district["rows"]]
+        self.assertEqual(len(shares), 179)
+        self.assertEqual(shares, sorted(shares, reverse=True))
+        self.assertTrue(all((row[3] >= 60) == (row[4] == "Yes") for row in by_district["rows"]))
+        for level, place_id in (("school", 22510), ("district", 999)):  # a school, and an academy, which didn't vote
+            with self.assertRaises(DataToolError):
+                get_data(self.session, "question_two", level, place_id)
+        ranking = rank_districts(self.session, "question_two_yes_share", "highest")
+        self.assertEqual([row[1] for row in ranking["datasets"][0]["rows"]], shares)
+        self.assertEqual(ranking["districts"], [])  # no site page to link
+        compared = compare_places(self.session, "question_two", [{"level": "district", "id": 111}, {"level": "district", "id": fall_mountain}])
+        self.assertEqual(compared["datasets"][0]["columns"], ["Election", "Concord", "Fall Mountain Regional"])
+        self.assertTrue(all(item["source"]["site"] == "wmur.com" for item in compared["datasets"]))
+        # An answer showing the results links WMUR's page as its source, and no site page
+        registry = DatasetRegistry()
+        registry.add({"datasets": [district]})
+        answer = build_answer({"status": "answered", "answer": ["..."], "references": [],
+                               "tables": [{"dataset": "d1", "title": "Question 2", "columns": ["Yes share"]}]}, registry)
+        self.assertEqual(answer["references"], [])
+        self.assertEqual([source["site"] for source in answer["sources"]], ["wmur.com"])
+
+    def test_safety_has_serious_incidents_restraints_and_bullying_by_kind(self):
+        datasets = {d["key"] or d["title"].split(",")[0]: d for d in get_data(self.session, "safety", "state")["datasets"]}
+        self.assertIn(["2021-22", 1416], [row[:2] for row in datasets["restraint"]["rows"]])
+        incidents, kinds = datasets["incidents"], datasets["Serious safety incidents by kind"]
+        self.assertTrue(all(row[1] + row[2] == row[3] for row in incidents["rows"]))
+        # The kinds add up to each year's total
+        totals = {row[0]: row[3] for row in incidents["rows"]}
+        for index, year in enumerate(kinds["columns"][1:], start=1):
+            self.assertEqual(sum(row[index] for row in kinds["rows"]), totals[year])
+        for title in ("Confirmed bullying incidents by what they were based on", "Confirmed bullying incidents by what they involved",
+                      "Incidents that led to a suspension"):
+            self.assertIn(title, datasets)
+        school = [d["title"] for d in get_data(self.session, "safety", "school", 22510)["datasets"]]
+        self.assertIn("Restraints and seclusions, Portsmouth Middle School", school)
+
+    def test_students_by_grade_add_up_and_include_students_with_disabilities(self):
+        for level, place_id in (("state", None), ("district", 111), ("school", 22510)):
+            datasets = {d["key"] or d["title"]: d for d in get_data(self.session, "enrollment", level, place_id)["datasets"]}
+            students = {row[0]: row[1] for row in datasets["students"]["rows"]}
+            for row in datasets["grades"]["rows"]:
+                self.assertEqual(sum(value or 0 for value in row[1:]), students[row[0]], (level, row[0]))
+            latest = next(d for d in datasets.values() if d["title"].startswith("Students by grade, "))
+            self.assertEqual(latest["rows"][-1][:2], ["All grades", students[latest["title"].split(", ")[1]]])
+            self.assertTrue(datasets["disabilities"]["rows"])
+        concord = {d["key"]: d for d in get_data(self.session, "enrollment", "district", 111)["datasets"] if d["key"]}
+        self.assertIn(["2022-23", 19.8], concord["disabilities"]["rows"])
+
+    def test_teacher_degrees_leave_out_years_that_count_too_many_teachers(self):
+        degrees = next(d for d in get_data(self.session, "staff", "district", 111)["datasets"] if d["key"] == "degrees")
+        # Concord's degree counts for 2014-15 to 2020-21 add up to far more teachers than it had
+        self.assertEqual([row[0] for row in degrees["rows"]], ["2022-23", "2023-24", "2024-25", "2025-26"])
+        for row in degrees["rows"]:
+            self.assertAlmostEqual(row[-1], 100 * (row[2] + row[3]) / sum(row[1:5]), delta=0.1)
+
+    def test_balance_sheets_add_up_and_are_for_districts_only(self):
+        trend, lines = get_data(self.session, "balance_sheet", "district", 111)["datasets"]
+        for row in trend["rows"]:
+            self.assertAlmostEqual(row[4] - row[5], row[3], delta=2)  # assets less liabilities is the fund balance
+        self.assertEqual(trend["rows"][-1][:2], ["2024-25", 2800000])
+        self.assertIn(["Unassigned Fund Balance", "Fund balance: Unassigned", 2800000, 3379942], lines["rows"])
+        self.assertEqual(lines["page"], "/district/111/financials/balance-sheet")
+        for level, place_id in (("state", None), ("school", 22510)):
+            with self.assertRaises(DataToolError):
+                get_data(self.session, "balance_sheet", level, place_id)
+
+    def test_schools_rank_by_level_or_district_and_can_be_linked(self):
+        from app.service.internal.ask.data_tools import rank_schools
+        ranking = rank_schools(self.session, "math_proficiency", "highest", "elementary")["datasets"][0]
+        # The state's ">90%" ranks above every percentage it reports
+        order = [{">90%": 90.5, "<10%": 9.5}.get(row[3], row[3]) for row in ranking["rows"]]
+        self.assertEqual(order, sorted(order, reverse=True))
+        self.assertFalse(any(row[2].endswith(("Grade 9", "Grade 10", "Grade 11", "Grade 12")) for row in ranking["rows"]))
+        high = rank_schools(self.session, "graduation_rate", "lowest", "high")["datasets"][0]
+        self.assertTrue(all(row[2].endswith("Grade 12") for row in high["rows"]))
+        with self.assertRaises(DataToolError):
+            rank_schools(self.session, "cost_per_student", "highest", "all")
+        # Ranked through the Ask: every school ranked can be linked to
+        from app.service.internal.ask.data_tools import list_schools
+        concord_high = next(school["page"] for school in list_schools(self.session, 111) if school["name"] == "Concord High School") + "/enrollment"
+        answer, client = self.run_with([
+            reply("tool_use", tool_use("t1", "rank_schools", {"measure": "students", "order": "highest", "level": "all", "district_id": 111})),
+            final({
+                "status": "answered", "answer": ["Concord High School is the largest."], "charts": [], "tables": [], "follow_ups": [],
+                "references": [{"label": "Concord High School: Enrollment", "path": concord_high}],
+            }),
+        ], "Which Concord school has the most students?")
+        rows = json.loads(client.requests[1]["messages"][-1]["content"][0]["content"])["datasets"][0]["rows"]
+        self.assertEqual(rows[0][:2], ["Concord High School", "Concord"])
+        self.assertTrue(all(row[1] == "Concord" for row in rows))
+        self.assertEqual(answer["references"][0]["path"], concord_high)
+
     def test_data_tools_check_places(self):
         with self.assertRaises(DataToolError):
             get_data(self.session, "staff", "school", 27010)

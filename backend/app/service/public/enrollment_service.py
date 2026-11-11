@@ -49,6 +49,15 @@ class EnrollmentService:
         enrollments = session.exec(statement).all()
         return [SchoolEnrollmentGet.from_orm(enrollment) for enrollment in enrollments]
     
+    def get_school_enrollment_totals(self, session: Session, year: Optional[int] = None) -> List[dict]:
+        """Every school's students (all grades) by year, as {school_id, year, enrollment}."""
+        statement = select(SchoolEnrollment.school_id_fk, SchoolEnrollment.year, func.sum(SchoolEnrollment.enrollment)).group_by(
+            SchoolEnrollment.school_id_fk, SchoolEnrollment.year)
+        if year is not None:
+            statement = statement.where(SchoolEnrollment.year == year)
+        return [{"school_id": school_id, "year": row_year, "enrollment": int(total or 0)}
+                for school_id, row_year, total in session.exec(statement).all()]
+
     def get_latest_school_enrollments(
         self, 
         session: Session,

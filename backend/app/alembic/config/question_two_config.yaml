@@ -13,7 +13,7 @@
 # question-two-2026-all-rows.csv keeps every town, district and SAU row as WMUR lists them.
 #
 # `python -m app.etl load question-two` loads every election below. When certified results are
-# published, replace the file, set official: true and load again.
+# published, replace the file, set official: true, update the source and load again.
 directory: "../assets/question-two"
 threshold_percent: 60
 
@@ -21,5 +21,7 @@ elections:
   2026:
     file: question-two-2026-districts.csv
     source_url: "https://www.wmur.com/article/town-district-question-2-results-nh-110926/74379244"
+    # Shown with the Ask's answers that use these results
+    source_label: "WMUR: Question 2 results by town and school district (unofficial)"
     as_of: "2026-11-09"
     official: false
