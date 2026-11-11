@@ -1,0 +1,739 @@
+town,row_type,name,yes,no,yes_percent,result
+Acworth Town,town,Acworth Town,275,184,59.9,FAIL
+Acworth Town,district,Fall Mountain Regional School District,3160,2092,60.2,PASS
+Acworth Town,sau,SAU 60,3160,2092,60.2,PASS
+Albany Town,town,Albany Town,217,114,65.6,PASS
+Albany Town,district,Albany School District,217,114,65.6,PASS
+Albany Town,sau,SAU 9,4592,2958,60.8,PASS
+Alexandria Town,town,Alexandria Town,557,275,66.9,PASS
+Alexandria Town,district,Newfound Area School District,2688,1514,64.0,PASS
+Alexandria Town,sau,SAU 4,3940,2071,65.5,PASS
+Allenstown Town,town,Allenstown Town,1252,557,69.2,PASS
+Allenstown Town,district,Allenstown School District,1252,557,69.2,PASS
+Allenstown Town,sau,SAU 4,3940,2071,65.5,PASS
+Alstead Town,town,Alstead Town,487,414,54.1,FAIL
+Alstead Town,district,Fall Mountain Regional School District,3160,2092,60.2,PASS
+Alstead Town,sau,SAU 60,3160,2092,60.2,PASS
+Alton Town,town,Alton Town,2208,952,69.9,PASS
+Alton Town,district,Alton School District,2208,952,69.9,PASS
+Alton Town,sau,SAU 72,2208,952,69.9,PASS
+Amherst Town,town,Amherst Town,3681,2810,56.7,FAIL
+Amherst Town,district,Amherst School District,3681,2810,56.7,FAIL
+Amherst Town,district,Souhegan Cooperative School District,4477,3474,56.3,FAIL
+Amherst Town,sau,SAU 39,4477,3474,56.3,FAIL
+Andover Town,town,Andover Town,604,549,52.4,FAIL
+Andover Town,district,Andover School District,604,549,52.4,FAIL
+Andover Town,sau,SAU 46,5624,3496,61.7,PASS
+Antrim Town,town,Antrim Town,757,515,59.5,FAIL
+Antrim Town,district,Contoocook Valley School District,5428,4833,52.9,FAIL
+Antrim Town,sau,SAU 1,5428,4833,52.9,FAIL
+Ashland Town,town,Ashland Town,513,366,58.4,FAIL
+Ashland Town,district,Ashland School District,513,366,58.4,FAIL
+Ashland Town,district,Pemi-Baker Regional School District,4398,4126,51.6,FAIL
+Ashland Town,sau,SAU 2,3458,2528,57.8,FAIL
+Atkinson Town,town,Atkinson Town,2689,1326,67.0,PASS
+Atkinson Town,district,Timberlane Regional School District,8952,3476,72.0,PASS
+Atkinson Town,sau,SAU 106,8952,3476,72.0,PASS
+Auburn Town,town,Auburn Town,1973,1218,61.8,PASS
+Auburn Town,district,Auburn School District,1973,1218,61.8,PASS
+Auburn Town,sau,SAU 15,7696,4184,64.8,PASS
+Barnstead Town,town,Barnstead Town,1396,633,68.8,PASS
+Barnstead Town,district,Barnstead School District,1396,633,68.8,PASS
+Barnstead Town,sau,SAU 86,1396,633,68.8,PASS
+Barrington Town,town,Barrington Town,2755,1935,58.7,FAIL
+Barrington Town,district,Barrington School District,2755,1935,58.7,FAIL
+Barrington Town,sau,SAU 74,2755,1935,58.7,FAIL
+Bartlett Town,town,Bartlett Town,920,819,52.9,FAIL
+Bartlett Town,district,Bartlett School District,920,819,52.9,FAIL
+Bartlett Town,sau,SAU 9,4592,2958,60.8,PASS
+Bath Town,town,Bath Town,349,177,66.3,PASS
+Bath Town,district,Bath School District,349,177,66.3,PASS
+Bath Town,sau,SAU 23,1993,1090,64.6,PASS
+Bedford Town,town,Bedford Town,6719,4633,59.2,FAIL
+Bedford Town,district,Bedford School District,6719,4633,59.2,FAIL
+Bedford Town,sau,SAU 25,6719,4633,59.2,FAIL
+Belmont Town,town,Belmont Town,2148,948,69.4,PASS
+Belmont Town,district,Shaker Regional School District,2848,1663,63.1,PASS
+Belmont Town,sau,SAU 80,2848,1663,63.1,PASS
+Bennington Town,town,Bennington Town,345,244,58.6,FAIL
+Bennington Town,district,Contoocook Valley School District,5428,4833,52.9,FAIL
+Bennington Town,sau,SAU 1,5428,4833,52.9,FAIL
+Benton Town,town,Benton Town,115,54,68.0,PASS
+Benton Town,district,Benton School District,115,54,68.0,PASS
+Benton Town,sau,SAU 23,1993,1090,64.6,PASS
+Berlin City,town,Berlin City,1852,1045,63.9,PASS
+Berlin City,district,Berlin School District,1852,1045,63.9,PASS
+Berlin City,sau,SAU 3,1852,1045,63.9,PASS
+Bethlehem Town,town,Bethlehem Town,771,567,57.6,FAIL
+Bethlehem Town,district,Bethlehem School District,771,567,57.6,FAIL
+Bethlehem Town,district,Profile School District,1297,1194,52.1,FAIL
+Bethlehem Town,sau,SAU 35,1545,1393,52.6,FAIL
+Boscawen Town,town,Boscawen Town,989,512,65.9,PASS
+Boscawen Town,district,Merrimack Valley School District,5020,2947,63.0,PASS
+Boscawen Town,sau,SAU 46,5624,3496,61.7,PASS
+Bow Town,town,Bow Town,2095,2120,49.7,FAIL
+Bow Town,district,Bow School District,2095,2120,49.7,FAIL
+Bow Town,sau,SAU 67,3188,2759,53.6,FAIL
+Bradford Town,town,Bradford Town,493,424,53.8,FAIL
+Bradford Town,district,Kearsarge Regional School District,4423,4594,49.1,FAIL
+Bradford Town,sau,SAU 65,4423,4594,49.1,FAIL
+Brentwood Town,town,Brentwood Town,1556,1060,59.5,FAIL
+Brentwood Town,district,Brentwood School District,1556,1060,59.5,FAIL
+Brentwood Town,district,Exeter Region Cooperative School District,9026,9558,48.6,FAIL
+Brentwood Town,sau,SAU 16,9026,9558,48.6,FAIL
+Bridgewater Town,town,Bridgewater Town,288,358,44.6,FAIL
+Bridgewater Town,district,Pasquaney School District,713,658,52.0,FAIL
+Bridgewater Town,sau,SAU 108,713,658,52.0,FAIL
+Bristol Town,town,Bristol Town,913,560,62.0,PASS
+Bristol Town,district,Newfound Area School District,2688,1514,64.0,PASS
+Bristol Town,sau,SAU 4,3940,2071,65.5,PASS
+Brookfield Town,town,Brookfield Town,332,125,72.6,PASS
+Brookfield Town,district,Governor Wentworth Regional School District,6629,3541,65.2,PASS
+Brookfield Town,sau,SAU 49,6629,3541,65.2,PASS
+Brookline Town,town,Brookline Town,1886,1064,63.9,PASS
+Brookline Town,district,Brookline School District,1886,1064,63.9,PASS
+Brookline Town,district,Hollis-Brookline Cooperative School District,4764,3038,61.1,PASS
+Brookline Town,sau,SAU 41,4764,3038,61.1,PASS
+Campton Town,town,Campton Town,951,732,56.5,FAIL
+Campton Town,district,Campton School District,951,732,56.5,FAIL
+Campton Town,district,Pemi-Baker Regional School District,4398,4126,51.6,FAIL
+Campton Town,sau,SAU 48,4094,3909,51.2,FAIL
+Canaan Town,town,Canaan Town,1022,690,59.7,FAIL
+Canaan Town,district,Mascoma Valley Regional School District,2687,2158,55.5,FAIL
+Canaan Town,sau,SAU 62,2687,2158,55.5,FAIL
+Candia Town,town,Candia Town,1448,751,65.8,PASS
+Candia Town,district,Candia School District,1448,751,65.8,PASS
+Candia Town,sau,SAU 15,7696,4184,64.8,PASS
+Canterbury Town,town,Canterbury Town,700,715,49.5,FAIL
+Canterbury Town,district,Shaker Regional School District,2848,1663,63.1,PASS
+Canterbury Town,sau,SAU 80,2848,1663,63.1,PASS
+Carroll Town,town,Carroll Town,308,113,73.2,PASS
+Carroll Town,district,White Mountains Regional School District,2548,1157,68.8,PASS
+Carroll Town,sau,SAU 36,2548,1157,68.8,PASS
+Center Harbor Town,town,Center Harbor Town,341,236,59.1,FAIL
+Center Harbor Town,district,Inter-Lakes Cooperative School District,2945,2162,57.7,FAIL
+Center Harbor Town,sau,SAU 2,3458,2528,57.8,FAIL
+Charlestown Town,town,Charlestown Town,1181,556,68.0,PASS
+Charlestown Town,district,Fall Mountain Regional School District,3160,2092,60.2,PASS
+Charlestown Town,sau,SAU 60,3160,2092,60.2,PASS
+Chatham Town,town,Chatham Town,114,51,69.1,PASS
+Chatham Town,district,Chatham School District,114,51,69.1,PASS
+Chatham Town,sau,SAU 9,4592,2958,60.8,PASS
+Chester Town,town,Chester Town,1716,980,63.6,PASS
+Chester Town,district,Chester School District,1716,980,63.6,PASS
+Chester Town,sau,SAU 82,1716,980,63.6,PASS
+Chesterfield Town,town,Chesterfield Town,1112,830,57.3,FAIL
+Chesterfield Town,district,Chesterfield School District,1112,830,57.3,FAIL
+Chesterfield Town,sau,SAU 29,6818,7450,47.8,FAIL
+Chichester Town,town,Chichester Town,834,560,59.8,FAIL
+Chichester Town,district,Chichester School District,834,560,59.8,FAIL
+Chichester Town,sau,SAU 53,6216,3461,64.2,PASS
+Claremont Town,town,Claremont Town,2507,1618,60.8,PASS
+Claremont Town,district,Claremont School District,2507,1618,60.8,PASS
+Claremont Town,sau,SAU 6,2507,1618,60.8,PASS
+Clarksville Town,town,Clarksville Town,80,40,66.7,PASS
+Clarksville Town,district,Clarksville School District,80,40,66.7,PASS
+Clarksville Town,sau,SAU 7,1317,592,69.0,PASS
+Colebrook Town,town,Colebrook Town,535,249,68.2,PASS
+Colebrook Town,district,Colebrook School District,535,249,68.2,PASS
+Colebrook Town,sau,SAU 7,1317,592,69.0,PASS
+Columbia Town,town,Columbia Town,211,79,72.8,PASS
+Columbia Town,district,Columbia School District,211,79,72.8,PASS
+Columbia Town,sau,SAU 7,1317,592,69.0,PASS
+Concord CSD City,town,Concord CSD City,8289,7497,52.5,FAIL
+Concord CSD City,district,Concord School District,8289,7497,52.5,FAIL
+Concord CSD City,sau,SAU 8,8289,7497,52.5,FAIL
+Concord MV City,town,Concord MV City,1130,1013,52.7,FAIL
+Concord MV City,district,Merrimack Valley School District,5020,2947,63.0,PASS
+Concord MV City,sau,SAU 46,5624,3496,61.7,PASS
+Conway Town,town,Conway Town,2800,1560,64.2,PASS
+Conway Town,district,Conway School District,2800,1560,64.2,PASS
+Conway Town,sau,SAU 9,4592,2958,60.8,PASS
+Cornish Town,town,Cornish Town,443,462,49.0,FAIL
+Cornish Town,district,Cornish School District,443,462,49.0,FAIL
+Cornish Town,sau,SAU 100,443,462,49.0,FAIL
+Croydon Town,town,Croydon Town,243,172,58.6,FAIL
+Croydon Town,district,Croydon School District,243,172,58.6,FAIL
+Croydon Town,sau,SAU 99,243,172,58.6,FAIL
+Dalton Town,town,Dalton Town,295,127,69.9,PASS
+Dalton Town,district,White Mountains Regional School District,2548,1157,68.8,PASS
+Dalton Town,sau,SAU 36,2548,1157,68.8,PASS
+Danbury Town,town,Danbury Town,425,154,73.4,PASS
+Danbury Town,district,Newfound Area School District,2688,1514,64.0,PASS
+Danbury Town,sau,SAU 4,3940,2071,65.5,PASS
+Danville Town,town,Danville Town,1715,425,80.1,PASS
+Danville Town,district,Timberlane Regional School District,8952,3476,72.0,PASS
+Danville Town,sau,SAU 106,8952,3476,72.0,PASS
+Deerfield Town,town,Deerfield Town,1726,902,65.7,PASS
+Deerfield Town,district,Deerfield School District,1726,902,65.7,PASS
+Deerfield Town,sau,SAU 53,6216,3461,64.2,PASS
+Deering Town,town,Deering Town,585,213,73.3,PASS
+Deering Town,district,Hillsboro-Deering Cooperative School District,2302,976,70.2,PASS
+Deering Town,sau,SAU 34,2813,1227,69.6,PASS
+Derry Town,town,Derry Town,7772,4189,65.0,PASS
+Derry Town,district,Derry Cooperative School District,7772,4189,65.0,PASS
+Derry Town,sau,SAU 10,7772,4189,65.0,PASS
+Dorchester Town,town,Dorchester Town,113,51,68.9,PASS
+Dorchester Town,district,Mascoma Valley Regional School District,2687,2158,55.5,FAIL
+Dorchester Town,sau,SAU 62,2687,2158,55.5,FAIL
+Dover Town,town,Dover Town,7879,7131,52.5,FAIL
+Dover Town,district,Dover School District,7879,7131,52.5,FAIL
+Dover Town,sau,SAU 11,7879,7131,52.5,FAIL
+Dublin Town,town,Dublin Town,420,421,49.9,FAIL
+Dublin Town,district,Contoocook Valley School District,5428,4833,52.9,FAIL
+Dublin Town,sau,SAU 1,5428,4833,52.9,FAIL
+Dummer Town,town,Dummer Town,95,37,72.0,PASS
+Dummer Town,district,Dummer School District,95,37,72.0,PASS
+Dummer Town,sau,SAU 20,1662,828,66.7,PASS
+Dunbarton Town,town,Dunbarton Town,1093,639,63.1,PASS
+Dunbarton Town,district,Dunbarton School District,1093,639,63.1,PASS
+Dunbarton Town,sau,SAU 67,3188,2759,53.6,FAIL
+Durham Town,town,Durham Town,1988,3249,38.0,FAIL
+Durham Town,district,Oyster River Coop School District,3884,4803,44.7,FAIL
+Durham Town,sau,SAU 5,3884,4803,44.7,FAIL
+East Kingston Town,town,East Kingston Town,778,511,60.4,PASS
+East Kingston Town,district,East Kingston School District,778,511,60.4,PASS
+East Kingston Town,district,Exeter Region Cooperative School District,9026,9558,48.6,FAIL
+East Kingston Town,sau,SAU 16,9026,9558,48.6,FAIL
+Easton Town,town,Easton Town,89,123,42.0,FAIL
+Easton Town,district,Lafayette Regional School District,615,750,45.1,FAIL
+Easton Town,sau,SAU 35,1545,1393,52.6,FAIL
+Eaton Town,town,Eaton Town,143,90,61.4,PASS
+Eaton Town,district,Eaton School District,143,90,61.4,PASS
+Eaton Town,sau,SAU 9,4592,2958,60.8,PASS
+Effingham Town,town,Effingham Town,598,170,77.9,PASS
+Effingham Town,district,Governor Wentworth Regional School District,6629,3541,65.2,PASS
+Effingham Town,sau,SAU 49,6629,3541,65.2,PASS
+Ellsworth Town,town,Ellsworth Town,32,16,66.7,PASS
+Ellsworth Town,district,Ellsworth School District,32,16,66.7,PASS
+Ellsworth Town,sau,SAU 48,4094,3909,51.2,FAIL
+Enfield Town,town,Enfield Town,1020,1190,46.2,FAIL
+Enfield Town,district,Mascoma Valley Regional School District,2687,2158,55.5,FAIL
+Enfield Town,sau,SAU 62,2687,2158,55.5,FAIL
+Epping Town,town,Epping Town,2280,1511,60.1,PASS
+Epping Town,district,Epping School District,2280,1511,60.1,PASS
+Epping Town,sau,SAU 14,2280,1511,60.1,PASS
+Epsom Town,town,Epsom Town,1552,775,66.7,PASS
+Epsom Town,district,Epsom School District,1552,775,66.7,PASS
+Epsom Town,sau,SAU 53,6216,3461,64.2,PASS
+Errol Town,town,Errol Town,103,52,66.5,PASS
+Errol Town,district,Errol School District,103,52,66.5,PASS
+Errol Town,sau,SAU 20,1662,828,66.7,PASS
+Exeter Town,town,Exeter Town,3460,4603,42.9,FAIL
+Exeter Town,district,Exeter School District,3460,4603,42.9,FAIL
+Exeter Town,district,Exeter Region Cooperative School District,9026,9558,48.6,FAIL
+Exeter Town,sau,SAU 16,9026,9558,48.6,FAIL
+Farmington Town,town,Farmington Town,1722,745,69.8,PASS
+Farmington Town,district,Farmington School District,1722,745,69.8,PASS
+Farmington Town,sau,SAU 61,1722,745,69.8,PASS
+Fitzwilliam Town,town,Fitzwilliam Town,707,352,66.8,PASS
+Fitzwilliam Town,district,Monadnock Regional School District,3580,2270,61.2,PASS
+Fitzwilliam Town,sau,SAU 93,3580,2270,61.2,PASS
+Francestown Town,town,Francestown Town,582,409,58.7,FAIL
+Francestown Town,district,Contoocook Valley School District,5428,4833,52.9,FAIL
+Francestown Town,sau,SAU 1,5428,4833,52.9,FAIL
+Franconia Town,town,Franconia Town,313,421,42.6,FAIL
+Franconia Town,district,Lafayette Regional School District,615,750,45.1,FAIL
+Franconia Town,district,Profile School District,1297,1194,52.1,FAIL
+Franconia Town,sau,SAU 35,1545,1393,52.6,FAIL
+Franklin City,town,Franklin City,1947,1169,62.5,PASS
+Franklin City,district,Franklin School District,1947,1169,62.5,PASS
+Franklin City,sau,SAU 18,1947,1169,62.5,PASS
+Freedom Town,town,Freedom Town,641,320,66.7,PASS
+Freedom Town,district,Freedom School District,641,320,66.7,PASS
+Freedom Town,sau,SAU 13,2271,1457,60.9,PASS
+Fremont Town,town,Fremont Town,1737,658,72.5,PASS
+Fremont Town,district,Fremont School District,1737,658,72.5,PASS
+Fremont Town,sau,SAU 83,1737,658,72.5,PASS
+Gilford Town,town,Gilford Town,2314,1773,56.6,FAIL
+Gilford Town,district,Gilford School District,2314,1773,56.6,FAIL
+Gilford Town,sau,SAU 73,2314,1773,56.6,FAIL
+Gilmanton Town,town,Gilmanton Town,1310,682,65.8,PASS
+Gilmanton Town,district,Gilmanton School District,1310,682,65.8,PASS
+Gilmanton Town,sau,SAU 79,1310,682,65.8,PASS
+Gilsum Town,town,Gilsum Town,201,151,57.1,FAIL
+Gilsum Town,district,Monadnock Regional School District,3580,2270,61.2,PASS
+Gilsum Town,sau,SAU 93,3580,2270,61.2,PASS
+Goffstown Town,town,Goffstown Town,4691,2949,61.4,PASS
+Goffstown Town,district,Goffstown School District,4691,2949,61.4,PASS
+Goffstown Town,sau,SAU 19,6570,4226,60.9,PASS
+Gorham Town,town,Gorham Town,777,359,68.4,PASS
+Gorham Town,district,Gorham Randolph Shelburne Cooperative School District,1061,536,66.4,PASS
+Gorham Town,sau,SAU 20,1662,828,66.7,PASS
+Goshen Town,town,Goshen Town,216,137,61.2,PASS
+Goshen Town,district,Goshen School District,216,137,61.2,PASS
+Goshen Town,sau,SAU 102,216,137,61.2,PASS
+Grafton Town,town,Grafton Town,446,163,73.2,PASS
+Grafton Town,district,Mascoma Valley Regional School District,2687,2158,55.5,FAIL
+Grafton Town,sau,SAU 62,2687,2158,55.5,FAIL
+Grantham Town,town,Grantham Town,976,1054,48.1,FAIL
+Grantham Town,district,Grantham School District,976,1054,48.1,FAIL
+Grantham Town,sau,SAU 75,976,1054,48.1,FAIL
+Greenfield Town,town,Greenfield Town,569,324,63.7,PASS
+Greenfield Town,district,Contoocook Valley School District,5428,4833,52.9,FAIL
+Greenfield Town,sau,SAU 1,5428,4833,52.9,FAIL
+Greenland Town,town,Greenland Town,1327,1087,55.0,FAIL
+Greenland Town,district,Greenland School District,1327,1087,55.0,FAIL
+Greenland Town,sau,SAU 50,3707,3454,51.8,FAIL
+Greenville Town,town,Greenville Town,348,348,50.0,FAIL
+Greenville Town,district,Mascenic Regional School District,1688,1515,52.7,FAIL
+Greenville Town,sau,SAU 87,1688,1515,52.7,FAIL
+Groton Town,town,Groton Town,171,89,65.8,PASS
+Groton Town,district,Pasquaney School District,713,658,52.0,FAIL
+Groton Town,sau,SAU 108,713,658,52.0,FAIL
+Hale's Location Town,town,Hale's Location Town,98,27,78.4,PASS
+Hale's Location Town,district,Hale's Location (Carroll County) School District,98,27,78.4,PASS
+Hale's Location Town,sau,SAU 97,98,27,78.4,PASS
+Hampstead Town,town,Hampstead Town,2913,1585,64.8,PASS
+Hampstead Town,district,Hampstead School District,2913,1585,64.8,PASS
+Hampstead Town,sau,SAU 55,2913,1585,64.8,PASS
+Hampton Town,town,Hampton Town,5154,3325,60.8,PASS
+Hampton Town,district,Hampton School District,5154,3325,60.8,PASS
+Hampton Town,district,Winnacunnet Cooperative School District,9848,6111,61.7,PASS
+Hampton Town,sau,SAU 21,10172,6251,61.9,PASS
+Hampton Falls Town,town,Hampton Falls Town,807,614,56.8,FAIL
+Hampton Falls Town,district,Hampton Falls School District,807,614,56.8,FAIL
+Hampton Falls Town,district,Winnacunnet Cooperative School District,9848,6111,61.7,PASS
+Hampton Falls Town,sau,SAU 21,10172,6251,61.9,PASS
+Hancock Town,town,Hancock Town,470,689,40.6,FAIL
+Hancock Town,district,Contoocook Valley School District,5428,4833,52.9,FAIL
+Hancock Town,sau,SAU 1,5428,4833,52.9,FAIL
+Hanover Town,town,Hanover Town,1773,3349,34.6,FAIL
+Hanover Town,district,Hanover School District,1773,3349,34.6,FAIL
+Hanover Town,district,Dresden School District,1773,3349,34.6,FAIL
+Hanover Town,sau,SAU 70,1773,3349,34.6,FAIL
+Harrisville Town,town,Harrisville Town,256,358,41.7,FAIL
+Harrisville Town,district,Harrisville School District,256,358,41.7,FAIL
+Harrisville Town,sau,SAU 29,6818,7450,47.8,FAIL
+Hart's Location Town,town,Hart's Location Town,19,17,52.8,FAIL
+Hart's Location Town,district,Hart's Location School District,19,17,52.8,FAIL
+Hart's Location Town,sau,SAU 9,4592,2958,60.8,PASS
+Haverhill Town,town,Haverhill Town,1112,554,66.7,PASS
+Haverhill Town,district,Haverhill Cooperative School District,1112,554,66.7,PASS
+Haverhill Town,sau,SAU 23,1993,1090,64.6,PASS
+Hebron Town,town,Hebron Town,254,211,54.6,FAIL
+Hebron Town,district,Pasquaney School District,713,658,52.0,FAIL
+Hebron Town,sau,SAU 108,713,658,52.0,FAIL
+Henniker Town,town,Henniker Town,1082,1042,50.9,FAIL
+Henniker Town,district,Henniker School District,1082,1042,50.9,FAIL
+Henniker Town,district,John Stark Regional School District,3595,2618,57.9,FAIL
+Henniker Town,sau,SAU 24,3956,2965,57.2,FAIL
+Hill Town,town,Hill Town,281,148,65.5,PASS
+Hill Town,district,Hill School District,281,148,65.5,PASS
+Hill Town,sau,SAU 103,281,148,65.5,PASS
+Hillsborough Town,town,Hillsborough Town,1717,763,69.2,PASS
+Hillsborough Town,district,Hillsboro-Deering Cooperative School District,2302,976,70.2,PASS
+Hillsborough Town,sau,SAU 34,2813,1227,69.6,PASS
+Hinsdale Town,town,Hinsdale Town,875,434,66.8,PASS
+Hinsdale Town,district,Hinsdale School District,875,434,66.8,PASS
+Hinsdale Town,sau,SAU 92,875,434,66.8,PASS
+Holderness Town,town,Holderness Town,459,711,39.2,FAIL
+Holderness Town,district,Holderness School District,459,711,39.2,FAIL
+Holderness Town,district,Pemi-Baker Regional School District,4398,4126,51.6,FAIL
+Holderness Town,sau,SAU 48,4094,3909,51.2,FAIL
+Hollis Town,town,Hollis Town,2878,1974,59.3,FAIL
+Hollis Town,district,Hollis School District,2878,1974,59.3,FAIL
+Hollis Town,district,Hollis-Brookline Cooperative School District,4764,3038,61.1,PASS
+Hollis Town,sau,SAU 41,4764,3038,61.1,PASS
+Hooksett Town,town,Hooksett Town,4275,2215,65.9,PASS
+Hooksett Town,district,Hooksett School District,4275,2215,65.9,PASS
+Hooksett Town,sau,SAU 15,7696,4184,64.8,PASS
+Hopkinton Town,town,Hopkinton Town,1787,1664,51.8,FAIL
+Hopkinton Town,district,Hopkinton School District,1787,1664,51.8,FAIL
+Hopkinton Town,sau,SAU 66,1787,1664,51.8,FAIL
+Hudson Town,town,Hudson Town,6639,3382,66.3,PASS
+Hudson Town,district,Hudson School District,6639,3382,66.3,PASS
+Hudson Town,sau,SAU 81,6639,3382,66.3,PASS
+Jackson Town,town,Jackson Town,379,307,55.2,FAIL
+Jackson Town,district,Jackson School District,379,307,55.2,FAIL
+Jackson Town,sau,SAU 9,4592,2958,60.8,PASS
+Jaffrey Town,town,Jaffrey Town,1267,1122,53.0,FAIL
+Jaffrey Town,district,Jaffrey-Rindge Cooperative School District,3088,2040,60.2,PASS
+Jaffrey Town,sau,SAU 47,3088,2040,60.2,PASS
+Jefferson Town,town,Jefferson Town,416,139,75.0,PASS
+Jefferson Town,district,White Mountains Regional School District,2548,1157,68.8,PASS
+Jefferson Town,sau,SAU 36,2548,1157,68.8,PASS
+Keene City,town,Keene City,4247,5049,45.7,FAIL
+Keene City,district,Keene School District,4247,5049,45.7,FAIL
+Keene City,sau,SAU 29,6818,7450,47.8,FAIL
+Kensington Town,town,Kensington Town,680,578,54.1,FAIL
+Kensington Town,district,Kensington School District,680,578,54.1,FAIL
+Kensington Town,district,Exeter Region Cooperative School District,9026,9558,48.6,FAIL
+Kensington Town,sau,SAU 16,9026,9558,48.6,FAIL
+Kingston Town,town,Kingston Town,2100,877,70.5,PASS
+Kingston Town,district,Sanborn Regional School District,3610,1442,71.5,PASS
+Kingston Town,sau,SAU 17,3610,1442,71.5,PASS
+Laconia City,town,Laconia City,4246,2429,63.6,PASS
+Laconia City,district,Laconia School District,4246,2429,63.6,PASS
+Laconia City,sau,SAU 30,4246,2429,63.6,PASS
+Lancaster Town,town,Lancaster Town,824,457,64.3,PASS
+Lancaster Town,district,White Mountains Regional School District,2548,1157,68.8,PASS
+Lancaster Town,sau,SAU 36,2548,1157,68.8,PASS
+Landaff Town,town,Landaff Town,159,76,67.7,PASS
+Landaff Town,district,Landaff School District,159,76,67.7,PASS
+Landaff Town,sau,SAU 35,1545,1393,52.6,FAIL
+Langdon Town,town,Langdon Town,214,101,67.9,PASS
+Langdon Town,district,Fall Mountain Regional School District,3160,2092,60.2,PASS
+Langdon Town,sau,SAU 60,3160,2092,60.2,PASS
+Lebanon Town,town,Lebanon Town,2785,3354,45.4,FAIL
+Lebanon Town,district,Lebanon School District,2785,3354,45.4,FAIL
+Lebanon Town,sau,SAU 88,2785,3354,45.4,FAIL
+Lee Town,town,Lee Town,1326,1074,55.3,FAIL
+Lee Town,district,Oyster River Coop School District,3884,4803,44.7,FAIL
+Lee Town,sau,SAU 5,3884,4803,44.7,FAIL
+Lempster Town,town,Lempster Town,356,182,66.2,PASS
+Lempster Town,district,Lempster School District,356,182,66.2,PASS
+Lempster Town,sau,SAU 71,356,182,66.2,PASS
+Lincoln Town,town,Lincoln Town,345,350,49.6,FAIL
+Lincoln Town,district,Lincoln-Woodstock Cooperative School District,685,655,51.1,FAIL
+Lincoln Town,sau,SAU 68,685,655,51.1,FAIL
+Lisbon Town,town,Lisbon Town,431,195,68.8,PASS
+Lisbon Town,district,Lisbon Regional School District,635,263,70.7,PASS
+Lisbon Town,sau,SAU 110,635,263,70.7,PASS
+Litchfield Town,town,Litchfield Town,2386,1614,59.7,FAIL
+Litchfield Town,district,Litchfield School District,2386,1614,59.7,FAIL
+Litchfield Town,sau,SAU 27,2386,1614,59.7,FAIL
+Littleton Town,town,Littleton Town,1649,841,66.2,PASS
+Littleton Town,district,Littleton School District,1649,841,66.2,PASS
+Littleton Town,sau,SAU 84,1649,841,66.2,PASS
+Londonderry Town,town,Londonderry Town,6138,5678,51.9,FAIL
+Londonderry Town,district,Londonderry School District,6138,5678,51.9,FAIL
+Londonderry Town,sau,SAU 12,6138,5678,51.9,FAIL
+Loudon Town,town,Loudon Town,1867,802,70.0,PASS
+Loudon Town,district,Merrimack Valley School District,5020,2947,63.0,PASS
+Loudon Town,sau,SAU 46,5624,3496,61.7,PASS
+Lyman Town,town,Lyman Town,204,68,75.0,PASS
+Lyman Town,district,Lisbon Regional School District,635,263,70.7,PASS
+Lyman Town,sau,SAU 110,635,263,70.7,PASS
+Lyme Town,town,Lyme Town,537,492,52.2,FAIL
+Lyme Town,district,Lyme School District,537,492,52.2,FAIL
+Lyme Town,sau,SAU 76,537,492,52.2,FAIL
+Lyndeborough Town,town,Lyndeborough Town,524,331,61.3,PASS
+Lyndeborough Town,district,Wilton-Lyndeborough Cooperative School District,1626,1090,59.9,FAIL
+Lyndeborough Town,sau,SAU 63,1626,1090,59.9,FAIL
+Madbury Town,town,Madbury Town,570,480,54.3,FAIL
+Madbury Town,district,Oyster River Coop School District,3884,4803,44.7,FAIL
+Madbury Town,sau,SAU 5,3884,4803,44.7,FAIL
+Madison Town,town,Madison Town,849,552,60.6,PASS
+Madison Town,district,Madison School District,849,552,60.6,PASS
+Madison Town,sau,SAU 13,2271,1457,60.9,PASS
+Manchester Town,town,Manchester Town,20827,13919,59.9,FAIL
+Manchester Town,district,Manchester School District,20827,13919,59.9,FAIL
+Manchester Town,sau,SAU 37,20827,13919,59.9,FAIL
+Marlborough Town,town,Marlborough Town,432,521,45.3,FAIL
+Marlborough Town,district,Marlborough School District,432,521,45.3,FAIL
+Marlborough Town,sau,SAU 29,6818,7450,47.8,FAIL
+Marlow Town,town,Marlow Town,197,129,60.4,PASS
+Marlow Town,district,Marlow School District,197,129,60.4,PASS
+Marlow Town,sau,SAU 29,6818,7450,47.8,FAIL
+Mason Town,town,Mason Town,412,330,55.5,FAIL
+Mason Town,district,Mason School District,412,330,55.5,FAIL
+Mason Town,sau,SAU 89,412,330,55.5,FAIL
+Meredith Town,town,Meredith Town,2138,1356,61.2,PASS
+Meredith Town,district,Inter-Lakes Cooperative School District,2945,2162,57.7,FAIL
+Meredith Town,sau,SAU 2,3458,2528,57.8,FAIL
+Merrimack Town,town,Merrimack Town,7981,4952,61.7,PASS
+Merrimack Town,district,Merrimack School District,7981,4952,61.7,PASS
+Merrimack Town,sau,SAU 26,7981,4952,61.7,PASS
+Middleton Town,town,Middleton Town,592,200,74.7,PASS
+Middleton Town,district,Middleton School District,592,200,74.7,PASS
+Middleton Town,sau,SAU 69,592,200,74.7,PASS
+Milan Town,town,Milan Town,403,203,66.5,PASS
+Milan Town,district,Milan School District,403,203,66.5,PASS
+Milan Town,sau,SAU 20,1662,828,66.7,PASS
+Milford Town,town,Milford Town,4036,2817,58.9,FAIL
+Milford Town,district,Milford School District,4036,2817,58.9,FAIL
+Milford Town,sau,SAU 40,4036,2817,58.9,FAIL
+Millsfield Town,town,Millsfield Town,4,14,22.2,FAIL
+Millsfield Town,district,Coos County School District,4,14,22.2,FAIL
+Millsfield Town,sau,SAU 98,4,14,22.2,FAIL
+Milton Town,town,Milton Town,1318,639,67.3,PASS
+Milton Town,district,Milton School District,1318,639,67.3,PASS
+Milton Town,sau,SAU 64,1318,639,67.3,PASS
+Monroe Town,town,Monroe Town,274,175,61.0,PASS
+Monroe Town,district,Monroe School District,274,175,61.0,PASS
+Monroe Town,sau,SAU 77,274,175,61.0,PASS
+Mont Vernon Town,town,Mont Vernon Town,796,664,54.5,FAIL
+Mont Vernon Town,district,Mont Vernon School District,796,664,54.5,FAIL
+Mont Vernon Town,district,Souhegan Cooperative School District,4477,3474,56.3,FAIL
+Mont Vernon Town,sau,SAU 39,4477,3474,56.3,FAIL
+Moultonborough Town,town,Moultonborough Town,1932,1152,62.6,PASS
+Moultonborough Town,district,Moultonborough School District,1932,1152,62.6,PASS
+Moultonborough Town,sau,SAU 45,1932,1152,62.6,PASS
+Nashua City,town,Nashua City,18829,13235,58.7,FAIL
+Nashua City,district,Nashua School District,18829,13235,58.7,FAIL
+Nashua City,sau,SAU 42,18829,13235,58.7,FAIL
+Nelson Town,town,Nelson Town,167,194,46.3,FAIL
+Nelson Town,district,Nelson School District,167,194,46.3,FAIL
+Nelson Town,sau,SAU 29,6818,7450,47.8,FAIL
+New Boston Town,town,New Boston Town,1879,1277,59.5,FAIL
+New Boston Town,district,New Boston School District,1879,1277,59.5,FAIL
+New Boston Town,sau,SAU 19,6570,4226,60.9,PASS
+New Castle Town,town,New Castle Town,305,408,42.8,FAIL
+New Castle Town,district,New Castle School District,305,408,42.8,FAIL
+New Castle Town,sau,SAU 50,3707,3454,51.8,FAIL
+New Durham Town,town,New Durham Town,1080,414,72.3,PASS
+New Durham Town,district,Governor Wentworth Regional School District,6629,3541,65.2,PASS
+New Durham Town,sau,SAU 49,6629,3541,65.2,PASS
+New Hampton Town,town,New Hampton Town,793,525,60.2,PASS
+New Hampton Town,district,Newfound Area School District,2688,1514,64.0,PASS
+New Hampton Town,sau,SAU 4,3940,2071,65.5,PASS
+New Ipswich Town,town,New Ipswich Town,1340,1167,53.5,FAIL
+New Ipswich Town,district,Mascenic Regional School District,1688,1515,52.7,FAIL
+New Ipswich Town,sau,SAU 87,1688,1515,52.7,FAIL
+New London Town,town,New London Town,1118,1485,43.0,FAIL
+New London Town,district,Kearsarge Regional School District,4423,4594,49.1,FAIL
+New London Town,sau,SAU 65,4423,4594,49.1,FAIL
+Newbury Town,town,Newbury Town,814,577,58.5,FAIL
+Newbury Town,district,Kearsarge Regional School District,4423,4594,49.1,FAIL
+Newbury Town,sau,SAU 65,4423,4594,49.1,FAIL
+Newfields Town,town,Newfields Town,493,560,46.8,FAIL
+Newfields Town,district,Newfields School District,493,560,46.8,FAIL
+Newfields Town,district,Exeter Region Cooperative School District,9026,9558,48.6,FAIL
+Newfields Town,sau,SAU 16,9026,9558,48.6,FAIL
+Newington Town,town,Newington Town,297,240,55.3,FAIL
+Newington Town,district,Newington School District,297,240,55.3,FAIL
+Newington Town,sau,SAU 50,3707,3454,51.8,FAIL
+Newmarket Town,town,Newmarket Town,2135,2619,44.9,FAIL
+Newmarket Town,district,Newmarket School District,2135,2619,44.9,FAIL
+Newmarket Town,sau,SAU 31,2135,2619,44.9,FAIL
+Newport Town,town,Newport Town,1374,852,61.7,PASS
+Newport Town,district,Newport School District,1374,852,61.7,PASS
+Newport Town,sau,SAU 43,1374,852,61.7,PASS
+Newton Town,town,Newton Town,1510,565,72.8,PASS
+Newton Town,district,Sanborn Regional School District,3610,1442,71.5,PASS
+Newton Town,sau,SAU 17,3610,1442,71.5,PASS
+North Hampton Town,town,North Hampton Town,1540,1170,56.8,FAIL
+North Hampton Town,district,North Hampton School District,1540,1170,56.8,FAIL
+North Hampton Town,district,Winnacunnet Cooperative School District,9848,6111,61.7,PASS
+North Hampton Town,sau,SAU 21,10172,6251,61.9,PASS
+Northfield Town,town,Northfield Town,1225,660,65.0,PASS
+Northfield Town,district,Winnisquam Regional School District,3277,1816,64.3,PASS
+Northfield Town,sau,SAU 59,3277,1816,64.3,PASS
+Northumberland Town,town,Northumberland Town,488,191,71.9,PASS
+Northumberland Town,district,Northumberland School District,488,191,71.9,PASS
+Northumberland Town,sau,SAU 58,822,326,71.6,PASS
+Northwood Town,town,Northwood Town,1231,959,56.2,FAIL
+Northwood Town,district,Northwood School District,1231,959,56.2,FAIL
+Northwood Town,sau,SAU 44,1231,959,56.2,FAIL
+Nottingham Town,town,Nottingham Town,1641,1226,57.2,FAIL
+Nottingham Town,district,Nottingham School District,1641,1226,57.2,FAIL
+Nottingham Town,sau,SAU 107,1641,1226,57.2,FAIL
+Orange Town,town,Orange Town,86,64,57.3,FAIL
+Orange Town,district,Mascoma Valley Regional School District,2687,2158,55.5,FAIL
+Orange Town,sau,SAU 62,2687,2158,55.5,FAIL
+Orford Town,town,Orford Town,347,263,56.9,FAIL
+Orford Town,district,Rivendell School District,347,263,56.9,FAIL
+Orford Town,sau,SAU 78,347,263,56.9,FAIL
+Ossipee Town,town,Ossipee Town,1416,543,72.3,PASS
+Ossipee Town,district,Governor Wentworth Regional School District,6629,3541,65.2,PASS
+Ossipee Town,sau,SAU 49,6629,3541,65.2,PASS
+Pelham Town,town,Pelham Town,4680,1871,71.4,PASS
+Pelham Town,district,Pelham School District,4680,1871,71.4,PASS
+Pelham Town,sau,SAU 28,4680,1871,71.4,PASS
+Pembroke Town,town,Pembroke Town,2104,1224,63.2,PASS
+Pembroke Town,district,Pembroke School District,2104,1224,63.2,PASS
+Pembroke Town,sau,SAU 53,6216,3461,64.2,PASS
+Peterborough Town,town,Peterborough Town,1647,1867,46.9,FAIL
+Peterborough Town,district,Contoocook Valley School District,5428,4833,52.9,FAIL
+Peterborough Town,sau,SAU 1,5428,4833,52.9,FAIL
+Piermont Town,town,Piermont Town,179,140,56.1,FAIL
+Piermont Town,district,Piermont School District,179,140,56.1,FAIL
+Piermont Town,sau,SAU 23,1993,1090,64.6,PASS
+Pittsburg Town,town,Pittsburg Town,298,146,67.1,PASS
+Pittsburg Town,district,Pittsburg School District,298,146,67.1,PASS
+Pittsburg Town,sau,SAU 7,1317,592,69.0,PASS
+Pittsfield Town,town,Pittsfield Town,1047,550,65.6,PASS
+Pittsfield Town,district,Pittsfield School District,1047,550,65.6,PASS
+Pittsfield Town,sau,SAU 51,1047,550,65.6,PASS
+Plainfield Town,town,Plainfield Town,549,768,41.7,FAIL
+Plainfield Town,district,Plainfield School District,549,768,41.7,FAIL
+Plainfield Town,sau,SAU 32,549,768,41.7,FAIL
+Plaistow Town,town,Plaistow Town,2328,958,70.8,PASS
+Plaistow Town,district,Timberlane Regional School District,8952,3476,72.0,PASS
+Plaistow Town,sau,SAU 106,8952,3476,72.0,PASS
+Plymouth Town,town,Plymouth Town,1002,1243,44.6,FAIL
+Plymouth Town,district,Plymouth School District,1002,1243,44.6,FAIL
+Plymouth Town,district,Pemi-Baker Regional School District,4398,4126,51.6,FAIL
+Plymouth Town,sau,SAU 48,4094,3909,51.2,FAIL
+Portsmouth City,town,Portsmouth City,4906,6395,43.4,FAIL
+Portsmouth City,district,Portsmouth School District,4906,6395,43.4,FAIL
+Portsmouth City,sau,SAU 52,4906,6395,43.4,FAIL
+Randolph Town,town,Randolph Town,126,105,54.5,FAIL
+Randolph Town,district,Gorham Randolph Shelburne Cooperative School District,1061,536,66.4,PASS
+Randolph Town,sau,SAU 20,1662,828,66.7,PASS
+Raymond Town,town,Raymond Town,3101,1231,71.6,PASS
+Raymond Town,district,Raymond School District,3101,1231,71.6,PASS
+Raymond Town,sau,SAU 33,3101,1231,71.6,PASS
+Richmond Town,town,Richmond Town,389,151,72.0,PASS
+Richmond Town,district,Monadnock Regional School District,3580,2270,61.2,PASS
+Richmond Town,sau,SAU 93,3580,2270,61.2,PASS
+Rindge Town,town,Rindge Town,1821,918,66.5,PASS
+Rindge Town,district,Jaffrey-Rindge Cooperative School District,3088,2040,60.2,PASS
+Rindge Town,sau,SAU 47,3088,2040,60.2,PASS
+Rochester City,town,Rochester City,7821,4292,64.6,PASS
+Rochester City,district,Rochester School District,7821,4292,64.6,PASS
+Rochester City,sau,SAU 54,7821,4292,64.6,PASS
+Rollinsford Town,town,Rollinsford Town,724,632,53.4,FAIL
+Rollinsford Town,district,Rollinsford School District,724,632,53.4,FAIL
+Rollinsford Town,sau,SAU 104,724,632,53.4,FAIL
+Roxbury Town,town,Roxbury Town,53,47,53.0,FAIL
+Roxbury Town,district,Monadnock Regional School District,3580,2270,61.2,PASS
+Roxbury Town,sau,SAU 93,3580,2270,61.2,PASS
+Rumney Town,town,Rumney Town,409,320,56.1,FAIL
+Rumney Town,district,Rumney School District,409,320,56.1,FAIL
+Rumney Town,district,Pemi-Baker Regional School District,4398,4126,51.6,FAIL
+Rumney Town,sau,SAU 48,4094,3909,51.2,FAIL
+Rye Town,town,Rye Town,1778,1719,50.8,FAIL
+Rye Town,district,Rye School District,1778,1719,50.8,FAIL
+Rye Town,sau,SAU 50,3707,3454,51.8,FAIL
+Salem Town,town,Salem Town,8683,4368,66.5,PASS
+Salem Town,district,Salem School District,8683,4368,66.5,PASS
+Salem Town,sau,SAU 57,8683,4368,66.5,PASS
+Salisbury Town,town,Salisbury Town,459,247,65.0,PASS
+Salisbury Town,district,Merrimack Valley School District,5020,2947,63.0,PASS
+Salisbury Town,sau,SAU 46,5624,3496,61.7,PASS
+Sanbornton Town,town,Sanbornton Town,1027,602,63.0,PASS
+Sanbornton Town,district,Winnisquam Regional School District,3277,1816,64.3,PASS
+Sanbornton Town,sau,SAU 59,3277,1816,64.3,PASS
+Sandown Town,town,Sandown Town,2220,767,74.3,PASS
+Sandown Town,district,Timberlane Regional School District,8952,3476,72.0,PASS
+Sandown Town,sau,SAU 106,8952,3476,72.0,PASS
+Sandwich Town,town,Sandwich Town,466,570,45.0,FAIL
+Sandwich Town,district,Inter-Lakes Cooperative School District,2945,2162,57.7,FAIL
+Sandwich Town,sau,SAU 2,3458,2528,57.8,FAIL
+Seabrook Town,town,Seabrook Town,2347,1002,70.1,PASS
+Seabrook Town,district,Seabrook School District,2347,1002,70.1,PASS
+Seabrook Town,district,Winnacunnet Cooperative School District,9848,6111,61.7,PASS
+Seabrook Town,sau,SAU 21,10172,6251,61.9,PASS
+Sharon Town,town,Sharon Town,161,97,62.4,PASS
+Sharon Town,district,Contoocook Valley School District,5428,4833,52.9,FAIL
+Sharon Town,sau,SAU 1,5428,4833,52.9,FAIL
+Shelburne Town,town,Shelburne Town,158,72,68.7,PASS
+Shelburne Town,district,Gorham Randolph Shelburne Cooperative School District,1061,536,66.4,PASS
+Shelburne Town,sau,SAU 20,1662,828,66.7,PASS
+Somersworth City,town,Somersworth City,2693,1868,59.0,FAIL
+Somersworth City,district,Somersworth School District,2693,1868,59.0,FAIL
+Somersworth City,sau,SAU 56,2693,1868,59.0,FAIL
+South Hampton Town,town,South Hampton Town,324,140,69.8,PASS
+South Hampton Town,district,South Hampton School District,324,140,69.8,PASS
+South Hampton Town,sau,SAU 21,10172,6251,61.9,PASS
+Springfield Town,town,Springfield Town,395,345,53.4,FAIL
+Springfield Town,district,Kearsarge Regional School District,4423,4594,49.1,FAIL
+Springfield Town,sau,SAU 65,4423,4594,49.1,FAIL
+Stark Town,town,Stark Town,166,66,71.6,PASS
+Stark Town,district,Stark School District,166,66,71.6,PASS
+Stark Town,sau,SAU 58,822,326,71.6,PASS
+Stewartstown Town,town,Stewartstown Town,193,78,71.2,PASS
+Stewartstown Town,district,Stewartstown School District,193,78,71.2,PASS
+Stewartstown Town,sau,SAU 7,1317,592,69.0,PASS
+Stoddard Town,town,Stoddard Town,361,347,51.0,FAIL
+Stoddard Town,district,Stoddard School District,361,347,51.0,FAIL
+Stoddard Town,sau,SAU 24,3956,2965,57.2,FAIL
+Strafford Town,town,Strafford Town,1413,874,61.8,PASS
+Strafford Town,district,Strafford School District,1413,874,61.8,PASS
+Strafford Town,sau,SAU 105,1413,874,61.8,PASS
+Stratford Town,town,Stratford Town,168,69,70.9,PASS
+Stratford Town,district,Stratford School District,168,69,70.9,PASS
+Stratford Town,sau,SAU 58,822,326,71.6,PASS
+Stratham Town,town,Stratham Town,2059,2246,47.8,FAIL
+Stratham Town,district,Stratham School District,2059,2246,47.8,FAIL
+Stratham Town,district,Exeter Region Cooperative School District,9026,9558,48.6,FAIL
+Stratham Town,sau,SAU 16,9026,9558,48.6,FAIL
+Sugar Hill Town,town,Sugar Hill Town,213,206,50.8,FAIL
+Sugar Hill Town,district,Lafayette Regional School District,615,750,45.1,FAIL
+Sugar Hill Town,district,Profile School District,1297,1194,52.1,FAIL
+Sugar Hill Town,sau,SAU 35,1545,1393,52.6,FAIL
+Sullivan Town,town,Sullivan Town,206,124,62.4,PASS
+Sullivan Town,district,Sullivan School District,206,124,62.4,PASS
+Sullivan Town,sau,SAU 96,206,124,62.4,PASS
+Sunapee Town,town,Sunapee Town,940,1062,47.0,FAIL
+Sunapee Town,district,Sunapee School District,940,1062,47.0,FAIL
+Sunapee Town,sau,SAU 85,940,1062,47.0,FAIL
+Surry Town,town,Surry Town,201,203,49.8,FAIL
+Surry Town,district,Surry School District,201,203,49.8,FAIL
+Surry Town,sau,SAU 91,201,203,49.8,FAIL
+Sutton Town,town,Sutton Town,533,645,45.2,FAIL
+Sutton Town,district,Kearsarge Regional School District,4423,4594,49.1,FAIL
+Sutton Town,sau,SAU 65,4423,4594,49.1,FAIL
+Swanzey Town,town,Swanzey Town,1700,1284,57.0,FAIL
+Swanzey Town,district,Monadnock Regional School District,3580,2270,61.2,PASS
+Swanzey Town,sau,SAU 93,3580,2270,61.2,PASS
+Tamworth Town,town,Tamworth Town,781,585,57.2,FAIL
+Tamworth Town,district,Tamworth School District,781,585,57.2,FAIL
+Tamworth Town,sau,SAU 13,2271,1457,60.9,PASS
+Temple Town,town,Temple Town,477,267,64.1,PASS
+Temple Town,district,Contoocook Valley School District,5428,4833,52.9,FAIL
+Temple Town,sau,SAU 1,5428,4833,52.9,FAIL
+Thornton Town,town,Thornton Town,735,609,54.7,FAIL
+Thornton Town,district,Thornton School District,735,609,54.7,FAIL
+Thornton Town,district,Pemi-Baker Regional School District,4398,4126,51.6,FAIL
+Thornton Town,sau,SAU 48,4094,3909,51.2,FAIL
+Tilton Town,town,Tilton Town,1025,554,64.9,PASS
+Tilton Town,district,Winnisquam Regional School District,3277,1816,64.3,PASS
+Tilton Town,sau,SAU 59,3277,1816,64.3,PASS
+Troy Town,town,Troy Town,530,285,65.0,PASS
+Troy Town,district,Monadnock Regional School District,3580,2270,61.2,PASS
+Troy Town,sau,SAU 93,3580,2270,61.2,PASS
+Tuftonboro Town,town,Tuftonboro Town,1036,614,62.8,PASS
+Tuftonboro Town,district,Governor Wentworth Regional School District,6629,3541,65.2,PASS
+Tuftonboro Town,sau,SAU 49,6629,3541,65.2,PASS
+Unity Town,town,Unity Town,460,182,71.7,PASS
+Unity Town,district,Unity School District,460,182,71.7,PASS
+Unity Town,sau,SAU 109,460,182,71.7,PASS
+Wakefield Town,town,Wakefield Town,1791,765,70.1,PASS
+Wakefield Town,district,Wakefield School District,1791,765,70.1,PASS
+Wakefield Town,sau,SAU 101,1791,765,70.1,PASS
+Walpole Town,town,Walpole Town,1003,837,54.5,FAIL
+Walpole Town,district,Fall Mountain Regional School District,3160,2092,60.2,PASS
+Walpole Town,sau,SAU 60,3160,2092,60.2,PASS
+Warner Town,town,Warner Town,657,771,46.0,FAIL
+Warner Town,district,Kearsarge Regional School District,4423,4594,49.1,FAIL
+Warner Town,sau,SAU 65,4423,4594,49.1,FAIL
+Warren Town,town,Warren Town,238,165,59.1,FAIL
+Warren Town,district,Warren School District,238,165,59.1,FAIL
+Warren Town,sau,SAU 23,1993,1090,64.6,PASS
+Washington Town,town,Washington Town,446,237,65.3,PASS
+Washington Town,district,Washington School District,446,237,65.3,PASS
+Washington Town,sau,SAU 34,2813,1227,69.6,PASS
+Waterville Valley Town,town,Waterville Valley Town,177,133,57.1,FAIL
+Waterville Valley Town,district,Waterville Valley School District,177,133,57.1,FAIL
+Waterville Valley Town,sau,SAU 48,4094,3909,51.2,FAIL
+Weare Town,town,Weare Town,2513,1576,61.5,PASS
+Weare Town,district,Weare School District,2513,1576,61.5,PASS
+Weare Town,district,John Stark Regional School District,3595,2618,57.9,FAIL
+Weare Town,sau,SAU 24,3956,2965,57.2,FAIL
+Webster Town,town,Webster Town,575,373,60.7,PASS
+Webster Town,district,Merrimack Valley School District,5020,2947,63.0,PASS
+Webster Town,sau,SAU 46,5624,3496,61.7,PASS
+Wentworth Town,town,Wentworth Town,329,145,69.4,PASS
+Wentworth Town,district,Wentworth School District,329,145,69.4,PASS
+Wentworth Town,district,Pemi-Baker Regional School District,4398,4126,51.6,FAIL
+Wentworth Town,sau,SAU 48,4094,3909,51.2,FAIL
+Westmoreland Town,town,Westmoreland Town,407,369,52.4,FAIL
+Westmoreland Town,district,Westmoreland School District,407,369,52.4,FAIL
+Westmoreland Town,sau,SAU 29,6818,7450,47.8,FAIL
+Whitefield Town,town,Whitefield Town,705,321,68.7,PASS
+Whitefield Town,district,White Mountains Regional School District,2548,1157,68.8,PASS
+Whitefield Town,sau,SAU 36,2548,1157,68.8,PASS
+Wilmot Town,town,Wilmot Town,413,347,54.3,FAIL
+Wilmot Town,district,Kearsarge Regional School District,4423,4594,49.1,FAIL
+Wilmot Town,sau,SAU 65,4423,4594,49.1,FAIL
+Wilton Town,town,Wilton Town,1102,759,59.2,FAIL
+Wilton Town,district,Wilton-Lyndeborough Cooperative School District,1626,1090,59.9,FAIL
+Wilton Town,sau,SAU 63,1626,1090,59.9,FAIL
+Winchester Town,town,Winchester Town,839,547,60.5,PASS
+Winchester Town,district,Winchester School District,839,547,60.5,PASS
+Winchester Town,sau,SAU 94,839,547,60.5,PASS
+Windham Town,town,Windham Town,4461,3144,58.7,FAIL
+Windham Town,district,Windham School District,4461,3144,58.7,FAIL
+Windham Town,sau,SAU 95,4461,3144,58.7,FAIL
+Windsor Town,town,Windsor Town,65,14,82.3,PASS
+Windsor Town,district,Windsor School District,65,14,82.3,PASS
+Windsor Town,sau,SAU 34,2813,1227,69.6,PASS
+Wolfeboro Town,town,Wolfeboro Town,2167,1675,56.4,FAIL
+Wolfeboro Town,district,Governor Wentworth Regional School District,6629,3541,65.2,PASS
+Wolfeboro Town,sau,SAU 49,6629,3541,65.2,PASS
+Woodstock Town,town,Woodstock Town,340,305,52.7,FAIL
+Woodstock Town,district,Lincoln-Woodstock Cooperative School District,685,655,51.1,FAIL
+Woodstock Town,sau,SAU 68,685,655,51.1,FAIL

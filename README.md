@@ -146,7 +146,7 @@ PYTHONPATH=. python -m app.etl load assessment --year 2026
 3. Read the warnings: rows for schools, districts or towns that aren't in the database are skipped and listed.
 4. On Heroku, run it in a one-off dyno (`heroku run`), then restart the web dynos to clear the API cache.
 
-Datasets: `location`, `enrollment`, `town-enrollment`, `measurement`, `measurement-state-target`, `class-size`, `assessment`, `finance`, `cost-per-pupil`, `state-expenditure`, `state-class-size`, `education-freedom-account`, `safety`, `staff`, `teacher-education`, `teacher-salary`, `teacher-salary-band`, `early-exit`, `post-graduation`, `graduation-cohort`, `reduced-lunch`, `english-learner`, `enrollment-type`, `naep`, `census-finance`, `reference`.
+Datasets: `location`, `enrollment`, `town-enrollment`, `measurement`, `measurement-state-target`, `class-size`, `assessment`, `finance`, `cost-per-pupil`, `state-expenditure`, `state-class-size`, `education-freedom-account`, `safety`, `staff`, `teacher-education`, `teacher-salary`, `teacher-salary-band`, `early-exit`, `post-graduation`, `graduation-cohort`, `reduced-lunch`, `english-learner`, `enrollment-type`, `naep`, `census-finance`, `reference`, `question-two`.
 
 - Most datasets update existing rows and insert new ones, so loading a year twice changes nothing. `assessment` and `measurement` replace the year's rows instead (their keys contain NULLs), so reloaded rows get new ids.
 - Dependent materialized views are refreshed. `safety` also rebuilds that year's state and district totals; `finance` recomputes the state revenue and expenditure totals.

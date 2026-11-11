@@ -1,0 +1,25 @@
+# Ballot Question 2, required by HB 1300 (2026 chapter 324, RSA 32:5-i) at the 2026 and 2028
+# general elections: one question on a school property tax cap and a 6% cap on SAU central-office
+# spending. A school district adopts the tax cap when at least 60% of the voters in all its towns
+# vote yes; this dataset is that district vote. The SAU cap is decided by the vote across all the
+# SAU's towns, which can differ for an SAU of several districts (WMUR's SAU totals are in the
+# all-rows file).
+#
+# The 2026 results are WMUR's town-by-town table, updated November 9, 2026, which adds up the
+# towns of each multi-town district. They are unofficial: a district's result is final once its
+# school board ratifies its towns' results and reports them to the Department of Revenue
+# Administration. assets/question-two/question-two-2026-districts.csv has one row per district
+# (the district table's name, WMUR's name, the votes, WMUR's percentage and result, and the towns);
+# question-two-2026-all-rows.csv keeps every town, district and SAU row as WMUR lists them.
+#
+# `python -m app.etl load question-two` loads every election below. When certified results are
+# published, replace the file, set official: true and load again.
+directory: "../assets/question-two"
+threshold_percent: 60
+
+elections:
+  2026:
+    file: question-two-2026-districts.csv
+    source_url: "https://www.wmur.com/article/town-district-question-2-results-nh-110926/74379244"
+    as_of: "2026-11-09"
+    official: false
