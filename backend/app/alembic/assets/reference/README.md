@@ -13,6 +13,7 @@ Gathered starting November 8, 2026.
 | `facts-terms-and-how-schools-work.md` | 5. What the numbers mean; 6. How schools are run and paid for | Definitions of the site's measures and terms; governance, budgets, taxes and state aid |
 | `programs-and-help.md` (+ CSVs in `raw/programs/`) | 4. Finding help and programs | Head Start, EFA providers, career centers, dual enrollment, family support organizations, who to call |
 | `town-figures.md` (+ CSVs in `raw/town/`) | 6. How schools are paid for (numbers) | Tax rates and the school share by town; state adequacy aid by town |
+| `state-issues.md` | 3. Rules and rights; 6. How schools are run and paid for | The state laws, court cases, budgets, elections and trends affecting public schools in 2025-26: the school tax cap and Question 2, the school funding cases, special education aid, EFAs and other school choice bills, rights laws and lawsuits, safety and health, teachers |
 | `district-practices.md` | 1. Local practices | Kindergarten, preschool, budget votes and high school tuition options, district by district |
 | `research-briefs.md` | 7. What the research says | Short, neutral summaries of strong studies on recurring "does it work?" questions |
 | `outcomes-after-high-school.md` | 8. Life after high school | College-going, persistence, career and technical education, apprenticeships, students with disabilities after school |
@@ -91,12 +92,13 @@ All eight files are complete. Each starts with its own summary and ends with a *
 | `facts-terms-and-how-schools-work.md` | 65 topics, 379 facts |
 | `programs-and-help.md` | 31 topics, 106 facts, plus 16 CSVs in `raw/programs/` (Head Start 45 sites; EFA providers 3,606, 1,788 in NH; EFA stats for 229 towns; 33 career centers with 292 programs; 53 after-school sites; family-support directories with the towns each serves) |
 | `town-figures.md` | Department of Revenue tax rates by town, 2014–2025 (2,879 rows); school taxes by town from NH DOE's valuation report, 2010–2025 (3,792 rows); adequacy aid by town and component, FY2020–FY2027 (46,335 rows); all in `raw/town/` |
+| `state-issues.md` (added November 11, 2026) | 50 topics, 450 facts in eight sections; each section's sources and the gaps not retrieved are listed in the file. Raw copies in `raw/state-issues/` (553 files, 377 MB) |
 | `district-practices.md` | All 183 districts, 607 facts. Coverage: kindergarten cutoff 117, registration 97, full or half day 36; preschool 121; budget form and vote dates 148; high school options 86 of 105 districts without one. The table is in `raw/districts/coverage.csv` |
 | `national-comparisons.md` | 38 state-by-state tables and 2 fact topics |
 | `outcomes-after-high-school.md` | 23 tables and 13 fact topics |
 | `research-briefs.md` | 10 briefs, 95 findings from 84 studies and federal guides |
 
-In all, about 1,580 cited facts and 64 number tables, backed by about 3,600 raw files (900 MB) in `raw/`.
+In all, about 2,030 cited facts and 64 number tables, backed by about 4,150 raw files (1.3 GB) in `raw/`.
 
 **One format difference:** facts in `programs-and-help.md` have a `source` link but no `citation` line, because they come from organization web pages with no section numbers. A loader should use the source as the citation.
 

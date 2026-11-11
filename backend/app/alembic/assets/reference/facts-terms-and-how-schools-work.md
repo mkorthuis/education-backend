@@ -2120,11 +2120,11 @@ Strategy types 5 (what the site's numbers and terms mean) and 6 (how New Hampshi
    - as_of: 2026-11-08
    - review_by: 2027-08-15
 
-## money-fiscal-capacity-disparity-aid: Fiscal Capacity Disparity Aid (new July 1, 2026)
+## money-fiscal-capacity-disparity-aid: Fiscal Capacity Disparity Aid (from July 1, 2026)
 
 - kind: how_it_works
 - question_type: governance_money
-- description: The new aid for towns with low property value per pupil.
+- description: The aid for towns with low property value per pupil that starts July 1, 2026 (a one-year version was paid in FY2021).
 
 1. Fiscal capacity disparity aid, effective July 1, 2026, gives $1,250 per pupil in ADMR to New Hampshire municipalities with equalized valuation of $1,000,000 or less per pupil.
    - citation: RSA 198:40-g, I(a) (2025, 141:225, eff. July 1, 2026)
@@ -2388,12 +2388,12 @@ Strategy types 5 (what the site's numbers and terms mean) and 6 (how New Hampshi
    - source: https://www.courts.nh.gov/sites/g/files/ehbemt471/files/documents/2026-01/012626-215-2022-cv-00167-court-order-denied-163.pdf
    - as_of: 2026-11-08
    - review_by: 2027-11-08
-10. The New Hampshire Supreme Court accepted the State's appeal as Case No. 2026-0150 on April 2, 2026, and on June 2, 2026 ordered the trial record transferred by June 22, 2026; these orders were the latest Supreme Court documents on the court's Rand case page when checked.
+10. The New Hampshire Supreme Court accepted the State's appeal as Case No. 2026-0150 on April 2, 2026, and on June 2, 2026 ordered the trial record transferred by June 22, 2026.
    - citation: N.H. Supreme Court orders in Case No. 2026-0150 (April 2, 2026 and June 2, 2026)
    - source: https://www.courts.nh.gov/sites/g/files/ehbemt471/files/documents/2026-08/6.9.26-supreme-court-order.pdf
    - as_of: 2026-11-08
    - review_by: 2027-11-08
-   - note: case page https://www.courts.nh.gov/media/requested-cases/civil/steven-rand-et-al-v-state-new-hampshire checked 2026-11-08 in a browser
+   - note: case page https://www.courts.nh.gov/media/requested-cases/civil/steven-rand-et-al-v-state-new-hampshire checked 2026-11-08 in a browser. The appeal's later filings (through August 14, 2026, on the court's 2026-0150 page) are in money-rand-appeal-2026 (state-issues.md)
 
 ---
 

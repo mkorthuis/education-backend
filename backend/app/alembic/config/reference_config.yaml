@@ -19,6 +19,7 @@ files:
   - outcomes-after-high-school.md
   - national-comparisons.md
   - town-figures.md
+  - state-issues.md
 
 kinds: [rule, term, how_it_works, research, programs, local]
 fact_fields: [citation, source, as_of, review_by, place, note]
