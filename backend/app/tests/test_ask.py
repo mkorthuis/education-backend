@@ -433,6 +433,22 @@ class AskTests(unittest.TestCase):
         self.assertTrue(any(school["name"] == "Concord High School" for school in schools))
         self.assertTrue(all(school["page"].startswith("/school/") for school in schools))
 
+    def test_charter_schools_are_found_and_ranked_without_a_district(self):
+        from app.service.internal.ask.data_tools import find_places, rank_schools
+        found = find_places(self.session, "Virtual Learning Academy")
+        vlacs = [place for place in found if place["name"].startswith("Virtual Learning Academy")]
+        self.assertEqual(len(vlacs), 2, found)
+        self.assertTrue(all("district_id" not in place and place["type"].startswith("public charter school") for place in vlacs), vlacs)
+        # Ranked with the other schools statewide, though not in a district's ranking
+        ranking = rank_schools(self.session, "students", "highest", "all")["datasets"][0]
+        self.assertIn("Charter school", [row[1] for row in ranking["rows"]])
+        self.assertIn("charter", ranking["note"])
+        concord = rank_schools(self.session, "students", "highest", "all", 111)["datasets"][0]
+        self.assertNotIn("Charter school", [row[1] for row in concord["rows"]])
+        # A charter school has no district's spending or staff to fall back on
+        with self.assertRaisesRegex(DataToolError, "charter"):
+            get_data(self.session, "staff", "school", vlacs[0]["id"])
+
     def test_money_figures_add_up_and_inflation_matches_the_site(self):
         from app.service.internal.ask.data_tools import in_dollars_of
         datasets = {d["key"] or d["title"]: d for d in get_data(self.session, "spending", "district", 111)["datasets"]}

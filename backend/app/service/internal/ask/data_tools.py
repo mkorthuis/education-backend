@@ -234,8 +234,14 @@ def _once(session: Session, name: str, load: Callable[[], object]):
 
 # -------------------- Places --------------------
 
+# How a charter school is described to the model: it has no district to fall back on
+CHARTER_SCHOOL = "public charter school, run by its own board rather than a school district"
+
 def find_places(session: Session, query: str) -> List[dict]:
-    """Public districts, schools and towns whose name contains the query, best matches first."""
+    """
+    Public districts, schools (public charter schools too) and towns whose name contains the query,
+    best matches first. A charter school belongs to no district, so it comes without one.
+    """
     words = [word for word in query.lower().replace(",", " ").split() if word not in {"school", "district", "nh", "the", "of"}]
     if not words:
         raise DataToolError("Give part of a district, school or town name to search for.")
@@ -264,16 +270,20 @@ def find_places(session: Session, query: str) -> List[dict]:
         district_id = _field(school, "district_id_fk")
         # A school matches on its name or its town, so "Hampton schools" finds Marston School
         score = max(matches(school.name), matches(school.city or ""))
-        if score and district_id in names:
-            results.append((score, 2, {
+        if score and (district_id in names or school.kind == "charter"):
+            found = {
                 "kind": "school",
                 "id": school.id,
                 "name": school.name,
                 "town": (school.city or "").title(),
-                "district_id": district_id,
                 "grades": _grade_span(school),
                 "page": f"/school/{school.id}",
-            }))
+            }
+            if school.kind == "charter":
+                found["type"] = CHARTER_SCHOOL
+            else:
+                found["district_id"] = district_id
+            results.append((score, 2, found))
     results.sort(key=lambda item: (-item[0], item[1], item[2]["name"]))
     return [item[2] for item in results[:20]]
 
@@ -294,7 +304,7 @@ def list_schools(session: Session, district_id: int) -> List[dict]:
 
 
 def _place(session: Session, level: str, place_id: Optional[int]) -> dict:
-    """The place a data request is about, checked: a public district or a current school."""
+    """The place a data request is about, checked: a public district or a current school (with its district's kind)."""
     if level == "state":
         return {"level": "state", "id": None, "name": "New Hampshire (statewide)"}
     if place_id is None:
@@ -307,7 +317,8 @@ def _place(session: Session, level: str, place_id: Optional[int]) -> dict:
     schools = {s.id: s for s in location_service.get_schools(session)}
     if place_id not in schools:
         raise DataToolError(f"No current school has id {place_id}; use find_places to look it up.")
-    return {"level": "school", "id": place_id, "name": schools[place_id].name, "district_id": _field(schools[place_id], "district_id_fk")}
+    return {"level": "school", "id": place_id, "name": schools[place_id].name, "district_id": _field(schools[place_id], "district_id_fk"),
+            "kind": schools[place_id].kind}
 
 
 def page_for(place: dict, topic: str) -> Optional[str]:
@@ -1379,7 +1390,7 @@ BOUNDS = {"SCORE_UNDER_10": ("<10%", 9.5), "SCORE_OVER_90": (">90%", 90.5)}
 
 def rank_schools(session: Session, measure: str, order: str = "highest", level: str = "all", district_id: Optional[int] = None) -> dict:
     """Current public schools' latest value of one measure, sorted, with each school's page; all
-    schools of one level, or a district's."""
+    schools of one level (public charter schools too, as the site's ranks count them), or a district's."""
     if measure not in SCHOOL_RANK_MEASURES:
         raise DataToolError(f"Unknown measure {measure}; use one of {', '.join(SCHOOL_RANK_MEASURES)}.")
     if level not in SCHOOL_LEVELS:
@@ -1393,7 +1404,7 @@ def rank_schools(session: Session, measure: str, order: str = "highest", level: 
     schools = {}
     for school in location_service.get_schools(session, district_id=district["id"] if district else None):
         grades = sorted(g.id for g in (school.grades or []))
-        if _field(school, "district_id_fk") in districts and grades and in_level(grades[0], grades[-1]):
+        if (_field(school, "district_id_fk") in districts or school.kind == "charter") and grades and in_level(grades[0], grades[-1]):
             schools[school.id] = school
     values: Dict[int, Dict[int, tuple]] = defaultdict(dict)  # year -> school -> (shown, sort value)
     notes = [SCHOOL_LEVEL_NOTE]
@@ -1430,11 +1441,14 @@ def rank_schools(session: Session, measure: str, order: str = "highest", level: 
     year_text = f"class of {latest}" if measure == "graduation_rate" else school_year(latest)
     where = f" in {district['name']}" if district else ""
     section = SCHOOL_SECTIONS[topic]
+    if any(schools[i].kind == "charter" for i in values[latest]):
+        notes.append("Public charter schools are included; they belong to no district.")
     return {
         "datasets": [dataset(
             f"{label} by school, {level_name}{where}, {year_text}, {'highest' if highest else 'lowest'} first", unit,
             ["School", "District", "Grades", label],
-            [[schools[i].name.strip(), districts[_field(schools[i], "district_id_fk")], _grade_span(schools[i]), shown] for i, (shown, _) in ranked],
+            [[schools[i].name.strip(), districts.get(_field(schools[i], "district_id_fk"), "Charter school"), _grade_span(schools[i]), shown]
+             for i, (shown, _) in ranked],
             page_for(district, topic) if district else STATE_PAGES[topic], " ".join(notes),
         )],
         # Each school's page on this measure, for links
@@ -1546,6 +1560,8 @@ def get_data(session: Session, topic: str, level: str, place_id: Optional[int] =
         raise DataToolError(f"Unknown level {level}; use state, district or school.")
     place = _place(session, level, place_id)
     if level == "school" and topic not in SCHOOL_SECTIONS:
+        if place.get("kind") == "charter":
+            raise DataToolError(f"{topic} isn't on this site for charter schools: {place['name']} is a {CHARTER_SCHOOL}, so no district's figures cover it.")
         raise DataToolError(f"{topic} isn't reported for individual schools; ask for the school's district (district id {place.get('district_id')}).")
     datasets = TOPIC_FUNCTIONS[topic](session, place)
     return {"place": place["name"], "datasets": datasets}

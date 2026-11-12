@@ -45,10 +45,12 @@ class LocationService:
         session: Session, 
         is_public: Optional[bool] = None,
         school_id: Optional[int] = None,
-        include_former: bool = False
+        include_former: bool = False,
+        kind: Optional[str] = None
     ) -> List[DistrictGet]:
         """
-        Get districts, optionally filtering by public status and/or school ID.
+        Get districts, optionally filtering by public status, kind ('district', 'charter' or
+        'private') and/or school ID.
 
         Only districts in the state's current list, unless include_former is set; a school's
         district is returned whether or not it is current.
@@ -60,6 +62,8 @@ class LocationService:
         # Apply filters
         if is_public is not None:
             statement = statement.where(District.is_public == is_public)
+        if kind is not None:
+            statement = statement.where(District.kind == kind)
 
         if school_id is None and not include_former:
             statement = statement.where(District.is_current)
@@ -80,7 +84,8 @@ class LocationService:
                 "name": district.name,
                 "sau_id_fk": district.sau_id_fk,
                 "is_public": district.is_public,
-                "is_current": district.is_current
+                "is_current": district.is_current,
+                "kind": district.kind
             }
             
             # Add town IDs list instead of town objects
@@ -106,7 +111,8 @@ class LocationService:
             "name": district.name,
             "sau_id_fk": district.sau_id_fk,
             "is_public": district.is_public,
-            "is_current": district.is_current
+            "is_current": district.is_current,
+            "kind": district.kind
         }
         
         # Add town IDs list instead of town objects
@@ -122,14 +128,21 @@ class LocationService:
         self, 
         session: Session,
         district_id: Optional[int] = None,
-        include_former: bool = False
+        include_former: bool = False,
+        kind: Optional[str] = None
     ) -> List[SchoolGet]:
-        """Get schools in the state's current list (or all, with include_former), optionally by district ID."""
-        # Grades and school type are loaded for all schools at once instead of per school
-        statement = select(School).options(selectinload(School.grades), selectinload(School.school_type))
+        """
+        Get schools in the state's current list (or all, with include_former), optionally by district
+        ID or by their district's kind ('district', 'charter' or 'private').
+        """
+        # Grades, school type and district are loaded for all schools at once instead of per school
+        statement = select(School).options(
+            selectinload(School.grades), selectinload(School.school_type), selectinload(School.district))
         
         if district_id is not None:
             statement = statement.where(School.district_id_fk == district_id)
+        if kind is not None:
+            statement = statement.where(School.district_id_fk.in_(select(District.id).where(District.kind == kind)))
 
         if not include_former:
             statement = statement.where(School.is_current)
@@ -139,7 +152,7 @@ class LocationService:
         result = []
         
         for school in schools:
-            school_data = SchoolGet.from_orm(school)
+            school_data = self._school_get(school)
             self._set_latest_enrollment(school_data, enrollments.get(school.id, []))
             result.append(school_data)
             
@@ -151,9 +164,16 @@ class LocationService:
         if not school:
             raise HTTPException(status_code=404, detail="School not found")
         
-        school_data = SchoolGet.from_orm(school)
+        school_data = self._school_get(school)
         enrollments = self._enrollments_by_school(session, [school.id])
         self._set_latest_enrollment(school_data, enrollments.get(school.id, []))
+        return school_data
+
+    @staticmethod
+    def _school_get(school: School) -> SchoolGet:
+        """A school as the API returns it, with its district's kind."""
+        school_data = SchoolGet.from_orm(school)
+        school_data.kind = school.district.kind if school.district else None
         return school_data
 
     def _enrollments_by_school(self, session: Session, school_ids: List[int]) -> Dict[int, list]:

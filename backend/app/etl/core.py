@@ -67,6 +67,17 @@ def existing_ids(conn: Connection, table: str) -> set:
     return {row[0] for row in conn.execute(text(f"SELECT id FROM {table}"))}
 
 
+def has_column(conn: Connection, table: str, column: str) -> bool:
+    """
+    Whether a table has a column yet. The migrations that load data call today's loaders, so a
+    loader writing a column a later migration adds checks for it first.
+    """
+    return conn.execute(text("""
+        SELECT EXISTS (SELECT 1 FROM information_schema.columns
+                       WHERE table_name = :table AND column_name = :column)
+    """), {"table": table, "column": column}).scalar()
+
+
 def known_school_ids(conn: Connection) -> dict:
     """
     The school id for each id the state's files use: every school's own id, plus the old ids of

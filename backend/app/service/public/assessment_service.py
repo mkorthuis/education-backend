@@ -109,9 +109,10 @@ class AssessmentService:
         year: Optional[int] = None,
         assessment_subgroup_id: Optional[int] = None,
         assessment_subject_id: Optional[int] = None,
-        grade_id: Optional[int] = None
+        grade_id: Optional[int] = None,
+        district_kind: Optional[str] = None
     ) -> List[dict]:
-        """Get district level assessment data with optional filters"""
+        """Get district level assessment data with optional filters, such as only school districts (district_kind='district')"""
         try:
             statement = select(
                 *_assessment_columns(AssessmentDistrict),
@@ -125,9 +126,11 @@ class AssessmentService:
                 statement, AssessmentDistrict, year, assessment_subgroup_id, assessment_subject_id, grade_id
             )
 
-            # Add district-specific filter
+            # Add district-specific filters
             if district_id is not None:
                 statement = statement.where(AssessmentDistrict.district_id_fk == district_id)
+            if district_kind is not None:
+                statement = statement.where(District.kind == district_kind)
 
             return _rows(session, statement.order_by(AssessmentDistrict.id))
         except Exception:

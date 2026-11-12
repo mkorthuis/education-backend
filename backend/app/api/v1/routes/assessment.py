@@ -59,7 +59,8 @@ def get_district_assessments(
     year: Optional[int] = Query(default=None, description="Filter by year"),
     assessment_subgroup_id: Optional[int] = Query(default=None, description="Filter by assessment subgroup ID"),
     assessment_subject_id: Optional[int] = Query(default=None, description="Filter by assessment subject ID"),
-    grade_id: Optional[int] = Query(default=None, description="Filter by grade ID.  If you pass in 999, it returnes the summed values of all grades (grade_id is NULL)")
+    grade_id: Optional[int] = Query(default=None, description="Filter by grade ID.  If you pass in 999, it returnes the summed values of all grades (grade_id is NULL)"),
+    district_kind: Optional[str] = Query(default=None, description="Filter by the district's kind: district, charter (a charter school's board) or private")
 ):
     return assessment_service.get_district_assessments(
         session=session,
@@ -67,7 +68,8 @@ def get_district_assessments(
         year=year,
         assessment_subgroup_id=assessment_subgroup_id,
         assessment_subject_id=assessment_subject_id,
-        grade_id=grade_id
+        grade_id=grade_id,
+        district_kind=district_kind
     )
 
 @router.get("/school",

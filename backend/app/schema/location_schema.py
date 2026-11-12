@@ -44,6 +44,8 @@ class DistrictGet(BaseModel):
     sau_id_fk: Optional[int] = Field(alias='sau_id')
     is_public: bool
     is_current: bool = True
+    # 'district', 'charter' (a charter school's board) or 'private' (a private school's operator)
+    kind: str = 'district'
     towns: Optional[List[int]] = None
     grades: List[GradeGet] = []
 
@@ -61,6 +63,7 @@ class RegionGet(BaseModel):
 class SchoolTypeGet(BaseModel):
     id: int
     name: str
+    code: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -104,6 +107,8 @@ class SchoolGet(BaseModel):
     county: Optional[str]
     webpage: Optional[str]
     is_current: bool = True
+    # Its district's kind: 'district', 'charter' or 'private'
+    kind: Optional[str] = None
     school_type: Optional[SchoolTypeGet] = None
     grades: List[GradeGet] = []
     enrollment: Optional[Dict[int, int]] = None

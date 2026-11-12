@@ -63,8 +63,10 @@ class District(BaseMixin, table=True):
     name: str = Field(max_length=255)
     sau_id_fk: Optional[int] = Field(foreign_key="sau.id")
     sau: Optional["SAU"] = Relationship(back_populates="districts")
-    is_public: bool = Field(default=True)
+    is_public: bool = Field(default=True)  # in the state's district list (charter and private operators aren't)
     is_current: bool = Field(default=True)  # in the state's latest district list
+    # 'district' (a school district, academy or the like), 'charter' (a charter school's board) or 'private'
+    kind: str = Field(max_length=20, default="district")
     schools: List["School"] = Relationship(back_populates="district")
     towns: List["Town"] = Relationship(back_populates="districts", link_model=TownDistrictLink)
     grades: List["Grade"] = Relationship(back_populates="districts", link_model=DistrictGradeLink)
@@ -78,6 +80,7 @@ class Region(BaseMixin, table=True):
 class SchoolType(BaseMixin, table=True):
     __tablename__ = "school_type"
     name: str = Field(max_length=255)
+    code: Optional[str] = Field(max_length=10, default=None)  # the state's code, e.g. CRS for a charter school
     schools: List["School"] = Relationship(back_populates="school_type")
 
 class Grade(BaseMixin, table=True):

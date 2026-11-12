@@ -5,20 +5,21 @@
 #
 # Taken from the files that list ids next to names: the 2009-2018 assessment files (discode,
 # disname, schcode, schname) and the 2016-2025 enrollment files. The comment on each entry
-# gives the files and years it appears in, and other names it had.
+# gives the files and years it appears in, and other names it had. A district that isn't on the
+# state's district list (is_public: false) gives its kind: charter, private or district.
 districts:
   207: {name: "Goshen-Lempster Cooperative", is_public: true}  # assessments 2009-2015
   329: {name: "Lyndeborough", is_public: true}  # assessments 2009-2010
   571: {name: "Wilton", is_public: true}  # assessments 2009-2010
-  706: {name: "LEAF Charter School", is_public: false}  # assessments and enrollment 2018-2024
-  707: {name: "Cocheco Academy for the Arts", is_public: false}  # assessments and enrollment 2009-2022
-  710: {name: "Capital City Public Charter School", is_public: false}  # enrollment 2019-2020
-  715: {name: "New Hampshire Charter Equestrian Academy", is_public: false}  # assessments 2009-2010
-  720: {name: "Coastal Waters Chartered Public School", is_public: false}  # enrollment 2023-2024
-  728: {name: "PACE Career Academy Charter School", is_public: false}  # assessments and enrollment 2013-2021
-  739: {name: "TEAMS Charter School", is_public: false}  # assessments and enrollment 2015-2017
-  1092: {name: "SAU #23 French Pond", is_public: false}  # enrollment 2023
-  1093: {name: "SAU #23 King Street School", is_public: false}  # enrollment 2023
+  706: {name: "LEAF Charter School", is_public: false, kind: charter}  # assessments and enrollment 2018-2024
+  707: {name: "Cocheco Academy for the Arts", is_public: false, kind: charter}  # assessments and enrollment 2009-2022
+  710: {name: "Capital City Public Charter School", is_public: false, kind: charter}  # enrollment 2019-2020
+  715: {name: "New Hampshire Charter Equestrian Academy", is_public: false, kind: charter}  # assessments 2009-2010
+  720: {name: "Coastal Waters Chartered Public School", is_public: false, kind: charter}  # enrollment 2023-2024
+  728: {name: "PACE Career Academy Charter School", is_public: false, kind: charter}  # assessments and enrollment 2013-2021
+  739: {name: "TEAMS Charter School", is_public: false, kind: charter}  # assessments and enrollment 2015-2017
+  1092: {name: "SAU #23 French Pond", is_public: false, kind: district}  # enrollment 2023; SAU 23 programs in the public enrollment file
+  1093: {name: "SAU #23 King Street School", is_public: false, kind: district}  # enrollment 2023; SAU 23 programs in the public enrollment file
 
 schools:
   20055: {name: "Brown Elementary School", district: 51}  # assessments and enrollment 2009-2019

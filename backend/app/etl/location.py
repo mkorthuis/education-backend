@@ -13,6 +13,10 @@ former_schools_config.yaml, so their history in other datasets loads.
 
 Districts and schools in the latest configured year's lists are marked is_current;
 the API lists only those.
+
+A school's type comes from the state's type code. Districts on the district/town list are
+school districts; the other operators in the school list are a charter school's board or a
+private school's operator, which the district's kind records.
 """
 import logging
 from typing import Iterable, Optional
@@ -22,8 +26,8 @@ from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
 from app.etl.core import (
-    FORMER_SCHOOLS_CONFIG, configured_years, existing_ids, load_config, refresh_dependent_views, replace_rows,
-    upsert_rows, year_file
+    FORMER_SCHOOLS_CONFIG, configured_years, existing_ids, has_column, load_config, refresh_dependent_views,
+    replace_rows, upsert_rows, year_file
 )
 
 logger = logging.getLogger("app.etl")
@@ -41,18 +45,21 @@ GRADES = {
 REGIONS = {
     'South Central': 1, 'Lakes Region': 2, 'Southeast': 3, 'North Country': 4, 'Southwest': 5, 'Unknown': 6,
 }
+# The state's school types by its code (the school list's type column): our id, the name shown and
+# the kind of operator that runs such a school. The codes stay the same from year to year; the
+# descriptions don't (in 2026 "Charter Schools approved by the state" became "Charter School").
 SCHOOL_TYPES = {
-    'Public School': 1,
-    'Interstate School': 2,
-    'Charter Schools approved by the state': 3,
-    'Joint Maintenance Agreement': 4,
-    'Public Academy': 5,
-    'Other Private Schools': 6,
-    'Christian School': 7,
-    'In-State Spec Ed and Other Private': 8,
-    'In-State Private Special Education': 9,
-    'Parochial School': 10,
-    'Prep School': 11,
+    'PU': (1, 'Public School', 'district'),
+    'INT': (2, 'Interstate School', 'district'),
+    'CRS': (3, 'Charter School', 'charter'),
+    'JMA': (4, 'Joint Maintenance Agreement', 'district'),
+    'AC': (5, 'Public Academy', 'district'),
+    'OT': (6, 'Other Private School', 'private'),
+    'CH': (7, 'Christian School', 'private'),
+    'IO': (8, 'In-State Special Education', 'private'),
+    'IN': (9, 'In-State Private Special Education', 'private'),
+    'PA': (10, 'Parochial School', 'private'),
+    'PR': (11, 'Prep School', 'private'),
 }
 # Villages in school/SAU addresses that are not towns of their own
 VILLAGE_TOWNS = {
@@ -62,11 +69,16 @@ VILLAGE_TOWNS = {
     'meriden': 'plainfield',
     'sanbornville': 'wakefield',
     'suncook': 'pembroke',
+    'chocorua': 'tamworth',
+    'gonic': 'rochester',
+    # Not a village: the 2026 list's short spelling of Moultonborough
+    'moultonboro': 'moultonborough',
 }
 
 SAU_COLUMNS = ("id", "name", "address1", "address2", "town", "town_id_fk", "state", "zip", "phone", "fax", "webpage")
 SAU_STAFF_COLUMNS = ("sau_id_fk", "first_name", "last_name", "title", "admin_type", "email")
-DISTRICT_COLUMNS = ("id", "name", "sau_id_fk", "is_public")
+DISTRICT_COLUMNS = ("id", "name", "sau_id_fk", "is_public", "kind")
+SCHOOL_TYPE_COLUMNS = ("id", "name", "code")
 SCHOOL_COLUMNS = (
     "id", "name", "sau_id_fk", "district_id_fk", "region_id_fk", "school_type_id_fk",
     "principal_first_name", "principal_last_name", "address1", "address2", "city", "town_id_fk",
@@ -146,6 +158,7 @@ def parse_districts_and_towns(df: pd.DataFrame, saus: dict):
                 'sau_id': sau_id if not pd.isna(sau_id) else None,
                 'grade_ids': parse_grade_span(row.get('Grade Span')),
                 'is_public': True,
+                'kind': 'district',
             }
 
         if pd.isna(town_id):
@@ -203,8 +216,10 @@ def parse_schools(df: pd.DataFrame, config: dict, districts: dict, saus: dict, m
     """
     Schools from the school list, keyed by school id.
 
-    SAUs and districts the other lists don't have are added (districts as not public).
-    A blank region is stored as "Unknown".
+    SAUs and districts the other lists don't have are added (districts as not public), each
+    with the kind of operator its schools' type gives: a charter school's board or a private
+    school's operator. A blank region is stored as "Unknown". A type code SCHOOL_TYPES doesn't
+    have stops the load.
     """
     mappings = config['column_mappings']
     schools = {}
@@ -216,6 +231,11 @@ def parse_schools(df: pd.DataFrame, config: dict, districts: dict, saus: dict, m
         school_id = value('school_id')
         if pd.isna(school_id):
             continue
+        type_code = _text(value('school_type'))
+        if type_code not in SCHOOL_TYPES:
+            raise ValueError(f"School {_id(school_id)} ({value('school_name')}) has the type code {type_code!r} "
+                             f"({value('school_type_desc')}), which SCHOOL_TYPES in {__name__} doesn't have; add it")
+        type_id, _, kind = SCHOOL_TYPES[type_code]
 
         sau_id = value('sau_id')
         if sau_id and sau_id not in saus and not pd.isna(sau_id):
@@ -229,12 +249,17 @@ def parse_schools(df: pd.DataFrame, config: dict, districts: dict, saus: dict, m
                 'sau_id': sau_id if not pd.isna(sau_id) else None,
                 'grade_ids': parse_grade_span(grade_span) if grade_span else [],
                 'is_public': False,
+                'kind': kind,
             }
+        elif district_id in districts and not districts[district_id]['is_public'] and districts[district_id]['kind'] != kind:
+            logger.warning(f"School {_id(school_id)} ({value('school_name')}) is a {kind} school, but district "
+                           f"{_id(district_id)}'s other schools are {districts[district_id]['kind']}; the district stays "
+                           f"{districts[district_id]['kind']}")
 
         schools[school_id] = {
             'row': (
                 _id(school_id), _text(value('school_name')), _id(sau_id), _id(district_id),
-                REGIONS[_text(value('region_name')) or 'Unknown'], SCHOOL_TYPES.get(value('school_type_desc')),
+                REGIONS[_text(value('region_name')) or 'Unknown'], type_id,
                 _text(value('principal_first_name')), _text(value('principal_last_name')),
                 _text(value('address1')), _text(value('address2')), _text(value('city')),
                 matcher.find(value('city')),
@@ -273,14 +298,15 @@ def read_year(config: dict, year: int) -> dict:
             for sau_id, sau in saus.items() for staff in sau.get('staff', [])
         ],
         'district': [
-            (_id(district_id), _text_not_null(district['name']), _id(district['sau_id']), district['is_public'])
+            (_id(district_id), _text_not_null(district['name']), _id(district['sau_id']), district['is_public'],
+             district['kind'])
             for district_id, district in districts.items()
         ],
         'town_district_xref': [
             (_id(town_id), _id(district_id)) for town_id, town in towns.items() for district_id in town['district_ids']
         ],
         'region': [(region_id, name) for name, region_id in REGIONS.items()],
-        'school_type': [(type_id, name) for name, type_id in SCHOOL_TYPES.items()],
+        'school_type': [(type_id, name, code) for code, (type_id, name, _) in SCHOOL_TYPES.items()],
         'grades': list(GRADES.values()),
         'school': [school['row'] for school in schools.values()],
         'school_grade_xref': [
@@ -316,6 +342,17 @@ def sync_links(conn: Connection, table: str, owner_column: str, other_column: st
     return counts
 
 
+def _columns_present(conn: Connection, table: str, columns: tuple, rows: list, added: str):
+    """
+    The columns and rows to write: all of them, or without the `added` column until the migration
+    that adds it has run (the data migrations before it call this loader too).
+    """
+    if has_column(conn, table, added):
+        return columns, rows
+    index = columns.index(added)
+    return columns[:index] + columns[index + 1:], [row[:index] + row[index + 1:] for row in rows]
+
+
 def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     """Load the given years' lists (default: every configured year, oldest first)."""
     config = load_config(CONFIG)
@@ -327,20 +364,22 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
         if year == latest_year:
             latest = data
         owners = data['owners']
+        district_columns, district_rows = _columns_present(conn, "district", DISTRICT_COLUMNS, data['district'], "kind")
+        type_columns, type_rows = _columns_present(conn, "school_type", SCHOOL_TYPE_COLUMNS, data['school_type'], "code")
         # Same table order as the original migration: parents before the rows that refer to them
         counts[year] = {
             'town': upsert_rows(conn, "town", ("id", "name"), ("id",), data['town']),
             'sau': upsert_rows(conn, "sau", SAU_COLUMNS, ("id",), data['sau']),
             # Staff have no key: the list replaces every SAU's staff
             'sau_staff': replace_rows(conn, "sau_staff", SAU_STAFF_COLUMNS, data['sau_staff'], where="TRUE"),
-            'district': upsert_rows(conn, "district", DISTRICT_COLUMNS, ("id",), data['district']),
+            'district': upsert_rows(conn, "district", district_columns, ("id",), district_rows),
             # The district/town list is complete, so it replaces the links of every town,
             # including towns it no longer lists (e.g. Gonic, a village of Rochester, from 2026)
             'town_district_xref': sync_links(conn, "town_district_xref", "town_id_fk", "district_id_fk",
                                              conn.execute(text("SELECT id FROM town")).scalars().all(),
                                              data['town_district_xref']),
             'region': upsert_rows(conn, "region", ("id", "name"), ("id",), data['region']),
-            'school_type': upsert_rows(conn, "school_type", ("id", "name"), ("id",), data['school_type']),
+            'school_type': upsert_rows(conn, "school_type", type_columns, ("id",), type_rows),
             'grades': upsert_rows(conn, "grades", ("id", "name"), ("id",), data['grades']),
             'school': upsert_rows(conn, "school", SCHOOL_COLUMNS, ("id",), data['school']),
             'school_grade_xref': sync_links(conn, "school_grade_xref", "school_id_fk", "grade_id_fk",
@@ -358,16 +397,21 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
 def add_former(conn: Connection) -> dict:
     """
     Add the districts and schools in former_schools_config.yaml that the lists don't have.
-    Ids the lists have are left as the lists made them.
+    Ids the lists have are left as the lists made them. A district's kind is the config's, or
+    'district' for one on the district list (is_public).
     """
     former = load_config(FORMER_SCHOOLS_CONFIG)
     known_districts, known_schools = existing_ids(conn, "district"), existing_ids(conn, "school")
-    districts = [(district_id, d["name"], d["is_public"]) for district_id, d in former["districts"].items()
-                 if district_id not in known_districts]
+    districts = [(district_id, d["name"], d["is_public"], d.get("kind") or ("district" if d["is_public"] else None))
+                 for district_id, d in former["districts"].items() if district_id not in known_districts]
+    missing_kind = [district[0] for district in districts if district[3] is None]
+    if missing_kind:
+        raise ValueError(f"{FORMER_SCHOOLS_CONFIG}: districts {missing_kind} aren't public and have no kind (charter, private or district)")
+    district_columns, districts = _columns_present(conn, "district", ("id", "name", "is_public", "kind"), districts, "kind")
     schools = [(school_id, s["name"], s["district"]) for school_id, s in former["schools"].items()
                if school_id not in known_schools]
     return {
-        "district": upsert_rows(conn, "district", ("id", "name", "is_public"), ("id",), districts),
+        "district": upsert_rows(conn, "district", district_columns, ("id",), districts),
         "school": upsert_rows(conn, "school", ("id", "name", "district_id_fk"), ("id",), schools),
     }
 
@@ -380,11 +424,7 @@ def mark_current(conn: Connection, latest: dict) -> dict:
     """
     counts = {}
     for table in ("district", "school"):
-        has_column = conn.execute(text("""
-            SELECT EXISTS (SELECT 1 FROM information_schema.columns
-                           WHERE table_name = :table AND column_name = 'is_current')
-        """), {"table": table}).scalar()
-        if not has_column:
+        if not has_column(conn, table, "is_current"):
             continue
         ids = [row[0] for row in latest[table]]
         changed = conn.execute(text(f"""
