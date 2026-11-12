@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional, List, TYPE_CHECKING
 from sqlmodel import Field, Relationship
 from .base import BaseMixin
@@ -122,6 +123,9 @@ class School(BaseMixin, table=True):
     county: Optional[str] = Field(max_length=100)
     webpage: Optional[str] = Field(max_length=255)
     is_current: bool = Field(default=True)  # in the state's latest school list
+    # When the state's record of the school starts: when it opened, or when the state renumbered or
+    # reorganized it. Blank for most long-standing schools
+    open_date: Optional[date] = Field(default=None)
     
     sau: Optional["SAU"] = Relationship(back_populates="schools")
     district: Optional["District"] = Relationship(back_populates="schools")

@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List, Optional, Dict
 from pydantic import BaseModel, Field
 
@@ -109,6 +110,10 @@ class SchoolGet(BaseModel):
     is_current: bool = True
     # Its district's kind: 'district', 'charter' or 'private'
     kind: Optional[str] = None
+    # When the state's record of it starts (when it opened, or was renumbered or reorganized)
+    open_date: Optional[date] = None
+    # The topics it opened too recently to have figures in yet: enrollment, test_scores, graduation, safety
+    not_yet_reported: List[str] = []
     school_type: Optional[SchoolTypeGet] = None
     grades: List[GradeGet] = []
     enrollment: Optional[Dict[int, int]] = None

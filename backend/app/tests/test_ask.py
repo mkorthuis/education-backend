@@ -449,6 +449,13 @@ class AskTests(unittest.TestCase):
         with self.assertRaisesRegex(DataToolError, "charter"):
             get_data(self.session, "staff", "school", vlacs[0]["id"])
 
+    def test_a_new_school_has_no_figures_yet_and_says_when_it_opened(self):
+        from app.service.internal.ask.data_tools import find_places
+        breakthrough = next(place for place in find_places(self.session, "Breakthrough") if place["id"] == 29300)
+        self.assertEqual((breakthrough["opened"], breakthrough["no_figures_yet"]), ("2026-09-01", ["enrollment", "test_scores", "graduation", "safety"]))
+        with self.assertRaisesRegex(DataToolError, "opened on 2026-09-01, after the latest test results"):
+            get_data(self.session, "test_scores", "school", 29300)
+
     def test_money_figures_add_up_and_inflation_matches_the_site(self):
         from app.service.internal.ask.data_tools import in_dollars_of
         datasets = {d["key"] or d["title"]: d for d in get_data(self.session, "spending", "district", 111)["datasets"]}

@@ -82,7 +82,7 @@ SCHOOL_TYPE_COLUMNS = ("id", "name", "code")
 SCHOOL_COLUMNS = (
     "id", "name", "sau_id_fk", "district_id_fk", "region_id_fk", "school_type_id_fk",
     "principal_first_name", "principal_last_name", "address1", "address2", "city", "town_id_fk",
-    "state", "zip", "phone", "fax", "email", "county", "webpage",
+    "state", "zip", "phone", "fax", "email", "county", "webpage", "open_date",
 )
 
 
@@ -94,6 +94,12 @@ def _text(value):
 def _text_not_null(value):
     """A text value, or '' when blank (for NOT NULL columns)."""
     return '' if pd.isna(value) or value == '' else str(value)
+
+
+def _date(value):
+    """A date, or None when blank or not a date."""
+    parsed = pd.to_datetime(value, errors='coerce')
+    return None if pd.isna(parsed) else parsed.date()
 
 
 def _id(value):
@@ -264,7 +270,7 @@ def parse_schools(df: pd.DataFrame, config: dict, districts: dict, saus: dict, m
                 _text(value('address1')), _text(value('address2')), _text(value('city')),
                 matcher.find(value('city')),
                 _text(value('state')), _text(value('zip')), _text(value('phone')), _text(value('fax')),
-                _text(value('email')), _text(value('county')), _text(value('webpage')),
+                _text(value('email')), _text(value('county')), _text(value('webpage')), _date(value('open_date')),
             ),
             'grade_ids': parse_grade_span(value('grade_span')),
         }
@@ -366,6 +372,7 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
         owners = data['owners']
         district_columns, district_rows = _columns_present(conn, "district", DISTRICT_COLUMNS, data['district'], "kind")
         type_columns, type_rows = _columns_present(conn, "school_type", SCHOOL_TYPE_COLUMNS, data['school_type'], "code")
+        school_columns, school_rows = _columns_present(conn, "school", SCHOOL_COLUMNS, data['school'], "open_date")
         # Same table order as the original migration: parents before the rows that refer to them
         counts[year] = {
             'town': upsert_rows(conn, "town", ("id", "name"), ("id",), data['town']),
@@ -381,7 +388,7 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
             'region': upsert_rows(conn, "region", ("id", "name"), ("id",), data['region']),
             'school_type': upsert_rows(conn, "school_type", type_columns, ("id",), type_rows),
             'grades': upsert_rows(conn, "grades", ("id", "name"), ("id",), data['grades']),
-            'school': upsert_rows(conn, "school", SCHOOL_COLUMNS, ("id",), data['school']),
+            'school': upsert_rows(conn, "school", school_columns, ("id",), school_rows),
             'school_grade_xref': sync_links(conn, "school_grade_xref", "school_id_fk", "grade_id_fk",
                                             owners['school_grade_xref'], data['school_grade_xref']),
             'district_grade_xref': sync_links(conn, "district_grade_xref", "district_id_fk", "grade_id_fk",

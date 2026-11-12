@@ -91,6 +91,17 @@ class LocationApiTests(unittest.TestCase):
         # The school districts the site lists are all districts
         self.assertEqual({d["kind"] for d in self.get("location/district", is_public=True)}, {"district"})
 
+    def test_a_new_school_lists_the_figures_it_has_none_of_yet(self):
+        breakthrough = self.get("location/school/29300")
+        self.assertEqual(breakthrough["open_date"], "2026-09-01")
+        self.assertEqual(breakthrough["not_yet_reported"], ["enrollment", "test_scores", "graduation", "safety"])
+        # Opened July 2025: its spring 2026 tests are in, its 2025-26 enrollment and safety figures aren't, and
+        # without a grade 12 it has no graduation to wait for
+        north_star = next(s for s in self.get("location/school", kind="charter") if s["name"].startswith("North Star Academy"))
+        self.assertEqual(north_star["not_yet_reported"], ["enrollment", "safety"])
+        # A long-standing school has figures in every topic
+        self.assertEqual(self.get("location/school/20285")["not_yet_reported"], [])
+
     def test_district_ranks_can_leave_out_charter_boards(self):
         boards = {d["id"] for d in self.get("location/district", kind="charter")}
         params = dict(year=2026, assessment_subject_id=1, assessment_subgroup_id=1, grade_id=999)

@@ -283,6 +283,9 @@ def find_places(session: Session, query: str) -> List[dict]:
                 found["type"] = CHARTER_SCHOOL
             else:
                 found["district_id"] = district_id
+            if school.not_yet_reported:
+                found["opened"] = school.open_date.isoformat()
+                found["no_figures_yet"] = school.not_yet_reported
             results.append((score, 2, found))
     results.sort(key=lambda item: (-item[0], item[1], item[2]["name"]))
     return [item[2] for item in results[:20]]
@@ -317,8 +320,10 @@ def _place(session: Session, level: str, place_id: Optional[int]) -> dict:
     schools = {s.id: s for s in location_service.get_schools(session)}
     if place_id not in schools:
         raise DataToolError(f"No current school has id {place_id}; use find_places to look it up.")
-    return {"level": "school", "id": place_id, "name": schools[place_id].name, "district_id": _field(schools[place_id], "district_id_fk"),
-            "kind": schools[place_id].kind}
+    school = schools[place_id]
+    return {"level": "school", "id": place_id, "name": school.name, "district_id": _field(school, "district_id_fk"),
+            "kind": school.kind, "opened": school.open_date.isoformat() if school.open_date else None,
+            "not_yet_reported": school.not_yet_reported}
 
 
 def page_for(place: dict, topic: str) -> Optional[str]:
@@ -1552,6 +1557,20 @@ TOPIC_FUNCTIONS: Dict[str, Callable[[Session, dict], List[dict]]] = {
 }
 
 
+# What a new school's first figures in each topic will be, for saying why there are none yet
+FIRST_FIGURES = {
+    "enrollment": "enrollment", "test_scores": "test results", "graduation": "graduation figures", "safety": "safety figures",
+}
+
+
+def _not_yet_message(place: dict, topic: str) -> str:
+    """Why a school that opened recently has no figures in a topic: it opened after the latest ones."""
+    when = (f"{place['name']} opened on {place['opened']}" if place.get("kind") == "charter"
+            else f"The state's record of {place['name']} starts on {place['opened']} (when it opened, or was reorganized or renumbered)")
+    return (f"{when}, after the latest {FIRST_FIGURES[topic]} the state has published, so there are none for it yet; "
+            "they'll come with the state's next reports.")
+
+
 def get_data(session: Session, topic: str, level: str, place_id: Optional[int] = None) -> dict:
     """The datasets for one topic at one place, with the place's name."""
     if topic not in TOPIC_FUNCTIONS:
@@ -1559,6 +1578,8 @@ def get_data(session: Session, topic: str, level: str, place_id: Optional[int] =
     if level not in LEVELS:
         raise DataToolError(f"Unknown level {level}; use state, district or school.")
     place = _place(session, level, place_id)
+    if level == "school" and topic in (place.get("not_yet_reported") or []):
+        raise DataToolError(_not_yet_message(place, topic))
     if level == "school" and topic not in SCHOOL_SECTIONS:
         if place.get("kind") == "charter":
             raise DataToolError(f"{topic} isn't on this site for charter schools: {place['name']} is a {CHARTER_SCHOOL}, so no district's figures cover it.")

@@ -1,14 +1,30 @@
+from collections import defaultdict
+from datetime import date
 from typing import Dict, List, Optional
 from sqlalchemy.orm import selectinload
 from sqlmodel import Session, func, select
 from fastapi import HTTPException
 
 from app.model.location import SAU, District, Region, SchoolType, Grade, Town, School
+from app.model.assessment import AssessmentSchool
 from app.model.enrollment import SchoolEnrollment
+from app.model.outcome import SchoolGraduationCohort
+from app.model.safety import SchoolBullying, SchoolHarassment, SchoolRestraint, SchoolSafety, SchoolSeclusion, SchoolTruancy
 from app.schema.location_schema import (
     SAUGet, DistrictGet, RegionGet, SchoolTypeGet, 
     GradeGet, TownGet, SchoolGet
 )
+
+# The topics a school's own figures come in, with the tables that hold them (a school has safety
+# figures when any of the safety tables has a row for it, as the school safety page decides)
+SCHOOL_TOPICS = {
+    "enrollment": [SchoolEnrollment],
+    "test_scores": [AssessmentSchool],
+    "graduation": [SchoolGraduationCohort],
+    "safety": [SchoolSafety, SchoolHarassment, SchoolTruancy, SchoolBullying, SchoolRestraint, SchoolSeclusion],
+}
+GRADE_12_ID = 14
+
 
 class LocationService:
     def get_saus(
@@ -151,9 +167,11 @@ class LocationService:
         enrollments = self._enrollments_by_school(session, [school.id for school in schools])
         result = []
         
+        not_yet = self._not_yet_reported(session, schools)
         for school in schools:
             school_data = self._school_get(school)
             self._set_latest_enrollment(school_data, enrollments.get(school.id, []))
+            school_data.not_yet_reported = not_yet.get(school.id, [])
             result.append(school_data)
             
         return result
@@ -167,7 +185,41 @@ class LocationService:
         school_data = self._school_get(school)
         enrollments = self._enrollments_by_school(session, [school.id])
         self._set_latest_enrollment(school_data, enrollments.get(school.id, []))
+        school_data.not_yet_reported = self._not_yet_reported(session, [school]).get(school.id, [])
         return school_data
+
+    @staticmethod
+    def _not_yet_reported(session: Session, schools: List[School]) -> Dict[int, List[str]]:
+        """
+        For each school that opened after the latest school year a topic's figures cover (on or after
+        July 1 of the year the latest one ends), the topics it has no figures in yet: a new school's
+        first enrollment, test results, graduation and safety figures come in later years' files.
+        Graduation only for a school with a grade 12. Schools with figures, or without an open date,
+        aren't listed.
+        """
+        recent = [school for school in schools if school.open_date]
+        if not recent:
+            return {}
+        result: Dict[int, List[str]] = defaultdict(list)
+        for topic, tables in SCHOOL_TOPICS.items():
+            latest = max((session.exec(select(func.max(table.year))).one() or 0) for table in tables)
+            if not latest:
+                continue
+            cutoff = date(latest, 7, 1)
+            candidates = [
+                school.id for school in recent
+                if school.open_date >= cutoff
+                and (topic != "graduation" or any(grade.id == GRADE_12_ID for grade in school.grades))
+            ]
+            if not candidates:
+                continue
+            reported = set()
+            for table in tables:
+                reported.update(session.exec(select(table.school_id_fk).where(table.school_id_fk.in_(candidates)).distinct()).all())
+            for school_id in candidates:
+                if school_id not in reported:
+                    result[school_id].append(topic)
+        return result
 
     @staticmethod
     def _school_get(school: School) -> SchoolGet:
