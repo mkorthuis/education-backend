@@ -26,7 +26,7 @@ import yaml
 from sqlalchemy import text
 from sqlalchemy.engine import Connection
 
-from app.etl.core import config_path, load_config, lookup_ids, replace_rows, upsert_rows
+from app.etl.core import config_path, has_column, load_config, lookup_ids, replace_rows, upsert_rows
 
 logger = logging.getLogger("app.etl")
 
@@ -361,6 +361,11 @@ def link_tables(topics: List[dict], tables: List[dict]) -> None:
 
 def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     """Replace the library with the files' contents. (The library has no years; `years` is ignored.)"""
+    if not has_column(conn, FACT_TABLE, "fact_key"):
+        # Built from an empty database, the first reference migration (d5f7b9c1e3a4) made only the topic and
+        # fact tables; the one that adds outside schools, number tables and fact keys (a8c0e2f4b6d8) loads it
+        logger.info("The reference library's later tables aren't made yet; a later migration loads it")
+        return {}
     config = load_config(CONFIG)
     topics = read_library(config)
     tables = read_tables(config)
