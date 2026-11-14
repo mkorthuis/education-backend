@@ -1368,6 +1368,12 @@ def _open_hours(rows: list) -> Optional[str]:
     return f"{_clock(min(row.opens for row in within))} to {_clock(max(row.closes for row in within))}, {named}{flag}"
 
 
+def _address(program) -> Optional[str]:
+    """A program's street address as the search gives it: "1 Main St, North Conway, NH 03860"."""
+    place = ", ".join(part for part in ((program.city or "").strip().title(), f"NH {program.zip or ''}".strip()) if part)
+    return f"{program.street.strip()}, {place}" if program.street else None
+
+
 def _program_town(program) -> Optional[str]:
     """A program's town, with the village its address gives: "Conway (North Conway)"."""
     city = (program.city or "").strip().title()
@@ -1414,7 +1420,8 @@ def _child_care(session: Session, place: dict) -> List[dict]:
         [[_field(row, "as_of").isoformat(), *(_field(row, name) for _, name in CHILD_CARE_TOTALS)] for row in totals],
         None, CHILD_CARE_NOTE + (" Each row is one download of the search." if len(totals) > 1 else ""), key="child_care_totals",
     )]
-    programs = child_care_service.get_programs(session, district_id=None if place["level"] == "state" else place["id"])
+    # An email a program hides on its page is left out, as its page leaves it out
+    programs = child_care_service.get_programs(session, district_id=None if place["level"] == "state" else place["id"], hide_hidden_email=True)
 
     if place["level"] == "state":
         counties: Dict[str, list] = defaultdict(list)
@@ -1481,8 +1488,14 @@ def _child_care(session: Session, place: dict) -> List[dict]:
                   _yes_no(bool(p.head_start or p.early_head_start)), _open_hours(hours[p.id])] for p in shown],
                 None, CHILD_CARE_NOTE + " Age groups come from the program's listing, or where it lists none from its license or age range; "
                 "a program listing infants with no infant places, or with an age range starting at 3, may not take infants. "
-                "The search gives how to reach every program. Hours are a program's earliest opening and latest closing on the days it's open."
+                "Hours are a program's earliest opening and latest closing on the days it's open."
                 + (f" These are the {MAX_PROGRAMS} with the most places of the {len(programs)} programs." if len(programs) > MAX_PROGRAMS else ""),
+            ))
+            results.append(dataset(
+                f"How to reach the child care programs, {place['name']}", "count",
+                ["Program", "Town", "Address", "Phone", "Email", "Main contact"],
+                [[names[p.id], _program_town(p), _address(p), p.phone, p.email, p.main_contact] for p in shown],
+                None, "As each program lists them in NH DHHS's Child Care Search. A program that hides its email on its page has none here.",
             ))
             rates = child_care_service.get_rates(session, [p.id for p in shown])
             by_id = {p.id: p for p in shown}

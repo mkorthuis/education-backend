@@ -12,7 +12,7 @@ from types import SimpleNamespace
 from unittest import mock
 
 from fastapi.testclient import TestClient
-from sqlalchemy import delete, func, inspect
+from sqlalchemy import delete, func, inspect, text
 from sqlmodel import Session, select
 
 from app.api.v1.routes import ask as ask_route
@@ -555,15 +555,23 @@ class AskTests(unittest.TestCase):
 
     def test_child_care_adds_up_a_districts_towns_with_each_program(self):
         from app.service.internal.ask.data_tools import compare_places, find_places
-        totals, programs, rates, sau = get_data(self.session, "child_care", "district", 113)["datasets"]  # Conway
+        totals, programs, contacts, rates, sau = get_data(self.session, "child_care", "district", 113)["datasets"]  # Conway
         self.assertEqual(totals["rows"][0][:4], ["2026-11-13", 10, 10, 483])
         self.assertIsNone(totals["page"])
-        self.assertTrue(all(item["source"]["site"] == "new-hampshire.my.site.com" for item in (totals, programs, rates, sau)))
+        self.assertTrue(all(item["source"]["site"] == "new-hampshire.my.site.com" for item in (totals, programs, contacts, rates, sau)))
         self.assertEqual(sum(row[3] for row in programs["rows"]), 483)
         self.assertIn(["Vaughan Learning Center", "Conway (North Conway)", "Licensed group program", 120, 8, 22, "6 weeks to 12 years"],
                       [row[:7] for row in programs["rows"]])
         self.assertEqual([row[0] for row in programs["rows"] if row[2] == "Licensed family home"], ["Little Busy Bodies Educational Child Care"])
         self.assertTrue({row[0] for row in rates["rows"]} <= {row[0] for row in programs["rows"]})
+        # How to reach each one, as the search lists it, without an email the program hides on its page
+        self.assertEqual([row[0] for row in contacts["rows"]], [row[0] for row in programs["rows"]])
+        self.assertTrue(all(row[2] and row[3] for row in contacts["rows"]))
+        with Session(engine) as session:
+            hidden = {name for name, in session.exec(text(
+                "SELECT name FROM child_care_program WHERE email_hidden AND town_id_fk = (SELECT id FROM town WHERE name = 'Conway')"))}
+        self.assertTrue(hidden)
+        self.assertTrue(all(row[4] is None for row in contacts["rows"] if row[0] in hidden))
         # The other towns in SAU 9, none of which has a program
         self.assertEqual(sorted(row[0] for row in sau["rows"]), ["Albany", "Bartlett", "Chatham", "Eaton", "Hart's Location", "Jackson"])
         self.assertTrue(all(row[1] == 0 for row in sau["rows"]))
