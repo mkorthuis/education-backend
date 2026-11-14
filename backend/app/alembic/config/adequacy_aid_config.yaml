@@ -1,0 +1,1969 @@
+# New Hampshire adequacy aid ("adequate education grants"): NH DOE's calculation for each town (RSA 198:40-a to
+# 198:42), and how each town's grant and statewide education property tax (SWEPT) divide among its school districts.
+#
+# Each year has two DOE workbooks, saved in assets/adequacy-aid. The DOE's site blocks scripted downloads, so new
+# ones are saved through a browser from
+# https://www.education.nh.gov/who-we-are/division-of-education-and-analytic-resources/bureau-school-finance/state-adequacy-aid-funding
+# - summary: one row per town (column town_column is the DOE's town number, our town id) with every part of the
+#   calculation; columns maps each part to its column, and state_row is the DOE's statewide totals
+# - split: for towns in more than one district (an elementary district and a cooperative), each district's share
+#   of the town's grant and SWEPT. Every other town's grant goes to its one district (town_district_xref, or
+#   town_districts below). town_fixes corrects a town number the DOE's file gets wrong, by the row's name.
+#
+# components: every part of the calculation in any year. role: students, cost (an aid line), cost_total, swept,
+# added_aid, hold_harmless, result or basis (values used along the way).
+#
+# Each year's parameters (rates, thresholds, shares) and steps say how that year's calculation works. A step's
+# formula, over component and parameter codes, must reproduce the DOE's published value for every town to within
+# tolerance dollars, or the load stops; a component a town has no value for counts as 0. Steps without a formula
+# are explained but not checked (the DOE's rule isn't fully published). Values are stored as the DOE publishes
+# them; nothing is recomputed. A year is named by its fiscal year (2027: 2026-27), as doe_form.year is.
+#
+# To add a year: save its two workbooks, add a block (copy the previous year's, then its columns, parameters from
+# the DOE's explanation of the year, and steps), and load.
+directory: ../assets/adequacy-aid
+town_districts:
+  Concord:
+  - Concord
+# Unincorporated places in the DOE's workbooks: these, by the DOE's number, and each year's unincorporated_rows below
+# the towns (lettered a to o). They have no students, no town row and no school district; their SWEPT (and, in
+# FY2023, small SWEPT hold-harmless grants) counts in the state totals but isn't any district's.
+unincorporated:
+  73: Cambridge
+  133: Dix's Grant
+  134: Dixville
+  344: Martin's Location
+  414: Odell
+  436: Pinkham's Grant
+  514: Success
+  561: Wentworth's Location
+components:
+- code: resident_adm_base
+  name: Resident students (ADM)
+  description: Average daily membership of the students who live in the town, from the year before (charter and preschool students aren't counted)
+  unit: count
+  role: students
+- code: frl_adm
+  name: Free or reduced-price meal students
+  description: Resident students eligible for free or reduced-price meals, by average daily membership
+  unit: count
+  role: students
+- code: sped_adm
+  name: Special education students
+  description: Resident students with an individualized education program (IEP), by average daily membership
+  unit: count
+  role: students
+- code: ell_adm
+  name: English learners
+  description: Resident students receiving English language instruction, by average daily membership
+  unit: count
+  role: students
+- code: home_education_adm
+  name: Home-educated students taking district courses
+  description: 0.15 ADM for each course credit a home-educated student takes at a district school
+  unit: count
+  role: students
+- code: grade3_reading_adm
+  name: Third graders below proficient in reading
+  description: Third graders whose state reading score was below proficient and who aren't counted in another group (through FY2023)
+  unit: count
+  role: students
+- code: base_adequacy_aid
+  name: Base adequacy aid
+  description: Resident students at the base rate per student
+  unit: dollars
+  role: cost
+- code: frl_differentiated_aid
+  name: Free or reduced-price meal aid
+  description: The extra rate for each student eligible for free or reduced-price meals
+  unit: dollars
+  role: cost
+- code: sped_differentiated_aid
+  name: Special education aid
+  description: The extra rate for each special education student
+  unit: dollars
+  role: cost
+- code: ell_differentiated_aid
+  name: English learner aid
+  description: The extra rate for each English learner
+  unit: dollars
+  role: cost
+- code: home_education_aid
+  name: Home education aid
+  description: Home-educated students' course credits at the base rate
+  unit: dollars
+  role: cost
+- code: grade3_reading_differentiated_aid
+  name: Third-grade reading aid
+  description: The extra rate for each third grader below proficient in reading (through FY2023)
+  unit: dollars
+  role: cost
+- code: total_cost_adequate_education
+  name: Cost of an adequate education
+  description: 'The town''s cost of an opportunity for an adequate education: the base and extra aid added up'
+  unit: dollars
+  role: cost_total
+- code: swept
+  name: Statewide education property tax (SWEPT)
+  description: The state education tax raised in the town, which it keeps for its schools and which counts toward the cost
+  unit: dollars
+  role: swept
+- code: extraordinary_need_grant
+  name: Extraordinary need grant
+  description: Extra aid for towns with low property value per free or reduced-price meal student
+  unit: dollars
+  role: added_aid
+- code: fiscal_capacity_disparity_aid
+  name: Fiscal capacity disparity aid
+  description: Extra aid for towns with low property value per student (FY2021, and again from FY2027)
+  unit: dollars
+  role: added_aid
+- code: frl_additional_aid
+  name: Additional free or reduced-price meal aid
+  description: One-time FY2021 aid on a sliding scale for towns with more than 12% of students eligible for free or reduced-price meals
+  unit: dollars
+  role: added_aid
+- code: relief_aid_grant
+  name: Relief aid
+  description: FY2022-FY2023 aid on a sliding scale by the share of students eligible for free or reduced-price meals, prorated to $17.5 million
+    statewide
+  unit: dollars
+  role: added_aid
+- code: stabilization_grant
+  name: Stabilization grant
+  description: The town's FY2012 stabilization grant, paid through FY2023 to towns whose cost is more than their SWEPT
+  unit: dollars
+  role: added_aid
+- code: preliminary_grant
+  name: Preliminary grant
+  description: Cost minus SWEPT, plus that year's added aid; never below $0
+  unit: dollars
+  role: result
+- code: hold_harmless_grant
+  name: Hold-harmless grant
+  description: Aid that limits a drop from an earlier year's grant or estimate
+  unit: dollars
+  role: hold_harmless
+- code: hold_harmless_95pct_grant
+  name: 95% guarantee
+  description: Aid that brings the final grant up to 95% of the November estimate
+  unit: dollars
+  role: hold_harmless
+- code: swept_hold_harmless_grant
+  name: SWEPT reduction hold-harmless grant
+  description: FY2023 aid for towns whose total grant was lower with the $100 million SWEPT reduction than without it
+  unit: dollars
+  role: hold_harmless
+- code: adequacy_grant
+  name: Adequacy grant
+  description: What the state pays the town's school district or districts
+  unit: dollars
+  role: result
+- code: final_total_state_grant
+  name: Total state aid
+  description: The adequacy grant plus the SWEPT the town keeps
+  unit: dollars
+  role: result
+- code: equalized_valuation
+  name: Equalized valuation
+  description: The town's property value at full market value, including utilities, railroads and payments in lieu of taxes
+  unit: dollars
+  role: basis
+- code: ev_per_frl_pupil
+  name: Valuation per free or reduced-price meal student
+  description: 'Equalized valuation divided by free or reduced-price meal students: the measure for extraordinary need grants'
+  unit: dollars_per_pupil
+  role: basis
+- code: extraordinary_need_aid_per_frl_adm
+  name: Extraordinary need aid per student
+  description: The extraordinary need grant per free or reduced-price meal student, from the sliding scale
+  unit: dollars_per_pupil
+  role: basis
+- code: ev_per_pupil
+  name: Valuation per student
+  description: 'Equalized valuation divided by resident students: the measure for fiscal capacity disparity aid'
+  unit: dollars_per_pupil
+  role: basis
+- code: frl_pct_eligible
+  name: Share eligible for free or reduced-price meals
+  description: Free or reduced-price meal students as a share of all students (FY2021)
+  unit: fraction
+  role: basis
+- code: relief_aid_frl_pct
+  name: Share eligible for free or reduced-price meals
+  description: Free or reduced-price meal students as a share of resident students, for relief aid
+  unit: fraction
+  role: basis
+- code: relief_aid_unprorated
+  name: Relief aid before proration
+  description: Relief aid from the sliding scale, before it's prorated to $17.5 million statewide
+  unit: dollars
+  role: basis
+- code: fy2012_stabilization_grant
+  name: FY2012 stabilization amount
+  description: The stabilization grant the town received in FY2012, the basis of later stabilization grants
+  unit: dollars
+  role: basis
+- code: hold_harmless_95pct_of_prior_estimate
+  name: 95% of the November estimate
+  description: 'The minimum grant: 95% of the November estimate for the year (FY2020-FY2023)'
+  unit: dollars
+  role: basis
+- code: prior_estimate_nov2018
+  name: November 2018 estimate
+  description: The November 15, 2018 estimate of the FY2020 grant
+  unit: dollars
+  role: basis
+- code: prior_estimate_nov2019
+  name: November 2019 estimate
+  description: The November 15, 2019 estimate of the FY2021 grant
+  unit: dollars
+  role: basis
+- code: prior_estimate_nov2022
+  name: November 2022 estimate of FY2024
+  description: The November 15, 2022 estimate of the FY2024 grant, the basis of the FY2024-FY2025 hold-harmless grant
+  unit: dollars
+  role: basis
+- code: prior_estimate_nov2022_of_fy2024
+  name: November 2022 estimate of FY2024
+  description: The November 15, 2022 estimate of the FY2024 grant, the basis of the FY2025 hold-harmless grant
+  unit: dollars
+  role: basis
+- code: hold_harmless_104pct_of_prior_estimate
+  name: 104% of the November 2022 estimate
+  description: The level the FY2024-FY2025 hold-harmless grant brings a town up to
+  unit: dollars
+  role: basis
+- code: hold_harmless_95pct_level_nov2023_estimate
+  name: November 2023 estimate
+  description: The November 15, 2023 estimate of the FY2025 grant, 95% of which is guaranteed
+  unit: dollars
+  role: basis
+- code: hold_harmless_95pct_level_nov2024_estimate
+  name: November 2024 estimate
+  description: The November 15, 2024 estimate of the FY2026 grant, 95% of which is guaranteed
+  unit: dollars
+  role: basis
+- code: hold_harmless_95pct_level_nov2025_estimate
+  name: November 2025 estimate
+  description: The November 15, 2025 estimate of the FY2027 grant, 95% of which is guaranteed
+  unit: dollars
+  role: basis
+- code: fy2025_hold_harmless_grant
+  name: FY2025 hold-harmless grant
+  description: The town's FY2025 hold-harmless grant, the basis of the FY2026-FY2027 hold-harmless grants
+  unit: dollars
+  role: basis
+- code: swept_without_100m_reduction
+  name: SWEPT without the $100 million reduction
+  description: What the town's SWEPT would have been in FY2023 had $363 million been raised statewide
+  unit: dollars
+  role: basis
+- code: total_grant_for_swept_hold_harmless_test
+  name: Total grant without the SWEPT reduction
+  description: The FY2023 total grant with the $363 million SWEPT, compared to decide the SWEPT hold-harmless grant
+  unit: dollars
+  role: basis
+- code: adm_2019_20
+  name: Resident students, 2019-20
+  description: Average daily membership in 2019-20, compared during COVID
+  unit: count
+  role: basis
+- code: adm_2020_21
+  name: Resident students, 2020-21
+  description: Average daily membership in 2020-21, compared during COVID
+  unit: count
+  role: basis
+- code: frl_adm_2019_20
+  name: Free or reduced-price meal students, 2019-20
+  description: Compared during COVID
+  unit: count
+  role: basis
+- code: frl_adm_2020_21
+  name: Free or reduced-price meal students, 2020-21
+  description: Compared during COVID
+  unit: count
+  role: basis
+- code: frl_adm_2021_22
+  name: Free or reduced-price meal students, 2021-22
+  description: Compared with the pre-COVID ratio in FY2023
+  unit: count
+  role: basis
+- code: frl_pct_2019_20
+  name: Share eligible for free or reduced-price meals, 2019-20
+  description: The pre-COVID share used to rebuild FY2023's counts
+  unit: fraction
+  role: basis
+- code: frl_adm_modified_precovid_ratio
+  name: Free or reduced-price meal students by the pre-COVID share
+  description: Resident students times the 2019-20 share (FY2023)
+  unit: count
+  role: basis
+- code: sped_adm_2019_20
+  name: Special education students, 2019-20
+  description: Compared during COVID
+  unit: count
+  role: basis
+- code: sped_adm_2020_21
+  name: Special education students, 2020-21
+  description: Compared during COVID
+  unit: count
+  role: basis
+- code: ell_adm_2019_20
+  name: English learners, 2019-20
+  description: Compared during COVID
+  unit: count
+  role: basis
+- code: ell_adm_2020_21
+  name: English learners, 2020-21
+  description: Compared during COVID
+  unit: count
+  role: basis
+- code: grade3_reading_adm_2018_19
+  name: Third graders below proficient in reading, 2018-19
+  description: Compared during COVID
+  unit: count
+  role: basis
+- code: grade3_reading_adm_2020_21
+  name: Third graders below proficient in reading, 2020-21
+  description: Compared during COVID
+  unit: count
+  role: basis
+years:
+  2020:
+    school_year: 2019-20
+    status: final
+    as_of: '2020-03-13'
+    explained_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2020_explained.pdf
+    summary:
+      file: ad_ed_aid_fy2020_final.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2020-04/ad_ed_aid_fy2020_final.xlsx
+      sheet: 'FY2020 Muni Rpt '
+      town_column: D
+      first_row: 9
+      last_row: 253
+      state_row: 7
+      unincorporated_rows: [256, 270]
+      columns:
+        resident_adm_base: F
+        base_adequacy_aid: G
+        frl_adm: H
+        frl_differentiated_aid: I
+        sped_adm: J
+        sped_differentiated_aid: K
+        ell_adm: L
+        ell_differentiated_aid: M
+        grade3_reading_adm: N
+        grade3_reading_differentiated_aid: O
+        total_cost_adequate_education: P
+        swept: Q
+        preliminary_grant: R
+        fy2012_stabilization_grant: S
+        stabilization_grant: T
+        prior_estimate_nov2018: U
+        hold_harmless_95pct_of_prior_estimate: V
+        adequacy_grant: W
+    split:
+      file: ad_ed_aid_coop_fy2020_final.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2020-04/ad_ed_aid_coop_fy2020_final.xlsx
+      sheet: FY20-DRA-split totals
+      first_row: 8
+      last_row: 84
+      columns:
+        district: A
+        town: B
+        name: C
+        adequacy_grant: F
+        swept_retained: G
+        total: H
+      town_fixes:
+        Dresden (Hanover): 233
+    parameters:
+      base_per_pupil:
+        name: Base adequacy per student
+        value: 3708.78
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(a); DOE FY2020 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2020_explained.pdf
+      frl_per_pupil:
+        name: Extra per free or reduced-price meal student
+        value: 1854.38
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(b); DOE FY2020 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2020_explained.pdf
+      sped_per_pupil:
+        name: Extra per special education student
+        value: 1995.21
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(c); DOE FY2020 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2020_explained.pdf
+      ell_per_pupil:
+        name: Extra per English learner
+        value: 725.63
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(d); DOE FY2020 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2020_explained.pdf
+      grade3_reading_per_pupil:
+        name: Extra per third grader below proficient in reading
+        value: 725.63
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as in effect before July 1, 2023); DOE FY2020 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2020_explained.pdf
+      swept_statewide:
+        name: SWEPT raised statewide
+        value: 363000000
+        unit: dollars
+        citation: RSA 76:3
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2020_explained.pdf
+      swept_rate:
+        name: SWEPT rate per $1,000 of equalized valuation (April 1, 2017)
+        value: 2.06
+        unit: dollars_per_thousand
+        citation: RSA 76:3, 76:8; DOE FY2020 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2020_explained.pdf
+    steps:
+    - component: base_adequacy_aid
+      formula: resident_adm_base * base_per_pupil
+      tolerance: 0.02
+      explanation: Every resident student at the base rate, $3,708.78 per student
+      citation: RSA 198:40-a, II(a)
+    - component: frl_differentiated_aid
+      formula: frl_adm * frl_per_pupil
+      tolerance: 0.02
+      explanation: $1,854.38 more for each student eligible for free or reduced-price meals
+      citation: RSA 198:40-a, II(b)
+    - component: sped_differentiated_aid
+      formula: sped_adm * sped_per_pupil
+      tolerance: 0.02
+      explanation: $1,995.21 more for each special education student
+      citation: RSA 198:40-a, II(c)
+    - component: ell_differentiated_aid
+      formula: ell_adm * ell_per_pupil
+      tolerance: 0.02
+      explanation: $725.63 more for each English learner
+      citation: RSA 198:40-a, II(d)
+    - component: grade3_reading_differentiated_aid
+      formula: grade3_reading_adm * grade3_reading_per_pupil
+      tolerance: 0.02
+      explanation: $725.63 more for each third grader below proficient in reading
+      citation: RSA 198:40-a, II (before July 1, 2023)
+    - component: total_cost_adequate_education
+      formula: base_adequacy_aid + frl_differentiated_aid + sped_differentiated_aid + ell_differentiated_aid + grade3_reading_differentiated_aid
+      tolerance: 0.02
+      explanation: 'The town''s cost of an adequate education: the lines above added up'
+      citation: RSA 198:40-a, III
+    - component: swept
+      formula: null
+      tolerance: 0.02
+      explanation: The statewide education property tax raised in the town ($2.06 per $1,000 of its equalized valuation), which it keeps and which
+        counts toward the cost
+      citation: RSA 76:3, 76:8; RSA 198:41, I(b)
+    - component: preliminary_grant
+      formula: max(0, total_cost_adequate_education - swept)
+      tolerance: 0.02
+      explanation: Cost minus SWEPT, never below $0
+      citation: RSA 198:41, I
+    - component: stabilization_grant
+      formula: fy2012_stabilization_grant * (preliminary_grant > 0) * (resident_adm_base > 0)
+      tolerance: 0.02
+      explanation: The town's FY2012 stabilization grant, at 100%, if its preliminary grant and students are above zero
+      citation: RSA 198:41, III; DOE FY2020 explanation
+    - component: adequacy_grant
+      formula: max(preliminary_grant + stabilization_grant, hold_harmless_95pct_of_prior_estimate)
+      tolerance: 0.02
+      explanation: The preliminary grant plus stabilization, but at least 95% of the November 15, 2018 estimate
+      citation: RSA 198:41, VI
+  2021:
+    school_year: 2020-21
+    status: final
+    as_of: '2021-04-01'
+    explained_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+    summary:
+      file: ad_ed_aid_fy2021.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2020-04/ad_ed_aid_fy2021.xlsx
+      sheet: 'FY2021 Muni Rpt '
+      town_column: D
+      first_row: 9
+      last_row: 253
+      state_row: 7
+      unincorporated_rows: [256, 270]
+      columns:
+        resident_adm_base: F
+        base_adequacy_aid: G
+        frl_adm: H
+        frl_differentiated_aid: I
+        sped_adm: J
+        sped_differentiated_aid: K
+        ell_adm: L
+        ell_differentiated_aid: M
+        grade3_reading_adm: N
+        grade3_reading_differentiated_aid: O
+        home_education_adm: P
+        home_education_aid: Q
+        total_cost_adequate_education: R
+        swept: S
+        frl_pct_eligible: T
+        frl_additional_aid: U
+        fiscal_capacity_disparity_aid: V
+        preliminary_grant: W
+        fy2012_stabilization_grant: X
+        stabilization_grant: Y
+        prior_estimate_nov2019: Z
+        hold_harmless_95pct_of_prior_estimate: AA
+        adequacy_grant: AB
+    split:
+      file: ad_ed_aid_coop_fy2021.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2020-04/ad_ed_aid_coop_fy2021.xlsx
+      sheet: FY21-DRA-split totals
+      first_row: 8
+      last_row: 84
+      columns:
+        district: A
+        town: B
+        name: C
+        adequacy_grant: F
+        swept_retained: G
+        total: H
+      town_fixes:
+        Dresden (Hanover): 233
+    parameters:
+      base_per_pupil:
+        name: Base adequacy per student
+        value: 3708.78
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(a); DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      frl_per_pupil:
+        name: Extra per free or reduced-price meal student
+        value: 1854.38
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(b); DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      sped_per_pupil:
+        name: Extra per special education student
+        value: 1995.21
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(c); DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      ell_per_pupil:
+        name: Extra per English learner
+        value: 725.63
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(d); DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      grade3_reading_per_pupil:
+        name: Extra per third grader below proficient in reading
+        value: 725.63
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as in effect before July 1, 2023); DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      swept_statewide:
+        name: SWEPT raised statewide
+        value: 363000000
+        unit: dollars
+        citation: RSA 76:3
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      swept_rate:
+        name: SWEPT rate per $1,000 of equalized valuation (April 1, 2018)
+        value: 1.925
+        unit: dollars_per_thousand
+        citation: RSA 76:3, 76:8; DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      fcda_floor:
+        name: Full fiscal capacity disparity aid at or below this valuation per student
+        value: 350000
+        unit: dollars_per_pupil
+        citation: DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      fcda_ceiling:
+        name: No fiscal capacity disparity aid above this valuation per student
+        value: 1000000
+        unit: dollars_per_pupil
+        citation: DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      fcda_max_per_pupil:
+        name: Most fiscal capacity disparity aid per student
+        value: 1750
+        unit: dollars_per_pupil
+        citation: DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      fcda_factor:
+        name: Disparity aid per dollar of valuation below the ceiling
+        value: 0.0027
+        unit: dollars_per_dollar
+        citation: DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      frl_additional_min_share:
+        name: Additional F&R aid starts above this share of F&R students
+        value: 0.12
+        unit: fraction
+        citation: DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      frl_additional_min_per_pupil:
+        name: Least additional aid per F&R student
+        value: 87.5
+        unit: dollars_per_pupil
+        citation: DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+      frl_additional_max_per_pupil:
+        name: Most additional aid per F&R student
+        value: 350
+        unit: dollars_per_pupil
+        citation: DOE FY2021 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/fy2021_explained.pdf
+    steps:
+    - component: base_adequacy_aid
+      formula: resident_adm_base * base_per_pupil
+      tolerance: 0.02
+      explanation: Every resident student at the base rate, $3,708.78 per student
+      citation: RSA 198:40-a, II(a)
+    - component: frl_differentiated_aid
+      formula: frl_adm * frl_per_pupil
+      tolerance: 0.02
+      explanation: $1,854.38 more for each student eligible for free or reduced-price meals
+      citation: RSA 198:40-a, II(b)
+    - component: sped_differentiated_aid
+      formula: sped_adm * sped_per_pupil
+      tolerance: 0.02
+      explanation: $1,995.21 more for each special education student
+      citation: RSA 198:40-a, II(c)
+    - component: ell_differentiated_aid
+      formula: ell_adm * ell_per_pupil
+      tolerance: 0.02
+      explanation: $725.63 more for each English learner
+      citation: RSA 198:40-a, II(d)
+    - component: grade3_reading_differentiated_aid
+      formula: grade3_reading_adm * grade3_reading_per_pupil
+      tolerance: 0.02
+      explanation: $725.63 more for each third grader below proficient in reading
+      citation: RSA 198:40-a, II (before July 1, 2023)
+    - component: home_education_aid
+      formula: home_education_adm * base_per_pupil
+      tolerance: 0.02
+      explanation: Home-educated students' district course credits, 0.15 ADM each, at the base rate
+      citation: DOE FY2021 explanation
+    - component: total_cost_adequate_education
+      formula: base_adequacy_aid + frl_differentiated_aid + sped_differentiated_aid + ell_differentiated_aid + grade3_reading_differentiated_aid
+        + home_education_aid
+      tolerance: 0.02
+      explanation: 'The town''s cost of an adequate education: the lines above added up'
+      citation: RSA 198:40-a, III
+    - component: swept
+      formula: null
+      tolerance: 0.02
+      explanation: The statewide education property tax raised in the town ($1.925 per $1,000 of its equalized valuation), which it keeps and
+        which counts toward the cost
+      citation: RSA 76:3, 76:8; RSA 198:41, I(b)
+    - component: frl_additional_aid
+      formula: null
+      tolerance: 0.02
+      explanation: One-time aid of $87.50 to $350 per free or reduced-price meal student for towns where more than 12% of students are eligible
+      citation: DOE FY2021 explanation
+    - component: fiscal_capacity_disparity_aid
+      formula: null
+      tolerance: 0.02
+      explanation: One-time aid of up to $1,750 per student for towns with equalized valuation of $1 million or less per student
+      citation: DOE FY2021 explanation
+    - component: preliminary_grant
+      formula: max(0, total_cost_adequate_education - swept + frl_additional_aid + fiscal_capacity_disparity_aid)
+      tolerance: 0.02
+      explanation: Cost minus SWEPT plus the one-time aid, never below $0
+      citation: RSA 198:41, I; DOE FY2021 explanation
+    - component: stabilization_grant
+      formula: fy2012_stabilization_grant * (preliminary_grant > 0) * (resident_adm_base > 0)
+      tolerance: 0.02
+      explanation: The town's FY2012 stabilization grant, at 100%, if its preliminary grant and students are above zero
+      citation: RSA 198:41, III; DOE FY2021 explanation
+    - component: adequacy_grant
+      formula: max(preliminary_grant + stabilization_grant, hold_harmless_95pct_of_prior_estimate)
+      tolerance: 0.02
+      explanation: The preliminary grant plus stabilization, but at least 95% of the November 15, 2019 estimate
+      citation: RSA 198:41, VI
+  2022:
+    school_year: 2021-22
+    status: final
+    as_of: '2022-04-01'
+    explained_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+    summary:
+      file: adequacy-fy-22-muni-summary.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy-22-muni-summary.xlsx
+      sheet: FY2022 Muni Rpt
+      town_column: D
+      first_row: 8
+      last_row: 252
+      state_row: 6
+      unincorporated_rows: [255, 269]
+      columns:
+        adm_2019_20: F
+        adm_2020_21: G
+        resident_adm_base: H
+        base_adequacy_aid: I
+        frl_adm_2019_20: J
+        frl_adm_2020_21: K
+        frl_adm: L
+        frl_differentiated_aid: M
+        sped_adm_2019_20: N
+        sped_adm_2020_21: O
+        sped_adm: P
+        sped_differentiated_aid: Q
+        ell_adm_2019_20: R
+        ell_adm_2020_21: S
+        ell_adm: T
+        ell_differentiated_aid: U
+        grade3_reading_adm_2018_19: V
+        grade3_reading_adm_2020_21: W
+        grade3_reading_adm: X
+        grade3_reading_differentiated_aid: Y
+        total_cost_adequate_education: Z
+        swept: AA
+        relief_aid_frl_pct: AB
+        relief_aid_unprorated: AC
+        relief_aid_grant: AD
+        preliminary_grant: AE
+        fy2012_stabilization_grant: AF
+        stabilization_grant: AG
+        hold_harmless_95pct_of_prior_estimate: AH
+        adequacy_grant: AI
+        final_total_state_grant: AJ
+    split:
+      file: adequacy-fy-22-split-town-coops.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy-22-split-town-coops.xlsx
+      sheet: FY22-DRA-split totals
+      first_row: 8
+      last_row: 84
+      columns:
+        district: A
+        town: B
+        name: C
+        adequacy_grant: F
+        swept_retained: G
+        total: H
+    parameters:
+      base_per_pupil:
+        name: Base adequacy per student
+        value: 3786.66
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(a); DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      frl_per_pupil:
+        name: Extra per free or reduced-price meal student
+        value: 1893.32
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(b); DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      sped_per_pupil:
+        name: Extra per special education student
+        value: 2037.11
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(c); DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      ell_per_pupil:
+        name: Extra per English learner
+        value: 740.87
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(d); DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      grade3_reading_per_pupil:
+        name: Extra per third grader below proficient in reading
+        value: 740.87
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as in effect before July 1, 2023); DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      swept_statewide:
+        name: SWEPT raised statewide
+        value: 363000000
+        unit: dollars
+        citation: RSA 76:3
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      swept_rate:
+        name: SWEPT rate per $1,000 of equalized valuation (April 1, 2019)
+        value: 1.825
+        unit: dollars_per_thousand
+        citation: RSA 76:3, 76:8; DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      relief_min_share:
+        name: Relief aid starts at this share of F&R students
+        value: 0.12
+        unit: fraction
+        citation: DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      relief_max_share:
+        name: Relief aid is greatest at this share of F&R students
+        value: 0.48
+        unit: fraction
+        citation: DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      relief_min_per_pupil:
+        name: Relief aid per F&R student at 12%
+        value: 150
+        unit: dollars_per_pupil
+        citation: DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      relief_max_per_pupil:
+        name: Relief aid per F&R student at 48% or more
+        value: 600
+        unit: dollars_per_pupil
+        citation: DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      relief_statewide:
+        name: Relief aid statewide
+        value: 17500000
+        unit: dollars
+        citation: DOE FY2022 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+      relief_aid_proration:
+        name: 'Relief aid prorated: $17.5 million divided by $19,654,161.86 before proration'
+        value: 0.8903966561716309
+        unit: fraction
+        citation: Derived from the DOE FY2022 workbook's state totals
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2022-explained.pdf
+    steps:
+    - component: resident_adm_base
+      formula: max(adm_2019_20, adm_2020_21)
+      tolerance: 0.02
+      explanation: 'Resident students: the greater of 2019-20 and 2020-21, because of COVID'
+      citation: DOE FY2022 explanation
+    - component: frl_adm
+      formula: max(frl_adm_2019_20, frl_adm_2020_21)
+      tolerance: 0.02
+      explanation: 'Free or reduced-price meal students: the greater of 2019-20 and 2020-21'
+      citation: DOE FY2022 explanation
+    - component: sped_adm
+      formula: max(sped_adm_2019_20, sped_adm_2020_21)
+      tolerance: 0.02
+      explanation: 'Special education students: the greater of 2019-20 and 2020-21'
+      citation: DOE FY2022 explanation
+    - component: ell_adm
+      formula: max(ell_adm_2019_20, ell_adm_2020_21)
+      tolerance: 0.02
+      explanation: 'English learners: the greater of 2019-20 and 2020-21'
+      citation: DOE FY2022 explanation
+    - component: grade3_reading_adm
+      formula: max(grade3_reading_adm_2018_19, grade3_reading_adm_2020_21)
+      tolerance: 0.02
+      explanation: 'Third graders below proficient: the greater of 2018-19 and 2020-21'
+      citation: DOE FY2022 explanation
+    - component: base_adequacy_aid
+      formula: resident_adm_base * base_per_pupil
+      tolerance: 0.02
+      explanation: Every resident student at the base rate, $3,786.66 per student
+      citation: RSA 198:40-a, II(a)
+    - component: frl_differentiated_aid
+      formula: frl_adm * frl_per_pupil
+      tolerance: 0.02
+      explanation: $1,893.32 more for each student eligible for free or reduced-price meals
+      citation: RSA 198:40-a, II(b)
+    - component: sped_differentiated_aid
+      formula: sped_adm * sped_per_pupil
+      tolerance: 0.02
+      explanation: $2,037.11 more for each special education student
+      citation: RSA 198:40-a, II(c)
+    - component: ell_differentiated_aid
+      formula: ell_adm * ell_per_pupil
+      tolerance: 0.02
+      explanation: $740.87 more for each English learner
+      citation: RSA 198:40-a, II(d)
+    - component: grade3_reading_differentiated_aid
+      formula: grade3_reading_adm * grade3_reading_per_pupil
+      tolerance: 0.02
+      explanation: $740.87 more for each third grader below proficient in reading
+      citation: RSA 198:40-a, II (before July 1, 2023)
+    - component: total_cost_adequate_education
+      formula: base_adequacy_aid + frl_differentiated_aid + sped_differentiated_aid + ell_differentiated_aid + grade3_reading_differentiated_aid
+      tolerance: 0.02
+      explanation: 'The town''s cost of an adequate education: the lines above added up'
+      citation: RSA 198:40-a, III
+    - component: swept
+      formula: null
+      tolerance: 0.02
+      explanation: The statewide education property tax raised in the town ($1.825 per $1,000 of its equalized valuation), which it keeps and
+        which counts toward the cost
+      citation: RSA 76:3, 76:8; RSA 198:41, I(b)
+    - component: relief_aid_unprorated
+      formula: null
+      tolerance: 0.02
+      explanation: Relief aid from $150 per free or reduced-price meal student at 12% of students to $600 at 48% or more
+      citation: DOE FY2022 explanation
+    - component: relief_aid_grant
+      formula: relief_aid_unprorated * relief_aid_proration
+      tolerance: 0.02
+      explanation: Relief aid, prorated so it totals $17.5 million statewide
+      citation: DOE FY2022 explanation
+    - component: preliminary_grant
+      formula: max(0, total_cost_adequate_education - swept) + relief_aid_grant
+      tolerance: 0.02
+      explanation: Cost minus SWEPT (never below $0), plus relief aid
+      citation: RSA 198:41, I; DOE FY2022 explanation
+    - component: stabilization_grant
+      formula: fy2012_stabilization_grant * (resident_adm_base > 0) * (total_cost_adequate_education > swept)
+      tolerance: 0.02
+      explanation: The town's FY2012 stabilization grant, at 100%, if it has students and its cost is more than its SWEPT
+      citation: RSA 198:41, III; DOE FY2022 explanation
+    - component: adequacy_grant
+      formula: max(preliminary_grant + stabilization_grant, hold_harmless_95pct_of_prior_estimate)
+      tolerance: 0.02
+      explanation: The preliminary grant plus stabilization, but at least 95% of the November 15, 2020 estimate
+      citation: RSA 198:41, VI
+    - component: final_total_state_grant
+      formula: adequacy_grant + swept
+      tolerance: 0.02
+      explanation: 'Total state aid: the adequacy grant plus the SWEPT the town keeps'
+      citation: DOE FY2022 workbook
+  2023:
+    school_year: 2022-23
+    status: final
+    as_of: '2023-04-01'
+    explained_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+    summary:
+      file: adequacy-fy23-muni-estimate-summary.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy23-muni-estimate-summary.xlsx
+      sheet: FY2023 Muni Rpt
+      town_column: D
+      first_row: 8
+      last_row: 252
+      state_row: 6
+      unincorporated_rows: [255, 269]
+      columns:
+        resident_adm_base: F
+        base_adequacy_aid: G
+        adm_2019_20: H
+        frl_adm_2019_20: I
+        frl_pct_2019_20: J
+        frl_adm_modified_precovid_ratio: K
+        frl_adm_2021_22: L
+        frl_adm: M
+        frl_differentiated_aid: N
+        sped_adm: O
+        sped_differentiated_aid: P
+        ell_adm: Q
+        ell_differentiated_aid: R
+        grade3_reading_adm: S
+        grade3_reading_differentiated_aid: T
+        total_cost_adequate_education: U
+        swept: V
+        relief_aid_frl_pct: W
+        relief_aid_unprorated: X
+        relief_aid_grant: Y
+        ev_per_frl_pupil: Z
+        extraordinary_need_grant: AA
+        preliminary_grant: AD
+        total_grant_for_swept_hold_harmless_test: AE
+        swept_without_100m_reduction: AF
+        swept_hold_harmless_grant: AG
+        fy2012_stabilization_grant: AH
+        stabilization_grant: AI
+        hold_harmless_95pct_of_prior_estimate: AJ
+        adequacy_grant: AL
+        final_total_state_grant: AN
+        hold_harmless_grant: AK
+    split:
+      file: adequacy-fy23-split-town-coops.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy23-split-town-coops.xlsx
+      sheet: FY23-DRA-split totals
+      first_row: 8
+      last_row: 84
+      columns:
+        district: B
+        town: C
+        name: D
+        adequacy_grant: G
+        swept_retained: H
+        total: I
+    parameters:
+      base_per_pupil:
+        name: Base adequacy per student
+        value: 3786.66
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(a); DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      frl_per_pupil:
+        name: Extra per free or reduced-price meal student
+        value: 1893.32
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(b); DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      sped_per_pupil:
+        name: Extra per special education student
+        value: 2037.11
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(c); DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      ell_per_pupil:
+        name: Extra per English learner
+        value: 740.87
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II(d); DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      grade3_reading_per_pupil:
+        name: Extra per third grader below proficient in reading
+        value: 740.87
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as in effect before July 1, 2023); DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      swept_statewide:
+        name: SWEPT raised statewide
+        value: 263000000
+        unit: dollars
+        citation: RSA 76:3; $100 million less for FY2023 only (2022 budget)
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      swept_rate:
+        name: SWEPT rate per $1,000 of equalized valuation (April 1, 2020)
+        value: 1.23
+        unit: dollars_per_thousand
+        citation: RSA 76:3, 76:8; DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      relief_min_share:
+        name: Relief aid starts at this share of F&R students
+        value: 0.12
+        unit: fraction
+        citation: DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      relief_max_share:
+        name: Relief aid is greatest at this share of F&R students
+        value: 0.48
+        unit: fraction
+        citation: DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      relief_min_per_pupil:
+        name: Relief aid per F&R student at 12%
+        value: 150
+        unit: dollars_per_pupil
+        citation: DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      relief_max_per_pupil:
+        name: Relief aid per F&R student at 48% or more
+        value: 600
+        unit: dollars_per_pupil
+        citation: DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      relief_statewide:
+        name: Relief aid statewide
+        value: 17500000
+        unit: dollars
+        citation: DOE FY2023 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      relief_aid_proration:
+        name: 'Relief aid prorated: $17.5 million divided by $18,875,405.02 before proration'
+        value: 0.9271324234609722
+        unit: fraction
+        citation: Derived from the DOE FY2023 workbook's state totals
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      eng_floor:
+        name: Full extraordinary need grant below this valuation per F&R student
+        value: 1000000
+        unit: dollars_per_pupil
+        citation: DOE FY2023 workbook header ($650 per F&R student; the DOE's written explanation says $600, but every town's grant matches $650)
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      eng_ceiling:
+        name: No extraordinary need grant above this valuation per F&R student
+        value: 6000000
+        unit: dollars_per_pupil
+        citation: DOE FY2023 workbook header ($650 per F&R student; the DOE's written explanation says $600, but every town's grant matches $650)
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      eng_max_per_pupil:
+        name: Most extraordinary need aid per F&R student
+        value: 650
+        unit: dollars_per_pupil
+        citation: DOE FY2023 workbook header ($650 per F&R student; the DOE's written explanation says $600, but every town's grant matches $650)
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+      eng_factor:
+        name: Extraordinary need aid per dollar of valuation below the ceiling
+        value: 0.00013
+        unit: dollars_per_dollar
+        citation: DOE FY2023 workbook header ($650 per F&R student; the DOE's written explanation says $600, but every town's grant matches $650)
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-grants-explained-fy23.pdf
+    steps:
+    - component: frl_pct_2019_20
+      formula: frl_adm_2019_20 / adm_2019_20
+      tolerance: 0.02
+      explanation: The town's share of free or reduced-price meal students in 2019-20, before COVID
+      citation: DOE FY2023 explanation
+    - component: frl_adm_modified_precovid_ratio
+      formula: frl_pct_2019_20 * resident_adm_base
+      tolerance: 0.02
+      explanation: Resident students times that pre-COVID share
+      citation: DOE FY2023 explanation
+    - component: frl_adm
+      formula: max(frl_adm_2021_22, frl_adm_modified_precovid_ratio)
+      tolerance: 0.02
+      explanation: 'Free or reduced-price meal students: the greater of 2021-22''s count and the pre-COVID share'
+      citation: DOE FY2023 explanation
+    - component: base_adequacy_aid
+      formula: resident_adm_base * base_per_pupil
+      tolerance: 0.02
+      explanation: Every resident student at the base rate, $3,786.66 per student
+      citation: RSA 198:40-a, II(a)
+    - component: frl_differentiated_aid
+      formula: frl_adm * frl_per_pupil
+      tolerance: 0.02
+      explanation: $1,893.32 more for each student eligible for free or reduced-price meals
+      citation: RSA 198:40-a, II(b)
+    - component: sped_differentiated_aid
+      formula: sped_adm * sped_per_pupil
+      tolerance: 0.02
+      explanation: $2,037.11 more for each special education student
+      citation: RSA 198:40-a, II(c)
+    - component: ell_differentiated_aid
+      formula: ell_adm * ell_per_pupil
+      tolerance: 0.02
+      explanation: $740.87 more for each English learner
+      citation: RSA 198:40-a, II(d)
+    - component: grade3_reading_differentiated_aid
+      formula: grade3_reading_adm * grade3_reading_per_pupil
+      tolerance: 0.02
+      explanation: $740.87 more for each third grader below proficient in reading
+      citation: RSA 198:40-a, II (before July 1, 2023)
+    - component: total_cost_adequate_education
+      formula: base_adequacy_aid + frl_differentiated_aid + sped_differentiated_aid + ell_differentiated_aid + grade3_reading_differentiated_aid
+      tolerance: 0.02
+      explanation: 'The town''s cost of an adequate education: the lines above added up'
+      citation: RSA 198:40-a, III
+    - component: swept
+      formula: null
+      tolerance: 0.02
+      explanation: The statewide education property tax raised in the town ($1.23 per $1,000 of its equalized valuation), which it keeps and which
+        counts toward the cost
+      citation: RSA 76:3, 76:8; RSA 198:41, I(b)
+    - component: relief_aid_unprorated
+      formula: null
+      tolerance: 0.02
+      explanation: Relief aid from $150 per free or reduced-price meal student at 12% of students to $600 at 48% or more
+      citation: DOE FY2023 explanation
+    - component: relief_aid_grant
+      formula: relief_aid_unprorated * relief_aid_proration
+      tolerance: 0.02
+      explanation: Relief aid, prorated so it totals $17.5 million statewide
+      citation: DOE FY2023 explanation
+    - component: extraordinary_need_grant
+      formula: frl_adm * clamp(eng_factor * (eng_ceiling - ev_per_frl_pupil), 0, eng_max_per_pupil)
+      tolerance: 0.02
+      explanation: 'Towns with low property value per free or reduced-price meal student get up to $650 per such student: the full amount below
+        $1,000,000 of valuation per student, falling to $0 at $6,000,000'
+      citation: DOE FY2023 workbook and explanation
+    - component: preliminary_grant
+      formula: max(0, total_cost_adequate_education - swept) + relief_aid_grant + extraordinary_need_grant
+      tolerance: 0.02
+      explanation: Cost minus SWEPT (never below $0), plus relief aid and the extraordinary need grant
+      citation: RSA 198:41, I; DOE FY2023 explanation
+    - component: stabilization_grant
+      formula: fy2012_stabilization_grant * (resident_adm_base > 0) * (total_cost_adequate_education > swept)
+      tolerance: 0.02
+      explanation: The town's FY2012 stabilization grant, at 100%, if it has students and its cost is more than its SWEPT
+      citation: RSA 198:41, III; DOE FY2023 explanation
+    - component: swept_hold_harmless_grant
+      formula: null
+      tolerance: 0.02
+      explanation: SWEPT was cut to $263 million statewide for FY2023; towns whose total grant was lower as a result got the difference
+      citation: DOE FY2023 explanation
+    - component: adequacy_grant
+      formula: max(preliminary_grant + stabilization_grant + swept_hold_harmless_grant, hold_harmless_95pct_of_prior_estimate)
+      tolerance: 0.02
+      explanation: The preliminary grant plus stabilization and the SWEPT hold-harmless grant, but at least 95% of the November estimate
+      citation: RSA 198:41, VI
+    - component: final_total_state_grant
+      formula: adequacy_grant + swept
+      tolerance: 0.02
+      explanation: 'Total state aid: the adequacy grant plus the SWEPT the town keeps'
+      citation: DOE FY2023 workbook
+  2024:
+    school_year: 2023-24
+    status: final
+    as_of: '2024-04-01'
+    explained_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+    summary:
+      file: adequacy-fy-24-muni-summary-4.1.24_0.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy-24-muni-summary-4.1.24_0.xlsx
+      sheet: FY2024 Muni Rpt
+      town_column: D
+      first_row: 8
+      last_row: 252
+      state_row: 6
+      unincorporated_rows: [255, 269]
+      columns:
+        resident_adm_base: F
+        base_adequacy_aid: G
+        frl_adm: H
+        frl_differentiated_aid: I
+        sped_adm: J
+        sped_differentiated_aid: K
+        ell_adm: L
+        ell_differentiated_aid: M
+        total_cost_adequate_education: N
+        swept: O
+        equalized_valuation: P
+        ev_per_frl_pupil: Q
+        extraordinary_need_aid_per_frl_adm: R
+        extraordinary_need_grant: S
+        preliminary_grant: T
+        prior_estimate_nov2022: U
+        hold_harmless_104pct_of_prior_estimate: V
+        hold_harmless_grant: W
+        adequacy_grant: X
+        final_total_state_grant: Z
+    split:
+      file: adequacy-fy-24-split-town-coops-4.1.24_0.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy-24-split-town-coops-4.1.24_0.xlsx
+      sheet: FY24-DRA-split totals
+      first_row: 8
+      last_row: 84
+      columns:
+        district: B
+        town: C
+        name: D
+        adequacy_grant: G
+        swept_retained: H
+        total: I
+    parameters:
+      base_per_pupil:
+        name: Base adequacy per student
+        value: 4100
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(a); DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      frl_per_pupil:
+        name: Extra per free or reduced-price meal student
+        value: 2300
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(b); DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      sped_per_pupil:
+        name: Extra per special education student
+        value: 2100
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(c); DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      ell_per_pupil:
+        name: Extra per English learner
+        value: 800
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(d); DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      swept_statewide:
+        name: SWEPT raised statewide
+        value: 363000000
+        unit: dollars
+        citation: RSA 76:3
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      swept_rate:
+        name: SWEPT rate per $1,000 of equalized valuation (April 1, 2021)
+        value: 1.44
+        unit: dollars_per_thousand
+        citation: RSA 76:3, 76:8; DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      eng_floor:
+        name: Full extraordinary need grant below this valuation per F&R student
+        value: 1600000
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      eng_ceiling:
+        name: No extraordinary need grant above this valuation per F&R student
+        value: 6600000
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      eng_max_per_pupil:
+        name: Most extraordinary need aid per F&R student
+        value: 8500
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      eng_factor:
+        name: Extraordinary need aid per dollar of valuation below the ceiling
+        value: 0.0017
+        unit: dollars_per_dollar
+        citation: RSA 198:40-f; DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+      hold_harmless_estimate_share:
+        name: Hold-harmless grant brings a town up to this share of its November 2022 estimate
+        value: 1.04
+        unit: fraction
+        citation: RSA 198:41; DOE FY2024 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy2024-adequacy-grants-explained-september-1-2023.pdf
+    steps:
+    - component: base_adequacy_aid
+      formula: resident_adm_base * base_per_pupil
+      tolerance: 0.02
+      explanation: Every resident student at the base rate, $4,100 per student
+      citation: RSA 198:40-a, II(a)
+    - component: frl_differentiated_aid
+      formula: frl_adm * frl_per_pupil
+      tolerance: 0.02
+      explanation: $2,300 more for each student eligible for free or reduced-price meals
+      citation: RSA 198:40-a, II(b)
+    - component: sped_differentiated_aid
+      formula: sped_adm * sped_per_pupil
+      tolerance: 0.02
+      explanation: $2,100 more for each special education student
+      citation: RSA 198:40-a, II(c)
+    - component: ell_differentiated_aid
+      formula: ell_adm * ell_per_pupil
+      tolerance: 0.02
+      explanation: $800 more for each English learner
+      citation: RSA 198:40-a, II(d)
+    - component: total_cost_adequate_education
+      formula: base_adequacy_aid + frl_differentiated_aid + sped_differentiated_aid + ell_differentiated_aid
+      tolerance: 0.02
+      explanation: 'The town''s cost of an adequate education: the lines above added up'
+      citation: RSA 198:40-a, III
+    - component: swept
+      formula: null
+      tolerance: 0.02
+      explanation: The statewide education property tax raised in the town ($1.44 per $1,000 of its equalized valuation), which it keeps and which
+        counts toward the cost
+      citation: RSA 76:3, 76:8; RSA 198:41, I(b)
+    - component: extraordinary_need_aid_per_frl_adm
+      formula: clamp(eng_factor * (eng_ceiling - ev_per_frl_pupil), 0, eng_max_per_pupil)
+      tolerance: 0.02
+      explanation: 'Towns with low property value per free or reduced-price meal student get up to $8,500 per such student: the full amount below
+        $1,600,000 of valuation per student, falling to $0 at $6,600,000'
+      citation: RSA 198:40-f
+    - component: extraordinary_need_grant
+      formula: frl_adm * extraordinary_need_aid_per_frl_adm
+      tolerance: 0.02
+      explanation: The aid per free or reduced-price meal student, for each such student
+      citation: RSA 198:40-f
+    - component: preliminary_grant
+      formula: max(0, total_cost_adequate_education - swept + extraordinary_need_grant)
+      tolerance: 0.02
+      explanation: Cost minus SWEPT, plus the extraordinary need grant; never below $0
+      citation: RSA 198:41, I
+    - component: hold_harmless_grant
+      formula: max(0, hold_harmless_estimate_share * prior_estimate_nov2022 - preliminary_grant)
+      tolerance: 0.02
+      explanation: Brings the town up to 104% of the DOE's November 15, 2022 estimate of its FY2024 grant
+      citation: RSA 198:41; DOE FY2024 explanation
+    - component: adequacy_grant
+      formula: preliminary_grant + hold_harmless_grant
+      tolerance: 0.02
+      explanation: The preliminary grant plus the hold-harmless grant
+      citation: RSA 198:41
+    - component: final_total_state_grant
+      formula: adequacy_grant + swept
+      tolerance: 0.02
+      explanation: 'Total state aid: the adequacy grant plus the SWEPT the town keeps'
+      citation: DOE workbook
+  2025:
+    school_year: 2024-25
+    status: final
+    as_of: '2025-04-01'
+    explained_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+    summary:
+      file: adequacy-fy-25-muni-summary-4.1.25.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy-25-muni-summary-4.1.25.xlsx
+      sheet: FY2025 Muni Rpt
+      town_column: D
+      first_row: 8
+      last_row: 252
+      state_row: 6
+      unincorporated_rows: [255, 269]
+      columns:
+        resident_adm_base: F
+        base_adequacy_aid: G
+        frl_adm: H
+        frl_differentiated_aid: I
+        sped_adm: J
+        sped_differentiated_aid: K
+        ell_adm: L
+        ell_differentiated_aid: M
+        home_education_adm: N
+        home_education_aid: O
+        total_cost_adequate_education: P
+        swept: Q
+        equalized_valuation: R
+        ev_per_frl_pupil: S
+        extraordinary_need_aid_per_frl_adm: T
+        extraordinary_need_grant: U
+        preliminary_grant: V
+        prior_estimate_nov2022_of_fy2024: W
+        hold_harmless_104pct_of_prior_estimate: X
+        hold_harmless_grant: Y
+        hold_harmless_95pct_level_nov2023_estimate: Z
+        hold_harmless_95pct_grant: AA
+        adequacy_grant: AB
+        final_total_state_grant: AD
+    split:
+      file: adequacy-fy-25-split-town-coops.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy-25-split-town-coops.xlsx
+      sheet: FY25-DRA-split totals
+      first_row: 8
+      last_row: 84
+      columns:
+        district: B
+        town: C
+        name: D
+        adequacy_grant: G
+        swept_retained: H
+        total: I
+    parameters:
+      base_per_pupil:
+        name: Base adequacy per student
+        value: 4182
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(a); DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      frl_per_pupil:
+        name: Extra per free or reduced-price meal student
+        value: 2346
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(b); DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      sped_per_pupil:
+        name: Extra per special education student
+        value: 2142
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(c); DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      ell_per_pupil:
+        name: Extra per English learner
+        value: 816
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(d); DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      swept_statewide:
+        name: SWEPT raised statewide
+        value: 363000000
+        unit: dollars
+        citation: RSA 76:3
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      swept_rate:
+        name: SWEPT rate per $1,000 of equalized valuation (April 1, 2022)
+        value: 1.22
+        unit: dollars_per_thousand
+        citation: RSA 76:3, 76:8; DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      eng_floor:
+        name: Full extraordinary need grant below this valuation per F&R student
+        value: 1632000
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      eng_ceiling:
+        name: No extraordinary need grant above this valuation per F&R student
+        value: 6732000
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      eng_max_per_pupil:
+        name: Most extraordinary need aid per F&R student
+        value: 8670
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      eng_factor:
+        name: Extraordinary need aid per dollar of valuation below the ceiling
+        value: 0.0017
+        unit: dollars_per_dollar
+        citation: RSA 198:40-f; DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      hold_harmless_estimate_share:
+        name: Hold-harmless grant brings a town up to this share of its November 2022 estimate
+        value: 1.04
+        unit: fraction
+        citation: RSA 198:41; DOE FY2025 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+      guarantee_share:
+        name: Final grant is at least this share of the November estimate
+        value: 0.95
+        unit: fraction
+        citation: RSA 198:41, VI
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2025-adequacy-grants-explained-april-2025.pdf
+    steps:
+    - component: base_adequacy_aid
+      formula: resident_adm_base * base_per_pupil
+      tolerance: 0.02
+      explanation: Every resident student at the base rate, $4,182 per student
+      citation: RSA 198:40-a, II(a)
+    - component: frl_differentiated_aid
+      formula: frl_adm * frl_per_pupil
+      tolerance: 0.02
+      explanation: $2,346 more for each student eligible for free or reduced-price meals
+      citation: RSA 198:40-a, II(b)
+    - component: sped_differentiated_aid
+      formula: sped_adm * sped_per_pupil
+      tolerance: 0.02
+      explanation: $2,142 more for each special education student
+      citation: RSA 198:40-a, II(c)
+    - component: ell_differentiated_aid
+      formula: ell_adm * ell_per_pupil
+      tolerance: 0.02
+      explanation: $816 more for each English learner
+      citation: RSA 198:40-a, II(d)
+    - component: home_education_aid
+      formula: home_education_adm * base_per_pupil
+      tolerance: 0.02
+      explanation: Home-educated students' district course credits, 0.15 ADM each, at the base rate
+      citation: DOE FY2025 explanation
+    - component: total_cost_adequate_education
+      formula: base_adequacy_aid + frl_differentiated_aid + sped_differentiated_aid + ell_differentiated_aid + home_education_aid
+      tolerance: 0.02
+      explanation: 'The town''s cost of an adequate education: the lines above added up'
+      citation: RSA 198:40-a, III
+    - component: swept
+      formula: null
+      tolerance: 0.02
+      explanation: The statewide education property tax raised in the town ($1.22 per $1,000 of its equalized valuation), which it keeps and which
+        counts toward the cost
+      citation: RSA 76:3, 76:8; RSA 198:41, I(b)
+    - component: extraordinary_need_aid_per_frl_adm
+      formula: clamp(eng_factor * (eng_ceiling - ev_per_frl_pupil), 0, eng_max_per_pupil)
+      tolerance: 0.02
+      explanation: 'Towns with low property value per free or reduced-price meal student get up to $8,670 per such student: the full amount below
+        $1,632,000 of valuation per student, falling to $0 at $6,732,000'
+      citation: RSA 198:40-f
+    - component: extraordinary_need_grant
+      formula: frl_adm * extraordinary_need_aid_per_frl_adm
+      tolerance: 0.02
+      explanation: The aid per free or reduced-price meal student, for each such student
+      citation: RSA 198:40-f
+    - component: preliminary_grant
+      formula: max(0, total_cost_adequate_education - swept + extraordinary_need_grant)
+      tolerance: 0.02
+      explanation: Cost minus SWEPT, plus the extraordinary need grant; never below $0
+      citation: RSA 198:41, I
+    - component: hold_harmless_grant
+      formula: max(0, hold_harmless_estimate_share * prior_estimate_nov2022_of_fy2024 - preliminary_grant)
+      tolerance: 0.02
+      explanation: Brings the town up to 104% of the DOE's November 15, 2022 estimate of its FY2024 grant
+      citation: RSA 198:41; DOE FY2025 explanation
+    - component: hold_harmless_95pct_grant
+      formula: max(0, guarantee_share * hold_harmless_95pct_level_nov2023_estimate - preliminary_grant - hold_harmless_grant)
+      tolerance: 0.02
+      explanation: Brings the grant up to 95% of the DOE's November 15, 2023 estimate
+      citation: RSA 198:41, VI
+    - component: adequacy_grant
+      formula: preliminary_grant + hold_harmless_grant + hold_harmless_95pct_grant
+      tolerance: 0.02
+      explanation: The preliminary grant plus the hold-harmless grants
+      citation: RSA 198:41
+    - component: final_total_state_grant
+      formula: adequacy_grant + swept
+      tolerance: 0.02
+      explanation: 'Total state aid: the adequacy grant plus the SWEPT the town keeps'
+      citation: DOE workbook
+  2026:
+    school_year: 2025-26
+    status: final
+    as_of: '2026-04-01'
+    explained_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+    summary:
+      file: adequacy-fy-26-muni-summary-4.1.26.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy-26-muni-summary-4.1.26.xlsx
+      sheet: FY2026 Muni Rpt
+      town_column: D
+      first_row: 8
+      last_row: 252
+      state_row: 6
+      unincorporated_rows: [255, 269]
+      columns:
+        resident_adm_base: F
+        base_adequacy_aid: G
+        frl_adm: H
+        frl_differentiated_aid: I
+        sped_adm: J
+        sped_differentiated_aid: K
+        ell_adm: L
+        ell_differentiated_aid: M
+        home_education_adm: N
+        home_education_aid: O
+        total_cost_adequate_education: P
+        swept: Q
+        equalized_valuation: R
+        ev_per_frl_pupil: S
+        extraordinary_need_aid_per_frl_adm: T
+        extraordinary_need_grant: U
+        preliminary_grant: V
+        fy2025_hold_harmless_grant: W
+        hold_harmless_grant: X
+        hold_harmless_95pct_level_nov2024_estimate: Y
+        hold_harmless_95pct_grant: Z
+        adequacy_grant: AA
+        final_total_state_grant: AC
+    split:
+      file: adequacy-fy-26-split-town-coops-4.1.26.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/adequacy-fy-26-split-town-coops-4.1.26.xlsx
+      sheet: FY26-DRA-split totals
+      first_row: 8
+      last_row: 84
+      columns:
+        district: B
+        town: C
+        name: D
+        adequacy_grant: G
+        swept_retained: H
+        total: I
+    parameters:
+      base_per_pupil:
+        name: Base adequacy per student
+        value: 4265.64
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(a); DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      frl_per_pupil:
+        name: Extra per free or reduced-price meal student
+        value: 2392.92
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(b); DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      sped_per_pupil:
+        name: Extra per special education student
+        value: 2184.84
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(c); DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      ell_per_pupil:
+        name: Extra per English learner
+        value: 832.32
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(d); DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      swept_statewide:
+        name: SWEPT raised statewide
+        value: 363000000
+        unit: dollars
+        citation: RSA 76:3
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      swept_rate:
+        name: SWEPT rate per $1,000 of equalized valuation (April 1, 2023)
+        value: 1.12
+        unit: dollars_per_thousand
+        citation: RSA 76:3, 76:8; DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      eng_floor:
+        name: Full extraordinary need grant below this valuation per F&R student
+        value: 1664640
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      eng_ceiling:
+        name: No extraordinary need grant above this valuation per F&R student
+        value: 6866640
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      eng_max_per_pupil:
+        name: Most extraordinary need aid per F&R student
+        value: 11500
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      eng_factor:
+        name: Extraordinary need aid per dollar of valuation below the ceiling
+        value: 0.00221
+        unit: dollars_per_dollar
+        citation: RSA 198:40-f; DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      hold_harmless_share:
+        name: Hold-harmless grant as a share of FY2025's
+        value: 0.8
+        unit: fraction
+        citation: RSA 198:41; DOE FY2026 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+      guarantee_share:
+        name: Final grant is at least this share of the November estimate
+        value: 0.95
+        unit: fraction
+        citation: RSA 198:41, VI
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-2026-adequacy-grants-explained-april-2026.pdf
+    steps:
+    - component: base_adequacy_aid
+      formula: resident_adm_base * base_per_pupil
+      tolerance: 0.02
+      explanation: Every resident student at the base rate, $4,265.64 per student
+      citation: RSA 198:40-a, II(a)
+    - component: frl_differentiated_aid
+      formula: frl_adm * frl_per_pupil
+      tolerance: 0.02
+      explanation: $2,392.92 more for each student eligible for free or reduced-price meals
+      citation: RSA 198:40-a, II(b)
+    - component: sped_differentiated_aid
+      formula: sped_adm * sped_per_pupil
+      tolerance: 0.02
+      explanation: $2,184.84 more for each special education student
+      citation: RSA 198:40-a, II(c)
+    - component: ell_differentiated_aid
+      formula: ell_adm * ell_per_pupil
+      tolerance: 0.02
+      explanation: $832.32 more for each English learner
+      citation: RSA 198:40-a, II(d)
+    - component: home_education_aid
+      formula: home_education_adm * base_per_pupil
+      tolerance: 0.02
+      explanation: Home-educated students' district course credits, 0.15 ADM each, at the base rate
+      citation: DOE FY2026 explanation
+    - component: total_cost_adequate_education
+      formula: base_adequacy_aid + frl_differentiated_aid + sped_differentiated_aid + ell_differentiated_aid + home_education_aid
+      tolerance: 0.02
+      explanation: 'The town''s cost of an adequate education: the lines above added up'
+      citation: RSA 198:40-a, III
+    - component: swept
+      formula: null
+      tolerance: 0.02
+      explanation: The statewide education property tax raised in the town ($1.12 per $1,000 of its equalized valuation), which it keeps and which
+        counts toward the cost
+      citation: RSA 76:3, 76:8; RSA 198:41, I(b)
+    - component: extraordinary_need_aid_per_frl_adm
+      formula: clamp(eng_factor * (eng_ceiling - ev_per_frl_pupil), 0, eng_max_per_pupil)
+      tolerance: 0.02
+      explanation: 'Towns with low property value per free or reduced-price meal student get up to $11,500 per such student: the full amount below
+        $1,664,640 of valuation per student, falling to $0 at $6,866,640'
+      citation: RSA 198:40-f
+    - component: extraordinary_need_grant
+      formula: frl_adm * extraordinary_need_aid_per_frl_adm
+      tolerance: 0.02
+      explanation: The aid per free or reduced-price meal student, for each such student
+      citation: RSA 198:40-f
+    - component: preliminary_grant
+      formula: max(0, total_cost_adequate_education - swept + extraordinary_need_grant)
+      tolerance: 0.02
+      explanation: Cost minus SWEPT, plus the extraordinary need grant; never below $0
+      citation: RSA 198:41, I
+    - component: hold_harmless_grant
+      formula: hold_harmless_share * fy2025_hold_harmless_grant
+      tolerance: 0.02
+      explanation: 80% of the town's FY2025 hold-harmless grant
+      citation: RSA 198:41; DOE FY2026 explanation
+    - component: hold_harmless_95pct_grant
+      formula: max(0, guarantee_share * hold_harmless_95pct_level_nov2024_estimate - preliminary_grant - hold_harmless_grant)
+      tolerance: 0.02
+      explanation: Brings the grant up to 95% of the DOE's November 15, 2024 estimate
+      citation: RSA 198:41, VI
+    - component: adequacy_grant
+      formula: preliminary_grant + hold_harmless_grant + hold_harmless_95pct_grant
+      tolerance: 0.02
+      explanation: The preliminary grant plus the hold-harmless grants
+      citation: RSA 198:41
+    - component: final_total_state_grant
+      formula: adequacy_grant + swept
+      tolerance: 0.02
+      explanation: 'Total state aid: the adequacy grant plus the SWEPT the town keeps'
+      citation: DOE workbook
+  2027:
+    school_year: 2026-27
+    status: estimate
+    as_of: '2026-10-01'
+    explained_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+    summary:
+      file: fy-27-adequacy-muni-summary.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-27-adequacy-muni-summary.xlsx
+      sheet: FY2027 Muni Rpt
+      town_column: D
+      first_row: 8
+      last_row: 252
+      state_row: 6
+      unincorporated_rows: [255, 269]
+      columns:
+        resident_adm_base: F
+        base_adequacy_aid: G
+        frl_adm: H
+        frl_differentiated_aid: I
+        sped_adm: J
+        sped_differentiated_aid: K
+        ell_adm: L
+        ell_differentiated_aid: M
+        home_education_adm: N
+        home_education_aid: O
+        total_cost_adequate_education: P
+        swept: Q
+        equalized_valuation: R
+        ev_per_frl_pupil: S
+        extraordinary_need_aid_per_frl_adm: T
+        extraordinary_need_grant: U
+        ev_per_pupil: V
+        fiscal_capacity_disparity_aid: W
+        preliminary_grant: X
+        fy2025_hold_harmless_grant: Y
+        hold_harmless_grant: Z
+        hold_harmless_95pct_level_nov2025_estimate: AA
+        hold_harmless_95pct_grant: AB
+        adequacy_grant: AC
+        final_total_state_grant: AE
+    split:
+      file: fy-27-adequacy-split-muni-coops.xlsx
+      url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-27-adequacy-split-muni-coops.xlsx
+      sheet: FY27-DRA-split totals
+      first_row: 8
+      last_row: 84
+      columns:
+        district: B
+        town: C
+        name: D
+        adequacy_grant: G
+        swept_retained: H
+        total: I
+    parameters:
+      base_per_pupil:
+        name: Base adequacy per student
+        value: 4351
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(a); DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      frl_per_pupil:
+        name: Extra per free or reduced-price meal student
+        value: 2441
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(b); DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      sped_per_pupil:
+        name: Extra per special education student
+        value: 2229
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(c); DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      ell_per_pupil:
+        name: Extra per English learner
+        value: 849
+        unit: dollars_per_pupil
+        citation: RSA 198:40-a, II (as adjusted under RSA 198:40-d)(d); DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      swept_statewide:
+        name: SWEPT raised statewide
+        value: 363000000
+        unit: dollars
+        citation: RSA 76:3
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      swept_rate:
+        name: SWEPT rate per $1,000 of equalized valuation (April 1, 2024)
+        value: 1.03
+        unit: dollars_per_thousand
+        citation: RSA 76:3, 76:8; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      eng_floor:
+        name: Full extraordinary need grant below this valuation per F&R student
+        value: 1697933
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      eng_ceiling:
+        name: No extraordinary need grant above this valuation per F&R student
+        value: 7003972
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      eng_max_per_pupil:
+        name: Most extraordinary need aid per F&R student
+        value: 11730
+        unit: dollars_per_pupil
+        citation: RSA 198:40-f; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      eng_factor:
+        name: Extraordinary need aid per dollar of valuation below the ceiling
+        value: 0.00221069
+        unit: dollars_per_dollar
+        citation: RSA 198:40-f; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      fcda_floor:
+        name: Full fiscal capacity disparity aid below this valuation per student
+        value: 1000000
+        unit: dollars_per_pupil
+        citation: RSA 198:40-g; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      fcda_ceiling:
+        name: No fiscal capacity disparity aid above this valuation per student
+        value: 1600000
+        unit: dollars_per_pupil
+        citation: RSA 198:40-g; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      fcda_max_per_pupil:
+        name: Most fiscal capacity disparity aid per student
+        value: 1250
+        unit: dollars_per_pupil
+        citation: RSA 198:40-g; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      fcda_factor:
+        name: Disparity aid per dollar of valuation below the ceiling
+        value: 0.002083333
+        unit: dollars_per_dollar
+        citation: RSA 198:40-g; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      hold_harmless_share:
+        name: Hold-harmless grant as a share of FY2025's
+        value: 0.8
+        unit: fraction
+        citation: RSA 198:41; DOE FY2027 explanation
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+      guarantee_share:
+        name: Final grant is at least this share of the November estimate
+        value: 0.95
+        unit: fraction
+        citation: RSA 198:41, VI
+        source_url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/2026/adequacy-explained-fy-2027.pdf
+    steps:
+    - component: base_adequacy_aid
+      formula: resident_adm_base * base_per_pupil
+      tolerance: 0.02
+      explanation: Every resident student at the base rate, $4,351 per student
+      citation: RSA 198:40-a, II(a)
+    - component: frl_differentiated_aid
+      formula: frl_adm * frl_per_pupil
+      tolerance: 0.02
+      explanation: $2,441 more for each student eligible for free or reduced-price meals
+      citation: RSA 198:40-a, II(b)
+    - component: sped_differentiated_aid
+      formula: sped_adm * sped_per_pupil
+      tolerance: 0.02
+      explanation: $2,229 more for each special education student
+      citation: RSA 198:40-a, II(c)
+    - component: ell_differentiated_aid
+      formula: ell_adm * ell_per_pupil
+      tolerance: 0.02
+      explanation: $849 more for each English learner
+      citation: RSA 198:40-a, II(d)
+    - component: home_education_aid
+      formula: home_education_adm * base_per_pupil
+      tolerance: 0.02
+      explanation: Home-educated students' district course credits, 0.15 ADM each, at the base rate
+      citation: DOE FY2027 explanation
+    - component: total_cost_adequate_education
+      formula: base_adequacy_aid + frl_differentiated_aid + sped_differentiated_aid + ell_differentiated_aid + home_education_aid
+      tolerance: 0.02
+      explanation: 'The town''s cost of an adequate education: the lines above added up'
+      citation: RSA 198:40-a, III
+    - component: swept
+      formula: null
+      tolerance: 0.02
+      explanation: The statewide education property tax raised in the town ($1.03 per $1,000 of its equalized valuation), which it keeps and which
+        counts toward the cost
+      citation: RSA 76:3, 76:8; RSA 198:41, I(b)
+    - component: extraordinary_need_aid_per_frl_adm
+      formula: clamp(eng_factor * (eng_ceiling - ev_per_frl_pupil), 0, eng_max_per_pupil)
+      tolerance: 0.02
+      explanation: 'Towns with low property value per free or reduced-price meal student get up to $11,730 per such student: the full amount below
+        $1,697,933 of valuation per student, falling to $0 at $7,003,972'
+      citation: RSA 198:40-f
+    - component: extraordinary_need_grant
+      formula: frl_adm * extraordinary_need_aid_per_frl_adm
+      tolerance: 0.02
+      explanation: The aid per free or reduced-price meal student, for each such student
+      citation: RSA 198:40-f
+    - component: fiscal_capacity_disparity_aid
+      formula: resident_adm_base * clamp(fcda_factor * (fcda_ceiling - ev_per_pupil), 0, fcda_max_per_pupil)
+      tolerance: 0.05
+      explanation: 'Towns with low property value per student get up to $1,250 per student: the full amount below $1 million of valuation per
+        student, falling to $0 at $1.6 million'
+      citation: RSA 198:40-g
+    - component: preliminary_grant
+      formula: max(0, total_cost_adequate_education - swept + extraordinary_need_grant + fiscal_capacity_disparity_aid)
+      tolerance: 0.02
+      explanation: Cost minus SWEPT, plus the extraordinary need grant and disparity aid; never below $0
+      citation: RSA 198:41, I
+    - component: hold_harmless_grant
+      formula: hold_harmless_share * fy2025_hold_harmless_grant * (swept <= total_cost_adequate_education)
+      tolerance: 0.02
+      explanation: 80% of the town's FY2025 hold-harmless grant, but none where SWEPT is more than the cost
+      citation: RSA 198:41; DOE FY2027 explanation
+    - component: hold_harmless_95pct_grant
+      formula: max(0, guarantee_share * hold_harmless_95pct_level_nov2025_estimate - preliminary_grant - hold_harmless_grant)
+      tolerance: 0.02
+      explanation: Brings the grant up to 95% of the DOE's November 15, 2025 estimate
+      citation: RSA 198:41, VI
+    - component: adequacy_grant
+      formula: preliminary_grant + hold_harmless_grant + hold_harmless_95pct_grant
+      tolerance: 0.02
+      explanation: The preliminary grant plus the hold-harmless grants
+      citation: RSA 198:41
+    - component: final_total_state_grant
+      formula: adequacy_grant + swept
+      tolerance: 0.02
+      explanation: 'Total state aid: the adequacy grant plus the SWEPT the town keeps'
+      citation: DOE workbook

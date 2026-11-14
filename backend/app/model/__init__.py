@@ -41,3 +41,7 @@ from .acs import (
     AcsTopic, AcsAnnotation, AcsRelease, AcsTable, AcsVariable, AcsVariableRelease, AcsMeasure, AcsTown, AcsDistrict,
     TownAcsEstimate, DistrictAcsEstimate, StateAcsEstimate
 )
+from .adequacy_aid import (
+    AdequacyAidYear, AdequacyAidComponent, AdequacyAidParameter, AdequacyAidStep, TownAdequacyAid, StateAdequacyAid,
+    DistrictAdequacyAidShare
+)
