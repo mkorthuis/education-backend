@@ -27,7 +27,7 @@ from .census_finance import (
     CensusRevenueItem, CensusStateRevenue, CensusStateEnrollment
 )
 from .reference import (
-    ReferenceTopic, ReferenceFact
+    ReferenceTopic, ReferenceFact, ReferenceTable, OutsideSchool, DistrictService
 )
 from .ask import AskQuestion
 from .question_two import DistrictQuestionTwo, SauQuestionTwo, TownQuestionTwo

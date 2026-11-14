@@ -2,14 +2,25 @@
 # about New Hampshire schools, written as Markdown in assets/reference/ (the format is in that
 # folder's README.md) and reviewed in pull requests. Each file's fact topics are loaded: a
 # "## slug: Title" heading followed by "- kind:", "- question_type:" and "- description:" lines, then
-# numbered facts with their citation, source, as_of and review_by. Number tables and other sections
-# ("## Summary", "## Not retrieved") are skipped.
+# numbered facts with their citation, source, as_of, review_by and place. Number tables (a heading
+# without "- kind:" and a Markdown table) load into reference_table; other sections ("## Summary",
+# "## Not retrieved") are skipped.
 #
 # `python -m app.etl load reference` replaces the library with the files' contents. Restart the web
 # dynos afterward: the Ask reads its topic list once per process.
 directory: "../assets/reference"
 
-# Loaded in this order, which is the topics' display order
+# Where each district's students go for the grades it doesn't run, and schools outside the state:
+# loaded first, so facts can be placed in them ("maine Fryeburg Academy") and the Ask can follow them
+places: places.yaml
+
+# Titles, kinds and descriptions for the topics the town research shares across files. Optional:
+# without it, a shared topic takes the first file's heading.
+shared_topics: town/shared-topics.md
+
+# Loaded in this order, which is the topics' display order. An entry may be a pattern, such as
+# town/*/*.md for the town research (copied here without its raw/ folders); a topic that appears in
+# several files is loaded once, with every file's facts. Files named in skip_files aren't loaded.
 files:
   - facts-rules-and-rights.md
   - facts-terms-and-how-schools-work.md
@@ -20,6 +31,8 @@ files:
   - national-comparisons.md
   - town-figures.md
   - state-issues.md
+
+skip_files: [README.md, brief.md, questions.md, shared-topics.md, recommended-improvements.md, research-brief-template.md]
 
 kinds: [rule, term, how_it_works, research, programs, local]
 fact_fields: [citation, source, as_of, review_by, place, note]

@@ -16,7 +16,8 @@ def _topic(topic: ReferenceTopic, current: int) -> dict:
 def _fact(fact: ReferenceFact) -> dict:
     return {"id": fact.id, "position": fact.position, "statement": fact.statement, "citation": fact.citation,
             "source_url": fact.source_url, "site": site(fact.source_url), "as_of": fact.as_of, "as_of_text": fact.as_of_text,
-            "review_by": fact.review_by, "district_id": fact.district_id_fk, "town_id": fact.town_id_fk}
+            "review_by": fact.review_by, "district_id": fact.district_id_fk, "town_id": fact.town_id_fk, "sau_id": fact.sau_id_fk,
+            "outside_school_id": fact.outside_school_id_fk, "source_file": fact.source_file, "section_title": fact.section_title}
 
 
 class ReferenceService:
@@ -37,7 +38,7 @@ class ReferenceService:
             raise HTTPException(status_code=404, detail=f"No reference topic {slug}")
         statement = (select(ReferenceFact)
                      .where(ReferenceFact.reference_topic_id_fk == topic.id, ReferenceFact.review_by >= date.today())
-                     .order_by(ReferenceFact.position))
+                     .order_by(ReferenceFact.id))
         if district_id is not None:
             statement = statement.where((ReferenceFact.district_id_fk == district_id) | (ReferenceFact.district_id_fk.is_(None)))
         facts = session.exec(statement).all()
@@ -50,10 +51,10 @@ class ReferenceService:
             select(ReferenceFact, ReferenceTopic)
             .join(ReferenceTopic, ReferenceTopic.id == ReferenceFact.reference_topic_id_fk)
             .where(ReferenceFact.review_by <= due)
-            .order_by(ReferenceFact.review_by, ReferenceTopic.display_order, ReferenceFact.position)
+            .order_by(ReferenceFact.review_by, ReferenceTopic.display_order, ReferenceFact.id)
         ).all()
         today = date.today()
-        return [{"topic": topic.slug, "source_file": topic.source_file, "position": fact.position, "statement": fact.statement,
+        return [{"topic": topic.slug, "source_file": fact.source_file, "position": fact.position, "statement": fact.statement,
                  "source_url": fact.source_url, "review_by": fact.review_by, "overdue": fact.review_by < today}
                 for fact, topic in rows]
 

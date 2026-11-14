@@ -5,6 +5,8 @@ the outside sources an answer may link to, and the API. Run against the local da
 
     docker exec -w /app education-backend-backend-1 python -m unittest app.tests.test_reference -v
 """
+import os
+import tempfile
 import unittest
 from datetime import date, timedelta
 
@@ -22,9 +24,32 @@ from app.model.reference import ReferenceFact, ReferenceTopic
 from app.service.internal.ask.ask_service import DatasetRegistry, build_answer
 from app.service.internal.ask.data_tools import DataToolError
 from app.service.internal.ask.national_tools import NAEP_SOURCE, naep_results
+from app.service.internal.ask import reference_tools
 from app.service.internal.ask.reference_tools import look_up_reference, site, tool_definition
 
 CONFIG = load_config(reference.CONFIG)
+
+SHARED = """## district-transportation: {title}
+
+- kind: local
+- question_type: {question_type}
+- description: Bus service.
+
+1. {town}'s buses are run by a contractor. See table {town_lower}_ride_minutes.
+   - source: https://example.org/{town_lower}
+   - as_of: 2026-11-13
+   - review_by: 2027-11-13
+   - place: district {town}
+
+## {town_lower}_ride_minutes: Ride Times
+
+- unit: minutes
+- period: 2026-27
+
+| Place | Minutes |
+|---|---|
+| {town} | 35 |
+"""
 
 SAMPLE = """# A file
 
@@ -85,6 +110,47 @@ class ReferenceParseTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 reference.parse_file(text_, "sample.md", CONFIG)
 
+    def test_places_include_saus_and_schools_outside_the_state(self):
+        for place in ("sau 9", "maine Fryeburg Academy", "town Jackson"):
+            [topic] = reference.parse_file(SAMPLE.replace("district Rochester", place), "sample.md", CONFIG)
+            self.assertEqual(topic["facts"][1]["place"], place)
+
+    def test_a_statement_that_runs_onto_a_list_stops_the_load(self):
+        with self.assertRaises(ValueError):
+            reference.parse_file(SAMPLE.replace("   - citation: RSA 193-F:4, II(i)", "   - the reporting staff member\n   - citation: RSA 193-F:4, II(i)"),
+                                 "sample.md", CONFIG)
+
+    def test_a_fact_number_used_twice_stops_the_load(self):
+        with self.assertRaises(ValueError):
+            reference.parse_file(SAMPLE.replace("2. A program's page", "1. A program's page"), "sample.md", CONFIG)
+
+    def test_number_tables_are_read_with_their_fields(self):
+        [table] = reference.parse_tables(SHARED.format(title="Buses", question_type="local_practice", town="Albany", town_lower="albany"), "a.md")
+        self.assertEqual((table["slug"], table["fields"]["unit"], table["columns"], table["rows"]),
+                         ("albany_ride_minutes", "minutes", ["Place", "Minutes"], [["Albany", "35"]]))
+        # A topic's own section isn't a table
+        self.assertEqual([tb["slug"] for tb in reference.parse_tables(SAMPLE, "sample.md")], ["naep_g4_math_score"])
+
+    def test_shared_topics_merge_across_files_and_tables_follow_their_facts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for town, question_type in (("Albany", "local_practice"), ("Madison", "local_practice")):
+                with open(os.path.join(directory, f"{town.lower()}.md"), "w") as f:
+                    f.write(SHARED.format(title=f"{town}'s Buses", question_type=question_type, town=town, town_lower=town.lower()))
+            config = {**CONFIG, "directory": directory, "files": ["*.md"], "shared_topics": None}
+            [topic] = reference.read_library(config)
+            self.assertEqual((topic["slug"], topic["title"], topic["files"]), ("district-transportation", "Albany's Buses", ["albany.md", "madison.md"]))
+            self.assertEqual([(f["file"], f["section_title"]) for f in topic["facts"]],
+                             [("albany.md", "Albany's Buses"), ("madison.md", "Madison's Buses")])
+            tables = reference.read_tables(config)
+            reference.link_tables([topic], tables)
+            self.assertEqual([(tb["fields"]["topic"], tb["fields"]["place"]) for tb in tables],
+                             [("district-transportation", "district Albany"), ("district-transportation", "district Madison")])
+            # The same topic can't be a different kind in another file
+            with open(os.path.join(directory, "madison.md"), "w") as f:
+                f.write(SHARED.format(title="Madison's Buses", question_type="rules", town="Madison", town_lower="madison"))
+            with self.assertRaises(ValueError):
+                reference.read_library(config)
+
     def test_facts_numbered_ten_and_up_keep_their_fields(self):
         facts = "".join(f"{n}. Fact {n}.\n{' ' * len(f'{n}. ')}- source: https://example.org/{n}\n{' ' * len(f'{n}. ')}- as_of: 2026-11-08\n"
                         f"{' ' * len(f'{n}. ')}- review_by: 2027-11-08\n" for n in range(1, 12))
@@ -95,8 +161,8 @@ class ReferenceParseTests(unittest.TestCase):
         topics = reference.read_library(CONFIG)
         self.assertGreater(len(topics), 150)
         self.assertGreater(sum(len(t["facts"]) for t in topics), 1500)
-        # Every file in the library contributes topics
-        self.assertEqual({t["file"] for t in topics}, set(CONFIG["files"]))
+        # Every file in the library contributes facts, and each topic appears once
+        self.assertEqual({f["file"] for t in topics for f in t["facts"]}, set(reference.library_files(CONFIG)))
         self.assertEqual(len({t["slug"] for t in topics}), len(topics))
 
     def test_sourced_facts_outside_a_topic_stop_the_load(self):
@@ -124,6 +190,12 @@ class ReferenceDatabaseTests(unittest.TestCase):
         # District practices are tied to their district
         rochester = self.district("Rochester")
         self.assertTrue(self.session.exec(select(ReferenceFact).where(ReferenceFact.district_id_fk == rochester.id)).first())
+        # Every fact keeps its key, file and heading
+        keys = self.session.execute(text("SELECT count(*), count(DISTINCT fact_key), count(section_title) FROM reference_fact")).one()
+        self.assertEqual(len(set(keys)), 1)
+        # Where each district's students go
+        services = self.session.execute(text("SELECT count(*) FROM district_service")).scalar()
+        self.assertEqual(services, len(reference.read_places(CONFIG)["district_service"]))
 
     def test_the_ask_tool_gives_facts_with_ids_and_keeps_links_aside(self):
         result = look_up_reference(self.session, ["bullying-school-duties"])
@@ -145,6 +217,43 @@ class ReferenceDatabaseTests(unittest.TestCase):
         ids = [int(f["id"][1:]) for f in with_district["facts"]]
         places = {self.session.get(ReferenceFact, i).district_id_fk for i in ids}
         self.assertTrue(places <= {merrimack.id, None})
+
+    def test_a_district_gets_the_facts_of_the_schools_its_students_attend(self):
+        jackson, merrimack = self.district("Jackson"), self.district("Merrimack")
+        [entry] = look_up_reference(self.session, ["budget-form-and-vote-dates"], jackson.id)["topics"]
+        places = [f.get("place") for f in entry["facts"]]
+        # Jackson's own fact first, then Conway's (Kennett High), each named
+        self.assertIn("Conway", places)
+        self.assertLess(places.index("Jackson"), places.index("Conway"))
+        [other] = look_up_reference(self.session, ["budget-form-and-vote-dates"], merrimack.id)["topics"]
+        self.assertNotIn("Conway", [f.get("place") for f in other["facts"]])
+
+    def test_statewide_topics_keep_their_facts_about_places(self):
+        [entry] = look_up_reference(self.session, ["cte-centers-overview"])["topics"]
+        self.assertIn("Town of Berlin", [f.get("place") for f in entry["facts"]])
+
+    def test_long_topics_are_capped_and_a_query_ranks_them(self):
+        limit = reference_tools.MAX_FACTS
+        reference_tools.MAX_FACTS = 3
+        try:
+            [entry] = look_up_reference(self.session, ["bullying-school-duties"])["topics"]
+            self.assertEqual(len(entry["facts"]), 3)
+            self.assertIn("more_facts", entry)
+            [ranked] = look_up_reference(self.session, ["bullying-school-duties"], None, "48 hours parents notified")["topics"]
+            self.assertIn("48 hours", ranked["facts"][0]["statement"])
+        finally:
+            reference_tools.MAX_FACTS = limit
+        with self.assertRaises(DataToolError):
+            look_up_reference(self.session, ["bullying-school-duties"], None, ["a list"])
+
+    def test_tables_come_with_their_topic_and_can_be_cited(self):
+        slug = self.session.execute(text(
+            "SELECT t.slug FROM reference_table tb JOIN reference_topic t ON t.id = tb.reference_topic_id_fk "
+            "WHERE tb.source_url IS NOT NULL AND t.kind <> 'local' LIMIT 1")).scalar()
+        result = look_up_reference(self.session, [slug])
+        [table, *_] = result["topics"][0]["tables"]
+        self.assertTrue(table["id"].startswith("rt") and table["columns"])
+        self.assertIn(table["id"], result["_sources"])
 
     def test_facts_past_their_review_date_are_withheld(self):
         topic = self.session.exec(select(ReferenceTopic).where(ReferenceTopic.slug == "bullying-school-duties")).one()
@@ -203,6 +312,7 @@ class ReferenceDatabaseTests(unittest.TestCase):
         # Not strict, so the topic list doesn't count toward the API's grammar limit
         self.assertNotIn("strict", tool_definition())
         self.assertIn("bullying-school-duties", tool_definition()["input_schema"]["properties"]["topics"]["items"]["enum"])
+        self.assertIn("query", tool_definition()["input_schema"]["properties"])
         for topics, district_id in (("bullying-school-duties", None), ([1], None), (["bullying-school-duties"], "335")):
             with self.assertRaises(DataToolError):
                 look_up_reference(self.session, topics, district_id)
@@ -223,6 +333,7 @@ class ReferenceApiTests(unittest.TestCase):
         topic = self.api.get(f"{self.url}/topic/bullying-school-duties").json()
         self.assertEqual(topic["slug"], "bullying-school-duties")
         self.assertTrue(all(f["source_url"].startswith("http") for f in topic["facts"]))
+        self.assertTrue(all(f["section_title"] and f["source_file"] for f in topic["facts"]))
         self.assertEqual(self.api.get(f"{self.url}/topic/no-such-topic").status_code, 404)
         review = self.api.get(f"{self.url}/review", params={"within_days": 730}).json()
         self.assertTrue(review)

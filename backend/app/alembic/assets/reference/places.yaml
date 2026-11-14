@@ -1,0 +1,180 @@
+# Where each district's students go for the grades it doesn't run, and the schools outside New
+# Hampshire they attend. The Ask's reference lookup follows these links, so a question about Jackson
+# also gets facts about Josiah Bartlett Elementary (Bartlett), Kennett High (Conway) and Fryeburg
+# Academy. Loaded with the library (`python -m app.etl load reference`).
+#
+# district_service rows:
+#   district / receiving_district: names exactly as in the site's district table
+#   outside_school: "Name (ST)", one of the outside_schools below
+#   grades: [low, high], with K for kindergarten
+#   arrangement: tuition_contract | area_agreement | cooperative | choice | no_contract
+#     choice: families may choose the school and the district pays up to a set amount
+#     no_contract: the district pays tuition there without a written contract posted
+#   starts / ends: the contract's dates, where known
+#   source: the contract, or the page or minutes that describe the arrangement
+#
+# Gathered November 13, 2026 from the town research (town/<Town>/README.md in the education folder).
+
+outside_schools:
+  - name: MSAD 72
+    state: ME
+    kind: public_district
+    url: https://www.msad72.org/
+  - name: Fryeburg Academy
+    state: ME
+    kind: private_academy
+    url: https://www.fryeburgacademy.org/
+
+district_service:
+  # ---- SAU 9 ----
+  - district: Jackson
+    receiving_district: Bartlett
+    grades: [7, 8]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2029-06-30
+    source: https://drive.google.com/file/d/15EfUC6h-Afo2KMn8pwWfYZXfSYXojxoU/view
+  - district: Jackson
+    receiving_district: Conway
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2006-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1ewDeGfHpCcDwouiJsCcI7dNBfE9cJnba/view
+    note: The 2003 contract, ending after Jackson's notice
+  - district: Jackson
+    receiving_district: Conway
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2027-07-01
+    ends: 2032-06-30
+    source: https://drive.google.com/file/d/1cHKhJnI_Yozv2CetoJU818ktgvjG5ZhS/view
+  - district: Jackson
+    outside_school: Fryeburg Academy (ME)
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2027-07-01
+    ends: 2037-06-30
+    source: https://drive.google.com/file/d/1yH_-1a_Kj2sZRMrAEsA3qPe2F1DniW2h/view
+    note: Families choose Kennett or Fryeburg Academy
+  - district: Bartlett
+    receiving_district: Conway
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2006-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1WXu_pCZh0AaEDPxl51BdLOA2ls5WdCJ_/view
+    note: The 2003 contract
+  - district: Bartlett
+    receiving_district: Conway
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2027-07-01
+    ends: 2032-06-30
+    source: https://drive.google.com/file/d/1jM2XG1KXI9U1yNHWg_L9I3dbVeQveOQw/view
+  - district: Hart's Location
+    receiving_district: Bartlett
+    grades: [K, 8]
+    arrangement: tuition_contract
+    starts: 2010-07-01
+    source: https://drive.google.com/file/d/1oWuL7vKJ-z1Ol7rVY8wjGpnbQj1S9AwS/view
+    note: Renews each year; SAU 9's tuition page files it under K-6
+  - district: Hart's Location
+    receiving_district: Conway
+    grades: [9, 12]
+    arrangement: no_contract
+    source: https://drive.google.com/file/d/1nR7C-KtNvAEPYBvJkqjLlyJe81Bgm7EW/view
+    note: Kennett named the high school of record in 2016; no contract
+  - district: Hart's Location
+    outside_school: Fryeburg Academy (ME)
+    grades: [9, 12]
+    arrangement: no_contract
+    source: https://drive.google.com/file/d/1OSkFvkdZPEQCYwQRCTTq1v6gDPHUXHhO/view
+    note: The 2026-27 budget pays tuition and mileage for one student
+  - district: Albany
+    receiving_district: Conway
+    grades: [K, 6]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2034-06-30
+    source: https://drive.google.com/file/d/11k9omTy-QLOQYhJMQRsOUf5VaAL7ZSMq/view
+  - district: Albany
+    receiving_district: Conway
+    grades: [7, 12]
+    arrangement: tuition_contract
+    starts: 2006-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1n_E5ZtYVx8uyaOxbsCchj3X96PODQ_Hl/view
+    note: The 2003 grades 7-8 and 9-12 contracts
+  - district: Albany
+    receiving_district: Conway
+    grades: [7, 12]
+    arrangement: tuition_contract
+    starts: 2027-07-01
+    ends: 2032-06-30
+    source: https://drive.google.com/file/d/1oTqoQ6Ji2u0THEVM_zBhAQQrnN2OfqpW/view
+    note: The 2027 grades 7-8 and 9-12 contracts
+  - district: Eaton
+    receiving_district: Conway
+    grades: [K, 12]
+    arrangement: tuition_contract
+    source: https://www.sau9.org/tuitions
+    note: K-6, 7-8 and 9-12 contracts listed on SAU 9's page; Eaton not researched in detail
+  - district: Chatham
+    outside_school: MSAD 72 (ME)
+    grades: [K, 8]
+    arrangement: no_contract
+    source: https://drive.google.com/file/d/14UL_eH1z0KvIhzS_2JZ6d3hyTYAnVwH5/view
+    note: A rider ran to June 30, 2021; year to year since
+  - district: Chatham
+    outside_school: Fryeburg Academy (ME)
+    grades: [9, 12]
+    arrangement: no_contract
+    source: https://drive.google.com/file/d/1D7nfX5oLUqeMkG1pNPfTpsIGiYRw-9l8/view
+    note: Chatham's policies name Fryeburg Academy the high school of record; no written agreement found
+  - district: Chatham
+    receiving_district: Conway
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1D7nfX5oLUqeMkG1pNPfTpsIGiYRw-9l8/view
+    note: Policy JECC; Chatham pays up to its MSAD 72 or Fryeburg rate and the family pays the rest
+
+  # ---- SAU 13 ----
+  - district: Madison
+    receiving_district: Conway
+    grades: [7, 12]
+    arrangement: tuition_contract
+    starts: 2006-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1E5cBiDRGgIpK2cmOMRYvmznA25VifTjN/view
+    note: The 2003 contracts; Madison voted in 2024 not to renew
+  - district: Freedom
+    receiving_district: Conway
+    grades: [7, 12]
+    arrangement: tuition_contract
+    starts: 2006-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1uhhBFeUbQE9oPLnafPj8AtZ4GaKoe4kv/view
+    note: The 2003 contracts; Freedom gave notice in 2024
+  - district: Freedom
+    receiving_district: Governor Wentworth Regional
+    grades: [7, 12]
+    arrangement: tuition_contract
+    starts: 2024-07-01
+    source: https://drive.google.com/file/d/19f2vQOm7NoYo-1WfdO4B8cw8wengG7CG/view
+    note: Kingswood; an agreement priced at Governor Wentworth's per-pupil cost, approved August 11, 2025
+  - district: Tamworth
+    receiving_district: Conway
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2006-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1yzFePgCx5BWzBzWIiemUeeDmObWxExQI/view
+    note: The 2003 contract; Tamworth gave notice in 2024
+  - district: Tamworth
+    receiving_district: Moultonborough
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2024-07-01
+    source: https://drive.google.com/file/d/1d8wVyA1kBtoqLZ16nlfdpPyL2ilzcEVP/view
+    note: Moultonborough Academy; up to 10 students per grade in 2026-27

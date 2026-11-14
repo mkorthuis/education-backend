@@ -20,6 +20,10 @@ Gathered starting November 8, 2026.
 
 Raw downloads (API responses, spreadsheets, PDFs) are kept in `raw/<area>/` so every figure can be traced back.
 
+`places.yaml` lists where each district's students go for the grades it doesn't run (another district or a school outside New Hampshire) and those outside schools. The Ask's lookup follows it, so a Jackson question also gets the facts placed in Bartlett, Conway, SAU 9 and Fryeburg Academy.
+
+The town research (`town/<Town>/*.md` in the education folder) uses this same format with shared topics. To load it, copy those Markdown files, without their `raw/` folders, to `town/` here with the shared topic list (`town/shared-topics.md`), and add `town/*/*.md` to `files` in `reference_config.yaml`.
+
 ## Rules for every file
 
 1. **Only what a source says.** Every fact and number comes from a page or file that was actually read or downloaded, never from memory. Numbers are copied exactly. A figure we calculated (a share, a sum) is marked **derived**, with how it was calculated.
@@ -44,11 +48,12 @@ Raw downloads (API responses, spreadsheets, PDFs) are kept in `raw/<area>/` so e
    - source: https://gc.nh.gov/rsa/html/XV/193-F/193-F-4.htm
    - as_of: 2026-11-08
    - review_by: 2027-08-15
-   - place: district Rochester        (only when the fact is about one district or town)
+   - place: district Rochester        (only when the fact is about one place; see below)
    - note: for reviewers only; never shown
 ```
 
-- **Topic slugs** are lower-case words joined by hyphens, and unique across all files.
+- **Topic slugs** are lower-case words joined by hyphens. A topic may appear in several files (the town research shares topics such as `district-transportation`, one section per town); its facts load under one topic, and each file's heading is kept with its facts. Within a file each slug appears once, and a topic's `kind` and `question_type` must match everywhere it appears.
+- **Places:** `district <name>` and `town <name>` as in the site's tables, `sau <number>` for a fact about a whole SAU, and a school outside New Hampshire by its state, such as `maine Fryeburg Academy`, as listed in `places.yaml`. A fact has one place at most; general facts have none. In a `local` topic, the Ask gives a district's facts with those of its towns, its SAU and the schools its students attend; in other topics every fact is given, with its place named.
 - **Statements** stand alone: each names its subject ("New Hampshire law…", "In Rochester…"), so it reads right when quoted by itself.
 - **`review_by`:** facts from state law use the August 15 after the next legislative session (2027-08-15). Everything else is reviewed one year after `as_of`.
 
@@ -77,6 +82,7 @@ Raw downloads (API responses, spreadsheets, PDFs) are kept in `raw/<area>/` so e
   - Districts use the `district` table's name and id.
 - **Year convention:** `year` is the year the school or fiscal year ends (2025 = 2024-25 or FY2025). `period` keeps the source's own label ("Fall 2022", "Class of 2022", "Tax year 2025").
 - **Rank:** only the source's own published rank, never one we computed.
+- **Topic and place (optional):** `- topic: <slug>` and `- place: <place>` lines tie a table to a topic and a place, so the Ask returns it with that topic's facts. Without them, a table takes the topic and place of the facts that name it ("See table jackson_transport_ride_minutes"). Tables tied to no topic are loaded but not given to the Ask.
 
 ### Long lists
 

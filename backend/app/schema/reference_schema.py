@@ -28,6 +28,10 @@ class ReferenceFactGet(BaseModel):
     review_by: date
     district_id: Optional[int] = None
     town_id: Optional[int] = None
+    sau_id: Optional[int] = None
+    outside_school_id: Optional[int] = None  # a school outside New Hampshire, such as Fryeburg Academy
+    source_file: str
+    section_title: str  # the file's own heading for the topic
 
 
 class ReferenceTopicDetailGet(ReferenceTopicGet):
