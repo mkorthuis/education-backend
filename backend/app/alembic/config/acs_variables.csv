@@ -1,0 +1,1196 @@
+variable,column_name,unit,description
+B01001_001,population,count,Total population
+B01001_002,pop_male,count,All males
+B01001_003,pop_male_under_5,count,Males under 5 years
+B01001_004,pop_male_5_9,count,Males aged 5 to 9 years
+B01001_005,pop_male_10_14,count,Males aged 10 to 14 years
+B01001_006,pop_male_15_17,count,Males aged 15 to 17 years
+B01001_007,pop_male_18_19,count,Males aged 18 and 19 years
+B01001_008,pop_male_20,count,Males aged 20 years
+B01001_009,pop_male_21,count,Males aged 21 years
+B01001_010,pop_male_22_24,count,Males aged 22 to 24 years
+B01001_011,pop_male_25_29,count,Males aged 25 to 29 years
+B01001_012,pop_male_30_34,count,Males aged 30 to 34 years
+B01001_013,pop_male_35_39,count,Males aged 35 to 39 years
+B01001_014,pop_male_40_44,count,Males aged 40 to 44 years
+B01001_015,pop_male_45_49,count,Males aged 45 to 49 years
+B01001_016,pop_male_50_54,count,Males aged 50 to 54 years
+B01001_017,pop_male_55_59,count,Males aged 55 to 59 years
+B01001_018,pop_male_60_61,count,Males aged 60 and 61 years
+B01001_019,pop_male_62_64,count,Males aged 62 to 64 years
+B01001_020,pop_male_65_66,count,Males aged 65 and 66 years
+B01001_021,pop_male_67_69,count,Males aged 67 to 69 years
+B01001_022,pop_male_70_74,count,Males aged 70 to 74 years
+B01001_023,pop_male_75_79,count,Males aged 75 to 79 years
+B01001_024,pop_male_80_84,count,Males aged 80 to 84 years
+B01001_025,pop_male_85_plus,count,Males aged 85 years and over
+B01001_026,pop_female,count,All females
+B01001_027,pop_female_under_5,count,Females under 5 years
+B01001_028,pop_female_5_9,count,Females aged 5 to 9 years
+B01001_029,pop_female_10_14,count,Females aged 10 to 14 years
+B01001_030,pop_female_15_17,count,Females aged 15 to 17 years
+B01001_031,pop_female_18_19,count,Females aged 18 and 19 years
+B01001_032,pop_female_20,count,Females aged 20 years
+B01001_033,pop_female_21,count,Females aged 21 years
+B01001_034,pop_female_22_24,count,Females aged 22 to 24 years
+B01001_035,pop_female_25_29,count,Females aged 25 to 29 years
+B01001_036,pop_female_30_34,count,Females aged 30 to 34 years
+B01001_037,pop_female_35_39,count,Females aged 35 to 39 years
+B01001_038,pop_female_40_44,count,Females aged 40 to 44 years
+B01001_039,pop_female_45_49,count,Females aged 45 to 49 years
+B01001_040,pop_female_50_54,count,Females aged 50 to 54 years
+B01001_041,pop_female_55_59,count,Females aged 55 to 59 years
+B01001_042,pop_female_60_61,count,Females aged 60 and 61 years
+B01001_043,pop_female_62_64,count,Females aged 62 to 64 years
+B01001_044,pop_female_65_66,count,Females aged 65 and 66 years
+B01001_045,pop_female_67_69,count,Females aged 67 to 69 years
+B01001_046,pop_female_70_74,count,Females aged 70 to 74 years
+B01001_047,pop_female_75_79,count,Females aged 75 to 79 years
+B01001_048,pop_female_80_84,count,Females aged 80 to 84 years
+B01001_049,pop_female_85_plus,count,Females aged 85 years and over
+B01002_001,median_age,years,Median age (total population)
+B01002_002,median_age_male,years,Median age › Male (total population)
+B01002_003,median_age_female,years,Median age › Female (total population)
+B07003_001,b07003_001,count,All population 1 year and over in the United States (the table's total)
+B07003_002,b07003_002,count,Population 1 year and over in the United States: Male
+B07003_003,b07003_003,count,Population 1 year and over in the United States: Female
+B07003_004,b07003_004,count,Population 1 year and over in the United States: Same house 1 year ago
+B07003_005,b07003_005,count,Population 1 year and over in the United States: Same house 1 year ago › Male
+B07003_006,b07003_006,count,Population 1 year and over in the United States: Same house 1 year ago › Female
+B07003_007,b07003_007,count,Population 1 year and over in the United States: Moved within same county
+B07003_008,b07003_008,count,Population 1 year and over in the United States: Moved within same county › Male
+B07003_009,b07003_009,count,Population 1 year and over in the United States: Moved within same county › Female
+B07003_010,b07003_010,count,Population 1 year and over in the United States: Moved from different county within same state
+B07003_011,b07003_011,count,Population 1 year and over in the United States: Moved from different county within same state › Male
+B07003_012,b07003_012,count,Population 1 year and over in the United States: Moved from different county within same state › Female
+B07003_013,b07003_013,count,Population 1 year and over in the United States: Moved from different state
+B07003_014,b07003_014,count,Population 1 year and over in the United States: Moved from different state › Male
+B07003_015,b07003_015,count,Population 1 year and over in the United States: Moved from different state › Female
+B07003_016,b07003_016,count,Population 1 year and over in the United States: Moved from abroad
+B07003_017,b07003_017,count,Population 1 year and over in the United States: Moved from abroad › Male
+B07003_018,b07003_018,count,Population 1 year and over in the United States: Moved from abroad › Female
+B26001_001,b26001_001,count,All population in group quarters (the table's total)
+B09001_001,children_under_18,count,Children under 18
+B09001_002,children_in_households,count,Children under 18 living in households
+B09001_003,children_under_3,count,Children under 3 living in households
+B09001_004,children_3_4,count,Children aged 3 and 4 years living in households
+B09001_005,children_5,count,Children aged 5 years living in households
+B09001_006,children_6_8,count,Children aged 6 to 8 years living in households
+B09001_007,children_9_11,count,Children aged 9 to 11 years living in households
+B09001_008,children_12_14,count,Children aged 12 to 14 years living in households
+B09001_009,children_15_17,count,Children aged 15 to 17 years living in households
+B09001_010,children_in_group_quarters,count,"Children under 18 living in group quarters (group homes, institutions, residential facilities)"
+B09002_001,b09002_001,count,All own children under 18 years (the table's total)
+B09002_002,b09002_002,count,Own children under 18 years: In married-couple families
+B09002_003,b09002_003,count,Own children under 18 years: In married-couple families › Under 3 years
+B09002_004,b09002_004,count,Own children under 18 years: In married-couple families › 3 and 4 years
+B09002_005,b09002_005,count,Own children under 18 years: In married-couple families › 5 years
+B09002_006,b09002_006,count,Own children under 18 years: In married-couple families › 6 to 11 years
+B09002_007,b09002_007,count,Own children under 18 years: In married-couple families › 12 to 17 years
+B09002_008,b09002_008,count,Own children under 18 years: In other families
+B09002_009,b09002_009,count,"Own children under 18 years: In other families › Male householder, no spouse present"
+B09002_010,b09002_010,count,"Own children under 18 years: In other families › Male householder, no spouse present › Under 3 years"
+B09002_011,b09002_011,count,"Own children under 18 years: In other families › Male householder, no spouse present › 3 and 4 years"
+B09002_012,b09002_012,count,"Own children under 18 years: In other families › Male householder, no spouse present › 5 years"
+B09002_013,b09002_013,count,"Own children under 18 years: In other families › Male householder, no spouse present › 6 to 11 years"
+B09002_014,b09002_014,count,"Own children under 18 years: In other families › Male householder, no spouse present › 12 to 17 years"
+B09002_015,b09002_015,count,"Own children under 18 years: In other families › Female householder, no spouse present"
+B09002_016,b09002_016,count,"Own children under 18 years: In other families › Female householder, no spouse present › Under 3 years"
+B09002_017,b09002_017,count,"Own children under 18 years: In other families › Female householder, no spouse present › 3 and 4 years"
+B09002_018,b09002_018,count,"Own children under 18 years: In other families › Female householder, no spouse present › 5 years"
+B09002_019,b09002_019,count,"Own children under 18 years: In other families › Female householder, no spouse present › 6 to 11 years"
+B09002_020,b09002_020,count,"Own children under 18 years: In other families › Female householder, no spouse present › 12 to 17 years"
+B09005_001,b09005_001,count,"All population under 18 years in households (excluding householders, spouses, and unmarried partners) (the table's total)"
+B09005_002,b09005_002,count,"Population under 18 years in households (excluding householders, spouses, and unmarried partners): Married-couple household"
+B09005_003,b09005_003,count,"Population under 18 years in households (excluding householders, spouses, and unmarried partners): Cohabiting couple household"
+B09005_004,b09005_004,count,"Population under 18 years in households (excluding householders, spouses, and unmarried partners): In male householder, no spouse/partner present household"
+B09005_005,b09005_005,count,"Population under 18 years in households (excluding householders, spouses, and unmarried partners): In female householder, no spouse/partner present household"
+B10001_001,b10001_001,count,All grandchildren under 18 living with grandparent householder (the table's total)
+B10001_002,b10001_002,count,Grandchildren under 18 living with grandparent householder: Grandchildren under 6 years
+B10001_003,b10001_003,count,Grandchildren under 18 living with grandparent householder: Grandchildren 6 to 11 years
+B10001_004,b10001_004,count,Grandchildren under 18 living with grandparent householder: Grandchildren 12 to 17 years
+B13016_001,b13016_001,count,All women 15 to 50 years (the table's total)
+B13016_002,b13016_002,count,Women 15 to 50 years: Women who had a birth in the past 12 months
+B13016_003,b13016_003,count,Women 15 to 50 years: Women who had a birth in the past 12 months › 15 to 19 years old
+B13016_004,b13016_004,count,Women 15 to 50 years: Women who had a birth in the past 12 months › 20 to 24 years old
+B13016_005,b13016_005,count,Women 15 to 50 years: Women who had a birth in the past 12 months › 25 to 29 years old
+B13016_006,b13016_006,count,Women 15 to 50 years: Women who had a birth in the past 12 months › 30 to 34 years old
+B13016_007,b13016_007,count,Women 15 to 50 years: Women who had a birth in the past 12 months › 35 to 39 years old
+B13016_008,b13016_008,count,Women 15 to 50 years: Women who had a birth in the past 12 months › 40 to 44 years old
+B13016_009,b13016_009,count,Women 15 to 50 years: Women who had a birth in the past 12 months › 45 to 50 years old
+B13016_010,b13016_010,count,Women 15 to 50 years: Women who did not have a birth in the past 12 months
+B13016_011,b13016_011,count,Women 15 to 50 years: Women who did not have a birth in the past 12 months › 15 to 19 years old
+B13016_012,b13016_012,count,Women 15 to 50 years: Women who did not have a birth in the past 12 months › 20 to 24 years old
+B13016_013,b13016_013,count,Women 15 to 50 years: Women who did not have a birth in the past 12 months › 25 to 29 years old
+B13016_014,b13016_014,count,Women 15 to 50 years: Women who did not have a birth in the past 12 months › 30 to 34 years old
+B13016_015,b13016_015,count,Women 15 to 50 years: Women who did not have a birth in the past 12 months › 35 to 39 years old
+B13016_016,b13016_016,count,Women 15 to 50 years: Women who did not have a birth in the past 12 months › 40 to 44 years old
+B13016_017,b13016_017,count,Women 15 to 50 years: Women who did not have a birth in the past 12 months › 45 to 50 years old
+B11001_001,households,count,"All households (the table's total), in Household Type (Including Living Alone)"
+B11001_002,hh_family,count,"Households: Family households, in Household Type (Including Living Alone)"
+B11001_003,hh_family_married,count,Households: Family households › Married-couple family
+B11001_004,hh_family_other,count,Households: Family households › Other family
+B11001_005,hh_family_other_male_hh,count,"Households: Family households › Other family › Male householder, no spouse present"
+B11001_006,hh_family_other_female_hh,count,"Households: Family households › Other family › Female householder, no spouse present"
+B11001_007,hh_nonfamily,count,"Households: Nonfamily households, in Household Type (Including Living Alone)"
+B11001_008,hh_nonfamily_alone,count,Households: Nonfamily households › Householder living alone
+B11001_009,hh_nonfamily_not_alone,count,Households: Nonfamily households › Householder not living alone
+B11003_001,families,count,"All families (the table's total), in Family Type by Presence and Age of Own Children Under 18 Years"
+B11003_002,families_married,count,Families: Married-couple family
+B11003_003,families_married_children,count,Families: Married-couple family › With own children of the householder under 18 years
+B11003_004,families_married_children_under_6_only,count,Families: Married-couple family › With own children of the householder under 18 years › Under 6 years only
+B11003_005,families_married_children_under_6_and_6_17,count,Families: Married-couple family › With own children of the householder under 18 years › Under 6 years and 6 to 17 years
+B11003_006,families_married_children_6_17_only,count,Families: Married-couple family › With own children of the householder under 18 years › 6 to 17 years only
+B11003_007,families_married_no_children,count,Families: Married-couple family › No own children of the householder under 18 years
+B11003_008,families_other,count,Families: Other family
+B11003_009,families_male_hh,count,"Families: Other family › Male householder, no spouse present"
+B11003_010,families_male_hh_children,count,"Families: Other family › Male householder, no spouse present › With own children of the householder under 18 years"
+B11003_011,families_male_hh_children_under_6_only,count,"Families: Other family › Male householder, no spouse present › With own children of the householder under 18 years › Under 6 years only"
+B11003_012,families_male_hh_children_under_6_and_6_17,count,"Families: Other family › Male householder, no spouse present › With own children of the householder under 18 years › Under 6 years and 6 to 17 years"
+B11003_013,families_male_hh_children_6_17_only,count,"Families: Other family › Male householder, no spouse present › With own children of the householder under 18 years › 6 to 17 years only"
+B11003_014,families_male_hh_no_children,count,"Families: Other family › Male householder, no spouse present › No own children of the householder under 18 years"
+B11003_015,families_female_hh,count,"Families: Other family › Female householder, no spouse present"
+B11003_016,families_female_hh_children,count,"Families: Other family › Female householder, no spouse present › With own children of the householder under 18 years"
+B11003_017,families_female_hh_children_under_6_only,count,"Families: Other family › Female householder, no spouse present › With own children of the householder under 18 years › Under 6 years only"
+B11003_018,families_female_hh_children_under_6_and_6_17,count,"Families: Other family › Female householder, no spouse present › With own children of the householder under 18 years › Under 6 years and 6 to 17 years"
+B11003_019,families_female_hh_children_6_17_only,count,"Families: Other family › Female householder, no spouse present › With own children of the householder under 18 years › 6 to 17 years only"
+B11003_020,families_female_hh_no_children,count,"Families: Other family › Female householder, no spouse present › No own children of the householder under 18 years"
+B11005_001,hh_by_children_total,count,"All households (the table's total), in Households by Presence of People Under 18 Years by Household Type"
+B11005_002,hh_with_under_18,count,Households: Households with one or more people under 18 years
+B11005_003,hh_with_under_18_family,count,Households: Households with one or more people under 18 years › Family households
+B11005_004,hh_with_under_18_family_married,count,Households: Households with one or more people under 18 years › Family households › Married-couple family
+B11005_005,hh_with_under_18_family_other,count,Households: Households with one or more people under 18 years › Family households › Other family
+B11005_006,hh_with_under_18_family_male_hh,count,"Households: Households with one or more people under 18 years › Family households › Other family › Male householder, no spouse present"
+B11005_007,hh_with_under_18_family_female_hh,count,"Households: Households with one or more people under 18 years › Family households › Other family › Female householder, no spouse present"
+B11005_008,hh_with_under_18_nonfamily,count,Households: Households with one or more people under 18 years › Nonfamily households
+B11005_009,hh_with_under_18_nonfamily_male_householder,count,Households: Households with one or more people under 18 years › Nonfamily households › Male householder
+B11005_010,hh_with_under_18_nonfamily_female_householder,count,Households: Households with one or more people under 18 years › Nonfamily households › Female householder
+B11005_011,hh_no_under_18,count,Households: Households with no people under 18 years
+B11005_012,hh_no_under_18_family,count,Households: Households with no people under 18 years › Family households
+B11005_013,hh_no_under_18_family_married,count,Households: Households with no people under 18 years › Family households › Married-couple family
+B11005_014,hh_no_under_18_family_other,count,Households: Households with no people under 18 years › Family households › Other family
+B11005_015,hh_no_under_18_family_male_hh,count,"Households: Households with no people under 18 years › Family households › Other family › Male householder, no spouse present"
+B11005_016,hh_no_under_18_family_female_hh,count,"Households: Households with no people under 18 years › Family households › Other family › Female householder, no spouse present"
+B11005_017,hh_no_under_18_nonfamily,count,Households: Households with no people under 18 years › Nonfamily households
+B11005_018,hh_no_under_18_nonfamily_male_householder,count,Households: Households with no people under 18 years › Nonfamily households › Male householder
+B11005_019,hh_no_under_18_nonfamily_female_householder,count,Households: Households with no people under 18 years › Nonfamily households › Female householder
+B11016_001,b11016_001,count,"All households (the table's total), in Household Type by Household Size"
+B11016_002,b11016_002,count,"Households: Family households, in Household Type by Household Size"
+B11016_003,b11016_003,count,Households: Family households › 2-person household
+B11016_004,b11016_004,count,Households: Family households › 3-person household
+B11016_005,b11016_005,count,Households: Family households › 4-person household
+B11016_006,b11016_006,count,Households: Family households › 5-person household
+B11016_007,b11016_007,count,Households: Family households › 6-person household
+B11016_008,b11016_008,count,Households: Family households › 7-or-more person household
+B11016_009,b11016_009,count,"Households: Nonfamily households, in Household Type by Household Size"
+B11016_010,b11016_010,count,Households: Nonfamily households › 1-person household
+B11016_011,b11016_011,count,Households: Nonfamily households › 2-person household
+B11016_012,b11016_012,count,Households: Nonfamily households › 3-person household
+B11016_013,b11016_013,count,Households: Nonfamily households › 4-person household
+B11016_014,b11016_014,count,Households: Nonfamily households › 5-person household
+B11016_015,b11016_015,count,Households: Nonfamily households › 6-person household
+B11016_016,b11016_016,count,Households: Nonfamily households › 7-or-more person household
+B23008_001,own_children,count,All own children under 18 years in families and subfamilies (the table's total)
+B23008_002,own_children_under_6,count,Own children under 18 years in families and subfamilies: Under 6 years
+B23008_003,own_children_under_6_two_parents,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with two parents
+B23008_004,own_children_under_6_two_parents_both_working,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with two parents › Both parents in labor force
+B23008_005,own_children_under_6_two_parents_father_only_working,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with two parents › Father only in labor force
+B23008_006,own_children_under_6_two_parents_mother_only_working,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with two parents › Mother only in labor force
+B23008_007,own_children_under_6_two_parents_neither_working,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with two parents › Neither parent in labor force
+B23008_008,own_children_under_6_one_parent,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with one parent
+B23008_009,own_children_under_6_one_parent_father,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with one parent › Living with father
+B23008_010,own_children_under_6_one_parent_father_in_labor_force,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with one parent › Living with father › In labor force
+B23008_011,own_children_under_6_one_parent_father_not_in_labor_force,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with one parent › Living with father › Not in labor force
+B23008_012,own_children_under_6_one_parent_mother,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with one parent › Living with mother
+B23008_013,own_children_under_6_one_parent_mother_in_labor_force,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with one parent › Living with mother › In labor force
+B23008_014,own_children_under_6_one_parent_mother_not_in_labor_force,count,Own children under 18 years in families and subfamilies: Under 6 years › Living with one parent › Living with mother › Not in labor force
+B23008_015,own_children_6_17,count,Own children under 18 years in families and subfamilies: 6 to 17 years
+B23008_016,own_children_6_17_two_parents,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with two parents
+B23008_017,own_children_6_17_two_parents_both_working,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with two parents › Both parents in labor force
+B23008_018,own_children_6_17_two_parents_father_only_working,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with two parents › Father only in labor force
+B23008_019,own_children_6_17_two_parents_mother_only_working,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with two parents › Mother only in labor force
+B23008_020,own_children_6_17_two_parents_neither_working,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with two parents › Neither parent in labor force
+B23008_021,own_children_6_17_one_parent,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with one parent
+B23008_022,own_children_6_17_one_parent_father,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with one parent › Living with father
+B23008_023,own_children_6_17_one_parent_father_in_labor_force,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with one parent › Living with father › In labor force
+B23008_024,own_children_6_17_one_parent_father_not_in_labor_force,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with one parent › Living with father › Not in labor force
+B23008_025,own_children_6_17_one_parent_mother,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with one parent › Living with mother
+B23008_026,own_children_6_17_one_parent_mother_in_labor_force,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with one parent › Living with mother › In labor force
+B23008_027,own_children_6_17_one_parent_mother_not_in_labor_force,count,Own children under 18 years in families and subfamilies: 6 to 17 years › Living with one parent › Living with mother › Not in labor force
+B03002_001,race_total,count,"Total population (the table's total), in Hispanic or Latino Origin by Race"
+B03002_002,race_not_hispanic,count,Total population: Not Hispanic or Latino
+B03002_003,race_not_hispanic_white,count,Total population: Not Hispanic or Latino › White alone
+B03002_004,race_not_hispanic_black,count,Total population: Not Hispanic or Latino › Black or African American alone
+B03002_005,race_not_hispanic_american_indian,count,Total population: Not Hispanic or Latino › American Indian and Alaska Native alone
+B03002_006,race_not_hispanic_asian,count,Total population: Not Hispanic or Latino › Asian alone
+B03002_007,race_not_hispanic_pacific_islander,count,Total population: Not Hispanic or Latino › Native Hawaiian and Other Pacific Islander alone
+B03002_008,race_not_hispanic_other_race,count,Total population: Not Hispanic or Latino › Some other race alone
+B03002_009,race_not_hispanic_two_plus_races,count,Total population: Not Hispanic or Latino › Two or more races
+B03002_010,race_not_hispanic_two_incl_other,count,Total population: Not Hispanic or Latino › Two or more races › Two races including Some other race
+B03002_011,race_not_hispanic_two_excl_other_3_plus,count,"Total population: Not Hispanic or Latino › Two or more races › Two races excluding Some other race, and three or more races"
+B03002_012,race_hispanic,count,Total population: Hispanic or Latino
+B03002_013,race_hispanic_white,count,Total population: Hispanic or Latino › White alone
+B03002_014,race_hispanic_black,count,Total population: Hispanic or Latino › Black or African American alone
+B03002_015,race_hispanic_american_indian,count,Total population: Hispanic or Latino › American Indian and Alaska Native alone
+B03002_016,race_hispanic_asian,count,Total population: Hispanic or Latino › Asian alone
+B03002_017,race_hispanic_pacific_islander,count,Total population: Hispanic or Latino › Native Hawaiian and Other Pacific Islander alone
+B03002_018,race_hispanic_other_race,count,Total population: Hispanic or Latino › Some other race alone
+B03002_019,race_hispanic_two_plus_races,count,Total population: Hispanic or Latino › Two or more races
+B03002_020,race_hispanic_two_incl_other,count,Total population: Hispanic or Latino › Two or more races › Two races including Some other race
+B03002_021,race_hispanic_two_excl_other_3_plus,count,"Total population: Hispanic or Latino › Two or more races › Two races excluding Some other race, and three or more races"
+B02001_001,b02001_001,count,"Total population (the table's total), in Race"
+B02001_002,b02001_002,count,Total population: White alone
+B02001_003,b02001_003,count,Total population: Black or African American alone
+B02001_004,b02001_004,count,Total population: American Indian and Alaska Native alone
+B02001_005,b02001_005,count,Total population: Asian alone
+B02001_006,b02001_006,count,Total population: Native Hawaiian and Other Pacific Islander alone
+B02001_007,b02001_007,count,Total population: Some Other Race alone
+B02001_008,b02001_008,count,Total population: Two or More Races
+B02001_009,b02001_009,count,Total population: Two or More Races › Two races including Some Other Race
+B02001_010,b02001_010,count,"Total population: Two or More Races › Two races excluding Some Other Race, and three or more races"
+B05002_001,b05002_001,count,"Total population (the table's total), in Place of Birth by Nativity and Citizenship Status"
+B05002_002,b05002_002,count,Total population: Native
+B05002_003,b05002_003,count,Total population: Native › Born in state of residence
+B05002_004,b05002_004,count,Total population: Native › Born in other state in the United States
+B05002_005,b05002_005,count,Total population: Native › Born in other state in the United States › Northeast
+B05002_006,b05002_006,count,Total population: Native › Born in other state in the United States › Midwest
+B05002_007,b05002_007,count,Total population: Native › Born in other state in the United States › South
+B05002_008,b05002_008,count,Total population: Native › Born in other state in the United States › West
+B05002_009,b05002_009,count,Total population: Native › Born outside the United States
+B05002_010,b05002_010,count,Total population: Native › Born outside the United States › Puerto Rico
+B05002_011,b05002_011,count,Total population: Native › Born outside the United States › U.S. Island Areas
+B05002_012,b05002_012,count,Total population: Native › Born outside the United States › Born abroad of American parent(s)
+B05002_013,b05002_013,count,Total population: Foreign-born
+B05002_014,b05002_014,count,Total population: Foreign-born › Naturalized U.S. citizen
+B05002_015,b05002_015,count,Total population: Foreign-born › Naturalized U.S. citizen › Europe
+B05002_016,b05002_016,count,Total population: Foreign-born › Naturalized U.S. citizen › Asia
+B05002_017,b05002_017,count,Total population: Foreign-born › Naturalized U.S. citizen › Africa
+B05002_018,b05002_018,count,Total population: Foreign-born › Naturalized U.S. citizen › Oceania
+B05002_019,b05002_019,count,Total population: Foreign-born › Naturalized U.S. citizen › Latin America
+B05002_020,b05002_020,count,Total population: Foreign-born › Naturalized U.S. citizen › Northern America
+B05002_021,b05002_021,count,Total population: Foreign-born › Not a U.S. citizen
+B05002_022,b05002_022,count,Total population: Foreign-born › Not a U.S. citizen › Europe
+B05002_023,b05002_023,count,Total population: Foreign-born › Not a U.S. citizen › Asia
+B05002_024,b05002_024,count,Total population: Foreign-born › Not a U.S. citizen › Africa
+B05002_025,b05002_025,count,Total population: Foreign-born › Not a U.S. citizen › Oceania
+B05002_026,b05002_026,count,Total population: Foreign-born › Not a U.S. citizen › Latin America
+B05002_027,b05002_027,count,Total population: Foreign-born › Not a U.S. citizen › Northern America
+B16004_001,lang_total,count,"All population 5 years and over (the table's total), in Age by Language Spoken at Home by Ability to Speak English for the Population 5 Years and Over"
+B16004_002,lang_5_17,count,Population 5 years and over: 5 to 17 years
+B16004_003,lang_5_17_english_only,count,Population 5 years and over: 5 to 17 years › Speak only English
+B16004_004,lang_5_17_spanish,count,Population 5 years and over: 5 to 17 years › Speak Spanish
+B16004_005,lang_5_17_spanish_english_very_well,count,"Population 5 years and over: 5 to 17 years › Speak Spanish › Speak English ""very well"""
+B16004_006,lang_5_17_spanish_english_well,count,"Population 5 years and over: 5 to 17 years › Speak Spanish › Speak English ""well"""
+B16004_007,lang_5_17_spanish_english_not_well,count,"Population 5 years and over: 5 to 17 years › Speak Spanish › Speak English ""not well"""
+B16004_008,lang_5_17_spanish_english_not_at_all,count,"Population 5 years and over: 5 to 17 years › Speak Spanish › Speak English ""not at all"""
+B16004_009,lang_5_17_indo_european,count,Population 5 years and over: 5 to 17 years › Speak other Indo-European languages
+B16004_010,lang_5_17_indo_european_english_very_well,count,"Population 5 years and over: 5 to 17 years › Speak other Indo-European languages › Speak English ""very well"""
+B16004_011,lang_5_17_indo_european_english_well,count,"Population 5 years and over: 5 to 17 years › Speak other Indo-European languages › Speak English ""well"""
+B16004_012,lang_5_17_indo_european_english_not_well,count,"Population 5 years and over: 5 to 17 years › Speak other Indo-European languages › Speak English ""not well"""
+B16004_013,lang_5_17_indo_european_english_not_at_all,count,"Population 5 years and over: 5 to 17 years › Speak other Indo-European languages › Speak English ""not at all"""
+B16004_014,lang_5_17_asian_pacific,count,Population 5 years and over: 5 to 17 years › Speak Asian and Pacific Island languages
+B16004_015,lang_5_17_asian_pacific_english_very_well,count,"Population 5 years and over: 5 to 17 years › Speak Asian and Pacific Island languages › Speak English ""very well"""
+B16004_016,lang_5_17_asian_pacific_english_well,count,"Population 5 years and over: 5 to 17 years › Speak Asian and Pacific Island languages › Speak English ""well"""
+B16004_017,lang_5_17_asian_pacific_english_not_well,count,"Population 5 years and over: 5 to 17 years › Speak Asian and Pacific Island languages › Speak English ""not well"""
+B16004_018,lang_5_17_asian_pacific_english_not_at_all,count,"Population 5 years and over: 5 to 17 years › Speak Asian and Pacific Island languages › Speak English ""not at all"""
+B16004_019,lang_5_17_other_lang,count,Population 5 years and over: 5 to 17 years › Speak other languages
+B16004_020,lang_5_17_other_lang_english_very_well,count,"Population 5 years and over: 5 to 17 years › Speak other languages › Speak English ""very well"""
+B16004_021,lang_5_17_other_lang_english_well,count,"Population 5 years and over: 5 to 17 years › Speak other languages › Speak English ""well"""
+B16004_022,lang_5_17_other_lang_english_not_well,count,"Population 5 years and over: 5 to 17 years › Speak other languages › Speak English ""not well"""
+B16004_023,lang_5_17_other_lang_english_not_at_all,count,"Population 5 years and over: 5 to 17 years › Speak other languages › Speak English ""not at all"""
+B16004_024,lang_18_64,count,Population 5 years and over: 18 to 64 years
+B16004_025,lang_18_64_english_only,count,Population 5 years and over: 18 to 64 years › Speak only English
+B16004_026,lang_18_64_spanish,count,Population 5 years and over: 18 to 64 years › Speak Spanish
+B16004_027,lang_18_64_spanish_english_very_well,count,"Population 5 years and over: 18 to 64 years › Speak Spanish › Speak English ""very well"""
+B16004_028,lang_18_64_spanish_english_well,count,"Population 5 years and over: 18 to 64 years › Speak Spanish › Speak English ""well"""
+B16004_029,lang_18_64_spanish_english_not_well,count,"Population 5 years and over: 18 to 64 years › Speak Spanish › Speak English ""not well"""
+B16004_030,lang_18_64_spanish_english_not_at_all,count,"Population 5 years and over: 18 to 64 years › Speak Spanish › Speak English ""not at all"""
+B16004_031,lang_18_64_indo_european,count,Population 5 years and over: 18 to 64 years › Speak other Indo-European languages
+B16004_032,lang_18_64_indo_european_english_very_well,count,"Population 5 years and over: 18 to 64 years › Speak other Indo-European languages › Speak English ""very well"""
+B16004_033,lang_18_64_indo_european_english_well,count,"Population 5 years and over: 18 to 64 years › Speak other Indo-European languages › Speak English ""well"""
+B16004_034,lang_18_64_indo_european_english_not_well,count,"Population 5 years and over: 18 to 64 years › Speak other Indo-European languages › Speak English ""not well"""
+B16004_035,lang_18_64_indo_european_english_not_at_all,count,"Population 5 years and over: 18 to 64 years › Speak other Indo-European languages › Speak English ""not at all"""
+B16004_036,lang_18_64_asian_pacific,count,Population 5 years and over: 18 to 64 years › Speak Asian and Pacific Island languages
+B16004_037,lang_18_64_asian_pacific_english_very_well,count,"Population 5 years and over: 18 to 64 years › Speak Asian and Pacific Island languages › Speak English ""very well"""
+B16004_038,lang_18_64_asian_pacific_english_well,count,"Population 5 years and over: 18 to 64 years › Speak Asian and Pacific Island languages › Speak English ""well"""
+B16004_039,lang_18_64_asian_pacific_english_not_well,count,"Population 5 years and over: 18 to 64 years › Speak Asian and Pacific Island languages › Speak English ""not well"""
+B16004_040,lang_18_64_asian_pacific_english_not_at_all,count,"Population 5 years and over: 18 to 64 years › Speak Asian and Pacific Island languages › Speak English ""not at all"""
+B16004_041,lang_18_64_other_lang,count,Population 5 years and over: 18 to 64 years › Speak other languages
+B16004_042,lang_18_64_other_lang_english_very_well,count,"Population 5 years and over: 18 to 64 years › Speak other languages › Speak English ""very well"""
+B16004_043,lang_18_64_other_lang_english_well,count,"Population 5 years and over: 18 to 64 years › Speak other languages › Speak English ""well"""
+B16004_044,lang_18_64_other_lang_english_not_well,count,"Population 5 years and over: 18 to 64 years › Speak other languages › Speak English ""not well"""
+B16004_045,lang_18_64_other_lang_english_not_at_all,count,"Population 5 years and over: 18 to 64 years › Speak other languages › Speak English ""not at all"""
+B16004_046,lang_65_plus,count,Population 5 years and over: 65 years and over
+B16004_047,lang_65_plus_english_only,count,Population 5 years and over: 65 years and over › Speak only English
+B16004_048,lang_65_plus_spanish,count,Population 5 years and over: 65 years and over › Speak Spanish
+B16004_049,lang_65_plus_spanish_english_very_well,count,"Population 5 years and over: 65 years and over › Speak Spanish › Speak English ""very well"""
+B16004_050,lang_65_plus_spanish_english_well,count,"Population 5 years and over: 65 years and over › Speak Spanish › Speak English ""well"""
+B16004_051,lang_65_plus_spanish_english_not_well,count,"Population 5 years and over: 65 years and over › Speak Spanish › Speak English ""not well"""
+B16004_052,lang_65_plus_spanish_english_not_at_all,count,"Population 5 years and over: 65 years and over › Speak Spanish › Speak English ""not at all"""
+B16004_053,lang_65_plus_indo_european,count,Population 5 years and over: 65 years and over › Speak other Indo-European languages
+B16004_054,lang_65_plus_indo_european_english_very_well,count,"Population 5 years and over: 65 years and over › Speak other Indo-European languages › Speak English ""very well"""
+B16004_055,lang_65_plus_indo_european_english_well,count,"Population 5 years and over: 65 years and over › Speak other Indo-European languages › Speak English ""well"""
+B16004_056,lang_65_plus_indo_european_english_not_well,count,"Population 5 years and over: 65 years and over › Speak other Indo-European languages › Speak English ""not well"""
+B16004_057,lang_65_plus_indo_european_english_not_at_all,count,"Population 5 years and over: 65 years and over › Speak other Indo-European languages › Speak English ""not at all"""
+B16004_058,lang_65_plus_asian_pacific,count,Population 5 years and over: 65 years and over › Speak Asian and Pacific Island languages
+B16004_059,lang_65_plus_asian_pacific_english_very_well,count,"Population 5 years and over: 65 years and over › Speak Asian and Pacific Island languages › Speak English ""very well"""
+B16004_060,lang_65_plus_asian_pacific_english_well,count,"Population 5 years and over: 65 years and over › Speak Asian and Pacific Island languages › Speak English ""well"""
+B16004_061,lang_65_plus_asian_pacific_english_not_well,count,"Population 5 years and over: 65 years and over › Speak Asian and Pacific Island languages › Speak English ""not well"""
+B16004_062,lang_65_plus_asian_pacific_english_not_at_all,count,"Population 5 years and over: 65 years and over › Speak Asian and Pacific Island languages › Speak English ""not at all"""
+B16004_063,lang_65_plus_other_lang,count,Population 5 years and over: 65 years and over › Speak other languages
+B16004_064,lang_65_plus_other_lang_english_very_well,count,"Population 5 years and over: 65 years and over › Speak other languages › Speak English ""very well"""
+B16004_065,lang_65_plus_other_lang_english_well,count,"Population 5 years and over: 65 years and over › Speak other languages › Speak English ""well"""
+B16004_066,lang_65_plus_other_lang_english_not_well,count,"Population 5 years and over: 65 years and over › Speak other languages › Speak English ""not well"""
+B16004_067,lang_65_plus_other_lang_english_not_at_all,count,"Population 5 years and over: 65 years and over › Speak other languages › Speak English ""not at all"""
+C16001_001,c16001_001,count,"All population 5 years and over (the table's total), in Language Spoken at Home for the Population 5 Years and Over"
+C16001_002,c16001_002,count,Population 5 years and over: Speak only English
+C16001_003,c16001_003,count,Population 5 years and over: Spanish
+C16001_004,c16001_004,count,"Population 5 years and over: Spanish › Speak English ""very well"""
+C16001_005,c16001_005,count,"Population 5 years and over: Spanish › Speak English less than ""very well"""
+C16001_006,c16001_006,count,"Population 5 years and over: French, Haitian, or Cajun"
+C16001_007,c16001_007,count,"Population 5 years and over: French, Haitian, or Cajun › Speak English ""very well"""
+C16001_008,c16001_008,count,"Population 5 years and over: French, Haitian, or Cajun › Speak English less than ""very well"""
+C16001_009,c16001_009,count,Population 5 years and over: German or other West Germanic languages
+C16001_010,c16001_010,count,"Population 5 years and over: German or other West Germanic languages › Speak English ""very well"""
+C16001_011,c16001_011,count,"Population 5 years and over: German or other West Germanic languages › Speak English less than ""very well"""
+C16001_012,c16001_012,count,"Population 5 years and over: Russian, Polish, or other Slavic languages"
+C16001_013,c16001_013,count,"Population 5 years and over: Russian, Polish, or other Slavic languages › Speak English ""very well"""
+C16001_014,c16001_014,count,"Population 5 years and over: Russian, Polish, or other Slavic languages › Speak English less than ""very well"""
+C16001_015,c16001_015,count,Population 5 years and over: Other Indo-European languages
+C16001_016,c16001_016,count,"Population 5 years and over: Other Indo-European languages › Speak English ""very well"""
+C16001_017,c16001_017,count,"Population 5 years and over: Other Indo-European languages › Speak English less than ""very well"""
+C16001_018,c16001_018,count,Population 5 years and over: Korean
+C16001_019,c16001_019,count,"Population 5 years and over: Korean › Speak English ""very well"""
+C16001_020,c16001_020,count,"Population 5 years and over: Korean › Speak English less than ""very well"""
+C16001_021,c16001_021,count,"Population 5 years and over: Chinese (incl. Mandarin, Cantonese)"
+C16001_022,c16001_022,count,"Population 5 years and over: Chinese (incl. Mandarin, Cantonese) › Speak English ""very well"""
+C16001_023,c16001_023,count,"Population 5 years and over: Chinese (incl. Mandarin, Cantonese) › Speak English less than ""very well"""
+C16001_024,c16001_024,count,Population 5 years and over: Vietnamese
+C16001_025,c16001_025,count,"Population 5 years and over: Vietnamese › Speak English ""very well"""
+C16001_026,c16001_026,count,"Population 5 years and over: Vietnamese › Speak English less than ""very well"""
+C16001_027,c16001_027,count,Population 5 years and over: Tagalog (incl. Filipino)
+C16001_028,c16001_028,count,"Population 5 years and over: Tagalog (incl. Filipino) › Speak English ""very well"""
+C16001_029,c16001_029,count,"Population 5 years and over: Tagalog (incl. Filipino) › Speak English less than ""very well"""
+C16001_030,c16001_030,count,Population 5 years and over: Other Asian and Pacific Island languages
+C16001_031,c16001_031,count,"Population 5 years and over: Other Asian and Pacific Island languages › Speak English ""very well"""
+C16001_032,c16001_032,count,"Population 5 years and over: Other Asian and Pacific Island languages › Speak English less than ""very well"""
+C16001_033,c16001_033,count,Population 5 years and over: Arabic
+C16001_034,c16001_034,count,"Population 5 years and over: Arabic › Speak English ""very well"""
+C16001_035,c16001_035,count,"Population 5 years and over: Arabic › Speak English less than ""very well"""
+C16001_036,c16001_036,count,Population 5 years and over: Other and unspecified languages
+C16001_037,c16001_037,count,"Population 5 years and over: Other and unspecified languages › Speak English ""very well"""
+C16001_038,c16001_038,count,"Population 5 years and over: Other and unspecified languages › Speak English less than ""very well"""
+B16002_001,b16002_001,count,"All households (the table's total), in Detailed Household Language by Household Limited English Speaking Status"
+B16002_002,b16002_002,count,Households: English only
+B16002_003,b16002_003,count,Households: Spanish
+B16002_004,b16002_004,count,Households: Spanish › Limited English speaking household
+B16002_005,b16002_005,count,Households: Spanish › Not a limited English speaking household
+B16002_006,b16002_006,count,"Households: French, Haitian, or Cajun"
+B16002_007,b16002_007,count,"Households: French, Haitian, or Cajun › Limited English speaking household"
+B16002_008,b16002_008,count,"Households: French, Haitian, or Cajun › Not a limited English speaking household"
+B16002_009,b16002_009,count,Households: German or other West Germanic languages
+B16002_010,b16002_010,count,Households: German or other West Germanic languages › Limited English speaking household
+B16002_011,b16002_011,count,Households: German or other West Germanic languages › Not a limited English speaking household
+B16002_012,b16002_012,count,"Households: Russian, Polish, or other Slavic languages"
+B16002_013,b16002_013,count,"Households: Russian, Polish, or other Slavic languages › Limited English speaking household"
+B16002_014,b16002_014,count,"Households: Russian, Polish, or other Slavic languages › Not a limited English speaking household"
+B16002_015,b16002_015,count,Households: Other Indo-European languages
+B16002_016,b16002_016,count,Households: Other Indo-European languages › Limited English speaking household
+B16002_017,b16002_017,count,Households: Other Indo-European languages › Not a limited English speaking household
+B16002_018,b16002_018,count,Households: Korean
+B16002_019,b16002_019,count,Households: Korean › Limited English speaking household
+B16002_020,b16002_020,count,Households: Korean › Not a limited English speaking household
+B16002_021,b16002_021,count,"Households: Chinese (incl. Mandarin, Cantonese)"
+B16002_022,b16002_022,count,"Households: Chinese (incl. Mandarin, Cantonese) › Limited English speaking household"
+B16002_023,b16002_023,count,"Households: Chinese (incl. Mandarin, Cantonese) › Not a limited English speaking household"
+B16002_024,b16002_024,count,Households: Vietnamese
+B16002_025,b16002_025,count,Households: Vietnamese › Limited English speaking household
+B16002_026,b16002_026,count,Households: Vietnamese › Not a limited English speaking household
+B16002_027,b16002_027,count,Households: Tagalog (incl. Filipino)
+B16002_028,b16002_028,count,Households: Tagalog (incl. Filipino) › Limited English speaking household
+B16002_029,b16002_029,count,Households: Tagalog (incl. Filipino) › Not a limited English speaking household
+B16002_030,b16002_030,count,Households: Other Asian and Pacific Island languages
+B16002_031,b16002_031,count,Households: Other Asian and Pacific Island languages › Limited English speaking household
+B16002_032,b16002_032,count,Households: Other Asian and Pacific Island languages › Not a limited English speaking household
+B16002_033,b16002_033,count,Households: Arabic
+B16002_034,b16002_034,count,Households: Arabic › Limited English speaking household
+B16002_035,b16002_035,count,Households: Arabic › Not a limited English speaking household
+B16002_036,b16002_036,count,Households: Other and unspecified languages
+B16002_037,b16002_037,count,Households: Other and unspecified languages › Limited English speaking household
+B16002_038,b16002_038,count,Households: Other and unspecified languages › Not a limited English speaking household
+B14002_001,school_sex_type_total,count,"All population 3 years and over (the table's total), in Sex by School Enrollment by Level of School by Type of School for the Population 3 Years and Over"
+B14002_002,school_male,count,Population 3 years and over: Male
+B14002_003,school_male_enrolled,count,Population 3 years and over: Male › Enrolled in school
+B14002_004,school_male_preschool,count,"Population 3 years and over: Male › Enrolled in school › Enrolled in nursery school, preschool"
+B14002_005,school_male_preschool_public,count,"Population 3 years and over: Male › Enrolled in school › Enrolled in nursery school, preschool › Public school"
+B14002_006,school_male_preschool_private,count,"Population 3 years and over: Male › Enrolled in school › Enrolled in nursery school, preschool › Private school"
+B14002_007,school_male_kindergarten,count,Population 3 years and over: Male › Enrolled in school › Enrolled in kindergarten
+B14002_008,school_male_kindergarten_public,count,Population 3 years and over: Male › Enrolled in school › Enrolled in kindergarten › Public school
+B14002_009,school_male_kindergarten_private,count,Population 3 years and over: Male › Enrolled in school › Enrolled in kindergarten › Private school
+B14002_010,school_male_grade_1_4,count,Population 3 years and over: Male › Enrolled in school › Enrolled in grade 1 to grade 4
+B14002_011,school_male_grade_1_4_public,count,Population 3 years and over: Male › Enrolled in school › Enrolled in grade 1 to grade 4 › Public school
+B14002_012,school_male_grade_1_4_private,count,Population 3 years and over: Male › Enrolled in school › Enrolled in grade 1 to grade 4 › Private school
+B14002_013,school_male_grade_5_8,count,Population 3 years and over: Male › Enrolled in school › Enrolled in grade 5 to grade 8
+B14002_014,school_male_grade_5_8_public,count,Population 3 years and over: Male › Enrolled in school › Enrolled in grade 5 to grade 8 › Public school
+B14002_015,school_male_grade_5_8_private,count,Population 3 years and over: Male › Enrolled in school › Enrolled in grade 5 to grade 8 › Private school
+B14002_016,school_male_grade_9_12,count,Population 3 years and over: Male › Enrolled in school › Enrolled in grade 9 to grade 12
+B14002_017,school_male_grade_9_12_public,count,Population 3 years and over: Male › Enrolled in school › Enrolled in grade 9 to grade 12 › Public school
+B14002_018,school_male_grade_9_12_private,count,Population 3 years and over: Male › Enrolled in school › Enrolled in grade 9 to grade 12 › Private school
+B14002_019,school_male_college,count,Population 3 years and over: Male › Enrolled in school › Enrolled in college undergraduate years
+B14002_020,school_male_college_public,count,Population 3 years and over: Male › Enrolled in school › Enrolled in college undergraduate years › Public school
+B14002_021,school_male_college_private,count,Population 3 years and over: Male › Enrolled in school › Enrolled in college undergraduate years › Private school
+B14002_022,school_male_grad_school,count,Population 3 years and over: Male › Enrolled in school › Enrolled in graduate or professional school
+B14002_023,school_male_grad_school_public,count,Population 3 years and over: Male › Enrolled in school › Enrolled in graduate or professional school › Public school
+B14002_024,school_male_grad_school_private,count,Population 3 years and over: Male › Enrolled in school › Enrolled in graduate or professional school › Private school
+B14002_025,school_male_not_enrolled,count,Population 3 years and over: Male › Not enrolled in school
+B14002_026,school_female,count,Population 3 years and over: Female
+B14002_027,school_female_enrolled,count,Population 3 years and over: Female › Enrolled in school
+B14002_028,school_female_preschool,count,"Population 3 years and over: Female › Enrolled in school › Enrolled in nursery school, preschool"
+B14002_029,school_female_preschool_public,count,"Population 3 years and over: Female › Enrolled in school › Enrolled in nursery school, preschool › Public school"
+B14002_030,school_female_preschool_private,count,"Population 3 years and over: Female › Enrolled in school › Enrolled in nursery school, preschool › Private school"
+B14002_031,school_female_kindergarten,count,Population 3 years and over: Female › Enrolled in school › Enrolled in kindergarten
+B14002_032,school_female_kindergarten_public,count,Population 3 years and over: Female › Enrolled in school › Enrolled in kindergarten › Public school
+B14002_033,school_female_kindergarten_private,count,Population 3 years and over: Female › Enrolled in school › Enrolled in kindergarten › Private school
+B14002_034,school_female_grade_1_4,count,Population 3 years and over: Female › Enrolled in school › Enrolled in grade 1 to grade 4
+B14002_035,school_female_grade_1_4_public,count,Population 3 years and over: Female › Enrolled in school › Enrolled in grade 1 to grade 4 › Public school
+B14002_036,school_female_grade_1_4_private,count,Population 3 years and over: Female › Enrolled in school › Enrolled in grade 1 to grade 4 › Private school
+B14002_037,school_female_grade_5_8,count,Population 3 years and over: Female › Enrolled in school › Enrolled in grade 5 to grade 8
+B14002_038,school_female_grade_5_8_public,count,Population 3 years and over: Female › Enrolled in school › Enrolled in grade 5 to grade 8 › Public school
+B14002_039,school_female_grade_5_8_private,count,Population 3 years and over: Female › Enrolled in school › Enrolled in grade 5 to grade 8 › Private school
+B14002_040,school_female_grade_9_12,count,Population 3 years and over: Female › Enrolled in school › Enrolled in grade 9 to grade 12
+B14002_041,school_female_grade_9_12_public,count,Population 3 years and over: Female › Enrolled in school › Enrolled in grade 9 to grade 12 › Public school
+B14002_042,school_female_grade_9_12_private,count,Population 3 years and over: Female › Enrolled in school › Enrolled in grade 9 to grade 12 › Private school
+B14002_043,school_female_college,count,Population 3 years and over: Female › Enrolled in school › Enrolled in college undergraduate years
+B14002_044,school_female_college_public,count,Population 3 years and over: Female › Enrolled in school › Enrolled in college undergraduate years › Public school
+B14002_045,school_female_college_private,count,Population 3 years and over: Female › Enrolled in school › Enrolled in college undergraduate years › Private school
+B14002_046,school_female_grad_school,count,Population 3 years and over: Female › Enrolled in school › Enrolled in graduate or professional school
+B14002_047,school_female_grad_school_public,count,Population 3 years and over: Female › Enrolled in school › Enrolled in graduate or professional school › Public school
+B14002_048,school_female_grad_school_private,count,Population 3 years and over: Female › Enrolled in school › Enrolled in graduate or professional school › Private school
+B14002_049,school_female_not_enrolled,count,Population 3 years and over: Female › Not enrolled in school
+B14007_001,school_total,count,"All population 3 years and over (the table's total), in School Enrollment by Detailed Level of School for the Population 3 Years and Over"
+B14007_002,school_enrolled,count,Population 3 years and over: Enrolled in school
+B14007_003,school_preschool,count,"Population 3 years and over: Enrolled in school › Enrolled in nursery school, preschool"
+B14007_004,school_kindergarten,count,Population 3 years and over: Enrolled in school › Enrolled in kindergarten
+B14007_005,school_grade_1,count,Population 3 years and over: Enrolled in school › Enrolled in grade 1
+B14007_006,school_grade_2,count,Population 3 years and over: Enrolled in school › Enrolled in grade 2
+B14007_007,school_grade_3,count,Population 3 years and over: Enrolled in school › Enrolled in grade 3
+B14007_008,school_grade_4,count,Population 3 years and over: Enrolled in school › Enrolled in grade 4
+B14007_009,school_grade_5,count,Population 3 years and over: Enrolled in school › Enrolled in grade 5
+B14007_010,school_grade_6,count,Population 3 years and over: Enrolled in school › Enrolled in grade 6
+B14007_011,school_grade_7,count,Population 3 years and over: Enrolled in school › Enrolled in grade 7
+B14007_012,school_grade_8,count,Population 3 years and over: Enrolled in school › Enrolled in grade 8
+B14007_013,school_grade_9,count,Population 3 years and over: Enrolled in school › Enrolled in grade 9
+B14007_014,school_grade_10,count,Population 3 years and over: Enrolled in school › Enrolled in grade 10
+B14007_015,school_grade_11,count,Population 3 years and over: Enrolled in school › Enrolled in grade 11
+B14007_016,school_grade_12,count,Population 3 years and over: Enrolled in school › Enrolled in grade 12
+B14007_017,school_college,count,"Population 3 years and over: Enrolled in school › Enrolled in college, undergraduate years"
+B14007_018,school_grad_school,count,Population 3 years and over: Enrolled in school › Graduate or professional school
+B14007_019,school_not_enrolled,count,Population 3 years and over: Not enrolled in school
+B15003_001,adults_25_plus,count,All population 25 years and over (the table's total)
+B15003_002,edu_no_schooling,count,Population 25 years and over: No schooling completed
+B15003_003,edu_nursery_school,count,Population 25 years and over: Nursery school
+B15003_004,edu_kindergarten,count,Population 25 years and over: Kindergarten
+B15003_005,edu_grade_1,count,Population 25 years and over: 1st grade
+B15003_006,edu_grade_2,count,Population 25 years and over: 2nd grade
+B15003_007,edu_grade_3,count,Population 25 years and over: 3rd grade
+B15003_008,edu_grade_4,count,Population 25 years and over: 4th grade
+B15003_009,edu_grade_5,count,Population 25 years and over: 5th grade
+B15003_010,edu_grade_6,count,Population 25 years and over: 6th grade
+B15003_011,edu_grade_7,count,Population 25 years and over: 7th grade
+B15003_012,edu_grade_8,count,Population 25 years and over: 8th grade
+B15003_013,edu_grade_9,count,Population 25 years and over: 9th grade
+B15003_014,edu_grade_10,count,Population 25 years and over: 10th grade
+B15003_015,edu_grade_11,count,Population 25 years and over: 11th grade
+B15003_016,edu_grade_12_no_diploma,count,"Population 25 years and over: 12th grade, no diploma"
+B15003_017,edu_hs_diploma,count,Population 25 years and over: Regular high school diploma
+B15003_018,edu_ged,count,Population 25 years and over: GED or alternative credential
+B15003_019,edu_some_college_under_1_year,count,"Population 25 years and over: Some college, less than 1 year"
+B15003_020,edu_some_college_no_degree,count,"Population 25 years and over: Some college, 1 or more years, no degree"
+B15003_021,edu_associates,count,Population 25 years and over: Associate's degree
+B15003_022,edu_bachelors,count,Population 25 years and over: Bachelor's degree
+B15003_023,edu_masters,count,Population 25 years and over: Master's degree
+B15003_024,edu_professional,count,Population 25 years and over: Professional school degree
+B15003_025,edu_doctorate,count,Population 25 years and over: Doctorate degree
+B14005_001,b14005_001,count,All population 16 to 19 years (the table's total)
+B14005_002,b14005_002,count,Population 16 to 19 years: Male
+B14005_003,b14005_003,count,Population 16 to 19 years: Male › Enrolled in school
+B14005_004,b14005_004,count,Population 16 to 19 years: Male › Enrolled in school › Employed
+B14005_005,b14005_005,count,Population 16 to 19 years: Male › Enrolled in school › Unemployed
+B14005_006,b14005_006,count,Population 16 to 19 years: Male › Enrolled in school › Not in labor force
+B14005_007,b14005_007,count,Population 16 to 19 years: Male › Not enrolled in school
+B14005_008,b14005_008,count,Population 16 to 19 years: Male › Not enrolled in school › High school graduate (includes equivalency)
+B14005_009,b14005_009,count,Population 16 to 19 years: Male › Not enrolled in school › High school graduate (includes equivalency) › Employed
+B14005_010,b14005_010,count,Population 16 to 19 years: Male › Not enrolled in school › High school graduate (includes equivalency) › Unemployed
+B14005_011,b14005_011,count,Population 16 to 19 years: Male › Not enrolled in school › High school graduate (includes equivalency) › Not in labor force
+B14005_012,b14005_012,count,Population 16 to 19 years: Male › Not enrolled in school › Not high school graduate
+B14005_013,b14005_013,count,Population 16 to 19 years: Male › Not enrolled in school › Not high school graduate › Employed
+B14005_014,b14005_014,count,Population 16 to 19 years: Male › Not enrolled in school › Not high school graduate › Unemployed
+B14005_015,b14005_015,count,Population 16 to 19 years: Male › Not enrolled in school › Not high school graduate › Not in labor force
+B14005_016,b14005_016,count,Population 16 to 19 years: Female
+B14005_017,b14005_017,count,Population 16 to 19 years: Female › Enrolled in school
+B14005_018,b14005_018,count,Population 16 to 19 years: Female › Enrolled in school › Employed
+B14005_019,b14005_019,count,Population 16 to 19 years: Female › Enrolled in school › Unemployed
+B14005_020,b14005_020,count,Population 16 to 19 years: Female › Enrolled in school › Not in labor force
+B14005_021,b14005_021,count,Population 16 to 19 years: Female › Not enrolled in school
+B14005_022,b14005_022,count,Population 16 to 19 years: Female › Not enrolled in school › High school graduate (includes equivalency)
+B14005_023,b14005_023,count,Population 16 to 19 years: Female › Not enrolled in school › High school graduate (includes equivalency) › Employed
+B14005_024,b14005_024,count,Population 16 to 19 years: Female › Not enrolled in school › High school graduate (includes equivalency) › Unemployed
+B14005_025,b14005_025,count,Population 16 to 19 years: Female › Not enrolled in school › High school graduate (includes equivalency) › Not in labor force
+B14005_026,b14005_026,count,Population 16 to 19 years: Female › Not enrolled in school › Not high school graduate
+B14005_027,b14005_027,count,Population 16 to 19 years: Female › Not enrolled in school › Not high school graduate › Employed
+B14005_028,b14005_028,count,Population 16 to 19 years: Female › Not enrolled in school › Not high school graduate › Unemployed
+B14005_029,b14005_029,count,Population 16 to 19 years: Female › Not enrolled in school › Not high school graduate › Not in labor force
+B19013_001,median_household_income,dollars,"Median household income in the past 12 months, in 2024 dollars: half of households had more, half less"
+B19113_001,median_family_income,dollars,"Median family income in the past 12 months, in 2024 dollars (families: households of people related by birth, marriage or adoption)"
+B19301_001,per_capita_income,dollars,"Per capita income: all residents' income in the past 12 months divided by the population, in 2024 dollars"
+B19001_001,hh_income_total,count,All households (the total the income brackets add up to)
+B19001_002,hh_income_under_10k,count,"Households with income of less than $10,000 in the past 12 months (2024 dollars)"
+B19001_003,hh_income_10k_15k,count,"Households with income of $10,000 to $14,999 in the past 12 months (2024 dollars)"
+B19001_004,hh_income_15k_20k,count,"Households with income of $15,000 to $19,999 in the past 12 months (2024 dollars)"
+B19001_005,hh_income_20k_25k,count,"Households with income of $20,000 to $24,999 in the past 12 months (2024 dollars)"
+B19001_006,hh_income_25k_30k,count,"Households with income of $25,000 to $29,999 in the past 12 months (2024 dollars)"
+B19001_007,hh_income_30k_35k,count,"Households with income of $30,000 to $34,999 in the past 12 months (2024 dollars)"
+B19001_008,hh_income_35k_40k,count,"Households with income of $35,000 to $39,999 in the past 12 months (2024 dollars)"
+B19001_009,hh_income_40k_45k,count,"Households with income of $40,000 to $44,999 in the past 12 months (2024 dollars)"
+B19001_010,hh_income_45k_50k,count,"Households with income of $45,000 to $49,999 in the past 12 months (2024 dollars)"
+B19001_011,hh_income_50k_60k,count,"Households with income of $50,000 to $59,999 in the past 12 months (2024 dollars)"
+B19001_012,hh_income_60k_75k,count,"Households with income of $60,000 to $74,999 in the past 12 months (2024 dollars)"
+B19001_013,hh_income_75k_100k,count,"Households with income of $75,000 to $99,999 in the past 12 months (2024 dollars)"
+B19001_014,hh_income_100k_125k,count,"Households with income of $100,000 to $124,999 in the past 12 months (2024 dollars)"
+B19001_015,hh_income_125k_150k,count,"Households with income of $125,000 to $149,999 in the past 12 months (2024 dollars)"
+B19001_016,hh_income_150k_200k,count,"Households with income of $150,000 to $199,999 in the past 12 months (2024 dollars)"
+B19001_017,hh_income_200k_plus,count,"Households with income of $200,000 or more in the past 12 months (2024 dollars)"
+B19126_001,median_family_income_all_types,dollars,Median family income in the past 12 months (in 2024 inflation-adjusted dollars) (families)
+B19126_002,median_family_income_married,dollars,Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Married-couple family (families)
+B19126_003,median_family_income_married_children,dollars,Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Married-couple family › With own children of the householder under 18 years (families)
+B19126_004,median_family_income_married_no_children,dollars,Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Married-couple family › No own children of the householder under 18 years (families)
+B19126_005,median_family_income_other,dollars,Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Other family (families)
+B19126_006,median_family_income_male_hh,dollars,"Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Other family › Male householder, no spouse present (families)"
+B19126_007,median_family_income_male_hh_children,dollars,"Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Other family › Male householder, no spouse present › With own children of the householder under 18 years (families)"
+B19126_008,median_family_income_male_hh_no_children,dollars,"Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Other family › Male householder, no spouse present › No own children of the householder under 18 years (families)"
+B19126_009,median_family_income_female_hh,dollars,"Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Other family › Female householder, no spouse present (families)"
+B19126_010,median_family_income_female_hh_children,dollars,"Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Other family › Female householder, no spouse present › With own children of the householder under 18 years (families)"
+B19126_011,median_family_income_female_hh_no_children,dollars,"Median family income in the past 12 months (in 2024 inflation-adjusted dollars) › Other family › Female householder, no spouse present › No own children of the householder under 18 years (families)"
+B19083_001,b19083_001,index (0-1),Gini Index (households)
+B20002_001,b20002_001,dollars,Median earnings in the past 12 months (in 2024 inflation-adjusted dollars) (population 16 years and over with earnings)
+B20002_002,b20002_002,dollars,Median earnings in the past 12 months (in 2024 inflation-adjusted dollars) › Male (population 16 years and over with earnings)
+B20002_003,b20002_003,dollars,Median earnings in the past 12 months (in 2024 inflation-adjusted dollars) › Female (population 16 years and over with earnings)
+B17001_001,poverty_total,count,"People whose poverty status can be determined: everyone except people in institutions, college dorms and military barracks, and unrelated children under 15"
+B17001_002,poverty_below,count,People whose family income in the past 12 months was below the poverty level
+B17001_003,poverty_below_male,count,Males whose family income in the past 12 months was below the poverty level
+B17001_004,poverty_below_male_under_5,count,Males under 5 years whose family income in the past 12 months was below the poverty level
+B17001_005,poverty_below_male_5,count,Males aged 5 years whose family income in the past 12 months was below the poverty level
+B17001_006,poverty_below_male_6_11,count,Males aged 6 to 11 years whose family income in the past 12 months was below the poverty level
+B17001_007,poverty_below_male_12_14,count,Males aged 12 to 14 years whose family income in the past 12 months was below the poverty level
+B17001_008,poverty_below_male_15,count,Males aged 15 years whose family income in the past 12 months was below the poverty level
+B17001_009,poverty_below_male_16_17,count,Males aged 16 and 17 years whose family income in the past 12 months was below the poverty level
+B17001_010,poverty_below_male_18_24,count,Males aged 18 to 24 years whose family income in the past 12 months was below the poverty level
+B17001_011,poverty_below_male_25_34,count,Males aged 25 to 34 years whose family income in the past 12 months was below the poverty level
+B17001_012,poverty_below_male_35_44,count,Males aged 35 to 44 years whose family income in the past 12 months was below the poverty level
+B17001_013,poverty_below_male_45_54,count,Males aged 45 to 54 years whose family income in the past 12 months was below the poverty level
+B17001_014,poverty_below_male_55_64,count,Males aged 55 to 64 years whose family income in the past 12 months was below the poverty level
+B17001_015,poverty_below_male_65_74,count,Males aged 65 to 74 years whose family income in the past 12 months was below the poverty level
+B17001_016,poverty_below_male_75_plus,count,Males aged 75 years and over whose family income in the past 12 months was below the poverty level
+B17001_017,poverty_below_female,count,Females whose family income in the past 12 months was below the poverty level
+B17001_018,poverty_below_female_under_5,count,Females under 5 years whose family income in the past 12 months was below the poverty level
+B17001_019,poverty_below_female_5,count,Females aged 5 years whose family income in the past 12 months was below the poverty level
+B17001_020,poverty_below_female_6_11,count,Females aged 6 to 11 years whose family income in the past 12 months was below the poverty level
+B17001_021,poverty_below_female_12_14,count,Females aged 12 to 14 years whose family income in the past 12 months was below the poverty level
+B17001_022,poverty_below_female_15,count,Females aged 15 years whose family income in the past 12 months was below the poverty level
+B17001_023,poverty_below_female_16_17,count,Females aged 16 and 17 years whose family income in the past 12 months was below the poverty level
+B17001_024,poverty_below_female_18_24,count,Females aged 18 to 24 years whose family income in the past 12 months was below the poverty level
+B17001_025,poverty_below_female_25_34,count,Females aged 25 to 34 years whose family income in the past 12 months was below the poverty level
+B17001_026,poverty_below_female_35_44,count,Females aged 35 to 44 years whose family income in the past 12 months was below the poverty level
+B17001_027,poverty_below_female_45_54,count,Females aged 45 to 54 years whose family income in the past 12 months was below the poverty level
+B17001_028,poverty_below_female_55_64,count,Females aged 55 to 64 years whose family income in the past 12 months was below the poverty level
+B17001_029,poverty_below_female_65_74,count,Females aged 65 to 74 years whose family income in the past 12 months was below the poverty level
+B17001_030,poverty_below_female_75_plus,count,Females aged 75 years and over whose family income in the past 12 months was below the poverty level
+B17001_031,poverty_above,count,People whose family income in the past 12 months was at or above the poverty level
+B17001_032,poverty_above_male,count,Males whose family income in the past 12 months was at or above the poverty level
+B17001_033,poverty_above_male_under_5,count,Males under 5 years whose family income in the past 12 months was at or above the poverty level
+B17001_034,poverty_above_male_5,count,Males aged 5 years whose family income in the past 12 months was at or above the poverty level
+B17001_035,poverty_above_male_6_11,count,Males aged 6 to 11 years whose family income in the past 12 months was at or above the poverty level
+B17001_036,poverty_above_male_12_14,count,Males aged 12 to 14 years whose family income in the past 12 months was at or above the poverty level
+B17001_037,poverty_above_male_15,count,Males aged 15 years whose family income in the past 12 months was at or above the poverty level
+B17001_038,poverty_above_male_16_17,count,Males aged 16 and 17 years whose family income in the past 12 months was at or above the poverty level
+B17001_039,poverty_above_male_18_24,count,Males aged 18 to 24 years whose family income in the past 12 months was at or above the poverty level
+B17001_040,poverty_above_male_25_34,count,Males aged 25 to 34 years whose family income in the past 12 months was at or above the poverty level
+B17001_041,poverty_above_male_35_44,count,Males aged 35 to 44 years whose family income in the past 12 months was at or above the poverty level
+B17001_042,poverty_above_male_45_54,count,Males aged 45 to 54 years whose family income in the past 12 months was at or above the poverty level
+B17001_043,poverty_above_male_55_64,count,Males aged 55 to 64 years whose family income in the past 12 months was at or above the poverty level
+B17001_044,poverty_above_male_65_74,count,Males aged 65 to 74 years whose family income in the past 12 months was at or above the poverty level
+B17001_045,poverty_above_male_75_plus,count,Males aged 75 years and over whose family income in the past 12 months was at or above the poverty level
+B17001_046,poverty_above_female,count,Females whose family income in the past 12 months was at or above the poverty level
+B17001_047,poverty_above_female_under_5,count,Females under 5 years whose family income in the past 12 months was at or above the poverty level
+B17001_048,poverty_above_female_5,count,Females aged 5 years whose family income in the past 12 months was at or above the poverty level
+B17001_049,poverty_above_female_6_11,count,Females aged 6 to 11 years whose family income in the past 12 months was at or above the poverty level
+B17001_050,poverty_above_female_12_14,count,Females aged 12 to 14 years whose family income in the past 12 months was at or above the poverty level
+B17001_051,poverty_above_female_15,count,Females aged 15 years whose family income in the past 12 months was at or above the poverty level
+B17001_052,poverty_above_female_16_17,count,Females aged 16 and 17 years whose family income in the past 12 months was at or above the poverty level
+B17001_053,poverty_above_female_18_24,count,Females aged 18 to 24 years whose family income in the past 12 months was at or above the poverty level
+B17001_054,poverty_above_female_25_34,count,Females aged 25 to 34 years whose family income in the past 12 months was at or above the poverty level
+B17001_055,poverty_above_female_35_44,count,Females aged 35 to 44 years whose family income in the past 12 months was at or above the poverty level
+B17001_056,poverty_above_female_45_54,count,Females aged 45 to 54 years whose family income in the past 12 months was at or above the poverty level
+B17001_057,poverty_above_female_55_64,count,Females aged 55 to 64 years whose family income in the past 12 months was at or above the poverty level
+B17001_058,poverty_above_female_65_74,count,Females aged 65 to 74 years whose family income in the past 12 months was at or above the poverty level
+B17001_059,poverty_above_female_75_plus,count,Females aged 75 years and over whose family income in the past 12 months was at or above the poverty level
+B17020_001,poverty_age_total,count,"All population for whom poverty status is determined (the table's total), in Poverty Status in the Past 12 Months by Age"
+B17020_002,poverty_age_below,count,Population for whom poverty status is determined: Income in the past 12 months below poverty level
+B17020_003,poverty_age_below_under_6,count,Population for whom poverty status is determined: Income in the past 12 months below poverty level › Under 6 years
+B17020_004,poverty_age_below_6_11,count,Population for whom poverty status is determined: Income in the past 12 months below poverty level › 6 to 11 years
+B17020_005,poverty_age_below_12_17,count,Population for whom poverty status is determined: Income in the past 12 months below poverty level › 12 to 17 years
+B17020_006,poverty_age_below_18_59,count,Population for whom poverty status is determined: Income in the past 12 months below poverty level › 18 to 59 years
+B17020_007,poverty_age_below_60_74,count,Population for whom poverty status is determined: Income in the past 12 months below poverty level › 60 to 74 years
+B17020_008,poverty_age_below_75_84,count,Population for whom poverty status is determined: Income in the past 12 months below poverty level › 75 to 84 years
+B17020_009,poverty_age_below_85_plus,count,Population for whom poverty status is determined: Income in the past 12 months below poverty level › 85 years and over
+B17020_010,poverty_age_above,count,Population for whom poverty status is determined: Income in the past 12 months at or above poverty level
+B17020_011,poverty_age_above_under_6,count,Population for whom poverty status is determined: Income in the past 12 months at or above poverty level › Under 6 years
+B17020_012,poverty_age_above_6_11,count,Population for whom poverty status is determined: Income in the past 12 months at or above poverty level › 6 to 11 years
+B17020_013,poverty_age_above_12_17,count,Population for whom poverty status is determined: Income in the past 12 months at or above poverty level › 12 to 17 years
+B17020_014,poverty_age_above_18_59,count,Population for whom poverty status is determined: Income in the past 12 months at or above poverty level › 18 to 59 years
+B17020_015,poverty_age_above_60_74,count,Population for whom poverty status is determined: Income in the past 12 months at or above poverty level › 60 to 74 years
+B17020_016,poverty_age_above_75_84,count,Population for whom poverty status is determined: Income in the past 12 months at or above poverty level › 75 to 84 years
+B17020_017,poverty_age_above_85_plus,count,Population for whom poverty status is determined: Income in the past 12 months at or above poverty level › 85 years and over
+C17002_001,poverty_ratio_total,count,"All population for whom poverty status is determined (the table's total), in Ratio of Income to Poverty Level in the Past 12 Months"
+C17002_002,poverty_ratio_under_0_50,count,Population for whom poverty status is determined: income under .50 times the poverty level
+C17002_003,poverty_ratio_0_50_0_99,count,Population for whom poverty status is determined: income .50 to .99 times the poverty level
+C17002_004,poverty_ratio_1_00_1_24,count,Population for whom poverty status is determined: income 1.00 to 1.24 times the poverty level
+C17002_005,poverty_ratio_1_25_1_49,count,Population for whom poverty status is determined: income 1.25 to 1.49 times the poverty level
+C17002_006,poverty_ratio_1_50_1_84,count,Population for whom poverty status is determined: income 1.50 to 1.84 times the poverty level
+C17002_007,poverty_ratio_1_85_1_99,count,Population for whom poverty status is determined: income 1.85 to 1.99 times the poverty level
+C17002_008,poverty_ratio_2_00_plus,count,Population for whom poverty status is determined: income 2.00 and over times the poverty level
+B17010_001,family_poverty_total,count,"All families (the table's total), in Poverty Status in the Past 12 Months of Families by Family Type by Presence of Related Children Under 18 Years by Age of Related Children"
+B17010_002,family_poverty_below,count,Families: Income in the past 12 months below poverty level
+B17010_003,family_poverty_below_married,count,Families: Income in the past 12 months below poverty level › Married-couple family
+B17010_004,family_poverty_below_married_children,count,Families: Income in the past 12 months below poverty level › Married-couple family › With related children of the householder under 18 years
+B17010_005,family_poverty_below_married_children_under_5_only,count,Families: Income in the past 12 months below poverty level › Married-couple family › With related children of the householder under 18 years › Under 5 years only
+B17010_006,family_poverty_below_married_children_under_5_and_5_17,count,Families: Income in the past 12 months below poverty level › Married-couple family › With related children of the householder under 18 years › Under 5 years and 5 to 17 years
+B17010_007,family_poverty_below_married_children_5_17_only,count,Families: Income in the past 12 months below poverty level › Married-couple family › With related children of the householder under 18 years › 5 to 17 years only
+B17010_008,family_poverty_below_married_no_children,count,Families: Income in the past 12 months below poverty level › Married-couple family › No related children of the householder under 18 years
+B17010_009,family_poverty_below_other,count,Families: Income in the past 12 months below poverty level › Other family
+B17010_010,family_poverty_below_male_hh,count,"Families: Income in the past 12 months below poverty level › Other family › Male householder, no spouse present"
+B17010_011,family_poverty_below_male_hh_children,count,"Families: Income in the past 12 months below poverty level › Other family › Male householder, no spouse present › With related children of the householder under 18 years"
+B17010_012,family_poverty_below_male_hh_children_under_5_only,count,"Families: Income in the past 12 months below poverty level › Other family › Male householder, no spouse present › With related children of the householder under 18 years › Under 5 years only"
+B17010_013,family_poverty_below_male_hh_children_under_5_and_5_17,count,"Families: Income in the past 12 months below poverty level › Other family › Male householder, no spouse present › With related children of the householder under 18 years › Under 5 years and 5 to 17 years"
+B17010_014,family_poverty_below_male_hh_children_5_17_only,count,"Families: Income in the past 12 months below poverty level › Other family › Male householder, no spouse present › With related children of the householder under 18 years › 5 to 17 years only"
+B17010_015,family_poverty_below_male_hh_no_children,count,"Families: Income in the past 12 months below poverty level › Other family › Male householder, no spouse present › No related children of the householder under 18 years"
+B17010_016,family_poverty_below_female_hh,count,"Families: Income in the past 12 months below poverty level › Other family › Female householder, no spouse present"
+B17010_017,family_poverty_below_female_hh_children,count,"Families: Income in the past 12 months below poverty level › Other family › Female householder, no spouse present › With related children of the householder under 18 years"
+B17010_018,family_poverty_below_female_hh_children_under_5_only,count,"Families: Income in the past 12 months below poverty level › Other family › Female householder, no spouse present › With related children of the householder under 18 years › Under 5 years only"
+B17010_019,family_poverty_below_female_hh_children_under_5_and_5_17,count,"Families: Income in the past 12 months below poverty level › Other family › Female householder, no spouse present › With related children of the householder under 18 years › Under 5 years and 5 to 17 years"
+B17010_020,family_poverty_below_female_hh_children_5_17_only,count,"Families: Income in the past 12 months below poverty level › Other family › Female householder, no spouse present › With related children of the householder under 18 years › 5 to 17 years only"
+B17010_021,family_poverty_below_female_hh_no_children,count,"Families: Income in the past 12 months below poverty level › Other family › Female householder, no spouse present › No related children of the householder under 18 years"
+B17010_022,family_poverty_above,count,Families: Income in the past 12 months at or above poverty level
+B17010_023,family_poverty_above_married,count,Families: Income in the past 12 months at or above poverty level › Married-couple family
+B17010_024,family_poverty_above_married_children,count,Families: Income in the past 12 months at or above poverty level › Married-couple family › With related children of the householder under 18 years
+B17010_025,family_poverty_above_married_children_under_5_only,count,Families: Income in the past 12 months at or above poverty level › Married-couple family › With related children of the householder under 18 years › Under 5 years only
+B17010_026,family_poverty_above_married_children_under_5_and_5_17,count,Families: Income in the past 12 months at or above poverty level › Married-couple family › With related children of the householder under 18 years › Under 5 years and 5 to 17 years
+B17010_027,family_poverty_above_married_children_5_17_only,count,Families: Income in the past 12 months at or above poverty level › Married-couple family › With related children of the householder under 18 years › 5 to 17 years only
+B17010_028,family_poverty_above_married_no_children,count,Families: Income in the past 12 months at or above poverty level › Married-couple family › No related children of the householder under 18 years
+B17010_029,family_poverty_above_other,count,Families: Income in the past 12 months at or above poverty level › Other family
+B17010_030,family_poverty_above_male_hh,count,"Families: Income in the past 12 months at or above poverty level › Other family › Male householder, no spouse present"
+B17010_031,family_poverty_above_male_hh_children,count,"Families: Income in the past 12 months at or above poverty level › Other family › Male householder, no spouse present › With related children of the householder under 18 years"
+B17010_032,family_poverty_above_male_hh_children_under_5_only,count,"Families: Income in the past 12 months at or above poverty level › Other family › Male householder, no spouse present › With related children of the householder under 18 years › Under 5 years only"
+B17010_033,family_poverty_above_male_hh_children_under_5_and_5_17,count,"Families: Income in the past 12 months at or above poverty level › Other family › Male householder, no spouse present › With related children of the householder under 18 years › Under 5 years and 5 to 17 years"
+B17010_034,family_poverty_above_male_hh_children_5_17_only,count,"Families: Income in the past 12 months at or above poverty level › Other family › Male householder, no spouse present › With related children of the householder under 18 years › 5 to 17 years only"
+B17010_035,family_poverty_above_male_hh_no_children,count,"Families: Income in the past 12 months at or above poverty level › Other family › Male householder, no spouse present › No related children of the householder under 18 years"
+B17010_036,family_poverty_above_female_hh,count,"Families: Income in the past 12 months at or above poverty level › Other family › Female householder, no spouse present"
+B17010_037,family_poverty_above_female_hh_children,count,"Families: Income in the past 12 months at or above poverty level › Other family › Female householder, no spouse present › With related children of the householder under 18 years"
+B17010_038,family_poverty_above_female_hh_children_under_5_only,count,"Families: Income in the past 12 months at or above poverty level › Other family › Female householder, no spouse present › With related children of the householder under 18 years › Under 5 years only"
+B17010_039,family_poverty_above_female_hh_children_under_5_and_5_17,count,"Families: Income in the past 12 months at or above poverty level › Other family › Female householder, no spouse present › With related children of the householder under 18 years › Under 5 years and 5 to 17 years"
+B17010_040,family_poverty_above_female_hh_children_5_17_only,count,"Families: Income in the past 12 months at or above poverty level › Other family › Female householder, no spouse present › With related children of the householder under 18 years › 5 to 17 years only"
+B17010_041,family_poverty_above_female_hh_no_children,count,"Families: Income in the past 12 months at or above poverty level › Other family › Female householder, no spouse present › No related children of the householder under 18 years"
+B17024_001,b17024_001,count,"All population for whom poverty status is determined (the table's total), in Age by Ratio of Income to Poverty Level in the Past 12 Months"
+B17024_002,b17024_002,count,Population for whom poverty status is determined: income under 6 years times the poverty level
+B17024_003,b17024_003,count,Population for whom poverty status is determined: Under 6 years › income under .50 times the poverty level
+B17024_004,b17024_004,count,Population for whom poverty status is determined: Under 6 years › income .50 to .74 times the poverty level
+B17024_005,b17024_005,count,Population for whom poverty status is determined: Under 6 years › income .75 to .99 times the poverty level
+B17024_006,b17024_006,count,Population for whom poverty status is determined: Under 6 years › income 1.00 to 1.24 times the poverty level
+B17024_007,b17024_007,count,Population for whom poverty status is determined: Under 6 years › income 1.25 to 1.49 times the poverty level
+B17024_008,b17024_008,count,Population for whom poverty status is determined: Under 6 years › income 1.50 to 1.74 times the poverty level
+B17024_009,b17024_009,count,Population for whom poverty status is determined: Under 6 years › income 1.75 to 1.84 times the poverty level
+B17024_010,b17024_010,count,Population for whom poverty status is determined: Under 6 years › income 1.85 to 1.99 times the poverty level
+B17024_011,b17024_011,count,Population for whom poverty status is determined: Under 6 years › income 2.00 to 2.99 times the poverty level
+B17024_012,b17024_012,count,Population for whom poverty status is determined: Under 6 years › income 3.00 to 3.99 times the poverty level
+B17024_013,b17024_013,count,Population for whom poverty status is determined: Under 6 years › income 4.00 to 4.99 times the poverty level
+B17024_014,b17024_014,count,Population for whom poverty status is determined: Under 6 years › income 5.00 and over times the poverty level
+B17024_015,b17024_015,count,Population for whom poverty status is determined: income 6 to 11 years times the poverty level
+B17024_016,b17024_016,count,Population for whom poverty status is determined: 6 to 11 years › income under .50 times the poverty level
+B17024_017,b17024_017,count,Population for whom poverty status is determined: 6 to 11 years › income .50 to .74 times the poverty level
+B17024_018,b17024_018,count,Population for whom poverty status is determined: 6 to 11 years › income .75 to .99 times the poverty level
+B17024_019,b17024_019,count,Population for whom poverty status is determined: 6 to 11 years › income 1.00 to 1.24 times the poverty level
+B17024_020,b17024_020,count,Population for whom poverty status is determined: 6 to 11 years › income 1.25 to 1.49 times the poverty level
+B17024_021,b17024_021,count,Population for whom poverty status is determined: 6 to 11 years › income 1.50 to 1.74 times the poverty level
+B17024_022,b17024_022,count,Population for whom poverty status is determined: 6 to 11 years › income 1.75 to 1.84 times the poverty level
+B17024_023,b17024_023,count,Population for whom poverty status is determined: 6 to 11 years › income 1.85 to 1.99 times the poverty level
+B17024_024,b17024_024,count,Population for whom poverty status is determined: 6 to 11 years › income 2.00 to 2.99 times the poverty level
+B17024_025,b17024_025,count,Population for whom poverty status is determined: 6 to 11 years › income 3.00 to 3.99 times the poverty level
+B17024_026,b17024_026,count,Population for whom poverty status is determined: 6 to 11 years › income 4.00 to 4.99 times the poverty level
+B17024_027,b17024_027,count,Population for whom poverty status is determined: 6 to 11 years › income 5.00 and over times the poverty level
+B17024_028,b17024_028,count,Population for whom poverty status is determined: income 12 to 17 years times the poverty level
+B17024_029,b17024_029,count,Population for whom poverty status is determined: 12 to 17 years › income under .50 times the poverty level
+B17024_030,b17024_030,count,Population for whom poverty status is determined: 12 to 17 years › income .50 to .74 times the poverty level
+B17024_031,b17024_031,count,Population for whom poverty status is determined: 12 to 17 years › income .75 to .99 times the poverty level
+B17024_032,b17024_032,count,Population for whom poverty status is determined: 12 to 17 years › income 1.00 to 1.24 times the poverty level
+B17024_033,b17024_033,count,Population for whom poverty status is determined: 12 to 17 years › income 1.25 to 1.49 times the poverty level
+B17024_034,b17024_034,count,Population for whom poverty status is determined: 12 to 17 years › income 1.50 to 1.74 times the poverty level
+B17024_035,b17024_035,count,Population for whom poverty status is determined: 12 to 17 years › income 1.75 to 1.84 times the poverty level
+B17024_036,b17024_036,count,Population for whom poverty status is determined: 12 to 17 years › income 1.85 to 1.99 times the poverty level
+B17024_037,b17024_037,count,Population for whom poverty status is determined: 12 to 17 years › income 2.00 to 2.99 times the poverty level
+B17024_038,b17024_038,count,Population for whom poverty status is determined: 12 to 17 years › income 3.00 to 3.99 times the poverty level
+B17024_039,b17024_039,count,Population for whom poverty status is determined: 12 to 17 years › income 4.00 to 4.99 times the poverty level
+B17024_040,b17024_040,count,Population for whom poverty status is determined: 12 to 17 years › income 5.00 and over times the poverty level
+B17024_041,b17024_041,count,Population for whom poverty status is determined: income 18 to 24 years times the poverty level
+B17024_042,b17024_042,count,Population for whom poverty status is determined: 18 to 24 years › income under .50 times the poverty level
+B17024_043,b17024_043,count,Population for whom poverty status is determined: 18 to 24 years › income .50 to .74 times the poverty level
+B17024_044,b17024_044,count,Population for whom poverty status is determined: 18 to 24 years › income .75 to .99 times the poverty level
+B17024_045,b17024_045,count,Population for whom poverty status is determined: 18 to 24 years › income 1.00 to 1.24 times the poverty level
+B17024_046,b17024_046,count,Population for whom poverty status is determined: 18 to 24 years › income 1.25 to 1.49 times the poverty level
+B17024_047,b17024_047,count,Population for whom poverty status is determined: 18 to 24 years › income 1.50 to 1.74 times the poverty level
+B17024_048,b17024_048,count,Population for whom poverty status is determined: 18 to 24 years › income 1.75 to 1.84 times the poverty level
+B17024_049,b17024_049,count,Population for whom poverty status is determined: 18 to 24 years › income 1.85 to 1.99 times the poverty level
+B17024_050,b17024_050,count,Population for whom poverty status is determined: 18 to 24 years › income 2.00 to 2.99 times the poverty level
+B17024_051,b17024_051,count,Population for whom poverty status is determined: 18 to 24 years › income 3.00 to 3.99 times the poverty level
+B17024_052,b17024_052,count,Population for whom poverty status is determined: 18 to 24 years › income 4.00 to 4.99 times the poverty level
+B17024_053,b17024_053,count,Population for whom poverty status is determined: 18 to 24 years › income 5.00 and over times the poverty level
+B17024_054,b17024_054,count,Population for whom poverty status is determined: income 25 to 34 years times the poverty level
+B17024_055,b17024_055,count,Population for whom poverty status is determined: 25 to 34 years › income under .50 times the poverty level
+B17024_056,b17024_056,count,Population for whom poverty status is determined: 25 to 34 years › income .50 to .74 times the poverty level
+B17024_057,b17024_057,count,Population for whom poverty status is determined: 25 to 34 years › income .75 to .99 times the poverty level
+B17024_058,b17024_058,count,Population for whom poverty status is determined: 25 to 34 years › income 1.00 to 1.24 times the poverty level
+B17024_059,b17024_059,count,Population for whom poverty status is determined: 25 to 34 years › income 1.25 to 1.49 times the poverty level
+B17024_060,b17024_060,count,Population for whom poverty status is determined: 25 to 34 years › income 1.50 to 1.74 times the poverty level
+B17024_061,b17024_061,count,Population for whom poverty status is determined: 25 to 34 years › income 1.75 to 1.84 times the poverty level
+B17024_062,b17024_062,count,Population for whom poverty status is determined: 25 to 34 years › income 1.85 to 1.99 times the poverty level
+B17024_063,b17024_063,count,Population for whom poverty status is determined: 25 to 34 years › income 2.00 to 2.99 times the poverty level
+B17024_064,b17024_064,count,Population for whom poverty status is determined: 25 to 34 years › income 3.00 to 3.99 times the poverty level
+B17024_065,b17024_065,count,Population for whom poverty status is determined: 25 to 34 years › income 4.00 to 4.99 times the poverty level
+B17024_066,b17024_066,count,Population for whom poverty status is determined: 25 to 34 years › income 5.00 and over times the poverty level
+B17024_067,b17024_067,count,Population for whom poverty status is determined: income 35 to 44 years times the poverty level
+B17024_068,b17024_068,count,Population for whom poverty status is determined: 35 to 44 years › income under .50 times the poverty level
+B17024_069,b17024_069,count,Population for whom poverty status is determined: 35 to 44 years › income .50 to .74 times the poverty level
+B17024_070,b17024_070,count,Population for whom poverty status is determined: 35 to 44 years › income .75 to .99 times the poverty level
+B17024_071,b17024_071,count,Population for whom poverty status is determined: 35 to 44 years › income 1.00 to 1.24 times the poverty level
+B17024_072,b17024_072,count,Population for whom poverty status is determined: 35 to 44 years › income 1.25 to 1.49 times the poverty level
+B17024_073,b17024_073,count,Population for whom poverty status is determined: 35 to 44 years › income 1.50 to 1.74 times the poverty level
+B17024_074,b17024_074,count,Population for whom poverty status is determined: 35 to 44 years › income 1.75 to 1.84 times the poverty level
+B17024_075,b17024_075,count,Population for whom poverty status is determined: 35 to 44 years › income 1.85 to 1.99 times the poverty level
+B17024_076,b17024_076,count,Population for whom poverty status is determined: 35 to 44 years › income 2.00 to 2.99 times the poverty level
+B17024_077,b17024_077,count,Population for whom poverty status is determined: 35 to 44 years › income 3.00 to 3.99 times the poverty level
+B17024_078,b17024_078,count,Population for whom poverty status is determined: 35 to 44 years › income 4.00 to 4.99 times the poverty level
+B17024_079,b17024_079,count,Population for whom poverty status is determined: 35 to 44 years › income 5.00 and over times the poverty level
+B17024_080,b17024_080,count,Population for whom poverty status is determined: income 45 to 54 years times the poverty level
+B17024_081,b17024_081,count,Population for whom poverty status is determined: 45 to 54 years › income under .50 times the poverty level
+B17024_082,b17024_082,count,Population for whom poverty status is determined: 45 to 54 years › income .50 to .74 times the poverty level
+B17024_083,b17024_083,count,Population for whom poverty status is determined: 45 to 54 years › income .75 to .99 times the poverty level
+B17024_084,b17024_084,count,Population for whom poverty status is determined: 45 to 54 years › income 1.00 to 1.24 times the poverty level
+B17024_085,b17024_085,count,Population for whom poverty status is determined: 45 to 54 years › income 1.25 to 1.49 times the poverty level
+B17024_086,b17024_086,count,Population for whom poverty status is determined: 45 to 54 years › income 1.50 to 1.74 times the poverty level
+B17024_087,b17024_087,count,Population for whom poverty status is determined: 45 to 54 years › income 1.75 to 1.84 times the poverty level
+B17024_088,b17024_088,count,Population for whom poverty status is determined: 45 to 54 years › income 1.85 to 1.99 times the poverty level
+B17024_089,b17024_089,count,Population for whom poverty status is determined: 45 to 54 years › income 2.00 to 2.99 times the poverty level
+B17024_090,b17024_090,count,Population for whom poverty status is determined: 45 to 54 years › income 3.00 to 3.99 times the poverty level
+B17024_091,b17024_091,count,Population for whom poverty status is determined: 45 to 54 years › income 4.00 to 4.99 times the poverty level
+B17024_092,b17024_092,count,Population for whom poverty status is determined: 45 to 54 years › income 5.00 and over times the poverty level
+B17024_093,b17024_093,count,Population for whom poverty status is determined: income 55 to 64 years times the poverty level
+B17024_094,b17024_094,count,Population for whom poverty status is determined: 55 to 64 years › income under .50 times the poverty level
+B17024_095,b17024_095,count,Population for whom poverty status is determined: 55 to 64 years › income .50 to .74 times the poverty level
+B17024_096,b17024_096,count,Population for whom poverty status is determined: 55 to 64 years › income .75 to .99 times the poverty level
+B17024_097,b17024_097,count,Population for whom poverty status is determined: 55 to 64 years › income 1.00 to 1.24 times the poverty level
+B17024_098,b17024_098,count,Population for whom poverty status is determined: 55 to 64 years › income 1.25 to 1.49 times the poverty level
+B17024_099,b17024_099,count,Population for whom poverty status is determined: 55 to 64 years › income 1.50 to 1.74 times the poverty level
+B17024_100,b17024_100,count,Population for whom poverty status is determined: 55 to 64 years › income 1.75 to 1.84 times the poverty level
+B17024_101,b17024_101,count,Population for whom poverty status is determined: 55 to 64 years › income 1.85 to 1.99 times the poverty level
+B17024_102,b17024_102,count,Population for whom poverty status is determined: 55 to 64 years › income 2.00 to 2.99 times the poverty level
+B17024_103,b17024_103,count,Population for whom poverty status is determined: 55 to 64 years › income 3.00 to 3.99 times the poverty level
+B17024_104,b17024_104,count,Population for whom poverty status is determined: 55 to 64 years › income 4.00 to 4.99 times the poverty level
+B17024_105,b17024_105,count,Population for whom poverty status is determined: 55 to 64 years › income 5.00 and over times the poverty level
+B17024_106,b17024_106,count,Population for whom poverty status is determined: income 65 to 74 years times the poverty level
+B17024_107,b17024_107,count,Population for whom poverty status is determined: 65 to 74 years › income under .50 times the poverty level
+B17024_108,b17024_108,count,Population for whom poverty status is determined: 65 to 74 years › income .50 to .74 times the poverty level
+B17024_109,b17024_109,count,Population for whom poverty status is determined: 65 to 74 years › income .75 to .99 times the poverty level
+B17024_110,b17024_110,count,Population for whom poverty status is determined: 65 to 74 years › income 1.00 to 1.24 times the poverty level
+B17024_111,b17024_111,count,Population for whom poverty status is determined: 65 to 74 years › income 1.25 to 1.49 times the poverty level
+B17024_112,b17024_112,count,Population for whom poverty status is determined: 65 to 74 years › income 1.50 to 1.74 times the poverty level
+B17024_113,b17024_113,count,Population for whom poverty status is determined: 65 to 74 years › income 1.75 to 1.84 times the poverty level
+B17024_114,b17024_114,count,Population for whom poverty status is determined: 65 to 74 years › income 1.85 to 1.99 times the poverty level
+B17024_115,b17024_115,count,Population for whom poverty status is determined: 65 to 74 years › income 2.00 to 2.99 times the poverty level
+B17024_116,b17024_116,count,Population for whom poverty status is determined: 65 to 74 years › income 3.00 to 3.99 times the poverty level
+B17024_117,b17024_117,count,Population for whom poverty status is determined: 65 to 74 years › income 4.00 to 4.99 times the poverty level
+B17024_118,b17024_118,count,Population for whom poverty status is determined: 65 to 74 years › income 5.00 and over times the poverty level
+B17024_119,b17024_119,count,Population for whom poverty status is determined: income 75 years and over times the poverty level
+B17024_120,b17024_120,count,Population for whom poverty status is determined: 75 years and over › income under .50 times the poverty level
+B17024_121,b17024_121,count,Population for whom poverty status is determined: 75 years and over › income .50 to .74 times the poverty level
+B17024_122,b17024_122,count,Population for whom poverty status is determined: 75 years and over › income .75 to .99 times the poverty level
+B17024_123,b17024_123,count,Population for whom poverty status is determined: 75 years and over › income 1.00 to 1.24 times the poverty level
+B17024_124,b17024_124,count,Population for whom poverty status is determined: 75 years and over › income 1.25 to 1.49 times the poverty level
+B17024_125,b17024_125,count,Population for whom poverty status is determined: 75 years and over › income 1.50 to 1.74 times the poverty level
+B17024_126,b17024_126,count,Population for whom poverty status is determined: 75 years and over › income 1.75 to 1.84 times the poverty level
+B17024_127,b17024_127,count,Population for whom poverty status is determined: 75 years and over › income 1.85 to 1.99 times the poverty level
+B17024_128,b17024_128,count,Population for whom poverty status is determined: 75 years and over › income 2.00 to 2.99 times the poverty level
+B17024_129,b17024_129,count,Population for whom poverty status is determined: 75 years and over › income 3.00 to 3.99 times the poverty level
+B17024_130,b17024_130,count,Population for whom poverty status is determined: 75 years and over › income 4.00 to 4.99 times the poverty level
+B17024_131,b17024_131,count,Population for whom poverty status is determined: 75 years and over › income 5.00 and over times the poverty level
+B22002_001,snap_total,count,"All households (the table's total), in Receipt of Food Stamps/SNAP in the Past 12 Months by Presence of Children Under 18 Years by Household Type for Households"
+B22002_002,snap_received,count,Households: Household received Food Stamps/SNAP in the past 12 months
+B22002_003,snap_received_children,count,Households: Household received Food Stamps/SNAP in the past 12 months › With children under 18 years
+B22002_004,snap_received_children_married,count,Households: Household received Food Stamps/SNAP in the past 12 months › With children under 18 years › Married-couple family
+B22002_005,snap_received_children_other,count,Households: Household received Food Stamps/SNAP in the past 12 months › With children under 18 years › Other family
+B22002_006,snap_received_children_male_hh,count,"Households: Household received Food Stamps/SNAP in the past 12 months › With children under 18 years › Other family › Male householder, no spouse present"
+B22002_007,snap_received_children_female_hh,count,"Households: Household received Food Stamps/SNAP in the past 12 months › With children under 18 years › Other family › Female householder, no spouse present"
+B22002_008,snap_received_children_nonfamily,count,Households: Household received Food Stamps/SNAP in the past 12 months › With children under 18 years › Nonfamily households
+B22002_009,snap_received_no_children,count,Households: Household received Food Stamps/SNAP in the past 12 months › No children under 18 years
+B22002_010,snap_received_no_children_married,count,Households: Household received Food Stamps/SNAP in the past 12 months › No children under 18 years › Married-couple family
+B22002_011,snap_received_no_children_other,count,Households: Household received Food Stamps/SNAP in the past 12 months › No children under 18 years › Other family
+B22002_012,snap_received_no_children_male_hh,count,"Households: Household received Food Stamps/SNAP in the past 12 months › No children under 18 years › Other family › Male householder, no spouse present"
+B22002_013,snap_received_no_children_female_hh,count,"Households: Household received Food Stamps/SNAP in the past 12 months › No children under 18 years › Other family › Female householder, no spouse present"
+B22002_014,snap_received_no_children_nonfamily,count,Households: Household received Food Stamps/SNAP in the past 12 months › No children under 18 years › Nonfamily households
+B22002_015,snap_not_received,count,Households: Household did not receive Food Stamps/SNAP in the past 12 months
+B22002_016,snap_not_received_children,count,Households: Household did not receive Food Stamps/SNAP in the past 12 months › With children under 18 years
+B22002_017,snap_not_received_children_married,count,Households: Household did not receive Food Stamps/SNAP in the past 12 months › With children under 18 years › Married-couple family
+B22002_018,snap_not_received_children_other,count,Households: Household did not receive Food Stamps/SNAP in the past 12 months › With children under 18 years › Other family
+B22002_019,snap_not_received_children_male_hh,count,"Households: Household did not receive Food Stamps/SNAP in the past 12 months › With children under 18 years › Other family › Male householder, no spouse present"
+B22002_020,snap_not_received_children_female_hh,count,"Households: Household did not receive Food Stamps/SNAP in the past 12 months › With children under 18 years › Other family › Female householder, no spouse present"
+B22002_021,snap_not_received_children_nonfamily,count,Households: Household did not receive Food Stamps/SNAP in the past 12 months › With children under 18 years › Nonfamily households
+B22002_022,snap_not_received_no_children,count,Households: Household did not receive Food Stamps/SNAP in the past 12 months › No children under 18 years
+B22002_023,snap_not_received_no_children_married,count,Households: Household did not receive Food Stamps/SNAP in the past 12 months › No children under 18 years › Married-couple family
+B22002_024,snap_not_received_no_children_other,count,Households: Household did not receive Food Stamps/SNAP in the past 12 months › No children under 18 years › Other family
+B22002_025,snap_not_received_no_children_male_hh,count,"Households: Household did not receive Food Stamps/SNAP in the past 12 months › No children under 18 years › Other family › Male householder, no spouse present"
+B22002_026,snap_not_received_no_children_female_hh,count,"Households: Household did not receive Food Stamps/SNAP in the past 12 months › No children under 18 years › Other family › Female householder, no spouse present"
+B22002_027,snap_not_received_no_children_nonfamily,count,Households: Household did not receive Food Stamps/SNAP in the past 12 months › No children under 18 years › Nonfamily households
+B19058_001,b19058_001,count,"All households (the table's total), in Public Assistance Income or Food Stamps/SNAP in the Past 12 Months for Households"
+B19058_002,b19058_002,count,Households: With cash public assistance or Food Stamps/SNAP
+B19058_003,b19058_003,count,Households: No cash public assistance or Food Stamps/SNAP
+B23025_001,pop_16_plus,count,All population 16 years and over (the table's total)
+B23025_002,employment_in_labor_force,count,Population 16 years and over: In labor force
+B23025_003,employment_civilian,count,Population 16 years and over: In labor force › Civilian labor force
+B23025_004,employment_employed,count,Population 16 years and over: In labor force › Civilian labor force › Employed
+B23025_005,employment_unemployed,count,Population 16 years and over: In labor force › Civilian labor force › Unemployed
+B23025_006,employment_armed_forces,count,Population 16 years and over: In labor force › Armed Forces
+B23025_007,employment_not_in_labor_force,count,Population 16 years and over: Not in labor force
+B08303_001,b08303_001,count,All workers 16 years and over who did not work from home (the table's total)
+B08303_002,b08303_002,count,Workers 16 years and over who did not work from home: Less than 5 minutes
+B08303_003,b08303_003,count,Workers 16 years and over who did not work from home: 5 to 9 minutes
+B08303_004,b08303_004,count,Workers 16 years and over who did not work from home: 10 to 14 minutes
+B08303_005,b08303_005,count,Workers 16 years and over who did not work from home: 15 to 19 minutes
+B08303_006,b08303_006,count,Workers 16 years and over who did not work from home: 20 to 24 minutes
+B08303_007,b08303_007,count,Workers 16 years and over who did not work from home: 25 to 29 minutes
+B08303_008,b08303_008,count,Workers 16 years and over who did not work from home: 30 to 34 minutes
+B08303_009,b08303_009,count,Workers 16 years and over who did not work from home: 35 to 39 minutes
+B08303_010,b08303_010,count,Workers 16 years and over who did not work from home: 40 to 44 minutes
+B08303_011,b08303_011,count,Workers 16 years and over who did not work from home: 45 to 59 minutes
+B08303_012,b08303_012,count,Workers 16 years and over who did not work from home: 60 to 89 minutes
+B08303_013,b08303_013,count,Workers 16 years and over who did not work from home: 90 or more minutes
+B08301_001,b08301_001,count,All workers 16 years and over (the table's total)
+B08301_002,b08301_002,count,"Workers 16 years and over: Car, truck, or van"
+B08301_003,b08301_003,count,"Workers 16 years and over: Car, truck, or van › Drove alone"
+B08301_004,b08301_004,count,"Workers 16 years and over: Car, truck, or van › Carpooled"
+B08301_005,b08301_005,count,"Workers 16 years and over: Car, truck, or van › Carpooled › In 2-person carpool"
+B08301_006,b08301_006,count,"Workers 16 years and over: Car, truck, or van › Carpooled › In 3-person carpool"
+B08301_007,b08301_007,count,"Workers 16 years and over: Car, truck, or van › Carpooled › In 4-person carpool"
+B08301_008,b08301_008,count,"Workers 16 years and over: Car, truck, or van › Carpooled › In 5- or 6-person carpool"
+B08301_009,b08301_009,count,"Workers 16 years and over: Car, truck, or van › Carpooled › In 7-or-more-person carpool"
+B08301_010,b08301_010,count,Workers 16 years and over: Public transportation
+B08301_011,b08301_011,count,Workers 16 years and over: Public transportation › Bus
+B08301_012,b08301_012,count,Workers 16 years and over: Public transportation › Subway or elevated rail
+B08301_013,b08301_013,count,Workers 16 years and over: Public transportation › Long-distance train or commuter rail
+B08301_014,b08301_014,count,"Workers 16 years and over: Public transportation › Light rail, streetcar or trolley (carro público in Puerto Rico)"
+B08301_015,b08301_015,count,Workers 16 years and over: Public transportation › Ferryboat
+B08301_016,b08301_016,count,Workers 16 years and over: Taxi or ride-hailing services
+B08301_017,b08301_017,count,Workers 16 years and over: Motorcycle
+B08301_018,b08301_018,count,Workers 16 years and over: Bicycle
+B08301_019,b08301_019,count,Workers 16 years and over: Walked
+B08301_020,b08301_020,count,Workers 16 years and over: Other means
+B08301_021,b08301_021,count,Workers 16 years and over: Worked from home
+B18101_001,b18101_001,count,"All civilian noninstitutionalized population (the table's total), in Sex by Age by Disability Status"
+B18101_002,b18101_002,count,"Civilian noninstitutionalized population: Male, in Sex by Age by Disability Status"
+B18101_003,b18101_003,count,Civilian noninstitutionalized population: Male › Under 5 years
+B18101_004,b18101_004,count,Civilian noninstitutionalized population: Male › Under 5 years › With a disability
+B18101_005,b18101_005,count,Civilian noninstitutionalized population: Male › Under 5 years › No disability
+B18101_006,b18101_006,count,Civilian noninstitutionalized population: Male › 5 to 17 years
+B18101_007,b18101_007,count,Civilian noninstitutionalized population: Male › 5 to 17 years › With a disability
+B18101_008,b18101_008,count,Civilian noninstitutionalized population: Male › 5 to 17 years › No disability
+B18101_009,b18101_009,count,Civilian noninstitutionalized population: Male › 18 to 34 years
+B18101_010,b18101_010,count,Civilian noninstitutionalized population: Male › 18 to 34 years › With a disability
+B18101_011,b18101_011,count,Civilian noninstitutionalized population: Male › 18 to 34 years › No disability
+B18101_012,b18101_012,count,Civilian noninstitutionalized population: Male › 35 to 64 years
+B18101_013,b18101_013,count,Civilian noninstitutionalized population: Male › 35 to 64 years › With a disability
+B18101_014,b18101_014,count,Civilian noninstitutionalized population: Male › 35 to 64 years › No disability
+B18101_015,b18101_015,count,"Civilian noninstitutionalized population: Male › 65 to 74 years, in Sex by Age by Disability Status"
+B18101_016,b18101_016,count,Civilian noninstitutionalized population: Male › 65 to 74 years › With a disability
+B18101_017,b18101_017,count,Civilian noninstitutionalized population: Male › 65 to 74 years › No disability
+B18101_018,b18101_018,count,"Civilian noninstitutionalized population: Male › 75 years and over, in Sex by Age by Disability Status"
+B18101_019,b18101_019,count,Civilian noninstitutionalized population: Male › 75 years and over › With a disability
+B18101_020,b18101_020,count,Civilian noninstitutionalized population: Male › 75 years and over › No disability
+B18101_021,b18101_021,count,"Civilian noninstitutionalized population: Female, in Sex by Age by Disability Status"
+B18101_022,b18101_022,count,Civilian noninstitutionalized population: Female › Under 5 years
+B18101_023,b18101_023,count,Civilian noninstitutionalized population: Female › Under 5 years › With a disability
+B18101_024,b18101_024,count,Civilian noninstitutionalized population: Female › Under 5 years › No disability
+B18101_025,b18101_025,count,Civilian noninstitutionalized population: Female › 5 to 17 years
+B18101_026,b18101_026,count,Civilian noninstitutionalized population: Female › 5 to 17 years › With a disability
+B18101_027,b18101_027,count,Civilian noninstitutionalized population: Female › 5 to 17 years › No disability
+B18101_028,b18101_028,count,Civilian noninstitutionalized population: Female › 18 to 34 years
+B18101_029,b18101_029,count,Civilian noninstitutionalized population: Female › 18 to 34 years › With a disability
+B18101_030,b18101_030,count,Civilian noninstitutionalized population: Female › 18 to 34 years › No disability
+B18101_031,b18101_031,count,Civilian noninstitutionalized population: Female › 35 to 64 years
+B18101_032,b18101_032,count,Civilian noninstitutionalized population: Female › 35 to 64 years › With a disability
+B18101_033,b18101_033,count,Civilian noninstitutionalized population: Female › 35 to 64 years › No disability
+B18101_034,b18101_034,count,"Civilian noninstitutionalized population: Female › 65 to 74 years, in Sex by Age by Disability Status"
+B18101_035,b18101_035,count,Civilian noninstitutionalized population: Female › 65 to 74 years › With a disability
+B18101_036,b18101_036,count,Civilian noninstitutionalized population: Female › 65 to 74 years › No disability
+B18101_037,b18101_037,count,"Civilian noninstitutionalized population: Female › 75 years and over, in Sex by Age by Disability Status"
+B18101_038,b18101_038,count,Civilian noninstitutionalized population: Female › 75 years and over › With a disability
+B18101_039,b18101_039,count,Civilian noninstitutionalized population: Female › 75 years and over › No disability
+B27001_001,b27001_001,count,"All civilian noninstitutionalized population (the table's total), in Health Insurance Coverage Status by Sex by Age"
+B27001_002,b27001_002,count,"Civilian noninstitutionalized population: Male, in Health Insurance Coverage Status by Sex by Age"
+B27001_003,b27001_003,count,Civilian noninstitutionalized population: Male › Under 6 years
+B27001_004,b27001_004,count,Civilian noninstitutionalized population: Male › Under 6 years › With health insurance coverage
+B27001_005,b27001_005,count,Civilian noninstitutionalized population: Male › Under 6 years › No health insurance coverage
+B27001_006,b27001_006,count,Civilian noninstitutionalized population: Male › 6 to 18 years
+B27001_007,b27001_007,count,Civilian noninstitutionalized population: Male › 6 to 18 years › With health insurance coverage
+B27001_008,b27001_008,count,Civilian noninstitutionalized population: Male › 6 to 18 years › No health insurance coverage
+B27001_009,b27001_009,count,Civilian noninstitutionalized population: Male › 19 to 25 years
+B27001_010,b27001_010,count,Civilian noninstitutionalized population: Male › 19 to 25 years › With health insurance coverage
+B27001_011,b27001_011,count,Civilian noninstitutionalized population: Male › 19 to 25 years › No health insurance coverage
+B27001_012,b27001_012,count,Civilian noninstitutionalized population: Male › 26 to 34 years
+B27001_013,b27001_013,count,Civilian noninstitutionalized population: Male › 26 to 34 years › With health insurance coverage
+B27001_014,b27001_014,count,Civilian noninstitutionalized population: Male › 26 to 34 years › No health insurance coverage
+B27001_015,b27001_015,count,Civilian noninstitutionalized population: Male › 35 to 44 years
+B27001_016,b27001_016,count,Civilian noninstitutionalized population: Male › 35 to 44 years › With health insurance coverage
+B27001_017,b27001_017,count,Civilian noninstitutionalized population: Male › 35 to 44 years › No health insurance coverage
+B27001_018,b27001_018,count,Civilian noninstitutionalized population: Male › 45 to 54 years
+B27001_019,b27001_019,count,Civilian noninstitutionalized population: Male › 45 to 54 years › With health insurance coverage
+B27001_020,b27001_020,count,Civilian noninstitutionalized population: Male › 45 to 54 years › No health insurance coverage
+B27001_021,b27001_021,count,Civilian noninstitutionalized population: Male › 55 to 64 years
+B27001_022,b27001_022,count,Civilian noninstitutionalized population: Male › 55 to 64 years › With health insurance coverage
+B27001_023,b27001_023,count,Civilian noninstitutionalized population: Male › 55 to 64 years › No health insurance coverage
+B27001_024,b27001_024,count,"Civilian noninstitutionalized population: Male › 65 to 74 years, in Health Insurance Coverage Status by Sex by Age"
+B27001_025,b27001_025,count,Civilian noninstitutionalized population: Male › 65 to 74 years › With health insurance coverage
+B27001_026,b27001_026,count,Civilian noninstitutionalized population: Male › 65 to 74 years › No health insurance coverage
+B27001_027,b27001_027,count,"Civilian noninstitutionalized population: Male › 75 years and over, in Health Insurance Coverage Status by Sex by Age"
+B27001_028,b27001_028,count,Civilian noninstitutionalized population: Male › 75 years and over › With health insurance coverage
+B27001_029,b27001_029,count,Civilian noninstitutionalized population: Male › 75 years and over › No health insurance coverage
+B27001_030,b27001_030,count,"Civilian noninstitutionalized population: Female, in Health Insurance Coverage Status by Sex by Age"
+B27001_031,b27001_031,count,Civilian noninstitutionalized population: Female › Under 6 years
+B27001_032,b27001_032,count,Civilian noninstitutionalized population: Female › Under 6 years › With health insurance coverage
+B27001_033,b27001_033,count,Civilian noninstitutionalized population: Female › Under 6 years › No health insurance coverage
+B27001_034,b27001_034,count,Civilian noninstitutionalized population: Female › 6 to 18 years
+B27001_035,b27001_035,count,Civilian noninstitutionalized population: Female › 6 to 18 years › With health insurance coverage
+B27001_036,b27001_036,count,Civilian noninstitutionalized population: Female › 6 to 18 years › No health insurance coverage
+B27001_037,b27001_037,count,Civilian noninstitutionalized population: Female › 19 to 25 years
+B27001_038,b27001_038,count,Civilian noninstitutionalized population: Female › 19 to 25 years › With health insurance coverage
+B27001_039,b27001_039,count,Civilian noninstitutionalized population: Female › 19 to 25 years › No health insurance coverage
+B27001_040,b27001_040,count,Civilian noninstitutionalized population: Female › 26 to 34 years
+B27001_041,b27001_041,count,Civilian noninstitutionalized population: Female › 26 to 34 years › With health insurance coverage
+B27001_042,b27001_042,count,Civilian noninstitutionalized population: Female › 26 to 34 years › No health insurance coverage
+B27001_043,b27001_043,count,Civilian noninstitutionalized population: Female › 35 to 44 years
+B27001_044,b27001_044,count,Civilian noninstitutionalized population: Female › 35 to 44 years › With health insurance coverage
+B27001_045,b27001_045,count,Civilian noninstitutionalized population: Female › 35 to 44 years › No health insurance coverage
+B27001_046,b27001_046,count,Civilian noninstitutionalized population: Female › 45 to 54 years
+B27001_047,b27001_047,count,Civilian noninstitutionalized population: Female › 45 to 54 years › With health insurance coverage
+B27001_048,b27001_048,count,Civilian noninstitutionalized population: Female › 45 to 54 years › No health insurance coverage
+B27001_049,b27001_049,count,Civilian noninstitutionalized population: Female › 55 to 64 years
+B27001_050,b27001_050,count,Civilian noninstitutionalized population: Female › 55 to 64 years › With health insurance coverage
+B27001_051,b27001_051,count,Civilian noninstitutionalized population: Female › 55 to 64 years › No health insurance coverage
+B27001_052,b27001_052,count,"Civilian noninstitutionalized population: Female › 65 to 74 years, in Health Insurance Coverage Status by Sex by Age"
+B27001_053,b27001_053,count,Civilian noninstitutionalized population: Female › 65 to 74 years › With health insurance coverage
+B27001_054,b27001_054,count,Civilian noninstitutionalized population: Female › 65 to 74 years › No health insurance coverage
+B27001_055,b27001_055,count,"Civilian noninstitutionalized population: Female › 75 years and over, in Health Insurance Coverage Status by Sex by Age"
+B27001_056,b27001_056,count,Civilian noninstitutionalized population: Female › 75 years and over › With health insurance coverage
+B27001_057,b27001_057,count,Civilian noninstitutionalized population: Female › 75 years and over › No health insurance coverage
+B28002_001,internet_total,count,"All households (the table's total), in Presence and Types of Internet Subscriptions in Household"
+B28002_002,internet_with_subscription,count,Households: With an Internet subscription
+B28002_003,internet_dial_up_only,count,Households: With an Internet subscription › Dial-up with no other type of Internet subscription
+B28002_004,internet_broadband,count,Households: With an Internet subscription › Broadband of any type
+B28002_005,internet_cellular,count,Households: With an Internet subscription › Cellular data plan
+B28002_006,internet_cellular_only,count,Households: With an Internet subscription › Cellular data plan › Cellular data plan with no other type of Internet subscription
+B28002_007,internet_cable_fiber_dsl,count,"Households: With an Internet subscription › Broadband such as cable, fiber optic or DSL"
+B28002_008,internet_cable_fiber_dsl_only,count,"Households: With an Internet subscription › Broadband such as cable, fiber optic or DSL › Broadband such as cable, fiber optic or DSL with no other type of Internet subscription"
+B28002_009,internet_satellite,count,Households: With an Internet subscription › Satellite Internet service
+B28002_010,internet_satellite_only,count,Households: With an Internet subscription › Satellite Internet service › Satellite Internet service with no other type of Internet subscription
+B28002_011,internet_other_only,count,Households: With an Internet subscription › Other service with no other type of Internet subscription
+B28002_012,internet_access_without_subscription,count,Households: Internet access without a subscription
+B28002_013,internet_no_internet,count,Households: No Internet access
+B28005_001,b28005_001,count,All population in households (the table's total)
+B28005_002,b28005_002,count,Population in households: Under 18 years
+B28005_003,b28005_003,count,Population in households: Under 18 years › Has a computer
+B28005_004,b28005_004,count,Population in households: Under 18 years › Has a computer › With dial-up Internet subscription alone
+B28005_005,b28005_005,count,Population in households: Under 18 years › Has a computer › With a broadband Internet subscription
+B28005_006,b28005_006,count,Population in households: Under 18 years › Has a computer › Without an Internet subscription
+B28005_007,b28005_007,count,Population in households: Under 18 years › No computer
+B28005_008,b28005_008,count,Population in households: 18 to 64 years
+B28005_009,b28005_009,count,Population in households: 18 to 64 years › Has a computer
+B28005_010,b28005_010,count,Population in households: 18 to 64 years › Has a computer › With dial-up Internet subscription alone
+B28005_011,b28005_011,count,Population in households: 18 to 64 years › Has a computer › With a broadband Internet subscription
+B28005_012,b28005_012,count,Population in households: 18 to 64 years › Has a computer › Without an Internet subscription
+B28005_013,b28005_013,count,Population in households: 18 to 64 years › No computer
+B28005_014,b28005_014,count,Population in households: 65 years and over
+B28005_015,b28005_015,count,Population in households: 65 years and over › Has a computer
+B28005_016,b28005_016,count,Population in households: 65 years and over › Has a computer › With dial-up Internet subscription alone
+B28005_017,b28005_017,count,Population in households: 65 years and over › Has a computer › With a broadband Internet subscription
+B28005_018,b28005_018,count,Population in households: 65 years and over › Has a computer › Without an Internet subscription
+B28005_019,b28005_019,count,Population in households: 65 years and over › No computer
+B25001_001,housing_units,count,"All housing units, occupied or vacant (houses, apartments, mobile homes and rooms meant as separate living quarters)"
+B25002_001,units_occupancy_total,count,All housing units (the total occupied and vacant add up to)
+B25002_002,units_occupied,count,Housing units where someone lives as their usual home
+B25002_003,units_vacant,count,"Housing units where no one lives as their usual home, including seasonal and vacation homes"
+B25003_001,units_tenure_total,count,Occupied housing units (households)
+B25003_002,units_owner_occupied,count,Occupied housing units lived in by their owner
+B25003_003,units_renter_occupied,count,Occupied housing units lived in by renters
+B25004_001,vacant_units,count,Vacant housing units (no one lives there as their usual home)
+B25004_002,vacant_for_rent,count,Vacant units for rent
+B25004_003,vacant_rented_not_occupied,count,"Vacant units already rented, but the renter hasn't moved in yet"
+B25004_004,vacant_for_sale,count,Vacant units for sale only (not for rent)
+B25004_005,vacant_sold_not_occupied,count,"Vacant units already sold, but the buyer hasn't moved in yet"
+B25004_006,vacant_seasonal,count,"Vacant units held for seasonal, recreational or occasional use: vacation and second homes, ski condos, timeshares"
+B25004_007,vacant_migrant_workers,count,Vacant units held for migrant workers
+B25004_008,vacant_other,count,"Vacant units for other reasons: under repair, in foreclosure, held for an estate, or kept for personal reasons"
+B25010_001,b25010_001,people,Average household size (occupied housing units)
+B25010_002,b25010_002,people,Average household size › Owner occupied (occupied housing units)
+B25010_003,b25010_003,people,Average household size › Renter occupied (occupied housing units)
+B25024_001,b25024_001,count,"All housing units (the table's total), in Units in Structure"
+B25024_002,b25024_002,count,"Housing units: 1, detached"
+B25024_003,b25024_003,count,"Housing units: 1, attached"
+B25024_004,b25024_004,count,Housing units: 2
+B25024_005,b25024_005,count,Housing units: 3 or 4
+B25024_006,b25024_006,count,Housing units: 5 to 9
+B25024_007,b25024_007,count,Housing units: 10 to 19
+B25024_008,b25024_008,count,Housing units: 20 to 49
+B25024_009,b25024_009,count,Housing units: 50 or more
+B25024_010,b25024_010,count,Housing units: Mobile home
+B25024_011,b25024_011,count,"Housing units: Boat, RV, van, etc."
+B25034_001,b25034_001,count,"All housing units (the table's total), in Year Structure Built"
+B25034_002,b25034_002,count,Housing units: Built 2020 or later
+B25034_003,b25034_003,count,Housing units: Built 2010 to 2019
+B25034_004,b25034_004,count,Housing units: Built 2000 to 2009
+B25034_005,b25034_005,count,Housing units: Built 1990 to 1999
+B25034_006,b25034_006,count,Housing units: Built 1980 to 1989
+B25034_007,b25034_007,count,Housing units: Built 1970 to 1979
+B25034_008,b25034_008,count,Housing units: Built 1960 to 1969
+B25034_009,b25034_009,count,Housing units: Built 1950 to 1959
+B25034_010,b25034_010,count,Housing units: Built 1940 to 1949
+B25034_011,b25034_011,count,Housing units: Built 1939 or earlier
+B25035_001,b25035_001,year,Median year structure built (housing units)
+B25038_001,b25038_001,count,"All occupied housing units (the table's total), in Tenure by Year Householder Moved Into Unit"
+B25038_002,b25038_002,count,"Occupied housing units: Owner occupied, in Tenure by Year Householder Moved Into Unit"
+B25038_003,b25038_003,count,Occupied housing units: Owner occupied › Moved in 2023 or later
+B25038_004,b25038_004,count,Occupied housing units: Owner occupied › Moved in 2020 to 2022
+B25038_005,b25038_005,count,Occupied housing units: Owner occupied › Moved in 2010 to 2019
+B25038_006,b25038_006,count,Occupied housing units: Owner occupied › Moved in 2000 to 2009
+B25038_007,b25038_007,count,Occupied housing units: Owner occupied › Moved in 1990 to 1999
+B25038_008,b25038_008,count,Occupied housing units: Owner occupied › Moved in 1989 or earlier
+B25038_009,b25038_009,count,"Occupied housing units: Renter occupied, in Tenure by Year Householder Moved Into Unit"
+B25038_010,b25038_010,count,Occupied housing units: Renter occupied › Moved in 2023 or later
+B25038_011,b25038_011,count,Occupied housing units: Renter occupied › Moved in 2020 to 2022
+B25038_012,b25038_012,count,Occupied housing units: Renter occupied › Moved in 2010 to 2019
+B25038_013,b25038_013,count,Occupied housing units: Renter occupied › Moved in 2000 to 2009
+B25038_014,b25038_014,count,Occupied housing units: Renter occupied › Moved in 1990 to 1999
+B25038_015,b25038_015,count,Occupied housing units: Renter occupied › Moved in 1989 or earlier
+B25014_001,b25014_001,count,"All occupied housing units (the table's total), in Tenure by Occupants per Room"
+B25014_002,b25014_002,count,"Occupied housing units: Owner occupied, in Tenure by Occupants per Room"
+B25014_003,b25014_003,count,Occupied housing units: Owner occupied › 0.50 or less occupants per room
+B25014_004,b25014_004,count,Occupied housing units: Owner occupied › 0.51 to 1.00 occupants per room
+B25014_005,b25014_005,count,Occupied housing units: Owner occupied › 1.01 to 1.50 occupants per room
+B25014_006,b25014_006,count,Occupied housing units: Owner occupied › 1.51 to 2.00 occupants per room
+B25014_007,b25014_007,count,Occupied housing units: Owner occupied › 2.01 or more occupants per room
+B25014_008,b25014_008,count,"Occupied housing units: Renter occupied, in Tenure by Occupants per Room"
+B25014_009,b25014_009,count,Occupied housing units: Renter occupied › 0.50 or less occupants per room
+B25014_010,b25014_010,count,Occupied housing units: Renter occupied › 0.51 to 1.00 occupants per room
+B25014_011,b25014_011,count,Occupied housing units: Renter occupied › 1.01 to 1.50 occupants per room
+B25014_012,b25014_012,count,Occupied housing units: Renter occupied › 1.51 to 2.00 occupants per room
+B25014_013,b25014_013,count,Occupied housing units: Renter occupied › 2.01 or more occupants per room
+B25077_001,median_home_value,dollars,"Median value of owner-occupied homes, as the owners estimate what they would sell for"
+B25075_001,b25075_001,count,Owner-occupied homes (the total the value brackets add up to)
+B25075_002,b25075_002,count,"Owner-occupied homes with an owner-estimated value of less than $10,000"
+B25075_003,b25075_003,count,"Owner-occupied homes with an owner-estimated value of $10,000 to $14,999"
+B25075_004,b25075_004,count,"Owner-occupied homes with an owner-estimated value of $15,000 to $19,999"
+B25075_005,b25075_005,count,"Owner-occupied homes with an owner-estimated value of $20,000 to $24,999"
+B25075_006,b25075_006,count,"Owner-occupied homes with an owner-estimated value of $25,000 to $29,999"
+B25075_007,b25075_007,count,"Owner-occupied homes with an owner-estimated value of $30,000 to $34,999"
+B25075_008,b25075_008,count,"Owner-occupied homes with an owner-estimated value of $35,000 to $39,999"
+B25075_009,b25075_009,count,"Owner-occupied homes with an owner-estimated value of $40,000 to $49,999"
+B25075_010,b25075_010,count,"Owner-occupied homes with an owner-estimated value of $50,000 to $59,999"
+B25075_011,b25075_011,count,"Owner-occupied homes with an owner-estimated value of $60,000 to $69,999"
+B25075_012,b25075_012,count,"Owner-occupied homes with an owner-estimated value of $70,000 to $79,999"
+B25075_013,b25075_013,count,"Owner-occupied homes with an owner-estimated value of $80,000 to $89,999"
+B25075_014,b25075_014,count,"Owner-occupied homes with an owner-estimated value of $90,000 to $99,999"
+B25075_015,b25075_015,count,"Owner-occupied homes with an owner-estimated value of $100,000 to $124,999"
+B25075_016,b25075_016,count,"Owner-occupied homes with an owner-estimated value of $125,000 to $149,999"
+B25075_017,b25075_017,count,"Owner-occupied homes with an owner-estimated value of $150,000 to $174,999"
+B25075_018,b25075_018,count,"Owner-occupied homes with an owner-estimated value of $175,000 to $199,999"
+B25075_019,b25075_019,count,"Owner-occupied homes with an owner-estimated value of $200,000 to $249,999"
+B25075_020,b25075_020,count,"Owner-occupied homes with an owner-estimated value of $250,000 to $299,999"
+B25075_021,b25075_021,count,"Owner-occupied homes with an owner-estimated value of $300,000 to $399,999"
+B25075_022,b25075_022,count,"Owner-occupied homes with an owner-estimated value of $400,000 to $499,999"
+B25075_023,b25075_023,count,"Owner-occupied homes with an owner-estimated value of $500,000 to $749,999"
+B25075_024,b25075_024,count,"Owner-occupied homes with an owner-estimated value of $750,000 to $999,999"
+B25075_025,b25075_025,count,"Owner-occupied homes with an owner-estimated value of $1,000,000 to $1,499,999"
+B25075_026,b25075_026,count,"Owner-occupied homes with an owner-estimated value of $1,500,000 to $1,999,999"
+B25075_027,b25075_027,count,"Owner-occupied homes with an owner-estimated value of $2,000,000 or more"
+B25088_001,b25088_001,dollars,Median selected monthly owner costs (dollars) (owner-occupied housing units)
+B25088_002,b25088_002,dollars,Median selected monthly owner costs (dollars) › Housing units with a mortgage (dollars) (owner-occupied housing units)
+B25088_003,b25088_003,dollars,Median selected monthly owner costs (dollars) › Housing units without a mortgage (dollars) (owner-occupied housing units)
+B25091_001,b25091_001,count,All owner-occupied housing units (the table's total)
+B25091_002,b25091_002,count,Owner-occupied housing units: Housing units with a mortgage
+B25091_003,b25091_003,count,Owner-occupied housing units: Housing units with a mortgage › Less than 10.0 percent
+B25091_004,b25091_004,count,Owner-occupied housing units: Housing units with a mortgage › 10.0 to 14.9 percent
+B25091_005,b25091_005,count,Owner-occupied housing units: Housing units with a mortgage › 15.0 to 19.9 percent
+B25091_006,b25091_006,count,Owner-occupied housing units: Housing units with a mortgage › 20.0 to 24.9 percent
+B25091_007,b25091_007,count,Owner-occupied housing units: Housing units with a mortgage › 25.0 to 29.9 percent
+B25091_008,b25091_008,count,Owner-occupied housing units: Housing units with a mortgage › 30.0 to 34.9 percent
+B25091_009,b25091_009,count,Owner-occupied housing units: Housing units with a mortgage › 35.0 to 39.9 percent
+B25091_010,b25091_010,count,Owner-occupied housing units: Housing units with a mortgage › 40.0 to 49.9 percent
+B25091_011,b25091_011,count,Owner-occupied housing units: Housing units with a mortgage › 50.0 percent or more
+B25091_012,b25091_012,count,Owner-occupied housing units: Housing units with a mortgage › Not computed
+B25091_013,b25091_013,count,Owner-occupied housing units: Housing units without a mortgage
+B25091_014,b25091_014,count,Owner-occupied housing units: Housing units without a mortgage › Less than 10.0 percent
+B25091_015,b25091_015,count,Owner-occupied housing units: Housing units without a mortgage › 10.0 to 14.9 percent
+B25091_016,b25091_016,count,Owner-occupied housing units: Housing units without a mortgage › 15.0 to 19.9 percent
+B25091_017,b25091_017,count,Owner-occupied housing units: Housing units without a mortgage › 20.0 to 24.9 percent
+B25091_018,b25091_018,count,Owner-occupied housing units: Housing units without a mortgage › 25.0 to 29.9 percent
+B25091_019,b25091_019,count,Owner-occupied housing units: Housing units without a mortgage › 30.0 to 34.9 percent
+B25091_020,b25091_020,count,Owner-occupied housing units: Housing units without a mortgage › 35.0 to 39.9 percent
+B25091_021,b25091_021,count,Owner-occupied housing units: Housing units without a mortgage › 40.0 to 49.9 percent
+B25091_022,b25091_022,count,Owner-occupied housing units: Housing units without a mortgage › 50.0 percent or more
+B25091_023,b25091_023,count,Owner-occupied housing units: Housing units without a mortgage › Not computed
+B25064_001,median_gross_rent,dollars,"Median gross rent per month: rent plus utilities and fuels, for renters paying cash rent"
+B25058_001,b25058_001,dollars,"Median contract rent per month: the rent agreed to, not counting utilities, for renters paying cash rent"
+B25063_001,b25063_001,count,Renter-occupied housing units (the total the rent brackets add up to)
+B25063_002,b25063_002,count,Renter households paying cash rent
+B25063_003,b25063_003,count,Renter households paying gross rent (rent plus utilities) of less than $100 a month
+B25063_004,b25063_004,count,Renter households paying gross rent (rent plus utilities) of $100 to $149 a month
+B25063_005,b25063_005,count,Renter households paying gross rent (rent plus utilities) of $150 to $199 a month
+B25063_006,b25063_006,count,Renter households paying gross rent (rent plus utilities) of $200 to $249 a month
+B25063_007,b25063_007,count,Renter households paying gross rent (rent plus utilities) of $250 to $299 a month
+B25063_008,b25063_008,count,Renter households paying gross rent (rent plus utilities) of $300 to $349 a month
+B25063_009,b25063_009,count,Renter households paying gross rent (rent plus utilities) of $350 to $399 a month
+B25063_010,b25063_010,count,Renter households paying gross rent (rent plus utilities) of $400 to $449 a month
+B25063_011,b25063_011,count,Renter households paying gross rent (rent plus utilities) of $450 to $499 a month
+B25063_012,b25063_012,count,Renter households paying gross rent (rent plus utilities) of $500 to $549 a month
+B25063_013,b25063_013,count,Renter households paying gross rent (rent plus utilities) of $550 to $599 a month
+B25063_014,b25063_014,count,Renter households paying gross rent (rent plus utilities) of $600 to $649 a month
+B25063_015,b25063_015,count,Renter households paying gross rent (rent plus utilities) of $650 to $699 a month
+B25063_016,b25063_016,count,Renter households paying gross rent (rent plus utilities) of $700 to $749 a month
+B25063_017,b25063_017,count,Renter households paying gross rent (rent plus utilities) of $750 to $799 a month
+B25063_018,b25063_018,count,Renter households paying gross rent (rent plus utilities) of $800 to $899 a month
+B25063_019,b25063_019,count,Renter households paying gross rent (rent plus utilities) of $900 to $999 a month
+B25063_020,b25063_020,count,"Renter households paying gross rent (rent plus utilities) of $1,000 to $1,249 a month"
+B25063_021,b25063_021,count,"Renter households paying gross rent (rent plus utilities) of $1,250 to $1,499 a month"
+B25063_022,b25063_022,count,"Renter households paying gross rent (rent plus utilities) of $1,500 to $1,999 a month"
+B25063_023,b25063_023,count,"Renter households paying gross rent (rent plus utilities) of $2,000 to $2,499 a month"
+B25063_024,b25063_024,count,"Renter households paying gross rent (rent plus utilities) of $2,500 to $2,999 a month"
+B25063_025,b25063_025,count,"Renter households paying gross rent (rent plus utilities) of $3,000 to $3,499 a month"
+B25063_026,b25063_026,count,"Renter households paying gross rent (rent plus utilities) of $3,500 or more a month"
+B25063_027,b25063_027,count,"Renter households paying no cash rent (rent-free housing, caretakers, housing that comes with a job)"
+B25070_001,rent_pct_income_total,count,Renter-occupied housing units (the total the rent-share brackets add up to)
+B25070_002,rent_pct_income_under_10,count,Renter households whose gross rent is less than 10.0 percent of household income (30% or more counts as cost-burdened)
+B25070_003,rent_pct_income_10_15,count,Renter households whose gross rent is 10.0 to 14.9 percent of household income (30% or more counts as cost-burdened)
+B25070_004,rent_pct_income_15_20,count,Renter households whose gross rent is 15.0 to 19.9 percent of household income (30% or more counts as cost-burdened)
+B25070_005,rent_pct_income_20_25,count,Renter households whose gross rent is 20.0 to 24.9 percent of household income (30% or more counts as cost-burdened)
+B25070_006,rent_pct_income_25_30,count,Renter households whose gross rent is 25.0 to 29.9 percent of household income (30% or more counts as cost-burdened)
+B25070_007,rent_pct_income_30_35,count,Renter households whose gross rent is 30.0 to 34.9 percent of household income (30% or more counts as cost-burdened)
+B25070_008,rent_pct_income_35_40,count,Renter households whose gross rent is 35.0 to 39.9 percent of household income (30% or more counts as cost-burdened)
+B25070_009,rent_pct_income_40_50,count,Renter households whose gross rent is 40.0 to 49.9 percent of household income (30% or more counts as cost-burdened)
+B25070_010,rent_pct_income_50_plus,count,Renter households whose gross rent is 50.0 percent or more of household income (30% or more counts as cost-burdened)
+B25070_011,rent_pct_income_not_computed,count,"Renter households whose rent share couldn't be computed (no cash rent, or no or negative income)"
+B25071_001,b25071_001,percent,Median gross rent as a percentage of household income (renter-occupied housing units paying cash rent)

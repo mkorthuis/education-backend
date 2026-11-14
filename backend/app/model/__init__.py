@@ -37,3 +37,7 @@ from .child_care import (
     ChildCareProgramHours, ChildCareProgramRate, ChildCareProgramFeatureLink, ChildCareInspection,
     TownChildCare, DistrictChildCare, StateChildCare
 )
+from .acs import (
+    AcsTopic, AcsAnnotation, AcsRelease, AcsTable, AcsVariable, AcsVariableRelease, AcsMeasure, AcsTown, AcsDistrict,
+    TownAcsEstimate, DistrictAcsEstimate, StateAcsEstimate
+)

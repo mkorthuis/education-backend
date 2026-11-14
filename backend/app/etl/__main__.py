@@ -16,6 +16,7 @@ import sys
 
 from app.core.db import engine
 from app.etl import (
+    acs,
     assessment,
     census_finance,
     child_care,
@@ -47,6 +48,7 @@ from app.etl import (
 )
 
 DATASETS = {
+    "acs": acs,
     "assessment": assessment,
     "census-finance": census_finance,
     "child-care": child_care,

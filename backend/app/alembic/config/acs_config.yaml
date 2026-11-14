@@ -1,0 +1,363 @@
+# Census Bureau American Community Survey (ACS) 5-year estimates for New Hampshire's towns, school
+# districts and the state: income, poverty, housing, children, families, education, language, work,
+# health insurance and internet. Every value has a margin of error (90% confidence).
+#
+# `python -m app.etl fetch acs` reads each release's summary files from www2.census.gov (no API key:
+# one pipe-delimited file per table covering the whole country) and keeps New Hampshire's rows: the
+# state (040), its county subdivisions (060: towns, cities, and the unincorporated grants and
+# purchases) and its elementary (950), secondary (960) and unified (970) school districts. It saves
+# them, with the tables' labels, to assets/acs/acs5-<year>.json.gz. `load acs` loads every release.
+#
+# A release is named by the last year of its five (2024: 2020-2024). Census advises against comparing
+# overlapping periods, so history skips ahead five years. Dollars are in the release's last year's
+# dollars. The 2015-2019 files are in Census's "prototype" folder: the same table-based format, made
+# before Census switched to it for 2021.
+#
+# acs_variables.csv lists every value loaded: its column name in the views, unit and description.
+# Each table's lines must all be listed there, and every line listed must be in the latest release.
+directory: "../assets/acs"
+state_fips: "33"
+releases:
+  2024:
+    period: 2020-2024
+    base_url: https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF
+    data: data/5YRData/acsdt5y2024-{table}.dat
+    geographies: documentation/Geos20245YR.txt
+    shells: documentation/ACS20245YR_Table_Shells.txt
+  2019:
+    period: 2015-2019
+    base_url: https://www2.census.gov/programs-surveys/acs/summary_file/2019/prototype
+    data: 5YRData/acsdt5y2019-{table}.dat
+    shells: ACS2019_Table_Shells.csv
+
+# acs_annotation: the codes the summary files give in place of a number. A controlled estimate (one
+# Census sets to match its population estimates) has no sampling error, so its margin of error is 0.
+annotations:
+  1: { code: -666666666, name: "Estimate can't be computed: too few sample observations" }
+  2: { code: -999999999, name: "Too few sample observations to compute" }
+  3: { code: -888888888, name: "Not applicable" }
+  4: { code: -555555555, name: "Controlled: no sampling error" }
+  5: { code: -333333333, name: "Margin of error can't be computed: the median is in an open-ended range" }
+  6: { code: -222222222, name: "Margin of error can't be computed: too few sample observations" }
+
+# Reliability by coefficient of variation (the standard error as a percent of the estimate): high up to
+# `high`, use with caution up to `caution`, low above. 30% is Census's own ceiling for key estimates.
+reliability:
+  high: 15
+  caution: 30
+
+# County subdivisions by Census's name, before the county. "Conway town" matches the town Conway;
+# these don't match their town's name.
+town_aliases:
+  "Hale's location": "Hale's Location"
+  "Millsfield township": Millsfield
+# County subdivisions with no row in the town table: unincorporated places, and Livermore, which has no
+# residents. They count in the state's figures, which come from Census directly. (Wentworth location is in
+# Coos County; the town Wentworth is "Wentworth town", in Grafton County.)
+skip_towns:
+  - Atkinson and Gilmanton Academy grant
+  - Beans grant
+  - Beans purchase
+  - Cambridge township
+  - Chandlers purchase
+  - County subdivisions not defined
+  - Crawfords purchase
+  - Cutts grant
+  - Dixs grant
+  - Dixville township
+  - Ervings location
+  - Greens grant
+  - Hadleys purchase
+  - Kilkenny township
+  - Livermore town
+  - Low and Burbanks grant
+  - Martins location
+  - Odell township
+  - Pinkhams grant
+  - Sargents purchase
+  - Second College grant
+  - Success township
+  - Thompson and Meserves purchase
+  - Wentworth location
+# School districts by Census's name, where it isn't the district table's name with or without " School
+# District". Each level's "Remainder of New Hampshire" (the area outside that level's districts) is
+# left out.
+district_aliases:
+  "Derry School District": Derry Cooperative
+  "Exeter Regional Cooperative School District": Exeter Region Cooperative
+  "Prospect Mountain High School Joint Maintenance Agreement District": Prospect Mountain JMA
+  "Hale's Location School District": "Hale's Location (Carroll County)"
+  "Inter-Lakes School District": Inter-Lakes Cooperative
+  "Lincoln-Woodstock School District": Lincoln-Woodstock Cooperative
+  "Oyster River Cooperative School District": Oyster River Coop
+  "White Mountain Regional School District": White Mountains Regional
+  "Wilton-Lyndeborough School District": Wilton-Lyndeborough Cooperative
+  "Rivendell Interstate School District": Rivendell
+
+topics:  # acs_topic: each has a materialized view per level (town_acs_<topic>, district_acs_<topic>, state_acs_<topic>)
+  1: { code: population, name: "Population and age" }
+  2: { code: children, name: "Children and births" }
+  3: { code: households, name: "Households and families" }
+  4: { code: race_language, name: "Race, origin and language" }
+  5: { code: education, name: "Education" }
+  6: { code: income, name: "Income and earnings" }
+  7: { code: poverty, name: "Poverty and assistance" }
+  8: { code: work, name: "Work and commuting" }
+  9: { code: health_internet, name: "Health, disability and internet" }
+  10: { code: housing, name: "Housing" }
+
+# acs_table: the tables loaded, by topic. core: likely to be used soon; extended: kept for later.
+tables:
+  B01001: { topic: population, tier: core, why: "Population by sex and 23 age bands; the total population" }
+  B01002: { topic: population, tier: core, why: "Median age, overall and by sex" }
+  B07003: { topic: population, tier: extended, why: "Who moved in the past year, and from where (same county, state, abroad): population turnover" }
+  B26001: { topic: population, tier: extended, why: "People in group quarters (dorms, nursing homes, prisons), which some per-person rates leave out" }
+  B09001: { topic: children, tier: core, why: "Children by age in the bands child care uses: under 3, 3-4, 5, then 6-8 through 15-17" }
+  B09002: { topic: children, tier: extended, why: "Children in married-couple and single-parent families, by age" }
+  B09005: { topic: children, tier: extended, why: "Children by the type of household they live in" }
+  B10001: { topic: children, tier: extended, why: "Grandchildren living with a grandparent householder, by age" }
+  B13016: { topic: children, tier: extended, why: "Women who gave birth in the past year, by age: an early signal of future kindergarten classes" }
+  B11001: { topic: households, tier: core, why: "Households by type: married couples, single parents, people living alone" }
+  B11003: { topic: households, tier: core, why: "Families by type and the ages of their own children (under 6, 6-17)" }
+  B11005: { topic: households, tier: core, why: "Households with and without anyone under 18" }
+  B11016: { topic: households, tier: extended, why: "Households by type and size" }
+  B23008: { topic: households, tier: core, why: "Children under 6 and 6-17 by whether their parents work: the usual measure of child care demand" }
+  B03002: { topic: race_language, tier: core, why: "Race and Hispanic or Latino origin (the standard race/ethnicity breakdown)" }
+  B02001: { topic: race_language, tier: extended, why: "Race alone and in combination" }
+  B05002: { topic: race_language, tier: extended, why: "Born in New Hampshire, another state or abroad, and citizenship" }
+  B16004: { topic: race_language, tier: core, why: "Language at home and English ability by age, including children 5-17: context for English learners" }
+  C16001: { topic: race_language, tier: extended, why: "Which languages are spoken at home" }
+  B16002: { topic: race_language, tier: extended, why: "Households where no one 14 or older speaks English very well, by language" }
+  B14002: { topic: education, tier: core, why: "Enrollment from preschool through college, public and private, by sex" }
+  B14007: { topic: education, tier: core, why: "Enrollment by grade: nursery school, kindergarten, each grade 1-12, college" }
+  B15003: { topic: education, tier: core, why: "Adults' highest level of education" }
+  B14005: { topic: education, tier: extended, why: "Teens 16-19 by school enrollment, high school graduation and work: those neither in school nor working" }
+  B19013: { topic: income, tier: core, why: "Median household income" }
+  B19113: { topic: income, tier: core, why: "Median family income" }
+  B19301: { topic: income, tier: core, why: "Per capita income" }
+  B19001: { topic: income, tier: core, why: "Households in 16 income brackets" }
+  B19126: { topic: income, tier: core, why: "Median family income for married couples and single parents, with and without children" }
+  B19083: { topic: income, tier: extended, why: "Gini index of income inequality" }
+  B20002: { topic: income, tier: extended, why: "Median earnings by sex" }
+  B17001: { topic: poverty, tier: core, why: "Poverty by sex and age" }
+  B17020: { topic: poverty, tier: core, why: "Poverty by age, with under 6 on its own" }
+  C17002: { topic: poverty, tier: core, why: "Income as a multiple of the poverty level; 1.85 is the free and reduced-price lunch line" }
+  B17010: { topic: poverty, tier: core, why: "Families in poverty by type and the ages of their children" }
+  B17024: { topic: poverty, tier: extended, why: "Income as a multiple of the poverty level by age (children under 6, 6-11, 12-17): for income-based eligibility lines" }
+  B22002: { topic: poverty, tier: core, why: "Households on SNAP (food stamps), with and without children" }
+  B19058: { topic: poverty, tier: extended, why: "Households with public assistance income or SNAP" }
+  B23025: { topic: work, tier: core, why: "Labor force, employed and unemployed" }
+  B08303: { topic: work, tier: extended, why: "Travel time to work" }
+  B08301: { topic: work, tier: extended, why: "How people get to work, including working from home" }
+  B18101: { topic: health_internet, tier: extended, why: "Disability by sex and age, including children" }
+  B27001: { topic: health_internet, tier: extended, why: "Health insurance coverage by sex and age, including children" }
+  B28002: { topic: health_internet, tier: core, why: "Households' internet subscriptions, by type" }
+  B28005: { topic: health_internet, tier: extended, why: "Computer and internet at home by age, including children under 18" }
+  B25001: { topic: housing, tier: core, why: "All housing units" }
+  B25002: { topic: housing, tier: core, why: "Occupied and vacant units" }
+  B25003: { topic: housing, tier: core, why: "Owners and renters" }
+  B25004: { topic: housing, tier: core, why: "Why vacant units are vacant, including seasonal and vacation homes" }
+  B25010: { topic: housing, tier: extended, why: "Average household size, for owners and renters" }
+  B25024: { topic: housing, tier: extended, why: "Units in structure: single-family homes, apartments, mobile homes" }
+  B25034: { topic: housing, tier: extended, why: "When homes were built" }
+  B25035: { topic: housing, tier: extended, why: "Median year homes were built" }
+  B25038: { topic: housing, tier: extended, why: "When households moved in, for owners and renters" }
+  B25014: { topic: housing, tier: extended, why: "Occupants per room: crowding" }
+  B25077: { topic: housing, tier: core, why: "Median home value" }
+  B25075: { topic: housing, tier: extended, why: "Owner homes in 26 value brackets" }
+  B25088: { topic: housing, tier: extended, why: "Median monthly owner costs, with and without a mortgage" }
+  B25091: { topic: housing, tier: extended, why: "Owner costs as a share of income: cost-burdened owners" }
+  B25064: { topic: housing, tier: core, why: "Median gross rent" }
+  B25058: { topic: housing, tier: extended, why: "Median contract rent (without utilities)" }
+  B25063: { topic: housing, tier: extended, why: "Renters in 24 rent brackets" }
+  B25070: { topic: housing, tier: core, why: "Rent as a share of income: cost-burdened renters" }
+  B25071: { topic: housing, tier: extended, why: "Median rent as a share of income" }
+
+# The {level}_acs_summary views' measures, in order (acs_measure). value: one estimate; sum: estimates added
+# up; share: the sum of share as a percentage of the sum of of (a "-" subtracts a line). Margins of error
+# follow Census's formulas for sums and proportions. label and description are what the site shows.
+summary:
+  population:
+    label: "Population"
+    description: "All residents."
+    value: B01001_001
+  median_age:
+    label: "Median age"
+    description: "Half of residents are older, half younger, in years."
+    value: B01002_001
+  children_under_6:
+    label: "Children under 6"
+    description: "Children under 6 living in households (under 3, 3 and 4, and 5)."
+    sum: [B09001_003, B09001_004, B09001_005]
+  children_under_18:
+    label: "Children under 18"
+    description: "Children under 18, in households and group quarters."
+    value: B09001_001
+  births_past_year:
+    label: "Recent births"
+    description: "Women 15 to 50 who gave birth in the past 12 months: an early signal of future kindergarten classes."
+    value: B13016_002
+  households:
+    label: "Households"
+    description: "Occupied homes: a household is everyone living in one."
+    value: B11001_001
+  households_with_children_pct:
+    label: "Households with children"
+    description: "Share of households with at least one person under 18."
+    share: [B11005_002]
+    of: [B11005_001]
+  single_parent_families_pct:
+    label: "Single-parent families"
+    description: "Share of families with their own children under 18 that have a single parent (no spouse present)."
+    share: [B11003_010, B11003_016]
+    of: [B11003_003, B11003_010, B11003_016]
+  under_6_all_parents_working_pct:
+    label: "Children under 6 with all parents working"
+    description: "Share of children under 6 living with their parents whose parents all work or are looking for work (both of two parents, or a single parent): the usual measure of child care demand."
+    share: [B23008_004, B23008_010, B23008_013]
+    of: [B23008_002]
+  age_6_17_all_parents_working_pct:
+    label: "Children 6 to 17 with all parents working"
+    description: "Share of children 6 to 17 living with their parents whose parents all work or are looking for work: a measure of before- and after-school care demand."
+    share: [B23008_017, B23008_023, B23008_026]
+    of: [B23008_015]
+  median_household_income:
+    label: "Median household income"
+    description: "Half of households had more income in the past 12 months, half less, in the release's last year's dollars."
+    value: B19013_001
+  median_family_income:
+    label: "Median family income"
+    description: "The same for families (households of people related by birth, marriage or adoption), in the release's last year's dollars."
+    value: B19113_001
+  per_capita_income:
+    label: "Per capita income"
+    description: "All residents' income in the past 12 months divided by the population, in the release's last year's dollars."
+    value: B19301_001
+  gini_index:
+    label: "Income inequality (Gini index)"
+    description: "From 0 (every household has the same income) to 1 (one household has all of it)."
+    value: B19083_001
+  poverty_pct:
+    label: "Poverty rate"
+    description: "Share of people whose family income in the past 12 months was below the poverty level."
+    share: [B17001_002]
+    of: [B17001_001]
+  under_18_poverty_pct:
+    label: "Child poverty rate"
+    description: "Share of children under 18 whose family income was below the poverty level."
+    share: [B17020_003, B17020_004, B17020_005]
+    of: [B17020_003, B17020_004, B17020_005, B17020_011, B17020_012, B17020_013]
+  under_6_poverty_pct:
+    label: "Poverty rate, children under 6"
+    description: "Share of children under 6 whose family income was below the poverty level."
+    share: [B17020_003]
+    of: [B17020_003, B17020_011]
+  below_185_poverty_pct:
+    label: "Below 185% of poverty"
+    description: "Share of people whose family income was under 1.85 times the poverty level: the income line for free and reduced-price school meals."
+    share: [C17002_002, C17002_003, C17002_004, C17002_005, C17002_006]
+    of: [C17002_001]
+  under_6_below_200_poverty_pct:
+    label: "Children under 6 below 200% of poverty"
+    description: "Share of children under 6 whose family income was under twice the poverty level, a common low-income line."
+    share: [B17024_003, B17024_004, B17024_005, B17024_006, B17024_007, B17024_008, B17024_009, B17024_010]
+    of: [B17024_002]
+  snap_households_pct:
+    label: "Households on SNAP"
+    description: "Share of households that received SNAP (food stamps) in the past 12 months."
+    share: [B22002_002]
+    of: [B22002_001]
+  snap_households_with_children:
+    label: "SNAP households with children"
+    description: "Households with children under 18 that received SNAP (food stamps) in the past 12 months."
+    value: B22002_003
+  labor_force_participation_pct:
+    label: "Labor force participation"
+    description: "Share of people 16 and over who are working or looking for work, including the armed forces."
+    share: [B23025_002]
+    of: [B23025_001]
+  unemployment_pct:
+    label: "Unemployment rate"
+    description: "Share of the civilian labor force that is out of work and looking for it."
+    share: [B23025_005]
+    of: [B23025_003]
+  work_from_home_pct:
+    label: "Work from home"
+    description: "Share of workers 16 and over who worked from home."
+    share: [B08301_021]
+    of: [B08301_001]
+  bachelors_or_higher_pct:
+    label: "Bachelor's degree or higher"
+    description: "Share of adults 25 and over with a bachelor's, master's, professional or doctoral degree."
+    share: [B15003_022, B15003_023, B15003_024, B15003_025]
+    of: [B15003_001]
+  preschool_enrolled:
+    label: "Enrolled in preschool"
+    description: "People enrolled in nursery school or preschool, public or private."
+    sum: [B14002_004, B14002_028]
+  private_k12_pct:
+    label: "Private school or home school, K-12"
+    description: "Share of students in kindergarten through grade 12 in private school; the ACS counts home school as private."
+    share: [B14002_009, B14002_012, B14002_015, B14002_018, B14002_033, B14002_036, B14002_039, B14002_042]
+    of: [B14002_007, B14002_010, B14002_013, B14002_016, B14002_031, B14002_034, B14002_037, B14002_040]
+  age_5_17_other_language_pct:
+    label: "Children speaking another language at home"
+    description: "Share of children 5 to 17 who speak a language other than English at home."
+    share: [B16004_002, -B16004_003]
+    of: [B16004_002]
+  age_5_17_limited_english_pct:
+    label: "Children with limited English"
+    description: "Share of children 5 to 17 who speak English less than \"very well\"."
+    share: [B16004_006, B16004_007, B16004_008, B16004_011, B16004_012, B16004_013, B16004_016, B16004_017, B16004_018, B16004_021, B16004_022, B16004_023]
+    of: [B16004_002]
+  uninsured_under_19_pct:
+    label: "Uninsured children"
+    description: "Share of children under 19 (outside institutions and the military) with no health insurance."
+    share: [B27001_005, B27001_008, B27001_033, B27001_036]
+    of: [B27001_003, B27001_006, B27001_031, B27001_034]
+  broadband_households_pct:
+    label: "Households with broadband"
+    description: "Share of households with a broadband internet subscription of any type."
+    share: [B28002_004]
+    of: [B28002_001]
+  under_18_broadband_pct:
+    label: "Children with a computer and broadband"
+    description: "Share of children under 18 living in a household with a computer and a broadband subscription."
+    share: [B28005_005]
+    of: [B28005_002]
+  housing_units:
+    label: "Housing units"
+    description: "All homes, occupied or vacant: houses, apartments, mobile homes."
+    value: B25001_001
+  seasonal_pct:
+    label: "Seasonal homes"
+    description: "Share of all homes held vacant for seasonal, recreational or occasional use: vacation and second homes."
+    share: [B25004_006]
+    of: [B25001_001]
+  owner_occupied_pct:
+    label: "Owner-occupied homes"
+    description: "Share of occupied homes lived in by their owners."
+    share: [B25003_002]
+    of: [B25003_001]
+  median_home_value:
+    label: "Median home value"
+    description: "Median value of owner-occupied homes, as owners estimate what they would sell for."
+    value: B25077_001
+  median_gross_rent:
+    label: "Median gross rent"
+    description: "Median monthly rent plus utilities, for renters paying cash rent, in the release's last year's dollars."
+    value: B25064_001
+  rent_burdened_pct:
+    label: "Rent-burdened renters"
+    description: "Share of renters paying 30% or more of household income in rent and utilities (where it can be computed)."
+    share: [B25070_007, B25070_008, B25070_009, B25070_010]
+    of: [B25070_001, -B25070_011]
+  owner_cost_burdened_pct:
+    label: "Cost-burdened owners"
+    description: "Share of owners spending 30% or more of household income on housing costs (where it can be computed)."
+    share: [B25091_008, B25091_009, B25091_010, B25091_011, B25091_019, B25091_020, B25091_021, B25091_022]
+    of: [B25091_001, -B25091_012, -B25091_023]
+  median_year_built:
+    label: "Median year built"
+    description: "Half of homes were built before this year, half after."
+    value: B25035_001
