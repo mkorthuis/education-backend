@@ -9,6 +9,7 @@ database.
 """
 from collections import defaultdict
 from functools import lru_cache
+from statistics import median, quantiles
 from typing import Callable, Dict, List, Optional
 from urllib.parse import urlparse
 
@@ -18,6 +19,7 @@ from sqlmodel import Session
 from app.etl.core import load_config
 from app.service.inflation import in_dollars_of
 from app.service.public.assessment_service import assessment_service
+from app.service.public.child_care_service import child_care_service
 from app.service.public.class_size_service import class_size_service
 from app.service.public.education_freedom_account_service import education_freedom_account_service
 from app.service.public.enrollment_service import enrollment_service
@@ -29,11 +31,11 @@ from app.service.public.question_two_service import question_two_service
 from app.service.public.safety_service import safety_service
 from app.service.public.staff_service import staff_service
 
-TOPICS = ["enrollment", "test_scores", "graduation", "spending", "balance_sheet", "staff", "safety", "efa", "question_two"]
+TOPICS = ["enrollment", "test_scores", "graduation", "spending", "balance_sheet", "staff", "safety", "efa", "question_two", "child_care"]
 LEVELS = ["state", "district", "school"]
 
-# Topics each level has, with the site page that shows them. Question 2 has no page yet, so its
-# datasets name their source instead.
+# Topics each level has, with the site page that shows them. Question 2 and child care have no page
+# yet, so their datasets name their source instead.
 STATE_PAGES = {
     "enrollment": "/state/enrollment",
     "test_scores": "/state/academic",
@@ -1286,6 +1288,230 @@ def _district_question_two(session: Session, place: dict) -> List[dict]:
     return results
 
 
+# -------------------- Child care --------------------
+
+CHILD_CARE_NOTE = (
+    "Programs in NH DHHS's Child Care Search, counted in the town where each one is, so families also use programs in nearby towns. "
+    "Licensed places are the most children a program's license allows at once, not how many attend or how many places are open; "
+    "license-exempt programs count as programs but not toward licensed places. Age groups are as each program lists them in the search. "
+    "Openings are what programs last reported on their own pages, each on its own date; a program that reported none adds nothing."
+)
+# (column, totals field)
+CHILD_CARE_TOTALS = [
+    ("Programs", "programs"), ("Licensed programs", "licensed_programs"), ("Licensed places", "licensed_capacity"),
+    ("Infant places", "infant_capacity"), ("Toddler places", "toddler_capacity"),
+    ("Programs listing infants", "infant_programs"), ("Programs listing toddlers", "toddler_programs"),
+    ("Programs listing preschoolers", "preschool_programs"), ("Programs listing school-age children", "school_age_programs"),
+    ("Infant openings", "infant_vacancies"), ("Toddler openings", "toddler_vacancies"),
+    ("Preschool openings", "preschool_vacancies"), ("School-age openings", "school_age_vacancies"),
+]
+# By town: without licensed programs and openings
+CHILD_CARE_BY_TOWN = [(column, name) for column, name in CHILD_CARE_TOTALS if name != "licensed_programs" and not name.endswith("vacancies")]
+CHILD_CARE_TYPES = {
+    "Licensed Group Child Care Program": "Licensed group program",
+    "Licensed Family Child Care Program": "Licensed family home",
+    "License Exempt Family Child Care Program": "License-exempt family home",
+    "License Exempt Facility": "License-exempt facility",
+}
+AGE_GROUP_FLAGS = [("infant", "infants"), ("toddler", "toddlers"), ("preschool", "preschoolers"), ("school_age", "school-age children")]
+DAY_NAMES = ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+RATE_PERIODS = {"hourly": "hour", "daily": "day", "weekly": "week", "monthly": "month"}
+MAX_PROGRAMS = 50  # a district's programs, the most places first (Manchester has 47)
+MAX_RATES = 100  # the listed programs' rates (Manchester's have 84)
+
+
+@lru_cache(maxsize=1)
+def _child_care_config() -> dict:
+    return load_config("child_care_config.yaml")
+
+
+def _child_care_source(as_of) -> dict:
+    """The search a download comes from, shown as the answer's source."""
+    url = _child_care_config()["search_page"]
+    return {"label": "NH DHHS Child Care Search", "url": url, "site": urlparse(url).netloc.lower(), "as_of": as_of.isoformat()}
+
+
+def _age(months: Optional[float]) -> Optional[str]:
+    """An age the search gives in months, in words: 1.4 -> "6 weeks", 18 -> "18 months", 33 -> "2 years 9 months"."""
+    if months is None:
+        return None
+    if months < 3:
+        return f"{round(months * 52 / 12)} weeks"
+    if months < 24:
+        return f"{round(months)} months"
+    years, rest = divmod(round(months), 12)
+    return f"{years} years" + (f" {rest} months" if rest else "")
+
+
+def _ages(program) -> Optional[str]:
+    low, high = _age(program.min_age_months), _age(program.max_age_months)
+    if low and high:
+        return f"{low} to {high}"
+    return f"up to {high}" if high else f"from {low}" if low else None
+
+
+def _clock(value) -> str:
+    return f"{value.hour % 12 or 12}:{value.minute:02d} {'AM' if value.hour < 12 else 'PM'}"
+
+
+def _open_hours(rows: list) -> Optional[str]:
+    """When a program is open, from its page's schedules: its earliest opening and latest closing, and its days.
+    A session that closes before it opens (overnight care, or 4:30 AM for 4:30 PM) is left out of the range and
+    flagged, unless every session is like that."""
+    rows = [row for row in rows if row.opens and row.closes]
+    if not rows:
+        return None
+    days = sorted({row.day_of_week for row in rows})
+    named = "Mon-Fri" if days == [1, 2, 3, 4, 5] else ", ".join(DAY_NAMES[day - 1] for day in days)
+    within = [row for row in rows if row.closes > row.opens] or rows
+    flag = "" if len(within) == len(rows) and within[0].closes > within[0].opens else " (a closing time before the opening time, as listed)"
+    return f"{_clock(min(row.opens for row in within))} to {_clock(max(row.closes for row in within))}, {named}{flag}"
+
+
+def _program_town(program) -> Optional[str]:
+    """A program's town, with the village its address gives: "Conway (North Conway)"."""
+    city = (program.city or "").strip().title()
+    return f"{program.town_name} ({city})" if city and program.town_name and city.lower() != program.town_name.lower() else program.town_name
+
+
+def _child_care_totals(rows: list, as_of) -> dict:
+    """Town totals added up for one download: a district's towns, or several towns."""
+    totals = {"as_of": as_of}
+    for _, name in CHILD_CARE_TOTALS:
+        values = [_field(row, name) for row in rows if _field(row, name) is not None]
+        # No programs: none of anything, except openings, which only programs report
+        totals[name] = sum(values) if values else None if rows or name.endswith("vacancies") else 0
+    return totals
+
+
+def _by_town(towns: list, totals: Dict[int, object]) -> list:
+    """A row per town, with zeros for a town with no programs."""
+    empty = _child_care_totals([], None)
+    return [[town.name, *(_field(totals.get(town.id, empty), name) for _, name in CHILD_CARE_BY_TOWN)]
+            for town in sorted(towns, key=lambda town: (-(_field(totals.get(town.id, empty), "licensed_capacity") or 0), town.name))]
+
+
+def _child_care(session: Session, place: dict) -> List[dict]:
+    """Licensed child care: for the state, totals, by county and typical weekly rates; for a district, its
+    towns' totals (by town too), each program with its places, ages, openings and hours, the rates they
+    list, and the other towns in its SAU. There's no page for these on the site yet, so each dataset
+    carries its source instead."""
+    state = child_care_service.get_state_totals(session)
+    if not state:
+        return []
+    latest = state[-1].as_of
+    total_columns = ["As of", *(column for column, _ in CHILD_CARE_TOTALS)]
+    if place["level"] == "state":
+        totals = state
+    else:
+        by_download = defaultdict(list)
+        for row in child_care_service.get_town_totals(session, district_id=place["id"]):
+            by_download[row.as_of].append(row)
+        by_download.setdefault(latest, [])
+        totals = [_child_care_totals(rows, as_of) for as_of, rows in sorted(by_download.items())]
+    results = [dataset(
+        f"Child care programs and places, {place['name']}", "count", total_columns,
+        [[_field(row, "as_of").isoformat(), *(_field(row, name) for _, name in CHILD_CARE_TOTALS)] for row in totals],
+        None, CHILD_CARE_NOTE + (" Each row is one download of the search." if len(totals) > 1 else ""), key="child_care_totals",
+    )]
+    programs = child_care_service.get_programs(session, district_id=None if place["level"] == "state" else place["id"])
+
+    if place["level"] == "state":
+        counties: Dict[str, list] = defaultdict(list)
+        for program in programs:
+            counties[program.county or "Not given"].append(program)
+        results.append(dataset(
+            f"Child care by county, {latest.isoformat()}", "count",
+            ["County", "Programs", "Licensed places", "Infant places", "Toddler places"],
+            [[county, len(found), sum(p.capacity for p in found if p.is_licensed), sum(p.infant_capacity or 0 for p in found),
+              sum(p.toddler_capacity or 0 for p in found)]
+             for county, found in sorted(counties.items(), key=lambda item: -sum(p.capacity for p in item[1] if p.is_licensed))],
+            None, CHILD_CARE_NOTE,
+        ))
+        weekly: Dict[str, list] = defaultdict(list)
+        for rate in child_care_service.get_rates(session, [p.id for p in programs]):
+            if rate.period == "weekly":
+                weekly[rate.age_group].append((rate.program_id_fk, float(rate.amount)))
+        rows = []
+        for age_group in ("Infant", "Toddler", "Preschool", "School Age"):
+            # A program's lowest weekly rate for the age group, when it lists several schedules
+            lowest: Dict[int, float] = {}
+            for program_id, amount in weekly.get(age_group, []):
+                lowest[program_id] = min(amount, lowest.get(program_id, amount))
+            amounts = sorted(lowest.values())
+            if len(amounts) >= 4:
+                quarter, _, three_quarters = quantiles(amounts, n=4)
+                rows.append([age_group, len(amounts), round(median(amounts)), round(quarter), round(three_quarters)])
+        if rows:
+            results.append(dataset(
+                f"Weekly child care rates programs list, statewide, {latest.isoformat()}", "dollars",
+                ["Age group", "Programs listing a weekly rate", "Median weekly rate", "Lower quarter", "Upper quarter"], rows, None,
+                "Derived from the weekly rates programs list on their DHHS pages (each program's lowest for the age group): half the "
+                "programs list less than the median, a quarter less than the lower quarter and a quarter more than the upper quarter. "
+                "Many programs list no rate or list one by the hour, day or month, and a few listed rates look like entry errors; "
+                "the middle figures aren't moved much by those.",
+                {"Programs listing a weekly rate": "count"},
+            ))
+    else:
+        towns = location_service.get_towns(session, district_id=place["id"])
+        latest_by_town = {row.town_id: row for row in child_care_service.get_town_totals(session, as_of=latest.isoformat())}
+        by_town_columns = ["Town", *(column for column, _ in CHILD_CARE_BY_TOWN)]
+        if len(towns) > 1:
+            results.append(dataset(
+                f"Child care by town, {latest.isoformat()}, {place['name']}", "count", by_town_columns,
+                _by_town(towns, latest_by_town), None, CHILD_CARE_NOTE,
+            ))
+        shown = sorted(programs, key=lambda p: (-p.capacity, p.name))[:MAX_PROGRAMS]
+        shown.sort(key=lambda p: (p.town_name or "", -p.capacity, p.name))
+        names = {p.id: p.name.strip() for p in shown}
+        if shown:
+            hours: Dict[int, list] = defaultdict(list)
+            for row in child_care_service.get_hours(session, [p.id for p in shown]):
+                hours[row.program_id_fk].append(row)
+            results.append(dataset(
+                f"Child care programs, {latest.isoformat()}, {place['name']}", "count",
+                ["Program", "Town", "Type", "Licensed places", "Infant places", "Toddler places", "Ages", "Age groups",
+                 "Availability", "Infant openings", "Toddler openings", "Preschool openings", "School-age openings", "Openings updated",
+                 "Takes the NH Child Care Scholarship", "Head Start", "Hours"],
+                [[names[p.id], _program_town(p), CHILD_CARE_TYPES.get(p.program_type, p.program_type), p.capacity if p.is_licensed else None,
+                  p.infant_capacity, p.toddler_capacity, _ages(p),
+                  ", ".join(label for flag, label in AGE_GROUP_FLAGS if getattr(p, flag)) or None, p.availability,
+                  p.infant_vacancies, p.toddler_vacancies, p.preschool_vacancies, p.school_age_vacancies,
+                  p.vacancies_updated.isoformat() if p.vacancies_updated else None, _yes_no(p.accepts_scholarship),
+                  _yes_no(bool(p.head_start or p.early_head_start)), _open_hours(hours[p.id])] for p in shown],
+                None, CHILD_CARE_NOTE + " Age groups come from the program's listing, or where it lists none from its license or age range; "
+                "a program listing infants with no infant places, or with an age range starting at 3, may not take infants. "
+                "The search gives how to reach every program. Hours are a program's earliest opening and latest closing on the days it's open."
+                + (f" These are the {MAX_PROGRAMS} with the most places of the {len(programs)} programs." if len(programs) > MAX_PROGRAMS else ""),
+            ))
+            rates = child_care_service.get_rates(session, [p.id for p in shown])
+            by_id = {p.id: p for p in shown}
+            if rates:
+                results.append(dataset(
+                    f"Child care rates programs list, {place['name']}", "dollars", ["Program", "Town", "Age group", "Rate", "Per"],
+                    [[names[rate.program_id_fk], _program_town(by_id[rate.program_id_fk]), rate.age_group, float(rate.amount), RATE_PERIODS[rate.period]]
+                     for rate in rates[:MAX_RATES]],
+                    None, "As each program lists them on its DHHS page, which may be out of date; a program can list several schedules "
+                    "(full or part time), each with its own rates. A few listed rates look like entry errors, such as a weekly rate in the "
+                    "thousands, so check unusual ones with the program." + (f" The first {MAX_RATES} of {len(rates)} rates." if len(rates) > MAX_RATES else ""),
+                ))
+        # Nearby towns: those of the other districts in its SAU
+        districts = location_service.get_districts(session, is_public=True)
+        sau_id = next((_field(d, "sau_id_fk") for d in districts if d.id == place["id"]), None)
+        if sau_id:
+            others = {d.id for d in districts if _field(d, "sau_id_fk") == sau_id} - {place["id"]}
+            own = {town.id for town in towns}
+            nearby = [town for town in location_service.get_towns(session) if set(town.district_ids or []) & others and town.id not in own]
+            if nearby:
+                results.append(dataset(
+                    f"Child care by town in SAU {sau_id}'s other districts, {latest.isoformat()}", "count", by_town_columns,
+                    _by_town(nearby, latest_by_town), None, CHILD_CARE_NOTE,
+                ))
+    for item in results:
+        item["source"] = _child_care_source(latest)
+    return results
+
+
 # -------------------- Ranking districts --------------------
 
 ORDERS = ("highest", "lowest")
@@ -1478,6 +1704,8 @@ COMPARE_MEASURES = {
                ("restraint", "Restraints per 1,000 students", "Restraints per 1,000 students"), ("incidents", "All serious incidents", "Serious safety incidents")],
     "efa": [("efa_students", "EFA students", "EFA students"), ("efa_students", "Share of public school students", "EFA students as a share of public school students")],
     "question_two": [("question_two", "Yes share", "Question 2 yes share"), ("question_two", "Adopted the school tax cap", "Adopted the school tax cap")],
+    "child_care": [("child_care_totals", "Licensed places", "Licensed child care places"), ("child_care_totals", "Infant places", "Infant places"),
+                   ("child_care_totals", "Toddler places", "Toddler places"), ("child_care_totals", "Programs", "Child care programs")],
 }
 MAX_COMPARE = 5
 
@@ -1554,6 +1782,7 @@ TOPIC_FUNCTIONS: Dict[str, Callable[[Session, dict], List[dict]]] = {
     "safety": _safety,
     "efa": _efa,
     "question_two": _question_two,
+    "child_care": _child_care,
 }
 
 

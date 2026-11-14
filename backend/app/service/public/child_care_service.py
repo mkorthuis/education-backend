@@ -194,6 +194,18 @@ class ChildCareService:
             logger.error(f"Error fetching child care programs: {e}")
             raise HTTPException(status_code=500, detail="Failed to fetch child care programs")
 
+    def get_hours(self, session: Session, program_ids: List[int]) -> List[ChildCareProgramHours]:
+        """The hours on the programs' latest pages, by program, schedule and day"""
+        return session.exec(select(ChildCareProgramHours).where(ChildCareProgramHours.program_id_fk.in_(program_ids))
+                            .order_by(ChildCareProgramHours.program_id_fk, ChildCareProgramHours.schedule,
+                                      ChildCareProgramHours.day_of_week, ChildCareProgramHours.opens)).all()
+
+    def get_rates(self, session: Session, program_ids: List[int]) -> List[ChildCareProgramRate]:
+        """The rates on the programs' latest pages, by program, schedule, age group and period"""
+        rates = session.exec(select(ChildCareProgramRate).where(ChildCareProgramRate.program_id_fk.in_(program_ids))).all()
+        return sorted(rates, key=lambda rate: (rate.program_id_fk, rate.schedule, list(AGE_GROUPS.values()).index(rate.age_group),
+                                               PERIODS.index(rate.period)))
+
     def get_program(self, session: Session, program_id: int, hide_hidden_email: bool = False) -> ChildCareProgramDetailGet:
         """One program with its hours, rates, features, licensing visits and every download's snapshot"""
         try:

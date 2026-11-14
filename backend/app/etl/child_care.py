@@ -489,10 +489,11 @@ def _last_updated(section: str) -> Optional[date]:
 
 
 def _page_list(value: Optional[str]) -> List[str]:
-    """One of Other Information's lists: some separate their values with ";", others with ","."""
+    """One of Other Information's lists: some separate their values with ";", others with ",". A comma
+    inside parentheses is part of a value: "CIVIL SERVICE DISCOUNT (POLICE, FIRE, EMERGENCY)"."""
     if not value:
         return []
-    return _list(value if ";" in value else value.replace(",", ";"))
+    return _list(value if ";" in value else re.sub(r",(?![^()]*\))", ";", value))
 
 
 def parse_page(page: str, headings: dict, name: str = "") -> dict:
@@ -742,6 +743,10 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
         conn, "child_care_program_feature_xref", ("program_id_fk", "feature_id_fk"),
         [(program_ids[key], feature_ids[feature]) for key, found in features.items() for feature in found],
         "program_id_fk = ANY(:ids)", {"ids": [program_ids[key] for key in latest]})
+    # Values no program lists any more (once read wrongly, say)
+    counts["child_care_feature"]["deleted"] = conn.execute(text(
+        "DELETE FROM child_care_feature f WHERE NOT EXISTS "
+        "(SELECT 1 FROM child_care_program_feature_xref x WHERE x.feature_id_fk = f.id)")).rowcount
 
     # What the programs' latest pages list replaces what they listed before
     counts["child_care_review_type"] = upsert_rows(

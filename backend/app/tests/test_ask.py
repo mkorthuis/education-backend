@@ -553,6 +553,38 @@ class AskTests(unittest.TestCase):
         self.assertEqual(answer["references"], [])
         self.assertEqual([source["site"] for source in answer["sources"]], ["wmur.com"])
 
+    def test_child_care_adds_up_a_districts_towns_with_each_program(self):
+        from app.service.internal.ask.data_tools import compare_places, find_places
+        totals, programs, rates, sau = get_data(self.session, "child_care", "district", 113)["datasets"]  # Conway
+        self.assertEqual(totals["rows"][0][:4], ["2026-11-13", 10, 10, 483])
+        self.assertIsNone(totals["page"])
+        self.assertTrue(all(item["source"]["site"] == "new-hampshire.my.site.com" for item in (totals, programs, rates, sau)))
+        self.assertEqual(sum(row[3] for row in programs["rows"]), 483)
+        self.assertIn(["Vaughan Learning Center", "Conway (North Conway)", "Licensed group program", 120, 8, 22, "6 weeks to 12 years"],
+                      [row[:7] for row in programs["rows"]])
+        self.assertEqual([row[0] for row in programs["rows"] if row[2] == "Licensed family home"], ["Little Busy Bodies Educational Child Care"])
+        self.assertTrue({row[0] for row in rates["rows"]} <= {row[0] for row in programs["rows"]})
+        # The other towns in SAU 9, none of which has a program
+        self.assertEqual(sorted(row[0] for row in sau["rows"]), ["Albany", "Bartlett", "Chatham", "Eaton", "Hart's Location", "Jackson"])
+        self.assertTrue(all(row[1] == 0 for row in sau["rows"]))
+        # A district with none gets zeros, and its SAU's towns, Conway first
+        jackson, nearby = get_data(self.session, "child_care", "district", 271)["datasets"]
+        self.assertEqual(jackson["rows"][0][:4], ["2026-11-13", 0, 0, 0])
+        self.assertEqual(nearby["rows"][0][:3], ["Conway", 10, 483])
+        # A district of several towns, by town
+        wentworth = next(place["id"] for place in find_places(self.session, "Governor Wentworth") if place["kind"] == "district")
+        totals, by_town = get_data(self.session, "child_care", "district", wentworth)["datasets"][:2]
+        self.assertGreater(len(by_town["rows"]), 1)
+        self.assertEqual(sum(row[2] for row in by_town["rows"]), totals["rows"][0][3])
+        # Statewide: by county, and listed weekly rates
+        state, counties, weekly = get_data(self.session, "child_care", "state")["datasets"]
+        self.assertEqual(sum(row[2] for row in counties["rows"]), state["rows"][0][3])
+        self.assertTrue(all(row[3] <= row[2] <= row[4] for row in weekly["rows"]))
+        with self.assertRaises(DataToolError):
+            get_data(self.session, "child_care", "school", 22510)
+        compared = compare_places(self.session, "child_care", [{"level": "district", "id": 113}, {"level": "state", "id": None}])
+        self.assertEqual(compared["datasets"][-1]["rows"][0][:2], ["Conway", 483])
+
     def test_safety_has_serious_incidents_restraints_and_bullying_by_kind(self):
         datasets = {d["key"] or d["title"].split(",")[0]: d for d in get_data(self.session, "safety", "state")["datasets"]}
         self.assertIn(["2021-22", 1416], [row[:2] for row in datasets["restraint"]["rows"]])

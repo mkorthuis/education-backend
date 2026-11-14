@@ -85,6 +85,11 @@ class ChildCareParseTests(unittest.TestCase):
         self.assertEqual(child_care.dereference(answer),
                          [{"Id": "a", "RecordType": {"Name": "Group"}}, {"Id": "b", "RecordType": {"Name": "Group"}}])
 
+    def test_a_page_list_keeps_commas_inside_parentheses(self):
+        self.assertEqual(child_care._page_list("CIVIL SERVICE DISCOUNT (POLICE, FIRE, EMERGENCY), MILITARY ASSISTANCE, FIRE"),
+                         ["CIVIL SERVICE DISCOUNT (POLICE, FIRE, EMERGENCY)", "MILITARY ASSISTANCE", "FIRE"])
+        self.assertEqual(child_care._page_list("FULL DAY; PART DAY (MORNINGS, AFTERNOONS)"), ["FULL DAY", "PART DAY (MORNINGS, AFTERNOONS)"])
+
     def test_the_youngest_age_comes_in_weeks_or_in_years_and_months(self):
         self.assertEqual(child_care.min_age_months({"age_wks_lo__c": 6}), 1.4)
         self.assertEqual(child_care.min_age_months({"age_yrs_lo__c": 2, "age_mos_lo__c": 8}), 32)
@@ -243,6 +248,13 @@ class ChildCareLoadTests(unittest.TestCase):
                     WHERE x.program_id_fk = p.id AND c.code = 'license_type')
             """)).scalar(), 3)  # three programs list no license type
             self.assertEqual(conn.execute(text("SELECT count(*) FROM child_care_inspection WHERE review_type_id_fk IS NULL")).scalar(), 0)
+            # Every value is one a program lists, read whole
+            self.assertEqual(conn.execute(text("""
+                SELECT count(*) FROM child_care_feature f
+                WHERE NOT EXISTS (SELECT 1 FROM child_care_program_feature_xref x WHERE x.feature_id_fk = f.id)
+            """)).scalar(), 0)
+            self.assertEqual(conn.execute(text(
+                "SELECT count(*) FROM child_care_feature WHERE name = 'CIVIL SERVICE DISCOUNT (POLICE, FIRE, EMERGENCY)'")).scalar(), 1)
 
     def test_a_town_in_two_districts_counts_toward_the_one_with_kindergarten(self):
         with engine.connect() as conn:
