@@ -7,6 +7,7 @@ page that shows the same data. The answer's charts and tables are built from the
 the server (Claude only names which dataset to show), so their numbers always come from the
 database.
 """
+import math
 from collections import defaultdict
 from functools import lru_cache
 from statistics import median, quantiles
@@ -18,6 +19,7 @@ from sqlmodel import Session
 
 from app.etl.core import load_config
 from app.service.inflation import in_dollars_of
+from app.service.public.acs_service import acs_service
 from app.service.public.assessment_service import assessment_service
 from app.service.public.child_care_service import child_care_service
 from app.service.public.class_size_service import class_size_service
@@ -31,11 +33,11 @@ from app.service.public.question_two_service import question_two_service
 from app.service.public.safety_service import safety_service
 from app.service.public.staff_service import staff_service
 
-TOPICS = ["enrollment", "test_scores", "graduation", "spending", "balance_sheet", "staff", "safety", "efa", "question_two", "child_care"]
+TOPICS = ["enrollment", "test_scores", "graduation", "spending", "balance_sheet", "staff", "safety", "efa", "question_two", "child_care", "census"]
 LEVELS = ["state", "district", "school"]
 
-# Topics each level has, with the site page that shows them. Question 2 and child care have no page
-# yet, so their datasets name their source instead.
+# Topics each level has, with the site page that shows them. Question 2, child care and the Census have
+# no page yet, so their datasets name their source instead.
 STATE_PAGES = {
     "enrollment": "/state/enrollment",
     "test_scores": "/state/academic",
@@ -1525,6 +1527,146 @@ def _child_care(session: Session, place: dict) -> List[dict]:
     return results
 
 
+# -------------------- Census (American Community Survey) --------------------
+
+CENSUS_SOURCE = {"label": "U.S. Census Bureau, American Community Survey 5-year estimates",
+                 "url": "https://www.census.gov/programs-surveys/acs", "site": "census.gov", "as_of": None}
+CENSUS_NOTE = (
+    "Census Bureau estimates from the American Community Survey, a sample survey pooled over five years. Each has a margin of "
+    "error at 90% confidence: the true figure is within the margin about 9 times in 10. Reliability rates an estimate by its "
+    "margin against its size: high, use with caution, or low (too uncertain to rely on); small towns often have wide margins. "
+    "A change between the two five-year periods is real only where the dataset says it's significant."
+)
+# The summary measures, one dataset per unit: (the measures' unit, dataset key, what the title calls them, the dataset's unit)
+CENSUS_GROUPS = [
+    ("count", "census_counts", "people, households and homes", "count"),
+    ("percent", "census_shares", "shares of people, families and homes", "percent"),
+    ("dollars", "census_dollars", "incomes, home values and rents", "dollars"),
+    (None, "census_other", "median age, income inequality and the age of homes", "number"),  # years, an index, a year
+]
+CENSUS_BY_TOWN = ["population", "children_under_18", "median_household_income", "under_18_poverty_pct", "seasonal_pct", "median_home_value"]
+RELIABILITY = {"high": "High", "caution": "Use with caution", "low": "Low"}
+
+
+def _census_releases(session: Session) -> tuple:
+    """The latest release, and the latest one before it that doesn't overlap it (Census advises against
+    comparing overlapping five-year periods)."""
+    releases = acs_service.get_releases(session)
+    if not releases:
+        return None, None
+    latest = releases[-1]
+    return latest, next((r for r in reversed(releases) if r.year <= latest.year - 5), None)
+
+
+def _census_group(unit: str):
+    return next((group for group in CENSUS_GROUPS if group[0] == unit), CENSUS_GROUPS[-1])
+
+
+def _earlier(measure: dict, unit: str, earlier, latest) -> tuple:
+    """The earlier release's value and margin, in the latest release's dollars for a dollar figure, and the
+    change and whether it's significant at 90% (Census's test: the change is larger than the two margins combined)."""
+    compare = measure.get("compare")
+    if not compare or compare["value"] is None:
+        return None, None, None, None
+    value, moe = compare["value"], compare["moe"]
+    if unit == "dollars":
+        value, moe = in_dollars_of(value, earlier.dollars_year, latest.dollars_year), in_dollars_of(moe, earlier.dollars_year, latest.dollars_year)
+    if measure["value"] is None:
+        return value, moe, None, None
+    # The change, to the estimate's own precision (0.4389 for a Gini index, 60.5 for an age, 1980 for a year)
+    places = max(len(str(number).partition(".")[2]) for number in (measure["value"], value))
+    change = round(measure["value"] - value, places) if places else round(measure["value"] - value)
+    significant = None if measure["moe"] is None or moe is None else abs(change) > math.sqrt(measure["moe"] ** 2 + moe ** 2)
+    return value, moe, change, significant
+
+
+def _census(session: Session, place: dict) -> List[dict]:
+    """Census Bureau estimates for a district's area (Census maps every school district) or the state: the
+    summary measures, each with its margin of error and reliability, for the latest five years and the
+    five before, with whether the change is significant; and for a district of several towns, key
+    measures by town. There's no page for these on the site yet, so each dataset carries its source."""
+    latest, earlier = _census_releases(session)
+    if latest is None:
+        return []
+    level, place_id = place["level"], place["id"] if place["level"] == "district" else None
+    rows = acs_service.get_summary(session, level, release=latest.year, compare_to=earlier.year if earlier else None, place_id=place_id)
+    if not rows:
+        return []
+    measures = rows[0].measures
+    by_group: Dict[str, list] = defaultdict(list)
+    for m in acs_service.get_measures(session):
+        measure = measures[m.name] if isinstance(measures[m.name], dict) else measures[m.name].model_dump()
+        before, before_moe, change, significant = _earlier(measure, m.unit, earlier, latest) if earlier else (None, None, None, None)
+        by_group[_census_group(m.unit)[1]].append([
+            m.label, measure["value"], measure["moe"], RELIABILITY.get(measure["reliability"]), before, change,
+            None if significant is None else _yes_no(significant), m.description])
+    results = []
+    for _, key, what, unit in CENSUS_GROUPS:
+        if not by_group[key]:
+            continue
+        before = f"{earlier.period}" + (f" in {latest.dollars_year} dollars" if unit == "dollars" else "") if earlier else "Earlier"
+        results.append(dataset(
+            f"Census estimates of {what}, {place['name']}", unit,
+            ["Measure", latest.period, "Margin of error (±)", "Reliability", before, "Change", "Change is significant", "What it measures"],
+            by_group[key], None,
+            CENSUS_NOTE + (f" Dollars are in each period's last year's dollars; the {earlier.period} figures are shown in "
+                           f"{latest.dollars_year} dollars, adjusted for inflation as the site does." if unit == "dollars" and earlier else "")
+            + (" Changes in shares are in percentage points." if unit == "percent" else ""),
+            key=key,
+        ))
+    if level == "district":
+        towns = acs_service.get_summary(session, "town", release=latest.year, district_id=place["id"])
+        if len(towns) > 1:
+            labels = {m.name: (m.label, m.unit) for m in acs_service.get_measures(session)}
+            rows = []
+            for town in sorted(towns, key=lambda t: t.town_name):
+                values = {name: (m if isinstance(m, dict) else m.model_dump()) for name, m in town.measures.items()}
+                shaky = [f"{labels[name][0]} ({RELIABILITY[values[name]['reliability']].lower()})" for name in CENSUS_BY_TOWN
+                         if values[name]["reliability"] in ("caution", "low")]
+                rows.append([town.town_name, *(values[name]["value"] for name in CENSUS_BY_TOWN), "; ".join(shaky) or None])
+            results.append(dataset(
+                f"Census estimates by town, {latest.period}, {place['name']}", "count",
+                ["Town", *(labels[name][0] for name in CENSUS_BY_TOWN), "Less reliable figures"], rows, None,
+                CENSUS_NOTE + " Margins of error for each town are in that town's own figures.",
+                {labels[name][0]: labels[name][1] for name in CENSUS_BY_TOWN},
+            ))
+    for item in results:
+        item["source"] = CENSUS_SOURCE
+    return results
+
+
+def _compare_census(session: Session, places: List[dict]) -> dict:
+    """The latest Census summary measures for several places side by side, one dataset per unit: each
+    place's estimate and margin of error, with the less reliable ones named in the note."""
+    latest, _ = _census_releases(session)
+    found = []
+    for place in places:
+        rows = acs_service.get_summary(session, place["level"], release=latest.year,
+                                       place_id=place["id"] if place["level"] == "district" else None) if latest else []
+        if not rows:
+            raise DataToolError(f"The Census has no estimates for {place['name']}.")
+        name = "New Hampshire" if place["level"] == "state" else place["name"]
+        found.append((name, {k: (m if isinstance(m, dict) else m.model_dump()) for k, m in rows[0].measures.items()}))
+    by_group: Dict[str, list] = defaultdict(list)
+    shaky: Dict[str, list] = defaultdict(list)
+    for m in acs_service.get_measures(session):
+        key = _census_group(m.unit)[1]
+        by_group[key].append([m.label, *(value for _, values in found for value in (values[m.name]["value"], values[m.name]["moe"]))])
+        shaky[key] += [f"{name}: {m.label} ({RELIABILITY[values[m.name]['reliability']].lower()})"
+                       for name, values in found if values[m.name]["reliability"] in ("caution", "low")]
+    names = [name for name, _ in found]
+    datasets = []
+    for _, key, what, unit in CENSUS_GROUPS:
+        if by_group[key]:
+            datasets.append(dataset(
+                f"Census estimates of {what}, {latest.period}: {', '.join(names)}", unit,
+                ["Measure", *(column for name in names for column in (name, f"{name} ±"))], by_group[key], None,
+                CENSUS_NOTE + (f" Less reliable: {'; '.join(shaky[key])}." if shaky[key] else ""),
+            ))
+            datasets[-1]["source"] = CENSUS_SOURCE
+    return {"places": names, "datasets": datasets}
+
+
 # -------------------- Ranking districts --------------------
 
 ORDERS = ("highest", "lowest")
@@ -1726,10 +1868,15 @@ MAX_COMPARE = 5
 def compare_places(session: Session, topic: str, places: List[dict]) -> dict:
     """The same measures for several places side by side: each measure by year with a column per
     place, and the latest year shared by all as one table with a row per place."""
-    if topic not in COMPARE_MEASURES:
-        raise DataToolError(f"Comparisons cover {', '.join(COMPARE_MEASURES)}; for {topic}, call get_data for each place.")
+    if topic not in COMPARE_MEASURES and topic != "census":
+        raise DataToolError(f"Comparisons cover {', '.join([*COMPARE_MEASURES, 'census'])}; for {topic}, call get_data for each place.")
     if not 2 <= len(places) <= MAX_COMPARE:
         raise DataToolError(f"Compare 2 to {MAX_COMPARE} places.")
+    if topic == "census":
+        found = [_place(session, item.get("level"), item.get("id")) for item in places]
+        if any(place["level"] == "school" for place in found):
+            raise DataToolError("Census estimates are for districts and the state, not individual schools; compare their districts.")
+        return _compare_census(session, found)
     found = []
     for item in places:
         place = _place(session, item.get("level"), item.get("id"))
@@ -1796,6 +1943,7 @@ TOPIC_FUNCTIONS: Dict[str, Callable[[Session, dict], List[dict]]] = {
     "efa": _efa,
     "question_two": _question_two,
     "child_care": _child_care,
+    "census": _census,
 }
 
 

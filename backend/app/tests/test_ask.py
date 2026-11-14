@@ -593,6 +593,38 @@ class AskTests(unittest.TestCase):
         compared = compare_places(self.session, "child_care", [{"level": "district", "id": 113}, {"level": "state", "id": None}])
         self.assertEqual(compared["datasets"][-1]["rows"][0][:2], ["Conway", 483])
 
+    def test_census_gives_each_estimate_with_its_margin_and_a_fair_comparison(self):
+        from app.service.inflation import in_dollars_of
+        from app.service.internal.ask.data_tools import compare_places, find_places
+        counts, shares, dollars, other = get_data(self.session, "census", "district", 271)["datasets"]  # Jackson
+        self.assertEqual(counts["rows"][0][:7], ["Population", 897, 188, "High", 891, 6, "No"])
+        self.assertEqual(counts["columns"][1:5], ["2020-2024", "Margin of error (±)", "Reliability", "2015-2019"])
+        self.assertIsNone(counts["page"])
+        self.assertEqual(counts["source"]["site"], "census.gov")
+        self.assertEqual((counts["unit"], shares["unit"], dollars["unit"]), ("count", "percent", "dollars"))
+        # 2015-2019 dollars are shown in 2024 dollars, and the change is tested against both margins
+        income = next(row for row in dollars["rows"] if row[0] == "Median household income")
+        self.assertEqual(dollars["columns"][4], "2015-2019 in 2024 dollars")
+        self.assertEqual(income[:7], ["Median household income", 117986, 46020, "Use with caution", in_dollars_of(66339, 2019, 2024),
+                                      117986 - in_dollars_of(66339, 2019, 2024), "No"])
+        self.assertEqual(len(counts["rows"]) + len(shares["rows"]) + len(dollars["rows"]) + len(other["rows"]), 40)
+        # A district of several towns, by town, naming its less reliable figures
+        wentworth = next(place["id"] for place in find_places(self.session, "Governor Wentworth") if place["kind"] == "district")
+        by_town = get_data(self.session, "census", "district", wentworth)["datasets"][-1]
+        self.assertGreater(len(by_town["rows"]), 1)
+        self.assertEqual(by_town["units"]["Median household income"], "dollars")
+        self.assertTrue(any(row[-1] and "(low)" in row[-1] for row in by_town["rows"]))
+        # The state, an academy the Census doesn't map, and a school
+        self.assertEqual(get_data(self.session, "census", "state")["datasets"][0]["rows"][0][:4], ["Population", 1394868, 0, "High"])
+        self.assertEqual(get_data(self.session, "census", "district", 999)["datasets"], [])
+        with self.assertRaises(DataToolError):
+            get_data(self.session, "census", "school", 22510)
+        # Places side by side, each estimate with its margin
+        compared = compare_places(self.session, "census", [{"level": "district", "id": 271}, {"level": "district", "id": 113}])
+        self.assertEqual(compared["datasets"][0]["columns"], ["Measure", "Jackson", "Jackson ±", "Conway", "Conway ±"])
+        self.assertEqual(compared["datasets"][0]["rows"][0], ["Population", 897, 188, 10141, 52])
+        self.assertIn("Jackson: Children under 18 (low)", compared["datasets"][0]["note"])
+
     def test_safety_has_serious_incidents_restraints_and_bullying_by_kind(self):
         datasets = {d["key"] or d["title"].split(",")[0]: d for d in get_data(self.session, "safety", "state")["datasets"]}
         self.assertIn(["2021-22", 1416], [row[:2] for row in datasets["restraint"]["rows"]])
