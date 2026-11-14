@@ -78,6 +78,11 @@ class Region(BaseMixin, table=True):
     name: str = Field(max_length=255)
     schools: List["School"] = Relationship(back_populates="region")
 
+class County(BaseMixin, table=True):
+    """New Hampshire's ten counties. Loaded with child care for now (child_care_config.yaml)."""
+    __tablename__ = "county"
+    name: str = Field(max_length=50)
+
 class SchoolType(BaseMixin, table=True):
     __tablename__ = "school_type"
     name: str = Field(max_length=255)

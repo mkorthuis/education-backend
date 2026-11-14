@@ -1,5 +1,5 @@
 from .location import (
-    District, School, SAU, SAUStaff, Region, SchoolType, Grade, Town,
+    District, School, SAU, SAUStaff, Region, County, SchoolType, Grade, Town,
     DistrictGradeLink, SchoolGradeLink, TownServedLink, TownDistrictLink
 )
 from .finance import (
@@ -31,3 +31,9 @@ from .reference import (
 )
 from .ask import AskQuestion
 from .question_two import DistrictQuestionTwo, SauQuestionTwo, TownQuestionTwo
+from .child_care import (
+    ChildCareProgramType, ChildCareQualityRating, ChildCareRegion, ChildCareLicenseStatus, ChildCareAvailability,
+    ChildCareReviewType, ChildCareFeatureCategory, ChildCareFeature, ChildCareProgram, ChildCareProgramSnapshot,
+    ChildCareProgramHours, ChildCareProgramRate, ChildCareProgramFeatureLink, ChildCareInspection,
+    TownChildCare, DistrictChildCare, StateChildCare
+)

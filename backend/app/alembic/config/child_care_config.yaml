@@ -1,0 +1,104 @@
+# Licensed child care programs, from NH DHHS's Child Care Search:
+# https://new-hampshire.my.site.com/nhccis/NH_ChildCareSearch
+#
+# `python -m app.etl fetch child-care` asks the search page for two statewide lists and saves both, as
+# the page returns them, to assets/child-care/child-care-<date>.json:
+#
+# - providers: what the page's "Download Provider Results" link downloads (ProviderResults.csv), one
+#   record per program: name, licensee, contact, address, type, license number and dates, licensed
+#   capacity and age range, the license's program types, quality rating, Child Care Scholarship
+#   enrollment. The CSV leaves out the quality rating, scholarship participation and record id.
+# - search: the search's own results with no filters: the age groups a program serves, its infant and
+#   toddler capacity, license status, map coordinates and Preventive and Protective Care enrollment.
+#   It also lists Residential Child Care Programs (homes for youth), which aren't child care and aren't
+#   loaded.
+#
+# Both are Salesforce Visualforce remoting calls (POST to remote_url) that need the page's tokens, so
+# fetch opens the page first. The site isn't behind bot protection.
+#
+# Then it reads each program's own page (detail_url): vacancies by age group, availability, hours,
+# rates, Head Start, its main contact, whether it hides its email, inspections and features. Each page
+# is saved trimmed to its content, to child-care-<date>-pages.json.gz, and parsed when loaded. The pages
+# are read one every pages.delay_seconds (about 40 minutes for all of them). The site shows a browser a
+# reCAPTCHA after more than 5 pages; it's only enforced in the browser, and reading them anyway, slowly,
+# was a deliberate choice (2026-11-13). An interrupted fetch keeps the day's pages read so far; fetch
+# again the same day to read the rest.
+#
+# The portal shows only the present, so history comes from saved downloads. To add one: fetch, add
+# its date to `downloads`, then `python -m app.etl load child-care` (it loads every download below).
+directory: "../assets/child-care"
+search_page: "https://new-hampshire.my.site.com/nhccis/NH_ChildCareSearch"
+remote_url: "https://new-hampshire.my.site.com/nhccis/apexremote"
+detail_url: "https://new-hampshire.my.site.com/nhccis/NH_childcaresearchaccountdetail?id={id}"
+controller: NH_ChildCareSearchClass
+pages:
+  delay_seconds: 2
+
+downloads:
+  - 2026-11-13
+
+# The search's "Type of Care", by the id the program_type table gives it
+program_types:
+  1: { name: Licensed Group Child Care Program, is_licensed: true }
+  2: { name: Licensed Family Child Care Program, is_licensed: true }
+  3: { name: License Exempt Family Child Care Program, is_licensed: false }
+  4: { name: License Exempt Facility, is_licensed: false }
+excluded_program_types:
+  - Residential Child Care Program
+
+# The fixed lists, by the id each value gets in its table. A value that isn't listed stops the load, so a
+# change at DHHS gets noticed. (Review types and Other Information's values are added as they appear.)
+quality_ratings:  # child_care_quality_rating: the older QRIS rating, lowest first
+  1: Licensed
+  2: Licensed Plus
+  3: Accreditation
+regions:  # child_care_region: DHHS's child care regions, by their number ("Region 4 Greater Derry and Manchester")
+  1: Greater Monadnock, Greater Sullivan and Upper County
+  2: Capitol Area
+  3: Greater Nashua
+  4: Greater Derry and Manchester
+  5: Central NH/Lakes Region
+  6: Strafford County and Seacoast Region
+  7: North Country and Carroll County
+counties:  # county
+  1: Belknap
+  2: Carroll
+  3: Cheshire
+  4: Coos
+  5: Grafton
+  6: Hillsborough
+  7: Merrimack
+  8: Rockingham
+  9: Strafford
+  10: Sullivan
+license_statuses:  # child_care_license_status
+  1: Active
+  2: Permit Issued
+availabilities:  # child_care_availability
+  1: Accepting Children
+  2: Accepting Children on Wait List
+  3: Not Accepting Children
+# child_care_feature_category: the lists programs have. code names one in queries; name is the heading a
+# program's page gives its list under Other Information (in capitals there). license_type is the license's
+# program types, from the provider list.
+feature_categories:
+  1: { code: license_type, name: License Type }
+  2: { code: financial_assistance, name: Type of Financial Assistance }
+  3: { code: environment, name: Environment }
+  4: { code: transportation, name: Transportation }
+  5: { code: schedule, name: Available Schedule Options }
+  6: { code: special_needs, name: Special Needs }
+  7: { code: language, name: Language Spoken by Staff }
+  8: { code: meals, name: Meals }
+  9: { code: special_skills, name: Special Skills }
+# Other Information's lists that aren't loaded: its type of care is the program's type, already loaded
+skipped_page_lists:
+  - Type of Care
+
+# Program cities that aren't town names and that location.TownMatcher's villages and one-word
+# matching ("North Conway" -> Conway) don't find. Any other city that matches no town stops the load.
+town_aliases:
+  hillsboro: Hillsborough
+  lochmere: Tilton
+  etna: Hanover
+  spofford: Chesterfield
