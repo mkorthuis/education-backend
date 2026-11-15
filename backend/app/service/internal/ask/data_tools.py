@@ -20,6 +20,7 @@ from sqlmodel import Session
 from app.etl.core import load_config
 from app.service.inflation import in_dollars_of
 from app.service.public.acs_service import acs_service
+from app.service.public.adequacy_aid_service import adequacy_aid_service
 from app.service.public.assessment_service import assessment_service
 from app.service.public.child_care_service import child_care_service
 from app.service.public.class_size_service import class_size_service
@@ -31,13 +32,14 @@ from app.service.public.measurement_service import measurement_service
 from app.service.public.outcome_service import outcome_service
 from app.service.public.question_two_service import question_two_service
 from app.service.public.safety_service import safety_service
+from app.service.public.special_education_aid_service import special_education_aid_service
 from app.service.public.staff_service import staff_service
 
-TOPICS = ["enrollment", "test_scores", "graduation", "spending", "balance_sheet", "staff", "safety", "efa", "question_two", "child_care", "census"]
+TOPICS = ["enrollment", "test_scores", "graduation", "spending", "balance_sheet", "staff", "safety", "efa", "question_two", "child_care", "census", "adequacy_aid", "special_education_aid"]
 LEVELS = ["state", "district", "school"]
 
-# Topics each level has, with the site page that shows them. Question 2, child care and the Census have
-# no page yet, so their datasets name their source instead.
+# Topics each level has, with the site page that shows them. Question 2, child care, the Census, adequacy
+# aid and special education aid have no page yet, so their datasets name their source instead.
 STATE_PAGES = {
     "enrollment": "/state/enrollment",
     "test_scores": "/state/academic",
@@ -1667,6 +1669,215 @@ def _compare_census(session: Session, places: List[dict]) -> dict:
     return {"places": names, "datasets": datasets}
 
 
+# -------------------- State adequacy aid --------------------
+
+ADEQUACY_NOTE = (
+    "NH DOE's adequate education grant calculation. For each town the state sets a cost of an adequate education for its "
+    "resident students, counted the year before: a base amount per student plus extra for students eligible for free or "
+    "reduced-price meals, in special education or learning English. It subtracts the statewide education property tax (SWEPT) "
+    "the town raises, which stays with the town's schools, and pays the rest as the adequacy grant, never below $0, with added "
+    "aid and hold-harmless grants in some years. Total state aid is the grant plus the SWEPT. Fiscal years run July to June "
+    "(FY2027 is 2026-27)."
+)
+# A town's calculation, as (column, summary field)
+ADEQUACY_STUDENTS = [("Resident students", "resident_adm"), ("Free or reduced-price meal students", "frl_adm"),
+                     ("Special education students", "sped_adm"), ("English learners", "ell_adm")]
+ADEQUACY_DOLLARS = [
+    ("Base aid", "base_aid"), ("Free or reduced-price meal aid", "frl_aid"), ("Special education aid", "sped_aid"),
+    ("English learner aid", "ell_aid"), ("Home education aid", "home_education_aid"), ("Third-grade reading aid", "grade3_reading_aid"),
+    ("Cost of an adequate education", "total_cost"), ("SWEPT", "swept"), ("SWEPT above the cost", "swept_above_cost"),
+    ("Extraordinary need grant", "extraordinary_need_grant"), ("Fiscal capacity disparity aid", "fiscal_capacity_disparity_aid"),
+    ("Other added aid", "other_added_aid"), ("Preliminary grant", "preliminary_grant"), ("Hold-harmless grants", "hold_harmless"),
+    ("Adequacy grant", "adequacy_grant"), ("Total state aid", "total_state_aid"), ("Equalized valuation", "equalized_valuation"),
+]
+ADEQUACY_RATES = [("Base aid per student", "base_per_pupil"), ("Extra per free or reduced-price meal student", "frl_per_pupil"),
+                  ("Extra per special education student", "sped_per_pupil"), ("Extra per English learner", "ell_per_pupil"),
+                  ("Extra per third grader below proficient in reading", "grade3_reading_per_pupil"),
+                  ("SWEPT rate per $1,000 of property value", "swept_rate"), ("SWEPT raised statewide", "swept_statewide")]
+ADEQUACY_TOWN_YEARS = 2  # a district of several towns: each town's latest years
+
+
+def _fiscal_year(year: int) -> str:
+    return f"FY{year}"
+
+
+def _status(row) -> str:
+    return f"Estimate ({_field(row, 'as_of'):%B} {_field(row, 'as_of').day}, {_field(row, 'as_of').year})" \
+        if _field(row, "status") == "estimate" else "Final"
+
+
+def _dollars(value) -> Optional[float]:
+    return None if value is None else round(value)
+
+
+def _adequacy_source(session: Session) -> dict:
+    """The DOE's explanation of the latest year, shown as the answer's source."""
+    latest = adequacy_aid_service.get_years(session)[-1]
+    return {"label": f"NH Department of Education, adequacy aid calculation and Adequacy Grants Explained, FY{latest.fiscal_year}",
+            "url": latest.explained_url or latest.summary_url, "site": "education.nh.gov", "as_of": latest.as_of.isoformat()}
+
+
+def _adequacy_rates(session: Session, years: List[int]) -> dict:
+    rates = []
+    for year in years:
+        values = {p.code: p.value for p in adequacy_aid_service.get_formula(session, year).parameters}
+        rates.append([_fiscal_year(year), *(_dollars(values.get(code)) if code == "swept_statewide" else values.get(code)
+                                            for _, code in ADEQUACY_RATES)])
+    return dataset(
+        "Adequacy aid rates by year", "dollars", ["Fiscal year", *(column for column, _ in ADEQUACY_RATES)], rates, None,
+        "The amounts the law sets per student each year, and the statewide education property tax (SWEPT): its rate per $1,000 "
+        "of equalized property value and what it raises statewide. Third-grade reading aid ended after FY2023.",
+    )
+
+
+def _adequacy_aid(session: Session, place: dict) -> List[dict]:
+    """NH DOE's adequacy aid: for a district, its grant, SWEPT and total state aid by year beside the grant it
+    reported, and its towns' calculations; for the state, the totals and how many towns get a grant; each
+    year's rates. There's no page for these on the site yet, so each dataset carries its source."""
+    years = adequacy_aid_service.get_years(session)
+    if not years:
+        return []
+    if place["level"] == "state":
+        towns = adequacy_aid_service.get_towns(session)
+        granted, above = defaultdict(int), defaultdict(int)
+        for town in towns:
+            granted[town.fiscal_year] += bool(town.adequacy_grant)
+            above[town.fiscal_year] += bool(town.swept_above_cost)
+        results = [dataset(
+            "State adequacy aid by year, statewide", "dollars",
+            ["Fiscal year", "School year", "Status", "Resident students", "Cost of an adequate education", "SWEPT", "Adequacy grants",
+             "Total state aid", "Towns with a grant", "Towns whose SWEPT is more than their cost"],
+            [[_fiscal_year(row.fiscal_year), row.school_year, _status(row), _dollars(row.values.get("resident_adm_base")),
+              _dollars(row.values.get("total_cost_adequate_education")), _dollars(row.swept), _dollars(row.adequacy_grant),
+              _dollars(row.total_state_aid), granted[row.fiscal_year], above[row.fiscal_year]] for row in adequacy_aid_service.get_state(session)],
+            None, ADEQUACY_NOTE + " Statewide figures are NH DOE's own totals.",
+            {"Resident students": "count", "Towns with a grant": "count", "Towns whose SWEPT is more than their cost": "count"},
+            key="adequacy_totals",
+        )]
+    else:
+        districts = adequacy_aid_service.get_districts(session, district_id=place["id"])
+        if not districts:
+            return []
+        results = [dataset(
+            f"State adequacy aid by year, {place['name']}", "dollars",
+            ["Fiscal year", "School year", "Status", "Adequacy grant", "SWEPT", "Total state aid", "Grant the district reported"],
+            [[_fiscal_year(d.fiscal_year), d.school_year, _status(d), _dollars(d.adequacy_grant), _dollars(d.swept_retained),
+              _dollars(d.total_state_aid), _dollars(d.reported_adequacy_grant)] for d in districts],
+            None, ADEQUACY_NOTE + " The grant the district reported is the \"Adequacy Aid Grant\" in its own annual financial report "
+            "(DOE-25), which comes out after the year ends." + (" A town in more than one district (a cooperative) splits its grant and "
+            "SWEPT among them; the district's figures are its share." if any(d.member_towns > 1 for d in districts) else ""),
+            key="adequacy_totals",
+        )]
+        towns = adequacy_aid_service.get_towns(session, district_id=place["id"])
+        names = sorted({t.town_name for t in towns})
+        if len(names) > 1:
+            latest = sorted({t.fiscal_year for t in towns})[-ADEQUACY_TOWN_YEARS:]
+            towns = [t for t in towns if t.fiscal_year in latest]
+        rows = [[*([t.town_name] if len(names) > 1 else []), _fiscal_year(t.fiscal_year),
+                 *(_round(getattr(t, field), 1) for _, field in ADEQUACY_STUDENTS),
+                 *(_dollars(getattr(t, field)) for _, field in ADEQUACY_DOLLARS)]
+                for t in sorted(towns, key=lambda t: (t.town_name, t.fiscal_year))]
+        results.append(dataset(
+            f"How the adequacy grant is figured, {', '.join(names)}" + (f", FY{latest[0]}-FY{latest[-1]}" if len(names) > 1 else ", by year"),
+            "dollars", [*(["Town"] if len(names) > 1 else []), "Fiscal year", *(c for c, _ in ADEQUACY_STUDENTS), *(c for c, _ in ADEQUACY_DOLLARS)],
+            rows, None,
+            ADEQUACY_NOTE + " Students are average daily membership, so they can be fractions. The cost is base aid plus the extra "
+            "aid; the preliminary grant is the cost less SWEPT plus added aid, never below $0; the adequacy grant adds any hold-harmless "
+            "grants. Other added aid is relief aid (FY2022-FY2023), stabilization grants (through FY2023) or FY2021's additional aid. "
+            "A blank is a part the DOE didn't use that year.",
+            {column: "count" for column, _ in ADEQUACY_STUDENTS},
+        ))
+    results.append(_adequacy_rates(session, [y.fiscal_year for y in years]))
+    for item in results:
+        item["source"] = _adequacy_source(session)
+    return results
+
+
+# -------------------- Special education aid --------------------
+
+SPECIAL_EDUCATION_AID_NOTE = (
+    "NH DOE's special education aid (catastrophic aid until 2017). A district pays each high-cost student's special education "
+    "costs up to a threshold, a multiple of the state average cost per pupil; the state pays a share of the costs above it, "
+    "cut by the year's proration when the appropriation falls short. Aid in a fiscal year repays the school year before "
+    "(FY2026 repays 2024-25 costs). The DOE gives no student counts by district."
+)
+SPECIAL_EDUCATION_TOP = 10  # statewide: the districts with the most aid
+
+
+def _special_education_source(years: list) -> dict:
+    return {"label": "NH Department of Education, special education aid by district (Other State Aid Programs)",
+            "url": years[-1].page_url, "site": "education.nh.gov", "as_of": None}
+
+
+def _shares(year) -> str:
+    """The state's share of each band above the threshold: "80% from 3.5 to 10 times; 100% over 10 times"."""
+    return "; ".join(f"{b.state_share:.0%} " + (f"from {b.from_multiple:g} to {b.to_multiple:g} times" if b.to_multiple else f"over {b.from_multiple:g} times")
+                     for b in year.bands if b.state_share > 0)
+
+
+def _special_education_aid(session: Session, place: dict) -> List[dict]:
+    """Special education aid: for a district, its costs, entitlement and aid in each year of the DOE's files beside what
+    it reported; for the state, the totals and the districts with the most aid; and each year's rules. There's no
+    page for these on the site yet, so each dataset carries its source."""
+    years = special_education_aid_service.get_years(session)
+    if not years:
+        return []
+    rules = dataset(
+        "How special education aid worked each year", "dollars",
+        ["Fiscal year", "Costs from", "State average cost per pupil", "Threshold per student", "State's share above it", "Appropriation",
+         "Proration", "Districts with aid"],
+        [[_fiscal_year(y.fiscal_year), y.cost_school_year, y.state_average_cost, y.threshold_cost, _shares(y), y.appropriation,
+          _round(100 * y.proration_rate, 2), y.districts] for y in years],
+        None, SPECIAL_EDUCATION_AID_NOTE + " The threshold is the cost per student where state aid begins. Proration is the share "
+        "of each district's entitlement the state paid; 100 means paid in full. A blank appropriation is one the DOE's file doesn't give.",
+        {"Proration": "percent", "Districts with aid": "count"},
+    )
+    if place["level"] == "state":
+        results = [dataset(
+            "Special education aid by year, statewide", "dollars",
+            ["Fiscal year", "Costs from", "Students reported", "Total cost", "Entitlement", "Aid paid"],
+            [[_fiscal_year(y.fiscal_year), y.cost_school_year, y.students_reported, _dollars(y.total_cost), _dollars(y.entitlement),
+              _dollars(y.aid_paid)] for y in years],
+            None, SPECIAL_EDUCATION_AID_NOTE + " Total cost is every reported high-cost student's special education costs; "
+            "entitlement is what the formula gives before proration.",
+            {"Students reported": "count"}, key="special_education_aid",
+        ), rules]
+        latest = years[-1].fiscal_year
+        top = sorted(special_education_aid_service.get_districts(session, year=latest), key=lambda d: -d.aid_paid)[:SPECIAL_EDUCATION_TOP]
+        results.append(dataset(
+            f"Districts with the most special education aid, FY{latest}", "dollars",
+            ["District", "Total cost", "Entitlement", "Aid paid", "Share of cost the state paid"],
+            [[d.district_name, _dollars(d.total_cost), _dollars(d.entitlement), _dollars(d.aid_paid), _share(d.aid_paid, d.total_cost)]
+             for d in top],
+            None, SPECIAL_EDUCATION_AID_NOTE, {"Share of cost the state paid": "percent"},
+        ))
+    else:
+        found = {d.fiscal_year: d for d in special_education_aid_service.get_districts(session, district_id=place["id"])}
+        missing = [_fiscal_year(y.fiscal_year) for y in years if y.fiscal_year not in found]
+        rows = []
+        for y in years:
+            d = found.get(y.fiscal_year)
+            rows.append([_fiscal_year(y.fiscal_year), y.cost_school_year, _yes_no(d is not None)] + (
+                [_dollars(d.total_cost), _dollars(d.cost_below_threshold), _dollars(d.cost_above_threshold), _dollars(d.cost_over_10_times),
+                 _dollars(d.entitlement), _dollars(d.aid_paid), _share(d.aid_paid, d.total_cost), _dollars(d.reported_aid)]
+                if d else [None, None, None, None, None, 0, None, None]))
+        results = [dataset(
+            f"Special education aid by year, {place['name']}", "dollars",
+            ["Fiscal year", "Costs from", "In the DOE's list", "Total cost", "Paid by the district below the threshold",
+             "Costs above the threshold", "Costs over 10 times the state average", "Entitlement", "Aid paid",
+             "Share of cost the state paid", "Aid the district reported"],
+            rows, None, SPECIAL_EDUCATION_AID_NOTE + " Total cost is the district's costs for its students over the threshold; the "
+            "district pays the part below the threshold for each student in full, and the entitlement is the state's share of the "
+            "rest before proration. Aid the district reported is the special education aid in its own financial report (DOE-25), "
+            "which comes out after the year ends." + (f" Not in the DOE's list in {', '.join(missing)}: the district claimed no "
+            "costs over the threshold those years, so it got no aid." if missing else ""),
+            {"Share of cost the state paid": "percent"}, key="special_education_aid",
+        ), rules]
+    for item in results:
+        item["source"] = _special_education_source(years)
+    return results
+
+
 # -------------------- Ranking districts --------------------
 
 ORDERS = ("highest", "lowest")
@@ -1859,6 +2070,9 @@ COMPARE_MEASURES = {
                ("restraint", "Restraints per 1,000 students", "Restraints per 1,000 students"), ("incidents", "All serious incidents", "Serious safety incidents")],
     "efa": [("efa_students", "EFA students", "EFA students"), ("efa_students", "Share of public school students", "EFA students as a share of public school students")],
     "question_two": [("question_two", "Yes share", "Question 2 yes share"), ("question_two", "Adopted the school tax cap", "Adopted the school tax cap")],
+    "adequacy_aid": [("adequacy_totals", "Adequacy grant", "Adequacy grant"), ("adequacy_totals", "Total state aid", "Total state aid (grant plus SWEPT)")],
+    "special_education_aid": [("special_education_aid", "Aid paid", "Special education aid paid"),
+                              ("special_education_aid", "Total cost", "Costs of high-cost special education students")],
     "child_care": [("child_care_totals", "Licensed places", "Licensed child care places"), ("child_care_totals", "Infant places", "Infant places"),
                    ("child_care_totals", "Toddler places", "Toddler places"), ("child_care_totals", "Programs", "Child care programs")],
 }
@@ -1944,6 +2158,8 @@ TOPIC_FUNCTIONS: Dict[str, Callable[[Session, dict], List[dict]]] = {
     "question_two": _question_two,
     "child_care": _child_care,
     "census": _census,
+    "adequacy_aid": _adequacy_aid,
+    "special_education_aid": _special_education_aid,
 }
 
 

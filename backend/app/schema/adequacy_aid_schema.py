@@ -37,10 +37,19 @@ class AdequacyAidStepGet(BaseModel):
     citation: str
 
 
+class AdequacyAidComponentGet(BaseModel):
+    code: str  # resident_adm_base
+    name: str
+    description: str
+    unit: str  # count, dollars, dollars_per_pupil, fraction
+    role: str  # students, cost, cost_total, swept, added_aid, hold_harmless, result, basis
+
+
 class AdequacyAidFormulaGet(BaseModel):
     year: AdequacyAidYearGet
     parameters: List[AdequacyAidParameterGet]
     steps: List[AdequacyAidStepGet]
+    components: List[AdequacyAidComponentGet] = []  # every part the year's towns have or its formulas use, in page order
 
 
 class AdequacyAidYearFields(BaseModel):

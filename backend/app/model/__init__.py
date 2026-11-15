@@ -45,3 +45,6 @@ from .adequacy_aid import (
     AdequacyAidYear, AdequacyAidComponent, AdequacyAidParameter, AdequacyAidStep, TownAdequacyAid, StateAdequacyAid,
     DistrictAdequacyAidShare
 )
+from .special_education_aid import (
+    SpecialEducationAidYear, SpecialEducationAidBand, DistrictSpecialEducationAid, DistrictSpecialEducationAidBand
+)

@@ -132,6 +132,11 @@ class AdequacyAidApiTests(unittest.TestCase):
         formula = self.get("formula", year=2027)
         self.assertEqual({p["code"]: p["value"] for p in formula["parameters"]}["base_per_pupil"], 4351)
         self.assertEqual((formula["steps"][0]["code"], formula["steps"][0]["uses"]), ("base_adequacy_aid", ["base_per_pupil", "resident_adm_base"]))
+        # Every name a formula uses is a parameter or a named part
+        components = {c["code"]: c for c in formula["components"]}
+        self.assertEqual((components["resident_adm_base"]["unit"], components["swept"]["role"]), ("count", "swept"))
+        known = set(components) | {p["code"] for p in formula["parameters"]}
+        self.assertLessEqual({name for s in formula["steps"] for name in s["uses"]} | {s["code"] for s in formula["steps"]}, known)
         self.get("formula", status=404, year=2019)
 
     def test_a_districts_calculation_has_every_year_and_its_towns(self):

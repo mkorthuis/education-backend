@@ -103,7 +103,18 @@ class AdequacyAidService:
                 {"year": year}).mappings().all()]
             steps = [{**s, "uses": sorted(names(s["formula"])) if s["formula"] else [], "tolerance": float(s["tolerance"])}
                      for s in _steps(session, [year])[year]]
-            return AdequacyAidFormulaGet(year=years[year], parameters=[{**p, "value": float(p["value"])} for p in parameters], steps=steps)
+            # The parts a page needs to name each figure and formula input: what the DOE published for the year's towns,
+            # each step's part, and the parts the formulas use
+            uses = sorted({name for s in steps for name in s["uses"]} - {p["code"] for p in parameters})
+            components = [dict(r) for r in session.execute(text("""
+                    SELECT code, name, description, unit, role FROM adequacy_aid_component
+                    WHERE id IN (SELECT DISTINCT component_id_fk FROM town_adequacy_aid WHERE fiscal_year = :year)
+                       OR id IN (SELECT component_id_fk FROM adequacy_aid_step WHERE fiscal_year = :year)
+                       OR code = ANY(:uses)
+                    ORDER BY sort, code
+                """), {"year": year, "uses": uses}).mappings().all()]
+            return AdequacyAidFormulaGet(year=years[year], parameters=[{**p, "value": float(p["value"])} for p in parameters],
+                                         steps=steps, components=components)
         except HTTPException:
             raise
         except Exception as e:

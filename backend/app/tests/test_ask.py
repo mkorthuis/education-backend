@@ -625,6 +625,56 @@ class AskTests(unittest.TestCase):
         self.assertEqual(compared["datasets"][0]["rows"][0], ["Population", 897, 188, 10141, 52])
         self.assertIn("Jackson: Children under 18 (low)", compared["datasets"][0]["note"])
 
+    def test_adequacy_aid_gives_each_years_grant_and_the_towns_calculation(self):
+        from app.service.internal.ask.data_tools import compare_places, find_places
+        totals, calculation, rates = get_data(self.session, "adequacy_aid", "district", 5)["datasets"]  # Albany
+        self.assertEqual(totals["rows"][-1], ["FY2027", "2026-27", "Estimate (October 1, 2026)", 355335, 226168, 581503, None])
+        self.assertEqual([row[0] for row in totals["rows"]], [f"FY{year}" for year in range(2020, 2028)])
+        self.assertIsNone(totals["page"])
+        self.assertEqual(totals["source"]["site"], "education.nh.gov")
+        # The calculation adds up: the cost less SWEPT is the preliminary grant, and hold-harmless grants make the adequacy grant
+        columns = calculation["columns"]
+        fy2027 = dict(zip(columns, calculation["rows"][-1]))
+        self.assertEqual(fy2027["Cost of an adequate education"] - fy2027["SWEPT"], fy2027["Preliminary grant"])
+        self.assertAlmostEqual(fy2027["Preliminary grant"] + fy2027["Hold-harmless grants"], fy2027["Adequacy grant"], delta=1)
+        self.assertEqual(calculation["units"]["Resident students"], "count")
+        self.assertEqual(rates["rows"][-1][:2], ["FY2027", 4351.0])
+        # A town whose SWEPT is more than its cost gets no grant and keeps its SWEPT
+        jackson = get_data(self.session, "adequacy_aid", "district", 271)["datasets"][0]
+        self.assertEqual(jackson["rows"][-2][3:6], [0, 901559, 901559])
+        # A district of several towns: each town's latest two years
+        wentworth = next(place["id"] for place in find_places(self.session, "Governor Wentworth") if place["kind"] == "district")
+        by_town = get_data(self.session, "adequacy_aid", "district", wentworth)["datasets"][1]
+        self.assertEqual(by_town["columns"][:2], ["Town", "Fiscal year"])
+        self.assertEqual({row[1] for row in by_town["rows"]}, {"FY2026", "FY2027"})
+        state = get_data(self.session, "adequacy_aid", "state")["datasets"][0]
+        self.assertEqual(state["rows"][-2][-2:], [204, 34])  # FY2026: towns with a grant, towns whose SWEPT is more than their cost
+        with self.assertRaises(DataToolError):
+            get_data(self.session, "adequacy_aid", "school", 22510)
+        compared = compare_places(self.session, "adequacy_aid", [{"level": "district", "id": 5}, {"level": "district", "id": 113}])
+        self.assertEqual(compared["datasets"][0]["columns"], ["Fiscal year", "Albany", "Conway"])
+
+    def test_special_education_aid_gives_each_year_and_never_a_student_count(self):
+        from app.service.internal.ask.data_tools import compare_places
+        conway, rules = get_data(self.session, "special_education_aid", "district", 113)["datasets"]
+        columns = conway["columns"]
+        fy2026 = dict(zip(columns, conway["rows"][-1]))
+        self.assertEqual((fy2026["Fiscal year"], fy2026["Costs from"], fy2026["Total cost"], fy2026["Aid paid"]), ("FY2026", "2024-25", 406452, 131604))
+        self.assertEqual(fy2026["Paid by the district below the threshold"] + fy2026["Costs above the threshold"], fy2026["Total cost"])
+        self.assertNotIn("Students reported", columns)
+        # Conway isn't in the DOE's FY2023 and FY2024 lists: no aid, and the note says why
+        self.assertEqual(dict(zip(columns, conway["rows"][2]))["In the DOE's list"], "No")
+        self.assertIn("Not in the DOE's list in FY2023, FY2024", conway["note"])
+        self.assertEqual(conway["source"]["site"], "education.nh.gov")
+        self.assertEqual(rules["rows"][-1][:5], ["FY2026", "2024-25", 21519.91, 75319.68, "80% from 3.5 to 10 times; 100% over 10 times"])
+        freedom = get_data(self.session, "special_education_aid", "district", 187)["datasets"][0]
+        self.assertTrue(all(row[2] == "No" and row[8] == 0 for row in freedom["rows"]))
+        state, _, top = get_data(self.session, "special_education_aid", "state")["datasets"]
+        self.assertEqual(state["rows"][-1][-1], 49917000)
+        self.assertEqual(len(top["rows"]), 10)
+        compared = compare_places(self.session, "special_education_aid", [{"level": "district", "id": 113}, {"level": "district", "id": 333}])
+        self.assertEqual(compared["datasets"][0]["rows"][-1], ["FY2026", 131604, 46067])
+
     def test_safety_has_serious_incidents_restraints_and_bullying_by_kind(self):
         datasets = {d["key"] or d["title"].split(",")[0]: d for d in get_data(self.session, "safety", "state")["datasets"]}
         self.assertIn(["2021-22", 1416], [row[:2] for row in datasets["restraint"]["rows"]])

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.v1.routes import util, location, measurement, enrollment, finance, assessment, education_freedom_account, safety, staff, class_size, outcome, cache, ask, naep, census_finance, reference, question_two, child_care, acs, adequacy_aid
+from app.api.v1.routes import util, location, measurement, enrollment, finance, assessment, education_freedom_account, safety, staff, class_size, outcome, cache, ask, naep, census_finance, reference, question_two, child_care, acs, adequacy_aid, special_education_aid
 
 api_router = APIRouter()
 api_router.include_router(acs.router, prefix="/acs", tags=["Census ACS"])
@@ -14,6 +14,7 @@ api_router.include_router(education_freedom_account.router, prefix="/education-f
 api_router.include_router(enrollment.router, prefix="/enrollment", tags=["Enrollment"])
 api_router.include_router(finance.router, prefix="/finance", tags=["Finance"])
 api_router.include_router(adequacy_aid.router, prefix="/finance/adequacy-aid", tags=["Finance"])
+api_router.include_router(special_education_aid.router, prefix="/finance/special-education-aid", tags=["Finance"])
 api_router.include_router(location.router, prefix="/location", tags=["Location"])
 api_router.include_router(measurement.router, prefix="/measurement", tags=["Measurement"])
 api_router.include_router(naep.router, prefix="/naep", tags=["NAEP"])

@@ -1,0 +1,118 @@
+# Special education aid (called catastrophic aid until 2017), RSA 186-C:18, III: the state's share of each school
+# district's costs for students whose special education costs more than a multiple of the state average cost per
+# pupil. The district pays each student's costs up to that threshold; the state pays a share of the costs in each
+# band above it. NH DOE publishes each year's aid by district on its Other State Aid Programs page (page_url).
+#
+# Each file has, for every district: its costs up to the threshold ("District Liability for CAP": each reported
+# student counts at the threshold, a part-year student at part of it), its costs between 3.5 and 10 times the state
+# average, its costs over 10 times, its total cost, its entitlement (the state's share of the costs above the
+# threshold) and, when the appropriation falls short, its prorated aid. The DOE leaves each district's student counts
+# blank; only the state row has them. They aren't derived here either: the threshold column would show how many
+# students a small district has.
+#
+# The DOE's site blocks scripted downloads, so save a new year's CSV through a browser into
+# assets/special-education-aid/, add a block for the year below and `python -m app.etl load special-education-aid`.
+# The load checks each district's entitlement against the year's bands, its total cost against its bands, its aid
+# against the proration, and the districts against the DOE's state row, and stops on a difference.
+directory: "../assets/special-education-aid"
+page_url: https://education.nh.gov/who-we-are/division-of-educator-and-analytic-resources/bureau-of-education-statistics/other-state-aid-programs
+statute_url: https://gc.nh.gov/rsa/html/XV/186-C/186-C-18.htm
+
+# The bands of a student's cost, as multiples of the state average cost per pupil, and the state's share of each:
+# the formula in effect from each fiscal year until the next one starts. Band numbers start at 1 at the lowest.
+formulas:
+  2011:
+    citation: RSA 186-C:18, III(a)
+    source_url: https://gc.nh.gov/rsa/html/XV/186-C/186-C-18.htm
+    bands:
+      - { from: 0, to: 3.5, state_share: 0, label: "Paid by the district (up to 3.5 times the state average)" }
+      - { from: 3.5, to: 10, state_share: 0.80, label: "3.5 to 10 times the state average: 80% state aid" }
+      - { from: 10, to: null, state_share: 1.00, label: "Over 10 times the state average: 100% state aid" }
+  # HB 1563 (2026 chapter 232), from aid paid in FY2029 on 2027-28 costs
+  2029:
+    citation: RSA 186-C:18, III(a), as amended by 2026, 232 (HB 1563)
+    source_url: https://gc.nh.gov/rsa/html/XV/186-C/186-C-18.htm
+    bands:
+      - { from: 0, to: 2.5, state_share: 0, label: "Paid by the district (up to 2.5 times the state average)" }
+      - { from: 2.5, to: 3.5, state_share: 0.15, label: "2.5 to 3.5 times the state average: 15% state aid" }
+      - { from: 3.5, to: 10, state_share: 0.80, label: "3.5 to 10 times the state average: 80% state aid" }
+      - { from: 10, to: null, state_share: 0.90, label: "Over 10 times the state average: 90% state aid" }
+
+# The DOE's names that aren't the district table's (matched case-insensitively). A file with district IDs is matched
+# by ID, and the name must still match.
+district_aliases:
+  Exeter Regional Cooperative: Exeter Region Cooperative
+  Exeter School District: Exeter
+  Hampton School District: Hampton
+  Hollis/Brookline Cooperative: Hollis-Brookline Cooperative
+  Oyster River Cooperative: Oyster River Coop
+  Profile Regional: Profile
+  Wilton-Lyndeboro Cooperative: Wilton-Lyndeborough Cooperative
+
+# Each fiscal year of aid paid (2026: paid in 2025-26, on 2024-25 costs, as the financial report's year):
+#   file, url: the DOE's file and its address on the page
+#   cost_school_year: the year whose costs it reimburses
+#   threshold_cost: the cost per student at which state aid begins (3.5 times the DOE's estimated state average cost
+#     per pupil), as the file's heading gives it or, where it doesn't, the most common district value in its first
+#     column (a district with one reported student); the load checks it's that most common value
+#   appropriation: the amount the DOE distributed, when the file gives it
+#   paid_in_full: the file has no prorated column because the appropriation covered every entitlement
+#   minimum_share: the least share of its entitlement a district gets when aid is prorated
+#   total_cost_differs: districts whose total cost isn't the sum of their bands in the DOE's file
+#   repeat_rows: rows below the table that repeat the state row's figures (the load checks they do), skipped
+years:
+  2021:
+    cost_school_year: 2019-20
+    status: final
+    file: sped-aid-20-21.csv
+    url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/sped-aid-20-21.csv
+    threshold_cost: 59217.97
+    paid_in_full: true
+    note: "Paid in full: the LBA's state aid report shows $29,626,759 paid in FY2021."
+  2022:
+    cost_school_year: 2020-21
+    status: final
+    file: fy22-school-year-20-21-sped-aid-final-without-students-report.csv
+    url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy22-school-year-20-21-sped-aid-final-without-students-report.csv
+    threshold_cost: 59217.97  # the same as FY2021's in the DOE's file
+    paid_in_full: true
+    note: "Paid in full: the LBA's state aid report shows $31,797,250 paid in FY2022. In the DOE's file, ten districts' total cost is $104 to $9,874 less than their three bands add up to; their entitlement follows the bands."
+    total_cost_differs: [Concord, Hampton Falls, Hollis, Mascenic Regional, Merrimack, Milford, Mont Vernon, Somersworth, Souhegan Cooperative, Tamworth]
+  2023:
+    cost_school_year: 2021-22
+    status: final
+    file: fy-23-school-year-2022-2023-sped-aid-final-no-students.csv
+    url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-23-school-year-2022-2023-sped-aid-final-no-students.csv
+    threshold_cost: 62949.81
+    appropriation: 33917000
+    note: "Prorated at 98.2763%, as the DOE's file says."
+  2024:
+    cost_school_year: 2022-23
+    status: final
+    # The DOE's CSV (sonh/fy24-for-2022-2023.csv) couldn't be downloaded by script; this is its PDF's table, in the
+    # FY2023 CSV's layout. The load's checks against the PDF's Grand Total row confirm every row came through.
+    file: fy24-from-pdf.csv
+    url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-24-school-year-2022-2023-sped-aid-final.pdf
+    threshold_cost: 66619.28
+    appropriation: 33917000
+    note: "Prorated at 87.038%, as the DOE's file says. Transcribed from the DOE's PDF."
+  2025:
+    cost_school_year: 2023-24
+    status: final
+    file: fy-25-2023-2024-sped-aid-csv.csv
+    url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy-25-2023-2024-sped-aid-csv.csv
+    threshold_cost: 69697.81
+    appropriation: 33917000
+    note: "Prorated at 68.79%, as the DOE's file says."
+    repeat_rows: [TOTAL]  # the entitlement and aid again
+  2026:
+    cost_school_year: 2024-25
+    status: final
+    file: fy26-special-education-aid-amounts-website.csv
+    url: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/fy26-special-education-aid-amounts-website.csv
+    threshold_cost: 75319.68  # the file's heading: "District Liability for CAP (75319.68)"
+    appropriation: 49917000
+    # 2025, 141 (HB 2): when aid is prorated, each district gets at least 80% of its entitlement, from September 1, 2025
+    minimum_share: 0.80
+    note: "Prorated at about 91.14%, as the DOE's file says; every district got more than the 80% minimum."
+    repeat_rows: [Total number of student reported, Total number of students over 10x ECPP]
