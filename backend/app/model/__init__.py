@@ -48,3 +48,6 @@ from .adequacy_aid import (
 from .special_education_aid import (
     SpecialEducationAidYear, SpecialEducationAidBand, DistrictSpecialEducationAid, DistrictSpecialEducationAidBand
 )
+from .property_tax import (
+    TownPropertyTax, TownSchoolTax, TownSchoolTaxCoopShare
+)

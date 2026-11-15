@@ -1,0 +1,101 @@
+# Property tax rates and school taxes by town, from two state publishers, each kept as published:
+#
+# - NH Department of Revenue Administration (DRA): each town's tax rates per $1,000 of assessed value (municipal,
+#   county, local education, state education, total), its equalization ratio and full value rate, and from 2018 the
+#   school tax dollars in its tax-rate calculation data. Tax years 2014 on.
+# - NH DOE's "Valuations, Property Tax Assessments and Tax Rates of School Districts": each town's school tax dollars,
+#   valuations, and rates per $1,000 of assessed and of equalized value. Tax years 2011 on: the 2010 report has no
+#   district numbers, so it isn't loaded.
+#
+# A tax year's rates are set in the fall and pay for the school year that starts then: tax year 2025 is 2025-26 (FY2026).
+#
+# The two CSVs in assets/property-tax were built for the Ask's reference library (additional-data/town-figures.md),
+# which documents every step: the DRA files read each year, the seven 2015 rows whose components DRA's PDF prints in
+# the wrong columns, and the DOE report's rule for which rows to keep (each single-town district row and each
+# cooperative member row that shows rates; the kept rows add up to the report's TOTALS row in every year). Each row
+# names the files it was read from, and they're in the repo: DRA's in assets/property-tax/dra, the DOE's reports in
+# assets/equalized-value. DATA_SOURCES.md says where each was first downloaded (DRA's older files are Wayback
+# Machine copies, since DRA's site no longer has them); the load stops if a file a row cites is missing.
+#
+# The load keeps the years below (the CSVs' 2026 rows are the towns set by October 30, 2026; load 2026 once DRA's
+# final file is in), checks the figures and stops on a difference: DRA's components against its total rate, the DOE's
+# rates and school tax dollars against DRA's, and the DOE's state education tax against the SWEPT in the adequacy aid
+# tables (a town's tax year 2025 state education tax is its FY2026 SWEPT). Each known difference is listed below.
+directory: "../assets/property-tax"
+dra_file: dra-tax-rates.csv
+doe_file: school-tax-by-town.csv
+doe_report_directory: "../assets/equalized-value"
+
+dra_years: { start: 2014, end: 2025 }
+doe_years: { start: 2011, end: 2025 }
+
+# DRA rows whose four components don't add up to the total rate, by town id and tax year
+dra_total_differs:
+  - { town_id: 429, tax_year: 2014, note: "Penacook: DRA's line leaves the municipal and county rates at 0.00, but its total of 32.39 includes Concord's (9.38 and 3.23)" }
+
+# Where the DOE's rate differs from DRA's by more than a cent. Column 10's footnote: the DOE's rates "may differ from
+# actual tax rates, by a penny or so", for property set-offs and rounding. The note goes on the DOE's row.
+rate_differences:
+  - { town_id: 321, tax_year: 2016, rates: [state] }
+  - { town_id: 321, tax_year: 2020, rates: [local, state, total], note: "The DOE report prints 0.00 for Loudon's 2020 rates, though its dollar figures are there" }
+  - { town_id: 429, tax_year: 2015, rates: [total], note: "DRA's 2015 PDF prints no total for Penacook" }
+  - { town_id: 497, tax_year: 2016, rates: [state] }
+  - { town_id: 497, tax_year: 2017, rates: [state] }
+  - { town_id: 497, tax_year: 2018, rates: [total] }
+
+# DRA's school tax dollars for a town that the DOE splits: DRA's figure is the sum of the DOE's rows. Concord (111):
+# DRA reports the whole city; the DOE splits off Penacook (429), the part in the Merrimack Valley district.
+combined_towns:
+  111: [111, 429]
+
+# The DOE's district numbers that aren't the site's: Gorham Randolph Shelburne Cooperative's older number (as the cost
+# per pupil load maps it), and Orford's, in the interstate Rivendell district. Every other number is the site's id.
+district_aliases:
+  201: 203
+  417: 457
+
+# The DOE's names for the districts a town's school tax goes to, by site district id: the cooperative (or county
+# district) a member town's row is under, and the cooperatives in the "reference only" rows (footnote C: the town's own
+# row carries the totals, and these rows show the part of its local school tax that goes to the cooperative; footnote
+# B: Hanover's share of Dresden). A member row's district number, where it has one, is its cooperative's.
+cooperatives:
+  "CARROLL COUNTY A": 222  # Hale's Location (Carroll County)
+  "CONTOOCOOK VALLEY": 112
+  "COOS COUNTY A": 114  # Coos County School District
+  "DRESDEN": 142
+  "EXETER REG COOP": 172
+  "FALL MOUNTAIN REG": 174
+  "GOSHEN-LEMPSTER": 207
+  "GOV WENTWORTH": 208
+  "GRS COOP": 203
+  "HILLSBORO-DEERING": 251
+  "HOLLIS/BROOKLINE": 260
+  "INTER-LAKES COOP": 269
+  "JAFFREY-RINDGE": 274
+  "JOHN STARK REG": 275
+  "KEARSARGE REG": 276
+  "LAFAYETTE REG": 288
+  "LINCOLN-WOODSTOCK": 305
+  "LISBON REG": 306
+  "MASCENIC REG": 342
+  "MASCOMA VALLEY REG": 343
+  "MERRIMACK VALLEY": 352
+  "MONADNOCK REG": 363
+  "NEWFOUND AREA": 388
+  "OYSTER RIVER COOP": 423
+  "PASQUANEY": 584
+  "PEMI-BAKER COOP": 428
+  "PROFILE": 450
+  "SANBORN REG": 476
+  "SHAKER REG": 486
+  "SOUHEGAN COOP": 493
+  "TIMBERLANE REG": 534
+  "WHITE MTNS REG": 568
+  "WILTON-LYNDEBORO": 572
+  "WINNISQUAM REG": 582
+  "WINNACUNNET COOP": 581
+
+# Member towns whose rows carry their own district's number instead of their cooperative's, by town id and tax years:
+# Wilton, in Wilton-Lyndeborough (its rows carry the cooperative's number from 2017)
+member_own_district:
+  571: [2011, 2012, 2013, 2014, 2015, 2016]
