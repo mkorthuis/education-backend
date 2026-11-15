@@ -61,3 +61,23 @@ class NaepComparisonGet(BaseModel):
     basis: str
     result: str
     difference: Optional[float] = None
+
+
+class NaepStateStandardGet(BaseModel):
+    """NCES's state mapping study: the NAEP score equivalent to a state's standard for proficient performance on its
+    own test (the score the same share of the state's students reached). nces_table is NCES's table: <year>a/b for the
+    per-year tables (2009 to 2022, unrounded), 1a/b, 2a/b and 3a/b for the 2005–2009 comparison study (2009, 2007 and
+    2005, rounded), so 2009 has two rows per state. naep_equivalent is null when NCES left the state out (note says
+    why); caution marks a relative error over 0.5."""
+    id: int
+    year: int
+    jurisdiction: JurisdictionGet
+    subject: AssessmentSubjectGet
+    grade: GradeGet
+    nces_table: str
+    naep_equivalent: Optional[float] = None
+    standard_error: Optional[float] = None
+    relative_error: Optional[float] = None
+    caution: bool
+    testing_program: Optional[str] = None
+    note: Optional[str] = None

@@ -66,3 +66,23 @@ class NaepComparison(BaseMixin, table=True):
     basis: str = Field(max_length=20)  # all_jurisdictions or pair
     result: str = Field(max_length=20)  # higher, lower or not_significant
     difference: Optional[float] = None
+
+
+class NaepStateStandard(BaseMixin, table=True):
+    """NCES's state mapping study: a state's standard for proficient performance on its own test, placed on the NAEP
+    scale (the NAEP score the same share of the state's students reached), for one NCES table, subject and grade"""
+    __tablename__ = "naep_state_standard"
+
+    year: int
+    jurisdiction_id_fk: int = Field(foreign_key="jurisdiction.id")
+    assessment_subject_id_fk: int = Field(foreign_key="assessment_subject.id")
+    grade_id_fk: int = Field(foreign_key="grades.id")
+    # NCES's table: <year>a/b, the per-year tables (2009 to 2022, unrounded); 1a/b, 2a/b, 3a/b, the 2005–2009
+    # comparison study's (2009, 2007, 2005, rounded), so 2009 has both
+    nces_table: str = Field(max_length=10)
+    naep_equivalent: Optional[float] = None  # none when NCES left the state out
+    standard_error: Optional[float] = None
+    relative_error: Optional[float] = None  # the 2005–2009 study's tables print only the caution mark
+    caution: bool = False  # NCES's mark: relative error greater than 0.5
+    testing_program: Optional[str] = Field(default=None, max_length=10)  # SBAC, PARCC or ACT, from 2015; none: the state's own test
+    note: Optional[str] = None  # NCES's footnotes on the state

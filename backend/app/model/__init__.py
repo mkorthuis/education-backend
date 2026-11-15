@@ -21,7 +21,7 @@ from .education_freedom_account import (
     EducationFreedomAccountEntry
 )
 from .naep import (
-    Jurisdiction, NaepMeasure, NaepStudentGroup, NaepResult, NaepComparison
+    Jurisdiction, NaepMeasure, NaepStudentGroup, NaepResult, NaepComparison, NaepStateStandard
 )
 from .census_finance import (
     CensusRevenueItem, CensusStateRevenue, CensusStateEnrollment

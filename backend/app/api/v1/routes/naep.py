@@ -4,7 +4,9 @@ from fastapi import APIRouter, Query
 
 from app.api.v1.deps import SessionDep
 from app.core.cache import cache_response
-from app.schema.naep_schema import JurisdictionGet, NaepComparisonGet, NaepMeasureGet, NaepResultGet, NaepStudentGroupGet
+from app.schema.naep_schema import (
+    JurisdictionGet, NaepComparisonGet, NaepMeasureGet, NaepResultGet, NaepStateStandardGet, NaepStudentGroupGet,
+)
 from app.service.public.naep_service import naep_service
 
 router = APIRouter()
@@ -91,4 +93,30 @@ def get_comparisons(
         session=session, year=year, other_year=other_year, assessment_subject_id=assessment_subject_id,
         grade_id=grade_id, naep_measure_id=naep_measure_id, naep_student_group_id=naep_student_group_id,
         jurisdiction=jurisdiction, other_jurisdiction=other_jurisdiction, basis=basis,
+    )
+
+
+@router.get("/state-standard",
+    response_model=List[NaepStateStandardGet],
+    summary="Get the NAEP equivalents of state proficiency standards",
+    description=(
+        "NCES's state mapping study: where each state's standard for proficient performance on its own test falls on "
+        "the NAEP scale (the NAEP score the same share of the state's students reached), reading and math in grades 4 "
+        "and 8, 2005 to 2022, as published. nces_table <year>a/b is NCES's per-year table (2009 to 2022, unrounded); "
+        "1a/b, 2a/b and 3a/b are the 2005–2009 comparison study's (2009, 2007 and 2005, rounded), so 2009 has two rows "
+        "per state. A state NCES left out has no score, and note gives NCES's reason (New Hampshire in 2017 and 2019). "
+        "NAEP's cut scores: Basic 208 and 243 in reading (grades 4 and 8), 214 and 262 in math; Proficient 238, 281, "
+        "249 and 299."
+    ),
+    response_description="Rows, oldest year first, then by subject, grade, place and NCES table")
+@cache_response("naep_state_standard")
+def get_state_standards(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None, description="Filter by NAEP year (2005, 2007, 2009, 2011, 2013, 2015, 2017, 2019 or 2022)"),
+    assessment_subject_id: Optional[int] = Query(default=None, description=SUBJECT),
+    grade_id: Optional[int] = Query(default=None, description=GRADE),
+    jurisdiction: Optional[str] = Query(default=None, description="Filter by NAEP place code, e.g. NH or MA"),
+):
+    return naep_service.get_state_standards(
+        session=session, year=year, assessment_subject_id=assessment_subject_id, grade_id=grade_id, jurisdiction=jurisdiction,
     )

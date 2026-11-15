@@ -1,0 +1,35 @@
+# NCES's state mapping study ("Mapping State Proficiency Standards Onto the NAEP Scales"): where each state's
+# standard for proficient performance on its own test falls on the NAEP scale. For each state, subject and grade,
+# NCES finds the NAEP score that the same share of the state's students reached as met the state's standard: its
+# "NAEP equivalent score". Reading and math, grades 4 and 8, public schools, from
+# https://nces.ed.gov/nationsreportcard/studies/statemapping/data_tables.aspx. NCES's cut scores for comparison: NAEP
+# Basic 208 and 243 in reading (grades 4 and 8), 214 and 262 in math; NAEP Proficient 238, 281, 249 and 299.
+#
+# Two sets of NCES tables, each loaded as published, so 2009 has two estimates per state:
+#
+# - The per-year tables, 2009 to 2022 (Table <year>a for grade 4, <year>b for grade 8), from NCES's Excel downloads,
+#   with unrounded scores, standard errors and relative errors, and from 2015 each state's testing program. The 2009
+#   tables were last updated May 24, 2018.
+# - The 2005–2009 comparison study (NCES 2011-458, published 2011), which estimated 2005, 2007 and 2009 on one basis:
+#   Tables 1 (2009), 2 (2007) and 3 (2005), each an HTML page with a reading table (a) and a math table (b) covering
+#   both grades. NCES publishes these as HTML only, rounded, with a mark instead of the relative error.
+#
+# A state NCES left out has no score; its row keeps NCES's footnotes that name it (New Hampshire in 2017 and 2019:
+# "the state did not use the same assessment for all students"). Results across years are comparable only while a
+# state's test stayed the same.
+directory: "../assets/naep-state-mapping"
+
+# The per-year Excel tables, table_<year>a.xlsx and table_<year>b.xlsx
+years: [2009, 2011, 2013, 2015, 2017, 2019, 2022]
+
+# The 2005–2009 study's HTML pages: the year each one estimates
+study_tables:
+  findings_table1.html: 2009
+  findings_table2.html: 2007
+  findings_table3.html: 2005
+
+# NCES rows that aren't a NAEP place in the database: the testing consortia's own estimates (Smarter Balanced, PARCC
+# and ACT) and Puerto Rico. A state row that repeats a consortium's estimate exactly (NCES's 2015 grade 8 PARCC
+# states) gets a note saying so.
+consortia: [SBAC, PARCC, ACT]
+not_loaded: [Puerto Rico]

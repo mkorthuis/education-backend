@@ -5,17 +5,23 @@ from sqlmodel import Session, select
 
 from app.model.assessment import AssessmentSubject
 from app.model.location import Grade
-from app.model.naep import Jurisdiction, NaepComparison, NaepMeasure, NaepResult, NaepStudentGroup
+from app.model.naep import Jurisdiction, NaepComparison, NaepMeasure, NaepResult, NaepStateStandard, NaepStudentGroup
 
 
 def _jurisdiction(place: Jurisdiction) -> dict:
     return {"id": place.id, "code": place.code, "name": place.name, "kind": place.kind}
 
 
-def _common(subject: AssessmentSubject, grade: Grade, measure: NaepMeasure, group: NaepStudentGroup) -> dict:
+def _subject_and_grade(subject: AssessmentSubject, grade: Grade) -> dict:
     return {
         "subject": {"id": subject.id, "name": subject.name, "description": subject.description},
         "grade": {"id": grade.id, "name": grade.name},
+    }
+
+
+def _common(subject: AssessmentSubject, grade: Grade, measure: NaepMeasure, group: NaepStudentGroup) -> dict:
+    return {
+        **_subject_and_grade(subject, grade),
         "measure": {"id": measure.id, "code": measure.code, "name": measure.name, "unit": measure.unit},
         "student_group": {"id": group.id, "variable": group.variable, "value": group.value,
                           "variable_name": group.variable_name, "name": group.name},
@@ -119,6 +125,43 @@ class NaepService:
                 "difference": row.difference,
             }
             for row, place, other_place, subject, grade, measure, group in session.exec(statement).all()
+        ]
+
+    def get_state_standards(self, session: Session, year: Optional[int] = None, assessment_subject_id: Optional[int] = None,
+                            grade_id: Optional[int] = None, jurisdiction: Optional[str] = None) -> List[dict]:
+        """NAEP equivalents of state proficiency standards, oldest year first, then by subject, grade, place and NCES
+        table (the per-year table before the 2005–2009 study's)."""
+        statement = (
+            select(NaepStateStandard, Jurisdiction, AssessmentSubject, Grade)
+            .join(Jurisdiction, Jurisdiction.id == NaepStateStandard.jurisdiction_id_fk)
+            .join(AssessmentSubject, AssessmentSubject.id == NaepStateStandard.assessment_subject_id_fk)
+            .join(Grade, Grade.id == NaepStateStandard.grade_id_fk)
+            .order_by(NaepStateStandard.year, AssessmentSubject.id, Grade.id, Jurisdiction.id,
+                      NaepStateStandard.nces_table.desc())
+        )
+        if year is not None:
+            statement = statement.where(NaepStateStandard.year == year)
+        if assessment_subject_id is not None:
+            statement = statement.where(NaepStateStandard.assessment_subject_id_fk == assessment_subject_id)
+        if grade_id is not None:
+            statement = statement.where(NaepStateStandard.grade_id_fk == grade_id)
+        if jurisdiction is not None:
+            statement = statement.where(Jurisdiction.code == jurisdiction.upper())
+        return [
+            {
+                "id": row.id,
+                "year": row.year,
+                "jurisdiction": _jurisdiction(place),
+                **_subject_and_grade(subject, grade),
+                "nces_table": row.nces_table,
+                "naep_equivalent": row.naep_equivalent,
+                "standard_error": row.standard_error,
+                "relative_error": row.relative_error,
+                "caution": row.caution,
+                "testing_program": row.testing_program,
+                "note": row.note,
+            }
+            for row, place, subject, grade in session.exec(statement).all()
         ]
 
 
