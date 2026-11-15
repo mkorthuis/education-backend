@@ -675,6 +675,45 @@ class AskTests(unittest.TestCase):
         compared = compare_places(self.session, "special_education_aid", [{"level": "district", "id": 113}, {"level": "district", "id": 333}])
         self.assertEqual(compared["datasets"][0]["rows"][-1], ["FY2026", 131604, 46067])
 
+    def test_property_tax_gives_each_towns_rates_and_school_taxes_by_tax_year(self):
+        from app.service.internal.ask.ask_service import TOOLS
+        from app.service.internal.ask.data_tools import compare_places, find_places
+        rates, taxes, ranks = get_data(self.session, "property_tax", "district", 113)["datasets"]  # Conway
+        self.assertEqual(rates["columns"][:6], ["Tax year", "Municipal", "County", "Local school", "State education", "Total"])
+        self.assertEqual(rates["rows"][-1], ["2025", 2.5, 0.81, 7.12, 1.11, 11.54, 71.3, 83.72, 9.61, "2025-12-03"])
+        self.assertEqual([row[0] for row in rates["rows"]], [str(year) for year in range(2014, 2026)])
+        self.assertEqual((rates["unit"], rates["units"]["Equalization ratio"], rates["source"]["site"]), ("rate", "percent", "revenue.nh.gov"))
+        # The DOE's dollars from 2011, and its rates on equalized value
+        self.assertEqual(taxes["rows"][0][:3], ["2011", 12094168, 3475856])
+        self.assertEqual(dict(zip(taxes["columns"], taxes["rows"][-1]))["Local school rate on equalized value"], 5.94)
+        self.assertEqual((taxes["units"]["Local school tax"], taxes["units"]["Total rate on equalized value"]), ("dollars", "rate"))
+        self.assertEqual(taxes["source"]["site"], "education.nh.gov")
+        self.assertEqual(ranks["rows"], [["Conway", 9.61, 194, 5.94, 175], ["Median NH town", 14.16, None, 8.2, None]])
+        # A cooperative its towns' own districts also tax for: each town by year, and the part that goes to it
+        souhegan = {d["title"].split(" by ")[0]: d for d in get_data(self.session, "property_tax", "district", 493)["datasets"]}
+        latest = souhegan["Property tax rates and school taxes"]
+        self.assertEqual([row[0] for row in latest["rows"]], ["Amherst", "Mont Vernon"])
+        self.assertEqual(dict(zip(latest["columns"], latest["rows"][0]))["Part to a cooperative"], 13720641)
+        self.assertEqual(souhegan["Local school tax to the cooperative"]["rows"][-1], ["2025", 13720641, 2566547])
+        self.assertEqual(souhegan["Total tax rate"]["columns"], ["Tax year", "Amherst", "Mont Vernon"])
+        wentworth = next(place["id"] for place in find_places(self.session, "Governor Wentworth") if place["kind"] == "district")
+        self.assertEqual(len(get_data(self.session, "property_tax", "district", wentworth)["datasets"][0]["rows"]), 6)
+        # The state: every town's taxes added up, the median town and the highest and lowest full value rates
+        totals, medians, extremes = get_data(self.session, "property_tax", "state")["datasets"]
+        self.assertEqual(totals["rows"][-1][:3], ["2025", 2790208188, 363426434])
+        self.assertEqual(totals["rows"][-1][-1], 237)
+        self.assertEqual(medians["rows"][-1][-2:], [14.16, 8.2])
+        self.assertEqual((len(extremes["rows"]), extremes["rows"][0][:3]), (20, ["Berlin", 1, 26.24]))
+        with self.assertRaises(DataToolError):
+            get_data(self.session, "property_tax", "school", 22510)
+        # Towns side by side with the median town, and by year; Census comparisons are offered too
+        compared = compare_places(self.session, "property_tax", [{"level": "district", "id": 113}, {"level": "state", "id": None}])["datasets"]
+        self.assertEqual([row[0] for row in compared[0]["rows"]], ["Conway", "Median NH town"])
+        self.assertEqual(compared[1]["columns"], ["Tax year", "Conway", "Median NH town"])
+        self.assertEqual(compared[1]["rows"][-1], ["2025", 9.61, 14.16])
+        compare_topics = next(tool for tool in TOOLS if tool["name"] == "compare_places")["input_schema"]["properties"]["topic"]["enum"]
+        self.assertTrue({"census", "property_tax"} <= set(compare_topics))
+
     def test_safety_has_serious_incidents_restraints_and_bullying_by_kind(self):
         datasets = {d["key"] or d["title"].split(",")[0]: d for d in get_data(self.session, "safety", "state")["datasets"]}
         self.assertIn(["2021-22", 1416], [row[:2] for row in datasets["restraint"]["rows"]])

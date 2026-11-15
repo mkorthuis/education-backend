@@ -30,12 +30,13 @@ from app.service.public.finance_service import finance_service
 from app.service.public.location_service import location_service
 from app.service.public.measurement_service import measurement_service
 from app.service.public.outcome_service import outcome_service
+from app.service.public.property_tax_service import property_tax_service
 from app.service.public.question_two_service import question_two_service
 from app.service.public.safety_service import safety_service
 from app.service.public.special_education_aid_service import special_education_aid_service
 from app.service.public.staff_service import staff_service
 
-TOPICS = ["enrollment", "test_scores", "graduation", "spending", "balance_sheet", "staff", "safety", "efa", "question_two", "child_care", "census", "adequacy_aid", "special_education_aid"]
+TOPICS = ["enrollment", "test_scores", "graduation", "spending", "balance_sheet", "staff", "safety", "efa", "question_two", "child_care", "census", "adequacy_aid", "special_education_aid", "property_tax"]
 LEVELS = ["state", "district", "school"]
 
 # Topics each level has, with the site page that shows them. Question 2, child care, the Census, adequacy
@@ -216,7 +217,8 @@ def _grade_order(name: str) -> int:
 
 def dataset(title: str, unit: str, columns: List[str], rows: List[list], page: str, note: Optional[str] = None,
             column_units: Optional[Dict[str, str]] = None, key: Optional[str] = None) -> dict:
-    """One dataset as the tools return it. `unit` (percent, dollars, count or number) applies to every
+    """One dataset as the tools return it. `unit` (percent, dollars, count, number, or rate: dollars per $1,000 of
+    property value, to the cent) applies to every
     value column except those named in `column_units`, such as a count beside percentages. `key`
     names the dataset for compare_places."""
     units = {name: (column_units or {}).get(name, unit) for name in columns[1:]}
@@ -1878,6 +1880,303 @@ def _special_education_aid(session: Session, place: dict) -> List[dict]:
     return results
 
 
+# -------------------- Property tax --------------------
+
+PROPERTY_TAX_NOTE = (
+    "Tax rates are dollars per $1,000 of property value. A tax year's rates are set in the fall and pay for the school year that "
+    "starts then: tax year 2025 pays for 2025-26 (FY2026). Towns assess property at different shares of its market value (the "
+    "equalization ratio), so compare towns, or a town's years across a revaluation, by the rates on equalized (market) value: "
+    "DRA's full value rate, or the DOE's rates on equalized value. When a revaluation brings the ratio up to about 100%, the "
+    "assessed rates fall without the taxes falling; the tax dollars show what changed."
+)
+DRA_NOTE = (
+    " NH DRA's rates on assessed value: the municipal, county, local school (local education) and state education rates add up "
+    "to the total. The school share is the local school and state education rates as a share of the total. The full value rate "
+    "is DRA's total rate on equalized (market) value instead, from tax year 2018. In a few small towns a rate is below zero, "
+    "where a surplus was returned to taxpayers; the school share can then be below 0% or over 100%."
+)
+SCHOOL_TAX_NOTE = (
+    " NH DOE's valuations report: the school taxes the town raises in dollars, and its rates on equalized value, which include "
+    "utilities. The local school tax is everything the town raises for its school districts; where part of it goes to a "
+    "cooperative, the DOE shows that part. The state education tax (SWEPT) stays with the town's schools and counts toward its "
+    "adequacy aid for the next fiscal year."
+)
+DRA_SOURCE = {"label": "NH Department of Revenue Administration, municipal and village district tax rates",
+              "url": "https://www.revenue.nh.gov/about-dra/municipal-and-property-division/municipal-and-property-reports/municipal-and-village",
+              "site": "revenue.nh.gov", "as_of": None}
+DOE_TAX_SOURCE = {"label": "NH Department of Education, Valuations, Property Tax Assessments and Tax Rates of School Districts",
+                  "url": "https://www.education.nh.gov/who-we-are/division-of-educator-and-analytic-resources/bureau-of-education-statistics/financial-reports",
+                  "site": "education.nh.gov", "as_of": None}
+# DRA's rates on assessed value, as (column, field)
+TAX_RATES = [("Municipal", "municipal_rate"), ("County", "county_rate"), ("Local school", "local_education_rate"),
+             ("State education", "state_education_rate"), ("Total", "total_rate")]
+# The DOE's dollars, and its rates on equalized value
+SCHOOL_TAXES = [("Local school tax", "local_education_tax"), ("State education tax", "state_education_tax"),
+                ("Municipal and county taxes", "other_local_tax"), ("Assessed valuation", "assessed_valuation_with_utilities"),
+                ("Equalized valuation", "equalized_valuation_with_utilities")]
+EQUALIZED_RATES = [("Local school rate on equalized value", "equalized_rate_local_education"),
+                   ("State education rate on equalized value", "equalized_rate_state_education"),
+                   ("Total rate on equalized value", "equalized_rate_total")]
+EQUALIZED_SCHOOL_RATE = EQUALIZED_RATES[0][0]
+TAX_TOWNS_SHOWN = 10  # statewide: the towns with the highest and the lowest full value rates
+MAX_TAX_TOWNS = 10  # a comparison's towns, each its own column in the by-year datasets
+
+
+def _tax_year(row) -> str:
+    """A tax year as its label: "2025" (charted as a year)"""
+    return str(row.tax_year)
+
+
+def _dra(row, field: str) -> Optional[float]:
+    return getattr(row.dra, field) if row.dra else None
+
+
+def _doe(row, field: str) -> Optional[float]:
+    return getattr(row.doe, field) if row.doe else None
+
+
+def _to_cooperative(row) -> Optional[float]:
+    """The part of a town's local school tax the DOE shows going to a cooperative"""
+    return _dollars(sum(s.local_education_tax for s in row.doe.cooperative_shares)) if row.doe and row.doe.cooperative_shares else None
+
+
+def _latest_tax_year(session: Session) -> Optional[int]:
+    return max((y.tax_year for y in property_tax_service.get_years(session) if y.dra_towns), default=None)
+
+
+# The rates a median town is figured on, as (column, value)
+MEDIAN_RATES = [*((c, lambda t, f=f: _dra(t, f)) for c, f in TAX_RATES), ("Equalization ratio", lambda t: _dra(t, "equalization_ratio")),
+                ("Full value rate", lambda t: _dra(t, "full_value_tax_rate")),
+                (EQUALIZED_SCHOOL_RATE, lambda t: _doe(t, "equalized_rate_local_education"))]
+
+
+def _median_of(towns: list, value) -> Optional[float]:
+    values = [v for v in map(value, towns) if v is not None]
+    return _round(median(values), 2) if values else None
+
+
+def _tax_ranks(session: Session, year: int) -> dict:
+    """Every town's rank in a tax year on DRA's full value rate and on the DOE's local school rate on equalized
+    value (highest first), with the number of towns ranked, and the median town's rates"""
+    def load():
+        towns = property_tax_service.get_towns(session, year=year)
+        ranks = {"median": {column: _median_of(towns, value) for column, value in MEDIAN_RATES}}
+        for name, value in (("full_value", lambda t: _dra(t, "full_value_tax_rate")),
+                            ("school", lambda t: _doe(t, "equalized_rate_local_education"))):
+            values = sorted((v for v in map(value, towns) if v is not None), reverse=True)
+            ranks[name] = ({t.town_id: values.index(value(t)) + 1 for t in towns if value(t) is not None}, len(values))
+        return ranks
+    return _once(session, f"property_tax_ranks_{year}", load)
+
+
+def _rank_dataset(session: Session, rows: list, year: int, title: str) -> dict:
+    """Where each town ranks among NH towns in a tax year, beside the median town"""
+    ranks = _tax_ranks(session, year)
+    (full_value, ranked), (school, school_ranked), middle = ranks["full_value"], ranks["school"], ranks["median"]
+    return dataset(
+        title, "rate",
+        ["Town", "Full value rate", "Rank on the full value rate", EQUALIZED_SCHOOL_RATE, "Rank on the local school rate"],
+        [*([t.town_name, _dra(t, "full_value_tax_rate"), full_value.get(t.town_id), _doe(t, "equalized_rate_local_education"),
+            school.get(t.town_id)] for t in rows),
+         ["Median NH town", middle["Full value rate"], None, middle[EQUALIZED_SCHOOL_RATE], None]],
+        None, PROPERTY_TAX_NOTE + f" Rank 1 is the highest of the {ranked} towns with a full value rate and the {school_ranked} with a "
+        "local school rate on equalized value; a high rank means high taxes for the value of the property. These are the site's "
+        "towns; DRA's own printed ranking also lists unincorporated places, so its ranks can differ.",
+        {"Rank on the full value rate": "count", "Rank on the local school rate": "count"},
+    )
+
+
+def _by_town_dataset(rows: list, title: str) -> dict:
+    """Towns' rates and school taxes in one tax year, a row each"""
+    shares = any(_to_cooperative(t) for t in rows)
+    return dataset(
+        title, "rate",
+        ["Town", *(c for c, _ in TAX_RATES), "School share of the total", "Equalization ratio", "Full value rate",
+         EQUALIZED_SCHOOL_RATE, "Local school tax", *(["Part to a cooperative"] if shares else []), "State education tax"],
+        [[t.town_name, *(_dra(t, f) for _, f in TAX_RATES), t.school_share_of_total_rate, _dra(t, "equalization_ratio"),
+          _dra(t, "full_value_tax_rate"), _doe(t, "equalized_rate_local_education"), _dollars(_doe(t, "local_education_tax")),
+          *([_to_cooperative(t)] if shares else []), _dollars(_doe(t, "state_education_tax"))] for t in rows],
+        None, PROPERTY_TAX_NOTE + DRA_NOTE + SCHOOL_TAX_NOTE,
+        {"School share of the total": "percent", "Equalization ratio": "percent", "Local school tax": "dollars",
+         "Part to a cooperative": "dollars", "State education tax": "dollars"},
+    )
+
+
+def _by_year_and_town(rows: list, value, title: str, unit: str, note: str, medians: Optional[dict] = None) -> Optional[dict]:
+    """One measure by tax year with a column per town, over the years any town has it, and the median town's
+    (by tax year) when it's given"""
+    towns = sorted({t.town_name for t in rows})
+    found = {(t.tax_year, t.town_name): value(t) for t in rows if value(t) is not None}
+    years = sorted({year for year, _ in found})
+    if not years:
+        return None
+    return dataset(title, unit, ["Tax year", *towns, *(["Median NH town"] if medians else [])],
+                   [[str(year), *(found.get((year, town)) for town in towns), *([medians.get(year)] if medians else [])] for year in years],
+                   None, note + (" The median NH town is the middle town that year." if medians else ""))
+
+
+def _medians_by_year(session: Session, value) -> dict:
+    """{tax year: the median town's value}"""
+    by_year = defaultdict(list)
+    for t in _once(session, "property_tax_towns", lambda: property_tax_service.get_towns(session)):
+        by_year[t.tax_year].append(t)
+    return {year: _median_of(towns, value) for year, towns in by_year.items()}
+
+
+def _property_tax(session: Session, place: dict) -> List[dict]:
+    """Property tax rates and school taxes: for a district, each of its towns' DRA rates and DOE school taxes by tax
+    year, and where they rank among NH towns; for the state, the totals, the median town and the towns with the
+    highest and lowest full value rates. There's no page for these on the site yet, so each dataset carries its
+    sources (DRA's for the rates, the DOE's for the school taxes)."""
+    year = _latest_tax_year(session)
+    if year is None:
+        return []
+    if place["level"] == "state":
+        towns = _once(session, "property_tax_towns", lambda: property_tax_service.get_towns(session))
+        by_year = defaultdict(list)
+        for t in towns:
+            by_year[t.tax_year].append(t)
+        totals = []
+        for tax_year, rows in sorted(by_year.items()):
+            doe = [t.doe for t in rows if t.doe]
+            if not doe:
+                continue
+            local, state, other = (sum(getattr(d, field) for d in doe) for field in ("local_education_tax", "state_education_tax", "other_local_tax"))
+            valuation, without_utilities = sum(d.equalized_valuation_with_utilities for d in doe), sum(d.equalized_valuation for d in doe)
+            # As the DOE figures a town's: the state education tax on value without utilities, the others with them
+            rates = [1000 * local / valuation, 1000 * state / without_utilities, 1000 * other / valuation]
+            totals.append([str(tax_year), _dollars(local), _dollars(state), _dollars(other), _dollars(valuation),
+                           *(_round(r, 2) for r in rates[:2]), _round(sum(rates), 2), len(doe)])
+        results = [dataset(
+            "Property taxes by tax year, statewide", "dollars",
+            ["Tax year", "Local school tax", "State education tax", "Municipal and county taxes", "Equalized valuation",
+             "Local school rate on equalized value", "State education rate on equalized value", "Total rate on equalized value", "Towns"],
+            totals, None, PROPERTY_TAX_NOTE + SCHOOL_TAX_NOTE + " Statewide taxes and valuation are every town's added up; the "
+            "statewide rates are those totals per $1,000 of equalized value (derived).",
+            {"Local school rate on equalized value": "rate", "State education rate on equalized value": "rate",
+             "Total rate on equalized value": "rate", "Towns": "count"}, key="property_tax_state",
+        )]
+        results[-1]["source"] = DOE_TAX_SOURCE
+        medians = []
+        for tax_year, rows in sorted(by_year.items()):
+            if not any(t.dra for t in rows):
+                continue
+            medians.append([str(tax_year), *(_median_of(rows, value) for _, value in MEDIAN_RATES)])
+        results.append(dataset(
+            "The median town's tax rates by tax year", "rate", ["Tax year", *(c for c, _ in MEDIAN_RATES)], medians, None,
+            PROPERTY_TAX_NOTE + DRA_NOTE + " Each column is the middle town on that rate alone, so the columns don't add up to the total.",
+            {"Equalization ratio": "percent"},
+        ))
+        results[-1]["source"] = DRA_SOURCE
+        latest = [t for t in by_year[year] if _dra(t, "full_value_tax_rate") is not None]
+        ranked = sorted(latest, key=lambda t: (-t.dra.full_value_tax_rate, t.town_name))
+        shown = ranked[:TAX_TOWNS_SHOWN] + ranked[-TAX_TOWNS_SHOWN:]
+        full_value = _tax_ranks(session, year)["full_value"][0]
+        results.append(dataset(
+            f"Towns with the highest and lowest full value tax rates, tax year {year}", "rate",
+            ["Town", "Rank", "Full value rate", "Total", "Equalization ratio", EQUALIZED_SCHOOL_RATE, "School share of the total"],
+            [[t.town_name, full_value[t.town_id], t.dra.full_value_tax_rate, t.dra.total_rate, t.dra.equalization_ratio,
+              _doe(t, "equalized_rate_local_education"), t.school_share_of_total_rate] for t in shown],
+            None, PROPERTY_TAX_NOTE + DRA_NOTE + f" The {TAX_TOWNS_SHOWN} highest and {TAX_TOWNS_SHOWN} lowest of {len(ranked)} towns; "
+            "rank 1 is the highest. Unincorporated places and towns with few homes can have unusually low rates.",
+            {"Rank": "count", "Equalization ratio": "percent", "School share of the total": "percent"},
+        ))
+        results[-1]["source"] = DRA_SOURCE
+        return results
+    rows = property_tax_service.get_towns(session, district_id=place["id"])
+    if not rows:
+        return []
+    towns = sorted({t.town_name for t in rows})
+    latest = sorted((t for t in rows if t.tax_year == year), key=lambda t: t.town_name)
+    where = ", ".join(towns)
+    if len(towns) == 1:
+        dra = [t for t in rows if t.dra]
+        results = [dataset(
+            f"Property tax rates by tax year, {where}", "rate",
+            ["Tax year", *(c for c, _ in TAX_RATES), "School share of the total", "Equalization ratio", "Full value rate", "Date set"],
+            [[_tax_year(t), *(getattr(t.dra, f) for _, f in TAX_RATES), t.school_share_of_total_rate, t.dra.equalization_ratio,
+              t.dra.full_value_tax_rate, t.dra.date_rate_set.isoformat()] for t in dra],
+            None, PROPERTY_TAX_NOTE + DRA_NOTE, {"School share of the total": "percent", "Equalization ratio": "percent"},
+            key="property_tax",
+        )]
+        results[-1]["source"] = DRA_SOURCE
+        doe = [t for t in rows if t.doe]
+        shares = any(_to_cooperative(t) for t in doe)
+        cooperatives = sorted({s.district_name for t in doe for s in t.doe.cooperative_shares})
+        results.append(dataset(
+            f"School taxes by tax year, {where}", "dollars",
+            ["Tax year", *(c for c, _ in SCHOOL_TAXES[:1]), *(["Part to a cooperative"] if shares else []), *(c for c, _ in SCHOOL_TAXES[1:]),
+             *(c for c, _ in EQUALIZED_RATES)],
+            [[_tax_year(t), _dollars(t.doe.local_education_tax), *([_to_cooperative(t)] if shares else []),
+              *(_dollars(getattr(t.doe, f)) for _, f in SCHOOL_TAXES[1:]), *(getattr(t.doe, f) for _, f in EQUALIZED_RATES)] for t in doe],
+            None, PROPERTY_TAX_NOTE + SCHOOL_TAX_NOTE + (f" The part to a cooperative goes to {', '.join(cooperatives)}." if cooperatives else ""),
+            {c: "rate" for c, _ in EQUALIZED_RATES},
+        ))
+        results[-1]["source"] = DOE_TAX_SOURCE
+    else:
+        results = [_by_town_dataset(latest, f"Property tax rates and school taxes by town, tax year {year}, {place['name']}")]
+        results[-1]["source"] = DRA_SOURCE
+        for value, title, unit, note, source in (
+                (lambda t: _dra(t, "total_rate"), "Total tax rate", "rate", DRA_NOTE, DRA_SOURCE),
+                (lambda t: _dra(t, "full_value_tax_rate"), "Full value tax rate", "rate", DRA_NOTE, DRA_SOURCE),
+                (lambda t: _doe(t, "equalized_rate_local_education"), EQUALIZED_SCHOOL_RATE.capitalize(), "rate", SCHOOL_TAX_NOTE, DOE_TAX_SOURCE),
+                (lambda t: _dollars(_doe(t, "local_education_tax")), "Local school tax", "dollars", SCHOOL_TAX_NOTE, DOE_TAX_SOURCE),
+                # A cooperative its towns' own districts also tax for (Souhegan): the part the DOE shows going to it
+                (lambda t: _dollars(sum(s.local_education_tax for s in t.doe.cooperative_shares if s.district_id == place["id"]))
+                 if t.doe and any(s.district_id == place["id"] for s in t.doe.cooperative_shares) else None,
+                 "Local school tax to the cooperative", "dollars",
+                 SCHOOL_TAX_NOTE + f" This is the part of each town's local school tax the DOE shows going to {place['name']}; the "
+                 "rest pays the town's own school district.", DOE_TAX_SOURCE)):
+            found = _by_year_and_town(rows, value, f"{title} by tax year and town, {place['name']}", unit, PROPERTY_TAX_NOTE + note)
+            if found:
+                found["source"] = source
+                results.append(found)
+    if latest:
+        results.append(_rank_dataset(session, latest, year, f"Where {where} {'ranks' if len(towns) == 1 else 'rank'} among NH towns, tax year {year}"))
+        results[-1]["source"] = DRA_SOURCE
+    return results
+
+
+def _compare_property_tax(session: Session, places: List[dict]) -> dict:
+    """Several districts' towns (and the median town for the state) side by side: the latest tax year's rates and
+    school taxes, a row per town, and the rates on market value by year with a column per town"""
+    year = _latest_tax_year(session)
+    if year is None:
+        raise DataToolError("The site has no property tax rates yet.")
+    rows, names, state = [], [], False
+    for place in places:
+        if place["level"] == "state":
+            state = True
+            names.append("New Hampshire")
+            continue
+        found = property_tax_service.get_towns(session, district_id=place["id"])
+        if not found:
+            raise DataToolError(f"The site has no property tax rates for {place['name']}.")
+        names.append(place["name"])
+        seen = {r.town_id for r in rows}
+        rows += [t for t in found if t.town_id not in seen]
+    latest = sorted((t for t in rows if t.tax_year == year), key=lambda t: t.town_name)
+    results = [_by_town_dataset(latest, f"Property tax rates and school taxes, tax year {year}: {', '.join(names)}")]
+    if state:
+        middle = _tax_ranks(session, year)["median"]
+        results[0]["rows"].append([middle.get(column) if column != "Town" else "Median NH town" for column in results[0]["columns"]])
+        results[0]["note"] += (" The median NH town is the middle town on each rate alone, so its rates don't add up to its total; "
+                               "it has no tax dollars.")
+    results[0]["source"] = DRA_SOURCE
+    if len({t.town_name for t in rows}) <= MAX_TAX_TOWNS:
+        for value, title, note, source in (
+                (lambda t: _dra(t, "full_value_tax_rate"), "Full value tax rate", DRA_NOTE, DRA_SOURCE),
+                (lambda t: _doe(t, "equalized_rate_local_education"), EQUALIZED_SCHOOL_RATE.capitalize(), SCHOOL_TAX_NOTE, DOE_TAX_SOURCE)):
+            found = _by_year_and_town(rows, value, f"{title} by tax year: {', '.join(names)}", "rate", PROPERTY_TAX_NOTE + note,
+                                      _medians_by_year(session, value) if state else None)
+            if found:
+                found["source"] = source
+                results.append(found)
+    else:
+        results[0]["note"] += f" These places have more than {MAX_TAX_TOWNS} towns, so only the latest year is side by side."
+    return {"places": names, "datasets": results}
+
+
 # -------------------- Ranking districts --------------------
 
 ORDERS = ("highest", "lowest")
@@ -2076,21 +2375,24 @@ COMPARE_MEASURES = {
     "child_care": [("child_care_totals", "Licensed places", "Licensed child care places"), ("child_care_totals", "Infant places", "Infant places"),
                    ("child_care_totals", "Toddler places", "Toddler places"), ("child_care_totals", "Programs", "Child care programs")],
 }
+# Topics compared their own way: by measure (census), or by town (property_tax)
+COMPARE_TOPICS = [*COMPARE_MEASURES, "census", "property_tax"]
 MAX_COMPARE = 5
 
 
 def compare_places(session: Session, topic: str, places: List[dict]) -> dict:
     """The same measures for several places side by side: each measure by year with a column per
     place, and the latest year shared by all as one table with a row per place."""
-    if topic not in COMPARE_MEASURES and topic != "census":
-        raise DataToolError(f"Comparisons cover {', '.join([*COMPARE_MEASURES, 'census'])}; for {topic}, call get_data for each place.")
+    if topic not in COMPARE_TOPICS:
+        raise DataToolError(f"Comparisons cover {', '.join(COMPARE_TOPICS)}; for {topic}, call get_data for each place.")
     if not 2 <= len(places) <= MAX_COMPARE:
         raise DataToolError(f"Compare 2 to {MAX_COMPARE} places.")
-    if topic == "census":
+    if topic in ("census", "property_tax"):
         found = [_place(session, item.get("level"), item.get("id")) for item in places]
         if any(place["level"] == "school" for place in found):
-            raise DataToolError("Census estimates are for districts and the state, not individual schools; compare their districts.")
-        return _compare_census(session, found)
+            what = "Census estimates are" if topic == "census" else "Property taxes are"
+            raise DataToolError(f"{what} for districts and the state, not individual schools; compare their districts.")
+        return _compare_census(session, found) if topic == "census" else _compare_property_tax(session, found)
     found = []
     for item in places:
         place = _place(session, item.get("level"), item.get("id"))
@@ -2160,6 +2462,7 @@ TOPIC_FUNCTIONS: Dict[str, Callable[[Session, dict], List[dict]]] = {
     "census": _census,
     "adequacy_aid": _adequacy_aid,
     "special_education_aid": _special_education_aid,
+    "property_tax": _property_tax,
 }
 
 
