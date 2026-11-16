@@ -55,3 +55,33 @@ salary_band_mapping:
   "MA45": 7
   "M.A.+45": 7
   "Masters+45": 7
+# NH DOE's files have typos: a $14 minimum, a maximum below the minimum, 1,300 steps. A row whose
+# minimum is below min_salary or whose maximum is below its minimum is skipped; a step count above
+# max_steps is dropped and the row kept. Each is logged, for reporting to NH DOE.
+limits:
+  min_salary: 20000
+  max_steps: 60
+
+# Values from a district's own published schedule that replace NH DOE's, applied before the limits.
+# Each needs the schedule as its source. year is the year the school year ends (2026 = 2025-26).
+corrections:
+  - district_id: 113  # Conway
+    year: 2026
+    band: BA
+    min_salary: 42571
+    max_salary: 87571
+    steps: 46
+    source: https://drive.google.com/file/d/1Hlw-rLE7O1EMIfzVKw2PBmRt8w5m2xIf/view
+    note: Conway Annual Report FY2025, Appendix B, 2025-26 Salary Schedule, p. 42, column B. NH DOE's BA row ($40,442-$83,192) is the schedule's non-degree (ND) column.
+  - district_id: 113  # Conway
+    year: 2026
+    band: MA
+    steps: 46
+    source: https://drive.google.com/file/d/1Hlw-rLE7O1EMIfzVKw2PBmRt8w5m2xIf/view
+    note: Same schedule, column M, which has 46 steps like every column; NH DOE's file has 464.
+  - district_id: 271  # Jackson
+    year: 2026
+    band: BA
+    min_salary: 46000
+    source: https://files.smartsites.parentsquare.com/10271/personnel_polices_for_contracted_employees_2026-27_1.pdf
+    note: Jackson's Salary Schedule for Hiring (Appendix A, p. 19) starts column B at $46,000; NH DOE's file has $4,600, and the rest of its Jackson rows match the schedule. NH DOE's 2024-25 file also had $46,000.

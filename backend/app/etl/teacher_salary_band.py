@@ -10,7 +10,7 @@ from typing import Iterable, Optional
 import pandas as pd
 from sqlalchemy.engine import Connection
 
-from app.etl.core import configured_years, existing_ids, load_config, refresh_dependent_views, upsert_rows
+from app.etl.core import configured_years, existing_ids, load_config, refresh_dependent_views, replace_rows, upsert_rows
 from app.etl.staff import log_skips, parse_int, skip_district, valid_salary, year_file_any_extension
 
 logger = logging.getLogger("app.etl")
@@ -19,7 +19,6 @@ CONFIG = "district_teacher_salary_band_config.yaml"
 TABLE = "district_teacher_salary_band"
 TYPE_TABLE = "teacher_salary_band_type"
 COLUMNS = ("district_id_fk", "teacher_salary_band_type_id_fk", "year", "min_salary", "max_salary", "steps")
-KEY = ("district_id_fk", "teacher_salary_band_type_id_fk", "year")
 
 
 def normalize_band_name(name: str) -> str:
@@ -36,11 +35,16 @@ def parse_year(df: pd.DataFrame, year: int, config: dict, districts: set, skips:
     Rows from one year's sheet, in file order; the first row for a district and band wins.
 
     Rows without a band the config maps, or without a positive minimum and maximum salary, are
-    skipped. Steps that are missing, fractional or not positive are stored as NULL.
+    skipped. The config's corrections replace NH DOE's values first; then a row with a minimum
+    below the limit or a maximum below its minimum is skipped, and a step count above the limit
+    is dropped. Steps that are missing, fractional or not positive are stored as NULL.
     """
     columns = config["column_mappings"]
     bands = {normalize_band_name(name): band_id for name, band_id in config["salary_band_mapping"].items()}
-    rows, seen = [], set()
+    limits = config["limits"]
+    corrections = {(c["district_id"], bands[normalize_band_name(c["band"])]): c
+                   for c in config.get("corrections") or [] if c["year"] == year}
+    rows, seen, corrected = [], set(), set()
     for _, row in df.iterrows():
         # Rows without a number in the district column are headings, notes and blank lines
         district_id = parse_int(row.iloc[columns["district_id"]])
@@ -61,14 +65,30 @@ def parse_year(df: pd.DataFrame, year: int, config: dict, districts: set, skips:
             continue
         min_salary = valid_salary(row.iloc[columns["min_salary"]])
         max_salary = valid_salary(row.iloc[columns["max_salary"]])
+        steps = parse_int(row.iloc[columns["steps"]])
+        fix = corrections.get((district_id, band_id))
+        if fix:
+            min_salary, max_salary = fix.get("min_salary", min_salary), fix.get("max_salary", max_salary)
+            steps = fix.get("steps", steps)
+            corrected.add((district_id, band_id))
         if min_salary is None or max_salary is None:
             skips["rows without a minimum or maximum salary"] += 1
             continue
-        steps = parse_int(row.iloc[columns["steps"]])
+        if min_salary < limits["min_salary"] or max_salary < min_salary:
+            skips["rows with an impossible salary"] += 1
+            logger.warning(f"Teacher salary bands {year}: skipped district {district_id} band {band}: "
+                           f"minimum {min_salary:,.0f}, maximum {max_salary:,.0f}")
+            continue
+        if steps is not None and steps > limits["max_steps"]:
+            logger.warning(f"Teacher salary bands {year}: district {district_id} band {band} kept without its {steps:,} steps")
+            steps = None
         if steps is not None and steps <= 0:
             steps = None
         rows.append((district_id, band_id, year, min_salary, max_salary, steps))
         seen.add((district_id, band_id))
+    unused = set(corrections) - corrected
+    if unused:
+        raise ValueError(f"Salary band corrections for {year} match no row in the file: {sorted(unused)}")
     return rows
 
 
@@ -78,8 +98,9 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     file_settings = config["file_settings"]
     districts = existing_ids(conn, "district")
 
-    rows, skips = [], Counter()
+    rows, skips, loaded = [], Counter(), []
     for year in configured_years(file_settings, years):
+        loaded.append(year)
         path = year_file_any_extension(file_settings, year)
         year_rows = parse_year(pd.read_excel(path, skiprows=file_settings["start_row"] - 1), year, config, districts, skips)
         if not year_rows:
@@ -90,7 +111,8 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     # Band types the config adds after the original migration's six (e.g. MA45) must exist first
     types = upsert_rows(conn, TYPE_TABLE, ("id", "name", "description"), ("id",),
                         [tuple(band_type) for band_type in config["salary_band_types"]])
-    counts = upsert_rows(conn, TABLE, COLUMNS, KEY, rows)
+    # Each year's file replaces that year, so a row the limits now skip leaves the table
+    counts = replace_rows(conn, TABLE, COLUMNS, rows, where="year = ANY(:years)", params={"years": loaded})
     counts[TYPE_TABLE] = types
     # The state_teacher_salary_band view; it does not exist yet when the migration loads the table
     counts["views_refreshed"] = refresh_dependent_views(conn, TABLE)
