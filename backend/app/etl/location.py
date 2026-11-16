@@ -14,6 +14,9 @@ former_schools_config.yaml, so their history in other datasets loads.
 Districts and schools in the latest configured year's lists are marked is_current;
 the API lists only those.
 
+A school whose website in the list is broken or missing takes its working site from the
+config's website_corrections, applied after every load.
+
 A school's type comes from the state's type code. Districts on the district/town list are
 school districts; the other operators in the school list are a charter school's board or a
 private school's operator, which the district's kind records.
@@ -396,9 +399,24 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
         }
     counts["former"] = add_former(conn)
     counts["current"] = mark_current(conn, latest or read_year(config, latest_year))
+    counts["website_corrections"] = apply_website_corrections(conn, config)
     # The district views also read school, so they are refreshed with it
     counts["views_refreshed"] = refresh_dependent_views(conn, "school")
     return counts
+
+
+def apply_website_corrections(conn: Connection, config: Optional[dict] = None) -> int:
+    """
+    Give the schools in the config's website_corrections (a broken or missing link in the state's
+    list) their own working site. A correction for a school the database doesn't have stops the load.
+    """
+    corrections = (config or load_config(CONFIG)).get('website_corrections') or []
+    for fix in corrections:
+        updated = conn.execute(text("UPDATE school SET webpage = :webpage WHERE id = :id"),
+                               {"webpage": fix['webpage'], "id": fix['school_id']}).rowcount
+        if not updated:
+            raise ValueError(f"{CONFIG}: a website correction for school {fix['school_id']}, which the database doesn't have")
+    return len(corrections)
 
 
 def add_former(conn: Connection) -> dict:

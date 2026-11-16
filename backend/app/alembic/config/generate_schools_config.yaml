@@ -44,3 +44,17 @@ column_mappings:
   admin_type: 27  
   group_id: 28
   webpage: 30
+
+# Schools whose website in the state's school list is broken or missing, with the school's own
+# working site. Applied after every load (location.apply_website_corrections), so a correction
+# outlasts the next year's list; one for a school the database doesn't have stops the load.
+website_corrections:
+  - school_id: 21180  # St. Joseph Regional School (Keene)
+    webpage: https://www.stjosephkeene.org/
+    note: The state's list gives http://sites.google.com/site/stjosephregionalschool, which asks for a Google sign-in (checked November 16, 2026).
+  - school_id: 29235  # Our Lady of Mercy Academy (Keene)
+    webpage: https://www.mercyacademykeene.org/
+    note: The state's list gives https://www.mercy.academy/, which didn't connect on November 16, 2026.
+  - school_id: 29282  # Granite Valley Preparatory Chartered Public School (Keene)
+    webpage: https://www.granitevalleyprep.org/
+    note: The state's list gives no website.

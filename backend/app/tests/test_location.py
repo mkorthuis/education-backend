@@ -11,6 +11,7 @@ import pandas as pd
 from fastapi.testclient import TestClient
 
 from app.core.config import settings
+from app.core.db import engine
 from app.etl import location
 from app.main import app
 
@@ -101,6 +102,20 @@ class LocationApiTests(unittest.TestCase):
         self.assertEqual(north_star["not_yet_reported"], ["enrollment", "safety"])
         # A long-standing school has figures in every topic
         self.assertEqual(self.get("location/school/20285")["not_yet_reported"], [])
+
+    def test_schools_with_broken_links_have_their_working_sites(self):
+        for fix in CONFIG['website_corrections']:
+            self.assertEqual(self.get(f"location/school/{fix['school_id']}")["webpage"], fix['webpage'])
+
+    def test_a_website_correction_for_an_unknown_school_stops_the_load(self):
+        config = {'website_corrections': [{'school_id': 99999999, 'webpage': 'https://example.org/'}]}
+        with engine.connect() as conn:
+            transaction = conn.begin()
+            try:
+                with self.assertRaises(ValueError):
+                    location.apply_website_corrections(conn, config)
+            finally:
+                transaction.rollback()
 
     def test_district_ranks_can_leave_out_charter_boards(self):
         boards = {d["id"] for d in self.get("location/district", kind="charter")}
