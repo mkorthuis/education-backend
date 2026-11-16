@@ -340,7 +340,9 @@ class ReferenceDatabaseTests(unittest.TestCase):
         self.assertNotIn("reasons", NAEP_SOURCE)
 
     def test_facts_about_this_site_are_used_but_not_linked(self):
-        fact = self.session.exec(select(ReferenceFact).where(ReferenceFact.source_url == "https://nhfacts.com")).first()
+        # The library's first such fact: town topics hold hundreds of facts and the lookup caps a topic at 25
+        fact = self.session.exec(select(ReferenceFact).where(ReferenceFact.source_url == "https://nhfacts.com")
+                                 .order_by(ReferenceFact.id)).first()
         slug = self.session.get(ReferenceTopic, fact.reference_topic_id_fk).slug
         result = look_up_reference(self.session, [slug])
         self.assertIn(f"r{fact.id}", [f["id"] for f in result["topics"][0]["facts"]])

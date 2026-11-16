@@ -31,6 +31,7 @@ files:
   - national-comparisons.md
   - town-figures.md
   - state-issues.md
+  - town/*/*.md
 
 skip_files: [README.md, brief.md, questions.md, shared-topics.md, recommended-improvements.md, research-brief-template.md]
 
