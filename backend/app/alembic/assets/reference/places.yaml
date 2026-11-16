@@ -1449,6 +1449,12 @@ district_service:
     ends: 2033-06-30
     source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/public-mtg-materials-sboe-4-13-2023_1.pdf
     note: Agreement dated February 8, 2023 (PDF pages 194-214), approved by the State Board April 13, 2023; extends three more years unless notice is given before July 1, 2031; 151 of Strafford's 157 high schoolers attend in 2025-26
+  - district: Strafford
+    receiving_district: Dover
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://publicrecords.dover.nh.gov/FileDisp/Index/131424/public/1/deptnum/0/cab/Public_Meetings
+    note: Dover's FY27 Enrollment Capacity Report (June 2026, p. 7) names "a limited 10 student per year agreement with Strafford (on a per student basis)"; the agreement itself and its dates aren't posted
   # ---- SAU 107 ----
   - district: Nottingham
     receiving_district: Dover
