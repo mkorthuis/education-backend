@@ -5,7 +5,9 @@ practices, with the library's number tables.
 
 A district's facts come with those of the places its students depend on: its towns, its SAU, and
 the districts and outside schools that take its students for grades it doesn't run (district_service),
-so a Jackson question also sees Kennett High's and Fryeburg Academy's facts. A topic can hold
+so a Jackson question also sees Kennett High's and Fryeburg Academy's facts. district_service is read
+both ways, so a Conway question also sees the facts of the districts that send it students, and a
+cooperative's those of its member districts, after the places its own students go. A topic can hold
 hundreds of facts across towns, so each topic gives at most MAX_FACTS, ranked by an optional query
 of a few words, then by how close the place is to the district asked about.
 
@@ -37,7 +39,7 @@ MAX_LABEL = 160
 OWN_SITE = "nhfacts.com"
 
 # How close a fact's place is to the district asked about; lower comes first
-OWN, OWN_SAU, NO_PLACE, SERVES, SERVES_SAU, ELSEWHERE = 0, 1, 2, 3, 4, 5
+OWN, OWN_SAU, NO_PLACE, SERVES, SERVES_SAU, SENDS, SENDS_SAU, ELSEWHERE = 0, 1, 2, 3, 4, 5, 6, 7
 
 
 @lru_cache(maxsize=1)
@@ -66,7 +68,8 @@ def tool_definition() -> dict:
             "(how_it_works), what research says works (research), programs and where to get help (programs), and each "
             "district's own practices (local; give the district's id from find_places). A district's facts come with those of "
             "its towns, its SAU and the schools its students attend for grades it doesn't run, including schools in other "
-            "states; each fact says which place it's about. A topic gives at most "
+            "states, then those of the districts that send it students, such as a cooperative's member districts; each fact "
+            "says which place it's about. A topic gives at most "
             f"{MAX_FACTS} facts: for a long one, add a query of a few words (\"late bus\", \"AP courses\") to rank them. "
             f"Pick up to {MAX_TOPICS} topics:\n{lines}"
         ),
@@ -93,7 +96,8 @@ def _label(citation: Optional[str], title: str) -> str:
 
 def related_places(session: Session, district: District) -> Dict[Tuple[str, int], int]:
     """The places whose facts a question about this district gets, each with how close it is:
-    {("district", 271): OWN, ("town", 271): OWN, ("sau", 9): OWN_SAU, ("district", 113): SERVES, ...}"""
+    {("district", 271): OWN, ("town", 271): OWN, ("sau", 9): OWN_SAU, ("district", 113): SERVES, ...}.
+    The districts that send it students come after those that take its own (Conway: Jackson, SENDS)."""
     places = {("district", district.id): OWN}
     for (town_id,) in session.execute(text("SELECT town_id_fk FROM town_district_xref WHERE district_id_fk = :d"), {"d": district.id}):
         places[("town", town_id)] = OWN
@@ -108,6 +112,12 @@ def related_places(session: Session, district: District) -> Dict[Tuple[str, int]
         places.setdefault((kind, ident), SERVES)
         if sau:
             places.setdefault(("sau", sau), SERVES_SAU)
+    for ident, sau in session.execute(text("""
+            SELECT DISTINCT d.id, d.sau_id_fk FROM district_service s JOIN district d ON d.id = s.district_id_fk
+            WHERE s.receiving_district_id_fk = :d"""), {"d": district.id}):
+        places.setdefault(("district", ident), SENDS)
+        if sau:
+            places.setdefault(("sau", sau), SENDS_SAU)
     return places
 
 

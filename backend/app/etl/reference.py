@@ -50,7 +50,7 @@ TABLE_FIELDS = ("unit", "period", "source", "as_of", "raw", "note", "topic", "pl
 OUTSIDE_STATES = {"maine": "ME", "vermont": "VT", "massachusetts": "MA", "quebec": "QC"}
 PLACE = re.compile(r"^(district|town|sau|" + "|".join(OUTSIDE_STATES) + r") (\S.*)$")
 GRADES = {"K": 0, "PK": 0}
-ARRANGEMENTS = ("tuition_contract", "area_agreement", "cooperative", "choice", "no_contract")
+ARRANGEMENTS = ("tuition_contract", "area_agreement", "cooperative", "choice", "no_contract", "interstate_district", "joint_maintenance")
 
 
 def _date(value: str) -> Optional[date]:
@@ -300,12 +300,22 @@ class Places:
         return tuple(found if i == slot else None for i in range(4))
 
 
+def takes_every_arrangement(conn: Connection) -> bool:
+    """Whether district_service's check allows every arrangement yet. The migrations that load the library
+    call today's loader, and interstate_district and joint_maintenance came in a later one (b7d9f1a3c5e8)."""
+    check = conn.execute(text("SELECT pg_get_constraintdef(oid) FROM pg_constraint WHERE conname = 'check_district_service_arrangement'")).scalar()
+    return check is None or all(f"'{a}'" in check for a in ARRANGEMENTS)
+
+
 def load_places(conn: Connection, config: dict) -> dict:
     """Outside schools (upserted by name and state) and district_service (replaced)."""
     places = read_places(config)
     counts = {"outside_school": upsert_rows(
         conn, "outside_school", ("name", "state", "kind", "url"), ("name", "state"),
         [(s["name"], s["state"], s["kind"], s.get("url")) for s in places["outside_schools"]])}
+    if not takes_every_arrangement(conn):
+        logger.info("district_service doesn't take every arrangement yet; a later migration loads it")
+        return counts
     districts = lookup_ids(conn, "district")
     outside = {f"{row[0]} ({row[1]})": row[2] for row in conn.execute(text("SELECT name, state, id FROM outside_school"))}
     rows, problems = [], []

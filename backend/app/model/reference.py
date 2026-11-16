@@ -90,8 +90,9 @@ class OutsideSchool(BaseMixin, table=True):
 class DistrictService(BaseMixin, table=True):
     """Where a district's students go for grades it doesn't run itself: another New Hampshire district
     or a school outside the state, the grades, and the arrangement (a tuition contract, an AREA
-    agreement, a cooperative, families' choice with the district paying, or tuition paid without a
-    written contract)"""
+    agreement, a cooperative, families' choice with the district paying, tuition paid without a
+    written contract, an interstate district such as Dresden, or a joint maintenance agreement such as
+    Prospect Mountain's)"""
     __tablename__ = "district_service"
 
     district_id_fk: int = Field(foreign_key="district.id")
@@ -99,7 +100,8 @@ class DistrictService(BaseMixin, table=True):
     outside_school_id_fk: Optional[int] = Field(default=None, foreign_key="outside_school.id")
     grade_low: int  # 0 is kindergarten
     grade_high: int
-    arrangement: str = Field(max_length=30)  # tuition_contract, area_agreement, cooperative, choice or no_contract
+    arrangement: str = Field(max_length=30)  # tuition_contract, area_agreement, cooperative, choice, no_contract,
+    # interstate_district or joint_maintenance
     starts: Optional[date] = None
     ends: Optional[date] = None
     source_url: str = Field(max_length=1000)

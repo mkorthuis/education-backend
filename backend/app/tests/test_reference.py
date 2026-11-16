@@ -228,6 +228,42 @@ class ReferenceDatabaseTests(unittest.TestCase):
         [other] = look_up_reference(self.session, ["budget-form-and-vote-dates"], merrimack.id)["topics"]
         self.assertNotIn("Conway", [f.get("place") for f in other["facts"]])
 
+    def test_a_district_gets_the_facts_of_the_districts_that_send_it_students(self):
+        conway, jackson = self.district("Conway"), self.district("Jackson")
+        souhegan, amherst = self.district("Souhegan Cooperative"), self.district("Amherst")
+        # Conway's own fact first, then Jackson's, which tuitions its high school students to Kennett
+        [entry] = look_up_reference(self.session, ["budget-form-and-vote-dates"], conway.id)["topics"]
+        places = [f.get("place") for f in entry["facts"]]
+        self.assertLess(places.index("Conway"), places.index("Jackson"))
+        self.assertEqual(reference_tools.related_places(self.session, conway)[("district", jackson.id)], reference_tools.SENDS)
+        # A cooperative gets its member districts' facts, and each member the cooperative's
+        [coop] = look_up_reference(self.session, ["budget-form-and-vote-dates"], souhegan.id)["topics"]
+        places = [f.get("place") for f in coop["facts"]]
+        self.assertLess(places.index("Souhegan Cooperative"), places.index("Amherst"))
+        self.assertIn("Mont Vernon", places)
+        # Amherst sends its high school students to Souhegan and takes Mont Vernon's grades 7-8
+        places = reference_tools.related_places(self.session, amherst)
+        self.assertEqual((places[("district", souhegan.id)], places[("district", self.district("Mont Vernon").id)]),
+                         (reference_tools.SERVES, reference_tools.SENDS))
+        # Two districts don't share each other's facts just because they send students to the same place
+        self.assertNotIn(("district", jackson.id), reference_tools.related_places(self.session, self.district("Albany")))
+
+    def test_districts_that_share_a_town_say_how_their_students_go(self):
+        # The state's district/town list links a cooperative or interstate district to its member towns; a
+        # district_service row (places.yaml) must link it to each member district, which a change in next
+        # year's list would break. Districts that run no grades, such as In-State Facility, don't count.
+        missing = self.session.execute(text("""
+            SELECT DISTINCT a.name || ' / ' || b.name
+            FROM town_district_xref x JOIN town_district_xref y ON y.town_id_fk = x.town_id_fk AND y.district_id_fk > x.district_id_fk
+            JOIN district a ON a.id = x.district_id_fk JOIN district b ON b.id = y.district_id_fk
+            WHERE a.is_current AND b.is_current
+              AND EXISTS (SELECT 1 FROM district_grade_xref g WHERE g.district_id_fk = a.id)
+              AND EXISTS (SELECT 1 FROM district_grade_xref g WHERE g.district_id_fk = b.id)
+              AND NOT EXISTS (SELECT 1 FROM district_service s WHERE (s.district_id_fk = a.id AND s.receiving_district_id_fk = b.id)
+                                                                 OR (s.district_id_fk = b.id AND s.receiving_district_id_fk = a.id))
+            ORDER BY 1""")).scalars().all()
+        self.assertEqual(missing, [])
+
     def test_statewide_topics_keep_their_facts_about_places(self):
         [entry] = look_up_reference(self.session, ["cte-centers-overview"])["topics"]
         self.assertIn("Town of Berlin", [f.get("place") for f in entry["facts"]])

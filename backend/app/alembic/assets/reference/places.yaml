@@ -1,19 +1,27 @@
 # Where each district's students go for the grades it doesn't run, and the schools outside New
-# Hampshire they attend. The Ask's reference lookup follows these links, so a question about Jackson
-# also gets facts about Josiah Bartlett Elementary (Bartlett), Kennett High (Conway) and Fryeburg
-# Academy. Loaded with the library (`python -m app.etl load reference`).
+# Hampshire they attend. The Ask's reference lookup follows these links both ways, so a question about
+# Jackson also gets facts about Josiah Bartlett Elementary (Bartlett), Kennett High (Conway) and Fryeburg
+# Academy, and one about Conway gets those of the districts that send it students. Loaded with the
+# library (`python -m app.etl load reference`). A test checks that every cooperative and interstate
+# district in the state's district/town list has a row for each member district.
 #
 # district_service rows:
 #   district / receiving_district: names exactly as in the site's district table
 #   outside_school: "Name (ST)", one of the outside_schools below
 #   grades: [low, high], with K for kindergarten
-#   arrangement: tuition_contract | area_agreement | cooperative | choice | no_contract
+#   arrangement: tuition_contract | area_agreement | cooperative | choice | no_contract |
+#                interstate_district | joint_maintenance
 #     choice: families may choose the school and the district pays up to a set amount
 #     no_contract: the district pays tuition there without a written contract posted
+#     interstate_district: a district formed with Vermont towns (Dresden, Rivendell)
+#     joint_maintenance: a school two districts run together under RSA 194:21 (Prospect Mountain)
 #   starts / ends: the contract's dates, where known
 #   source: the contract, or the page or minutes that describe the arrangement
 #
-# Gathered November 13, 2026 from the town research (town/<Town>/README.md in the education folder).
+# SAU 9 and SAU 13 were gathered November 13, 2026 from the town research (town/<Town>/README.md in
+# the education folder); the rest November 15, 2026 from each district's contracts, policies, board
+# minutes and annual reports, the State Board of Education's approvals, and, for cooperative members,
+# the state's district/town list.
 
 outside_schools:
   - name: MSAD 72
@@ -24,8 +32,102 @@ outside_schools:
     state: ME
     kind: private_academy
     url: https://www.fryeburgacademy.org/
+  - name: Amesbury High School
+    state: MA
+    kind: public_school
+    url: https://ahs.amesburyma.gov
+  - name: Pioneer Valley Regional School
+    state: MA
+    kind: public_school
+    url: https://pvrs.pvrsdk12.org/
+  - name: Franklin County Technical School
+    state: MA
+    kind: public_school
+    url: https://www.fcts.us/
+  - name: Thetford Academy
+    state: VT
+    kind: private_academy
+    url: https://thetfordacademy.org/
+  - name: St. Johnsbury Academy
+    state: VT
+    kind: private_academy
+    url: https://stjacademy.org/
+  - name: Hartford High School
+    state: VT
+    kind: public_school
+    url: https://hhsvt.com/
+  - name: Windsor High School
+    state: VT
+    kind: public_school
+    url: https://windsor.wsesu.net/
+  - name: Samuel Morey Elementary School
+    state: VT
+    kind: public_school
+    url: https://sme.rivendellschool.org/
+  - name: Oxbow High School
+    state: VT
+    kind: public_school
+    url: https://www.oxbowhighschool.org/
+  - name: Blue Mountain Union School
+    state: VT
+    kind: public_school
+    url: https://www.bmuschool.org/
+  - name: Lyndon Institute
+    state: VT
+    kind: private_academy
+    url: https://www.lyndoninstitute.org/
+  - name: Canaan Memorial High School
+    state: VT
+    kind: public_school
+    url: https://www.canaanschools.org/
+  - name: MSAD 35
+    state: ME
+    kind: public_district
+    url: https://www.rsu35.org/
 
 district_service:
+  # ---- SAU 2 ----
+  - district: Ashland
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  # ---- SAU 7 ----
+  - district: Clarksville
+    receiving_district: Pittsburg
+    grades: [K, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2036-06-30
+    source: https://content.myconnectsuite.com/api/documents/32f04f74f89d4243aa2563a6b95c6283
+    note: Renewed AREA, approved by the State Board on August 14, 2024 and by both districts' voters in October 2024; Clarksville may send up to four high schoolers elsewhere, without busing
+  - district: Columbia
+    receiving_district: Colebrook
+    grades: [K, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2036-06-30
+    source: https://content.myconnectsuite.com/api/documents/36ef6b6180a7453093e32ea9ebad3f58
+    note: Renewed AREA (in place since the 1970s); voters in both districts approved it August 6, 2024; Columbia students in Canaan's CTE program are billed for part of the day
+  - district: Stewartstown
+    receiving_district: Colebrook
+    grades: [9, 12]
+    arrangement: choice
+    source: https://content.myconnectsuite.com/api/documents/cddf1c0072cf4806a0dffc8a3930f813.pdf
+    note: Families choose Colebrook Academy, Pittsburg or Canaan (VT); Stewartstown pays each school's tuition; no written contract found
+  - district: Stewartstown
+    receiving_district: Pittsburg
+    grades: [9, 12]
+    arrangement: choice
+    source: https://content.myconnectsuite.com/api/documents/cddf1c0072cf4806a0dffc8a3930f813.pdf
+    note: Families choose Colebrook Academy, Pittsburg or Canaan (VT); Stewartstown pays each school's tuition; no written contract found
+  - district: Stewartstown
+    outside_school: Canaan Memorial High School (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://content.myconnectsuite.com/api/documents/cddf1c0072cf4806a0dffc8a3930f813.pdf
+    note: Families choose Colebrook Academy, Pittsburg or Canaan (VT); 12 Stewartstown students at Canaan High in March 2025; no written contract found
   # ---- SAU 9 ----
   - district: Jackson
     receiving_district: Bartlett
@@ -138,7 +240,14 @@ district_service:
     arrangement: choice
     source: https://drive.google.com/file/d/1D7nfX5oLUqeMkG1pNPfTpsIGiYRw-9l8/view
     note: Policy JECC; Chatham pays up to its MSAD 72 or Fryeburg rate and the family pays the rest
-
+  # ---- SAU 10 ----
+  - district: Derry Cooperative
+    receiving_district: Pinkerton Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2002-07-01
+    source: https://drive.google.com/file/d/11ltF3K9oy7wDUKxEr-4aTl5Foes2ISAO/view
+    note: The 2017 restatement of the 2002 contract; extends 5 years each July (next 2027) unless notice by March 30; the board may let up to 10% attend other public high schools
   # ---- SAU 13 ----
   - district: Madison
     receiving_district: Conway
@@ -178,3 +287,1223 @@ district_service:
     starts: 2024-07-01
     source: https://drive.google.com/file/d/1d8wVyA1kBtoqLZ16nlfdpPyL2ilzcEVP/view
     note: Moultonborough Academy; up to 10 students per grade in 2026-27
+  # ---- SAU 15 ----
+  - district: Auburn
+    receiving_district: Pinkerton Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2013-07-01
+    source: http://auburnschoolboard.sau15.net/wp-content/uploads/sites/14/2014/06/Pinkerton-Agreement-Approved.pdf
+    note: State Board approved June 2011; 20-year term, extending 5 years each July from 2018 unless notice by March 30; policy JCB lets up to 5% of a class go to another public high school
+  - district: Candia
+    receiving_district: Pinkerton Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2018-07-01
+    source: https://candia.sau15.net/wp-content/uploads/sites/7/2024/10/Candia-Pinkerton-Academy-Agreement-2018-2038.pdf
+    note: Replaced Manchester Central after the 2016 vote; 20-year term to 2038, extending 5 years each July from 2023 unless notice; up to 5% may go to another public high school
+  - district: Hooksett
+    receiving_district: Pinkerton Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2016-07-01
+    source: https://hooksett.sau15.net/wp-content/uploads/sites/3/2022/02/Pinkerton-Agreement.pdf
+    note: High school of record; Hooksett must send at least 63% of its 8th graders; 10-year term, extending 5 years each July from 2021 unless notice by March 30; amended 2021
+  - district: Hooksett
+    receiving_district: Manchester
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2019-07-01
+    ends: 2029-06-30
+    source: http://hooksetthighschoolinfo.sau15.net/wp-content/uploads/sites/12/2018/02/Hooksett-Manchester-2016.pdf
+    note: Families petition for Central, West or Memorial; tuition is set from Pinkerton's rate
+  - district: Hooksett
+    receiving_district: Bow
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2023-07-01
+    ends: 2028-06-30
+    source: https://hooksetthighschoolinfo.sau15.net/wp-content/uploads/sites/12/2023/07/SIGNED-Bow.pdf
+    note: MOU under RSA 193:3, IV; families petition; up to 10 students per grade; Hooksett pays Pinkerton's rate
+  - district: Hooksett
+    receiving_district: Goffstown
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2023-07-01
+    ends: 2028-06-30
+    source: https://hooksetthighschoolinfo.sau15.net/wp-content/uploads/sites/12/2023/07/SIGNED-Goffstown-2023-2028.pdf
+    note: MOU under RSA 193:3, IV; families petition; Hooksett pays Pinkerton's rate
+  - district: Hooksett
+    receiving_district: Londonderry
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2023-07-01
+    ends: 2028-06-30
+    source: https://hooksetthighschoolinfo.sau15.net/wp-content/uploads/sites/12/2023/07/SIGNED-Londonderry-2023-2028.pdf
+    note: MOU under RSA 193:3, IV; families petition; up to 40 students per grade; Hooksett pays Pinkerton's rate
+  - district: Hooksett
+    receiving_district: Pembroke
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2023-07-01
+    ends: 2028-06-30
+    source: https://hooksetthighschoolinfo.sau15.net/wp-content/uploads/sites/12/2023/07/Pembroke-SIGNED.pdf
+    note: Pembroke Academy; MOU under RSA 193:3, IV; families petition; up to 20 students per grade; Hooksett pays Pinkerton's rate
+  # ---- SAU 16 ----
+  - district: Brentwood
+    receiving_district: Exeter Region Cooperative
+    grades: [6, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: East Kingston
+    receiving_district: Exeter Region Cooperative
+    grades: [6, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Exeter
+    receiving_district: Exeter Region Cooperative
+    grades: [6, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Kensington
+    receiving_district: Exeter Region Cooperative
+    grades: [6, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Newfields
+    receiving_district: Exeter Region Cooperative
+    grades: [6, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Stratham
+    receiving_district: Exeter Region Cooperative
+    grades: [6, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  # ---- SAU 19 ----
+  - district: New Boston
+    receiving_district: Goffstown
+    grades: [7, 12]
+    arrangement: area_agreement
+    starts: 2024-07-01
+    ends: 2034-06-30
+    source: https://www.sau19.org/attachments/article/215/Final%20AREA%20Agreement%20%28%202024-2034%29%20%20with%20Appendix%20A%20and%20B%20%28Signed%29%20%204-18-2022.pdf
+    note: Mountain View Middle (7-8) and Goffstown High (9-12); renewed by both districts' voters in March 2022
+  # ---- SAU 20 ----
+  - district: Dummer
+    receiving_district: Milan
+    grades: [K, 6]
+    arrangement: area_agreement
+    starts: 2015-07-01
+    source: https://drive.google.com/file/d/1Fv1od_K6LNqDrI-v6gBR1kHwUc_HTe2V/view
+    note: Milan Village School; voters renewed the AREA in March 2014 for at least 10 years from 2015, and the State Board adopted it; no later renewal or end date found, but the 2026-27 budget still pays Milan tuition
+  - district: Dummer
+    receiving_district: Berlin
+    grades: [7, 12]
+    arrangement: tuition_contract
+    source: https://docs.google.com/document/d/1Pk475BleX3zekKR0iewOp9LYypL0PIHMQf6tPr2A6_0/edit
+    note: Renews itself every three years; another public school only if the Dummer board approves the request (Policy JDTS)
+  - district: Errol
+    receiving_district: Colebrook
+    grades: [9, 12]
+    arrangement: no_contract
+    source: https://content.myconnectsuite.com/api/documents/7b1cdea854214bb2b7569467654c9c73
+    note: Colebrook Academy listed 5 Errol high schoolers in 2024-25; Errol budgets high school tuition (about $148,000 for 2026-27) without naming schools; other destinations not found
+  - district: Milan
+    receiving_district: Berlin
+    grades: [7, 12]
+    arrangement: tuition_contract
+    starts: 2018-07-01
+    source: https://drive.google.com/file/d/182PijH5FtAU_ccBjyX9uUIBrEO7YA6gW/view
+    note: Replaced the Milan-Berlin AREA on July 1, 2018 (Dummer minutes, August 7, 2017); families may choose Gorham instead; buses run only to Berlin
+  - district: Milan
+    receiving_district: Gorham Randolph Shelburne Cooperative
+    grades: [7, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/11Yz0BwkB9Mp0fD8xiSOO_Lqa6vvAcKXP/view
+    note: Voters chose to let families pick Berlin or Gorham; Milan pays Gorham's tuition but parents provide transport; 9 at Gorham Middle and 10 at Gorham High in the 2026-27 budget
+  # ---- SAU 21 ----
+  - district: Hampton Falls
+    receiving_district: Winnacunnet Cooperative
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: North Hampton
+    receiving_district: Winnacunnet Cooperative
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Seabrook
+    receiving_district: Winnacunnet Cooperative
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: South Hampton
+    outside_school: Amesbury High School (MA)
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://amesburyma.gov/DocumentCenter/View/5767/Dec-1-2025-Packet
+    note: Contract dated April 3, 2007; Amesbury sets the rate each year ($15,871.45 for 2026-27); families choose Amesbury or Winnacunnet
+  - district: South Hampton
+    receiving_district: Winnacunnet Cooperative
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://campussuite-storage.s3.amazonaws.com/prod/1558718/e7fa12dc-6862-11e9-88e9-0a2901a6873e/2255995/06961bac-a699-11eb-8f37-022a99658949/file/2020-2021%20South%20Hampton%20SD%20Annual%20Report.pdf
+    note: Agreement made in summer 2020 at Amesbury's tuition rate; families choose; 16 South Hampton students at Winnacunnet in October 2025
+  # ---- SAU 23 ----
+  - district: Bath
+    receiving_district: Haverhill Cooperative
+    grades: [7, 8]
+    arrangement: tuition_contract
+    source: https://drive.google.com/file/d/1anS-rizNhDzN7xzrbe4F93PJ7wY_XLA4/view
+    note: Haverhill Cooperative Middle School; families choose Haverhill or Lisbon
+  - district: Bath
+    receiving_district: Lisbon Regional
+    grades: [7, 8]
+    arrangement: tuition_contract
+    source: https://drive.google.com/file/d/1anS-rizNhDzN7xzrbe4F93PJ7wY_XLA4/view
+    note: Lisbon Regional School; families choose Haverhill or Lisbon
+  - district: Bath
+    receiving_district: Haverhill Cooperative
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://docs.google.com/document/d/1jq0nzIhYvHwFhcHICioBLdZ82u1kda6wwuDYCqdOksA/edit
+    note: Woodsville High, one of two high schools free to families under policy JFB (from June 30, 2026); the 2026-27 agreement was still being revised in April 2026; Haverhill gives 2% off a bill over $400,000
+  - district: Bath
+    receiving_district: Lisbon Regional
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1anS-rizNhDzN7xzrbe4F93PJ7wY_XLA4/view
+    note: Lisbon Regional School, one of two high schools free to families; no high school contract found
+  - district: Bath
+    outside_school: St. Johnsbury Academy (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1anS-rizNhDzN7xzrbe4F93PJ7wY_XLA4/view
+    note: Bath pays up to the higher Lisbon or Woodsville rate plus 10% and the family pays the rest; students already there in 2025-26 are paid in full through June 30, 2029
+  - district: Benton
+    receiving_district: Haverhill Cooperative
+    grades: [K, 12]
+    arrangement: tuition_contract
+    source: https://www.tobentonnh.org/_files/ugd/532f26_b008195fa64e477dad2860260107a79b.pdf
+    note: Benton has no school and sends all its students to Haverhill schools, for an 11.72% tuition discount; agreements are signed each year
+  - district: Piermont
+    receiving_district: Haverhill Cooperative
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://drive.google.com/file/d/1LXluUZqUHc5cEKPjvnZjBW1yp2d33Rob/view
+    note: Woodsville High, one of three anchor schools families choose at no cost (policy JFB)
+  - district: Piermont
+    receiving_district: Rivendell
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1_K8DM7IomvuM7lfp5z0fyYXVOGI9j9LS/view
+    note: Rivendell Academy, one of three anchor schools families choose at no cost
+  - district: Piermont
+    outside_school: Oxbow High School (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1_K8DM7IomvuM7lfp5z0fyYXVOGI9j9LS/view
+    note: One of three anchor schools families choose at no cost
+  - district: Piermont
+    outside_school: St. Johnsbury Academy (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1PeGetEj6TFrtvPDahlypmJawvA0TXQdS/view
+    note: Policy JFB pays other accredited schools up to the anchor average plus 34% ($27,404 for 2026-27) and the family pays any excess
+  - district: Piermont
+    outside_school: Thetford Academy (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1PeGetEj6TFrtvPDahlypmJawvA0TXQdS/view
+    note: Policy JFB pays other accredited schools up to the anchor average plus 34% ($27,404 for 2026-27) and the family pays any excess
+  - district: Warren
+    receiving_district: Haverhill Cooperative
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://docs.google.com/document/d/19lj7kHI12uVHodbLgGILRoN2TS8Mi_sr7qk6aaeHi60/edit#heading=h.5b4u9vjcolj2
+    note: Woodsville High ($20,453 for 2026-27). A March 2025 article to send every freshman to Woodsville was tabled
+  - district: Warren
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: choice
+    source: https://docs.google.com/document/d/19lj7kHI12uVHodbLgGILRoN2TS8Mi_sr7qk6aaeHi60/edit#heading=h.5b4u9vjcolj2
+    note: Plymouth Regional High by voucher; Warren pays 4% under the Woodsville rate ($19,635 in 2026-27) and the family pays the rest
+  - district: Warren
+    receiving_district: Rivendell
+    grades: [9, 12]
+    arrangement: choice
+    source: https://docs.google.com/document/d/19lj7kHI12uVHodbLgGILRoN2TS8Mi_sr7qk6aaeHi60/edit#heading=h.5b4u9vjcolj2
+    note: Rivendell Academy by voucher; Warren pays 4% under the Woodsville rate ($19,635 in 2026-27) and the family pays the rest
+  - district: Warren
+    outside_school: St. Johnsbury Academy (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://docs.google.com/document/d/19lj7kHI12uVHodbLgGILRoN2TS8Mi_sr7qk6aaeHi60/edit#heading=h.5b4u9vjcolj2
+    note: By voucher; Warren pays 4% under the Woodsville rate ($19,635 in 2026-27) and the family pays the rest
+  # ---- SAU 24 ----
+  - district: Henniker
+    receiving_district: John Stark Regional
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Stoddard
+    receiving_district: Keene
+    grades: [6, 6]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/14IImurWIdldWMAD632WTZKEqZXfPkdAN/view
+    note: Keene Middle; a founding member of the 2018 grade 6 AREA
+  - district: Stoddard
+    receiving_district: Keene
+    grades: [7, 8]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1lCuQypj9GlT8rdbGj6g8bXy4Vnp8_c8-/view
+    note: Keene Middle; in the grades 7-8 AREA since 1973
+  - district: Stoddard
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1YMlv_A9STCjp5GpPFMSmcSiwwigXck4Y/view
+    note: Keene High; Stoddard joined the Keene AREA in 1973
+  - district: Weare
+    receiving_district: John Stark Regional
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  # ---- SAU 29 ----
+  - district: Chesterfield
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1YMlv_A9STCjp5GpPFMSmcSiwwigXck4Y/view
+    note: Keene High; in the Keene AREA since 1966, amended 2024-25 for a 20-year term
+  - district: Harrisville
+    receiving_district: Keene
+    grades: [7, 8]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1lCuQypj9GlT8rdbGj6g8bXy4Vnp8_c8-/view
+    note: Keene Middle; in the grades 7-8 AREA since 1973, amended 2024-25 for a 20-year term
+  - district: Harrisville
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1YMlv_A9STCjp5GpPFMSmcSiwwigXck4Y/view
+    note: Keene High; in the Keene AREA since 1966, amended 2024-25 for a 20-year term
+  - district: Marlborough
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1YMlv_A9STCjp5GpPFMSmcSiwwigXck4Y/view
+    note: Keene High; Marlborough joined the Keene AREA in 1988; amended 2024-25 for a 20-year term
+  - district: Marlow
+    receiving_district: Keene
+    grades: [7, 8]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1lCuQypj9GlT8rdbGj6g8bXy4Vnp8_c8-/view
+    note: Keene Middle; Marlow keeps grade 6 at Perkins Academy and is not in the grade 6 AREA
+  - district: Marlow
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1YMlv_A9STCjp5GpPFMSmcSiwwigXck4Y/view
+    note: Keene High; Marlow joined the Keene AREA in 1973; amended 2024-25 for a 20-year term
+  - district: Nelson
+    receiving_district: Keene
+    grades: [6, 6]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/14IImurWIdldWMAD632WTZKEqZXfPkdAN/view
+    note: Keene Middle; Nelson joined the grade 6 AREA in 2019
+  - district: Nelson
+    receiving_district: Keene
+    grades: [7, 8]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1lCuQypj9GlT8rdbGj6g8bXy4Vnp8_c8-/view
+    note: Keene Middle; in the grades 7-8 AREA since 1973
+  - district: Nelson
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1YMlv_A9STCjp5GpPFMSmcSiwwigXck4Y/view
+    note: Keene High; in the Keene AREA since 1966
+  - district: Westmoreland
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1YMlv_A9STCjp5GpPFMSmcSiwwigXck4Y/view
+    note: Keene High; in the Keene AREA since 1966, amended 2024-25 for a 20-year term
+  # ---- SAU 32 ----
+  - district: Plainfield
+    receiving_district: Lebanon
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2021-07-01
+    source: https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/2980/Psd/9d70dda0-4aec-48a6-91d2-05b26413bbba/AREA_Agreement_Amendment_July_2021_signed.pdf
+    note: Grantham-Lebanon-Plainfield AREA (since 1967); this amendment runs at least to 2031 and continues until amended or rescinded. Students may go elsewhere only at family expense
+  # ---- SAU 34 ----
+  - district: Washington
+    receiving_district: Hillsboro-Deering Cooperative
+    grades: [6, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2029-06-30
+    source: https://drive.google.com/file/d/10HSkvi9-apl2vPdR1_3NVi0Ccz4v_eWX/view
+    note: Hillsboro-Deering Middle and High Schools; a three-way agreement with Windsor, approved at Washington's March 7, 2026 meeting; tuition at Hillsboro-Deering's prior-year DOE-25 per-pupil cost
+  - district: Windsor
+    receiving_district: Hillsboro-Deering Cooperative
+    grades: [K, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2029-06-30
+    source: https://drive.google.com/file/d/1tmyb-SOtvLAPQtemvBgG2POgH6cK4oln/view
+    note: The same three-way agreement, on Windsor's March 2026 warrant (Article 09; result not found; if it failed, students stay under the existing agreements). The FY27 budget tuitions 13 students (5 elementary, 4 middle, 4 high)
+  # ---- SAU 35 ----
+  - district: Bethlehem
+    receiving_district: Profile
+    grades: [7, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Lafayette Regional
+    receiving_district: Profile
+    grades: [7, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Landaff
+    receiving_district: Bath
+    grades: [K, 6]
+    arrangement: tuition_contract
+    source: https://docs.google.com/document/d/1jq0nzIhYvHwFhcHICioBLdZ82u1kda6wwuDYCqdOksA/edit
+    note: Bath Village School, one of four schools families choose (policy JFBC). The 2025 agreement covered grades 4-6; Bath voted in April 2026 to extend it to K-6. State Board approved it November 13, 2025
+  - district: Landaff
+    receiving_district: Lafayette Regional
+    grades: [K, 6]
+    arrangement: choice
+    source: https://docs.google.com/document/d/1C5A7XuUAnmDpZRlh5JgUJtI7EUxdbF3erZ6ygL7GFXc/edit
+    note: Families choose Bath, Lafayette, Lisbon or Profile; a Lafayette tuition agreement was being finalized in June 2026
+  - district: Landaff
+    receiving_district: Lisbon Regional
+    grades: [K, 12]
+    arrangement: tuition_contract
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/nh-sboe-mtg-minutes-final-2-10-22.pdf
+    note: Tuition agreement approved by the State Board February 10, 2022 (grades not stated); Landaff buses K-12 students to Lisbon; families may also choose Bath, Lafayette or Profile
+  - district: Landaff
+    receiving_district: Haverhill Cooperative
+    grades: [5, 8]
+    arrangement: choice
+    source: https://sau35.org/pages/4c50e6fd-4e8a-4d00-b5d9-7409af911b96
+    note: SAU 35's Landaff tuition page lists Haverhill Middle School; policy JFBC does not. In February 2026 the board also sought an agreement covering Woodsville
+  - district: Landaff
+    receiving_district: Profile
+    grades: [7, 12]
+    arrangement: choice
+    source: https://docs.google.com/document/d/1C5A7XuUAnmDpZRlh5JgUJtI7EUxdbF3erZ6ygL7GFXc/edit
+    note: Families choose Bath, Lafayette, Lisbon or Profile; no Landaff bus to Profile
+  - district: Landaff
+    outside_school: St. Johnsbury Academy (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1miDvCQDlKllpXtnaOkJhkOGmPkactzRe/view
+    note: The board moved to grandfather students already at St. Johnsbury; policy JFBC pays other schools up to the highest agreed rate
+  # ---- SAU 39 ----
+  - district: Amherst
+    receiving_district: Souhegan Cooperative
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Mont Vernon
+    receiving_district: Amherst
+    grades: [7, 8]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2030-06-30
+    source: https://drive.google.com/file/d/1PtVtZstBm0J-CdQRYWnxfWnp3mn6ASCV/view
+    note: Amherst Middle School, since 2011; voters approved in March 2026; option to extend to 2034
+  - district: Mont Vernon
+    receiving_district: Souhegan Cooperative
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  # ---- SAU 41 ----
+  - district: Brookline
+    receiving_district: Hollis-Brookline Cooperative
+    grades: [7, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Hollis
+    receiving_district: Hollis-Brookline Cooperative
+    grades: [7, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  # ---- SAU 44 ----
+  - district: Northwood
+    receiving_district: Coe-Brown Northwood Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2025-07-01
+    ends: 2035-06-30
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/public-mtg-materials-sboe-12-12-2024.pdf
+    note: Contract signed November 2024 (PDF pages 375-378), approved by the State Board December 12, 2024; may be renewed to June 30, 2040; Northwood may send up to 10% of its high schoolers elsewhere
+  # ---- SAU 46 ----
+  - district: Andover
+    receiving_district: Merrimack Valley
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2024-07-01
+    ends: 2034-06-30
+    source: https://drive.google.com/file/d/1B9j26xed9bWNfF1M328jF-Ho0iWsnuC4/view
+    note: Merrimack Valley High, where Andover has sent students since the 1970s; Merrimack Valley voters approved the 10-year renewal in March 2023
+  # ---- SAU 48 ----
+  - district: Campton
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Ellsworth
+    receiving_district: Campton
+    grades: [K, 8]
+    arrangement: no_contract
+    source: https://drive.google.com/file/d/1rFf19jWtp-E4GUemXKYaxFesJgSvzxq3/view
+    note: Campton Elementary; 6 of Ellsworth's 10 students on the 2026-27 roster; families also use Plymouth and Thornton
+  - district: Ellsworth
+    receiving_district: Thornton
+    grades: [K, 8]
+    arrangement: no_contract
+    source: https://drive.google.com/file/d/1rFf19jWtp-E4GUemXKYaxFesJgSvzxq3/view
+    note: Thornton Central; 1 student on the 2026-27 roster
+  - district: Ellsworth
+    receiving_district: Plymouth
+    grades: [K, 8]
+    arrangement: no_contract
+    source: https://drive.google.com/file/d/1rFf19jWtp-E4GUemXKYaxFesJgSvzxq3/view
+    note: Plymouth Elementary; one kindergartner expected in 2026-27
+  - district: Ellsworth
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: no_contract
+    source: https://drive.google.com/file/d/1rFf19jWtp-E4GUemXKYaxFesJgSvzxq3/view
+    note: Plymouth Regional High; 3 students on the 2026-27 roster
+  - district: Holderness
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Plymouth
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Rumney
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Thornton
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  - district: Waterville Valley
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: no_contract
+    source: https://docs.google.com/document/d/1kcN0dFDloaQNxRcli_X7dwBWhCYYN1J2/edit
+    note: Plymouth Regional High; 2026-27 tuition budgeted at $21,938 a student; no bus to Plymouth
+  - district: Wentworth
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  # ---- SAU 50 ----
+  - district: Greenland
+    receiving_district: Portsmouth
+    grades: [9, 12]
+    arrangement: area_agreement
+    source: https://files.portsmouthnh.gov/school/policies/DEAA.pdf
+    note: Portsmouth High School; Portsmouth's tuition policy (revised 2016); the AREA agreement itself was not found online
+  - district: New Castle
+    receiving_district: Portsmouth
+    grades: [6, 8]
+    arrangement: tuition_contract
+    source: https://files.portsmouthnh.gov/school/policies/DEAA.pdf
+    note: Portsmouth Middle School, under a separate agreement not found online; SAU 50 says New Castle's grades 6-8 attend Portsmouth Middle or Rye Junior High
+  - district: New Castle
+    receiving_district: Rye
+    grades: [6, 8]
+    arrangement: no_contract
+    source: https://www.sau50.org/en-US
+    note: Rye Junior High; families choose it or Portsmouth Middle; no New Castle-Rye agreement found, so the arrangement is unconfirmed
+  - district: New Castle
+    receiving_district: Portsmouth
+    grades: [9, 12]
+    arrangement: area_agreement
+    source: https://files.portsmouthnh.gov/school/policies/DEAA.pdf
+    note: Portsmouth High School; Portsmouth's tuition policy (revised 2016); the AREA agreement itself was not found online
+  - district: Newington
+    receiving_district: Portsmouth
+    grades: [7, 8]
+    arrangement: tuition_contract
+    source: https://files.portsmouthnh.gov/school/policies/DEAA.pdf
+    note: Portsmouth Middle School, under a separate agreement not found online; Newington Public School runs PK-6
+  - district: Newington
+    receiving_district: Portsmouth
+    grades: [9, 12]
+    arrangement: area_agreement
+    source: https://files.portsmouthnh.gov/school/policies/DEAA.pdf
+    note: Portsmouth High School; Portsmouth's tuition policy (revised 2016); the AREA agreement itself was not found online
+  - district: Rye
+    receiving_district: Portsmouth
+    grades: [9, 12]
+    arrangement: area_agreement
+    source: https://files.portsmouthnh.gov/school/policies/DEAA.pdf
+    note: Portsmouth High School; Portsmouth's tuition policy (revised 2016); the AREA agreement itself was not found online
+  # ---- SAU 53 ----
+  - district: Allenstown
+    receiving_district: Pembroke
+    grades: [9, 12]
+    arrangement: area_agreement
+    source: https://drive.google.com/file/d/18fayft_pggy82Mn8a_lxf3FPE6lAVp1K/view
+    note: Pembroke Academy, with Chichester and Epsom; the AREA plan itself was not found online; Allenstown and Epsom raised reopening it in 2026
+  - district: Chichester
+    receiving_district: Pembroke
+    grades: [9, 12]
+    arrangement: area_agreement
+    source: https://drive.google.com/file/d/1tmDKebCmtNBOTS6M45AdOuUiOUVvpnVc/view
+    note: Pembroke Academy, with Allenstown and Epsom; the AREA plan itself was not found online; Chichester adopted open enrollment in March 2026
+  - district: Deerfield
+    receiving_district: Concord
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2024-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1mTVoYZCIjmv0QmFwYrr8hIQ211_lfBND/view
+    note: Concord High; families choose Concord, Pembroke Academy or Coe-Brown; renewable a year at a time, and the board plans a one-year extension for 2027-28 (news, November 2026)
+  - district: Deerfield
+    receiving_district: Pembroke
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2024-08-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1Ds1JQgKGWy6QyUinwwmh1C-7vxzvUEsY/view
+    note: "Pembroke Academy; families choose; the term begins \"August, 2024\"; tuition capped at the AREA districts' rate; renewable a year at a time"
+  - district: Deerfield
+    receiving_district: Coe-Brown Northwood Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2024-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/11uuVjidaIG2wbeRHZFddT6BmMAjb2qk-/view
+    note: Families choose; renews for two more years if both sides give notice by October 1 of the last year
+  - district: Epsom
+    receiving_district: Pembroke
+    grades: [9, 12]
+    arrangement: area_agreement
+    source: https://drive.google.com/file/d/1jd_650wqimvA3-YnRs0rd3L7Sl-Dp9Ns/view
+    note: Pembroke Academy; a 1969 AREA plan, per news reports; the State Board has ordered Epsom to pay open-enrollment tuition for students at other schools
+  # ---- SAU 55 ----
+  - district: Hampstead
+    receiving_district: Pinkerton Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://www.hampsteadschools.net/page/district-profile
+    note: Contract not posted; Pinkerton lists Hampstead as a contracted sending town; 356 Hampstead students there in October 2024
+  # ---- SAU 58 ----
+  - district: Stark
+    receiving_district: Northumberland
+    grades: [7, 12]
+    arrangement: area_agreement
+    source: https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/3822/Sau58/ac18ccfd-a838-48b2-9958-2408bac0be5a/February_4__2021.pdf?disposition=inline
+    note: Groveton Middle and High; AREA amended with new dates at the March 2021 meetings; term not found; 7 middle and 16 high school students in the 2025-26 budget
+  - district: Stratford
+    receiving_district: Northumberland
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2020-07-01
+    source: https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/3822/Sau58/1a0a3b47-d539-4ffb-ba9a-3c4b7b7f56ea/April_1__2020.pdf?disposition=inline
+    note: Groveton High; a 10-year agreement voted in 2018, revised from July 1, 2020; families may choose another public school in NH or VT, with Stratford paying up to Groveton's rate and busing only to Groveton
+  # ---- SAU 67 ----
+  - district: Dunbarton
+    receiving_district: Bow
+    grades: [7, 12]
+    arrangement: area_agreement
+    starts: 2024-07-01
+    ends: 2039-06-30
+    source: https://www.concordmonitor.com/2022/03/13/dunbarton-school-district-annual-meeting-45464701/
+    note: Bow Memorial (7-8) and Bow High (9-12); AREA first signed 2012-13; renewal approved by the State Board December 9, 2021 and by Dunbarton voters in March 2022, for 15 years
+  # ---- SAU 69 ----
+  - district: Middleton
+    receiving_district: Governor Wentworth Regional
+    grades: [7, 12]
+    arrangement: tuition_contract
+    starts: 2025-07-01
+    ends: 2035-06-30
+    source: https://drive.google.com/file/d/1S7tWh9rne0Po1WmUtDbbU-6udnMDf6nQ/view
+    note: "Kingswood Regional Middle and High; the 2025 warrant article (printed as \"Article IV\", voted as Article 9) passed 185-51; the first agreement began in July 2015; tuition is being phased up to Governor Wentworth's per-pupil cost over five years starting in 2026-27"
+  # ---- SAU 70 ----
+  - district: Hanover
+    receiving_district: Dresden
+    grades: [6, 12]
+    arrangement: interstate_district
+    source: https://norwich.vt.us/wp-content/uploads/2020/06/SB-packet-06-10-20.pdf
+    note: Dresden is the interstate district of Hanover and Norwich, VT (Richmond Middle School and Hanover High). The 2002 articles of agreement give Dresden grades 7-12; Hanover's grade 6 became part of Dresden from 2022-23 (2021 Dresden warrant Article 6). Norwich keeps grade 6 at Marion Cross
+  # ---- SAU 71 ----
+  - district: Lempster
+    receiving_district: Fall Mountain Regional
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/nh-sboe-mtg-minutes-final-7-20-2023.pdf
+    note: Tuition agreement approved by the State Board July 20, 2023; Policy JEDA also lets families choose another public high school, with Lempster paying up to Fall Mountain's rate
+  # ---- SAU 72 ----
+  - district: Alton
+    receiving_district: Prospect Mountain JMA
+    grades: [9, 12]
+    arrangement: joint_maintenance
+    source: https://5il.co/2bclq
+    note: Prospect Mountain High School, run by a joint board of the Alton and Barnstead school boards under a joint maintenance agreement (RSA 194:21); the State Board approved it in October 2001 and Alton adopted it December 19, 2001; Alton pays 45.55% of joint costs
+  # ---- SAU 74 ----
+  - district: Barrington
+    receiving_district: Dover
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2025-07-01
+    ends: 2034-06-30
+    source: https://drive.google.com/file/d/1XtExfVrRq_xUjsFJ8-UQdIuALKCl-fD8/view
+    note: Families choose Dover, Oyster River or Coe-Brown; Dover takes up to 100% of Barrington's high schoolers; may be extended to June 30, 2039; State Board approved February 20, 2025
+  - district: Barrington
+    receiving_district: Oyster River Coop
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2025-07-01
+    ends: 2033-06-30
+    source: https://drive.google.com/file/d/1rac3oxfs_3JDdSXWfnYDenNlCr-qaeVN/view
+    note: Up to 200 students in 2025-26, admitted by lottery; continues year to year after 2033, with four years' notice to end it; State Board approved April 10, 2025
+  - district: Barrington
+    receiving_district: Coe-Brown Northwood Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2025-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1H_dBNR4ZuMUPjF_dXzn6tz1xoMLm5o8X/view
+    note: A memorandum of understanding with no enrollment cap, not sent to the State Board under RSA 194:22
+  - district: Barrington
+    receiving_district: Coe-Brown Northwood Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2027-07-01
+    ends: 2030-06-30
+    source: https://drive.google.com/file/d/1qx_f681VbVwvCP29VqlfHxu2vXfdlHid/view
+    note: The next memorandum of understanding, signed October 21-22, 2026; no enrollment cap
+  # ---- SAU 75 ----
+  - district: Grantham
+    receiving_district: Lebanon
+    grades: [7, 12]
+    arrangement: area_agreement
+    starts: 2021-07-01
+    source: https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/2980/Psd/9d70dda0-4aec-48a6-91d2-05b26413bbba/AREA_Agreement_Amendment_July_2021_signed.pdf
+    note: Lebanon Middle School (7-8) and Lebanon High School (9-12) under the Grantham-Lebanon-Plainfield AREA; runs at least to 2031
+  # ---- SAU 76 ----
+  - district: Lyme
+    receiving_district: Dresden
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://sites.google.com/lymeschool.org/hschoiceinfo/general-info
+    note: Hanover High. Families choose among five schools with Lyme tuition agreements; 76 of Lyme's 90 high schoolers were at Hanover on October 1, 2025
+  - district: Lyme
+    outside_school: Thetford Academy (VT)
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://sites.google.com/lymeschool.org/hschoiceinfo/general-info
+    note: Families choose; Thetford Academy says Lyme has a designation/partnership agreement with it. 11 Lyme students there on October 1, 2025
+  - district: Lyme
+    outside_school: St. Johnsbury Academy (VT)
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://sites.google.com/lymeschool.org/hschoiceinfo/general-info
+    note: Families choose; application required. 3 Lyme students there on October 1, 2025
+  - district: Lyme
+    receiving_district: Lebanon
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://sites.google.com/lymeschool.org/hschoiceinfo/general-info
+    note: Families choose; no Lyme students at Lebanon High on October 1, 2025
+  - district: Lyme
+    receiving_district: Rivendell
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://sites.google.com/lymeschool.org/hschoiceinfo/general-info
+    note: Rivendell Academy, Orford; families choose. No Lyme students there on October 1, 2025
+  # ---- SAU 77 ----
+  - district: Monroe
+    outside_school: St. Johnsbury Academy (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://docs.google.com/document/d/1n--cD2sM-lcrKwtbEHi3efg3yrc5nn7o/edit
+    note: Families choose any approved high school; Monroe buses only to St. Johnsbury and pays up to its rate ($25,635 in 2026-27)
+  - district: Monroe
+    receiving_district: Haverhill Cooperative
+    grades: [9, 12]
+    arrangement: choice
+    source: https://docs.google.com/document/d/1aE2OAadgaFx8h80G_6jaX7Km8NUbuf-Zm_NwnMxLnk8/edit
+    note: Woodsville High; Monroe pays up to the St. Johnsbury rate; no Monroe bus
+  - district: Monroe
+    outside_school: Blue Mountain Union School (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://docs.google.com/document/d/1aE2OAadgaFx8h80G_6jaX7Km8NUbuf-Zm_NwnMxLnk8/edit
+    note: Monroe pays up to the St. Johnsbury rate; no Monroe bus
+  - district: Monroe
+    outside_school: Lyndon Institute (VT)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://docs.google.com/document/d/1aE2OAadgaFx8h80G_6jaX7Km8NUbuf-Zm_NwnMxLnk8/edit
+    note: Monroe pays up to the St. Johnsbury rate; no Monroe bus
+  # ---- SAU 78 ----
+  - district: Rivendell
+    outside_school: Samuel Morey Elementary School (VT)
+    grades: [K, 5]
+    arrangement: interstate_district
+    source: https://content.myconnectsuite.com/api/documents/b794180c2ee04e7483ad1e472ee788e2.pdf
+    note: Rivendell's own elementary school in Fairlee, VT, for Fairlee and Orford children; Orford's school buses run to Rivendell Academy and then Samuel Morey. A 2023 plan to close Morey and move it to Orford had not happened by 2026-27
+  # ---- SAU 79 ----
+  - district: Gilmanton
+    receiving_district: Gilford
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2023-03-15
+    ends: 2035-06-30
+    source: https://drive.google.com/file/d/1PqmV1A6N9SxC1hAXXjhoYJtdGGuvY8uv/view
+    note: "Gilford High School; the amended AREA plan (posted by Gilford's SAU 73 as \"Area Agreement 2023-2035\") phases out by grade from 2035-36 if not extended; Gilmanton's 2025-26 attempt to renegotiate ended in September 2026 with no change"
+  # ---- SAU 82 ----
+  - district: Chester
+    receiving_district: Pinkerton Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    ends: 2034-06-30
+    source: https://chesternh.org/DocumentCenter/View/2432/Chester-CIP---2022-to-2029-12-17-21
+    note: "Contract not posted; the end year is from the town's 2021 capital improvements plan; SAU 82 says students \"mainly attend\" Pinkerton"
+  # ---- SAU 83 ----
+  - district: Fremont
+    receiving_district: Pinkerton Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2036-06-30
+    source: https://5il.co/2m2mu
+    note: Families choose Pinkerton or Epping from the 2026 freshman class; Fremont must decide by June 30, 2031 whether to extend to 2046
+  - district: Fremont
+    receiving_district: Epping
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2036-06-30
+    source: https://5il.co/36qa5
+    note: Families choose Epping or Pinkerton from the 2026 freshman class; no minimum or maximum enrollment
+  - district: Fremont
+    receiving_district: Sanborn Regional
+    grades: [10, 12]
+    arrangement: tuition_contract
+    starts: 2006-07-01
+    ends: 2026-06-30
+    source: https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/3009/Ellisschool/f8095812-7248-4474-ad67-c20812efd973/2026-01-15-Full-File-Public-Hearing-Information-and-Settlement-Agreement.pdf
+    note: The 2003 contract ended June 30, 2026; under a January 2026 settlement, students enrolled at Sanborn may stay through graduation (last class 2029)
+  # ---- SAU 86 ----
+  - district: Barnstead
+    receiving_district: Prospect Mountain JMA
+    grades: [9, 12]
+    arrangement: joint_maintenance
+    source: https://5il.co/2bclq
+    note: Prospect Mountain High School, run by a joint board of the Alton and Barnstead school boards under a joint maintenance agreement (RSA 194:21); the State Board approved it in October 2001 and Barnstead adopted it November 20, 2001; Barnstead pays 54.45% of joint costs
+  # ---- SAU 89 ----
+  - district: Mason
+    receiving_district: Milford
+    grades: [6, 12]
+    arrangement: tuition_contract
+    source: https://sau89.nh.gov/apps/pages/index.jsp?uREC_ID=4462943&type=d&pREC_ID=2732905
+    note: Milford Middle and Milford High since Mason left Mascenic (2009); contract text and term not found
+  # ---- SAU 90 ----
+  - district: Hampton
+    receiving_district: Winnacunnet Cooperative
+    grades: [9, 12]
+    arrangement: cooperative
+    source: https://my.doe.nh.gov/myNHDOE/Help/PublicReports.aspx?ReportName=DistrictTown
+    note: Member district of the cooperative
+  # ---- SAU 91 ----
+  - district: Surry
+    receiving_district: Keene
+    grades: [K, 5]
+    arrangement: tuition_contract
+    starts: 2009-07-01
+    ends: 2028-06-30
+    source: https://surry.nh.gov/wp-content/uploads/2024/10/SSB-MC-Surry-Keene-tuition-agreement-k-5.pdf
+    note: Mainly Jonathan Daniels and Symonds schools; contract ends in 2028; the board is weighing a K-5 AREA instead
+  - district: Surry
+    receiving_district: Keene
+    grades: [6, 6]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://surry.nh.gov/wp-content/uploads/2026/02/MBB-AREA-agreement-grade-6-copy.pdf
+    note: Keene Middle; Surry's signed copy, adopted at the 2025 district meeting
+  - district: Surry
+    receiving_district: Keene
+    grades: [7, 8]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://surry.nh.gov/wp-content/uploads/2026/02/MBA-AREA-agreement-grade-7-8-copy.pdf
+    note: Keene Middle; Surry joined in 2016
+  - district: Surry
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://surry.nh.gov/wp-content/uploads/2026/02/MB-AREA-agreement-grade-9-12-copy.pdf
+    note: Keene High; Surry joined in 2016; its page says the AREA gives about a 2.5% tuition discount
+  # ---- SAU 94 ----
+  - district: Winchester
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: tuition_contract
+    ends: 2027-06-30
+    source: https://docs.google.com/document/d/1_-K1S8o0GJmjf9kzEjBYVGeYYvhaayIRRu0hCETVcuk/edit
+    note: Since 2006; Keene ended it (Feb 2024), so no new 9th graders from 2026; enrolled students finish at Keene, the class of 2028 by an addendum
+  - district: Winchester
+    receiving_district: Hinsdale
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2033-06-30
+    source: https://drive.google.com/file/d/1_Ut6mNt_ek7RnZlkF-NEqdckYj9CwAQW/view
+    note: Anchor high school from the class of 2030 (at least 80% of students); extends 10 years in 2033 unless either side gives 2 years' notice
+  - district: Winchester
+    outside_school: Pioneer Valley Regional School (MA)
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2031-06-30
+    source: https://drive.google.com/file/d/1QMUJhEqnk_r7v7DHej2SgBTH9ZiPaU-D/view
+    note: A choice school (Northfield, MA) for up to 20% of Winchester's high schoolers; district pays up to its Hinsdale rate, families transport
+  - district: Winchester
+    receiving_district: Monadnock Regional
+    grades: [9, 12]
+    arrangement: choice
+    source: https://www.wnhsd.org/o/district/page/winchester-high-school-information
+    note: Listed choice school (Monadnock Regional High); up to 20% may choose; district pays up to its Hinsdale rate; no written agreement posted
+  - district: Winchester
+    outside_school: Franklin County Technical School (MA)
+    grades: [9, 12]
+    arrangement: choice
+    source: https://www.wnhsd.org/o/district/page/winchester-high-school-information
+    note: Listed choice school (vocational, Turners Falls, MA) by application; district pays up to its Hinsdale rate
+  # ---- SAU 96 ----
+  - district: Sullivan
+    receiving_district: Nelson
+    grades: [K, 5]
+    arrangement: tuition_contract
+    source: https://townofsullivannh.com/vertical/sites/%7B55112C42-38E1-4306-9104-21AA508BD373%7D/uploads/AD_Philisophy_of_the_School_District.pdf
+    note: Nelson Elementary; a long-term agreement, with rates set yearly; contract text not posted
+  - district: Sullivan
+    receiving_district: Keene
+    grades: [6, 6]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/14IImurWIdldWMAD632WTZKEqZXfPkdAN/view
+    note: Keene Middle; Sullivan voters adopted the amended agreement in March 2025
+  - district: Sullivan
+    receiving_district: Keene
+    grades: [7, 8]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1lCuQypj9GlT8rdbGj6g8bXy4Vnp8_c8-/view
+    note: Keene Middle; Sullivan joined in 2016
+  - district: Sullivan
+    receiving_district: Keene
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2026-07-01
+    ends: 2046-06-30
+    source: https://drive.google.com/file/d/1YMlv_A9STCjp5GpPFMSmcSiwwigXck4Y/view
+    note: Keene High; Sullivan joined in 2016
+  # ---- SAU 97 ----
+  - district: Hale's Location (Carroll County)
+    receiving_district: Conway
+    grades: [K, 6]
+    arrangement: tuition_contract
+    starts: 2023-07-01
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/public-mtg-materials-sboe-5-11-2023.pdf
+    note: Contract of January 19, 2023 (approved by the State Board May 11, 2023, listed there as Hart's Location); minimum term through June 30, 2026, then year to year; ending it takes at least three full years' notice
+  - district: Hale's Location (Carroll County)
+    receiving_district: Conway
+    grades: [7, 8]
+    arrangement: tuition_contract
+    starts: 2023-07-01
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/public-mtg-materials-sboe-5-11-2023.pdf
+    note: Contract of January 19, 2023 (approved by the State Board May 11, 2023, listed there as Hart's Location); minimum term through June 30, 2026, then year to year; ending it takes at least three full years' notice
+  - district: Hale's Location (Carroll County)
+    receiving_district: Conway
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2008-07-01
+    source: https://drive.google.com/file/d/1i8EWv4Mo4tXyktRBXvP_nVqpcK62ceTn/view
+    note: Kennett High; contract of August 27, 2008; ten-year minimum, then year to year; ending it takes at least three full years' notice
+  # ---- SAU 98 ----
+  - district: Coos County School District
+    receiving_district: Colebrook
+    grades: [9, 12]
+    arrangement: no_contract
+    source: https://content.myconnectsuite.com/api/documents/7b1cdea854214bb2b7569467654c9c73
+    note: One Millsfield high schooler at Colebrook Academy in 2024-25; the state pays unincorporated places' tuition and bills the county (RSA 198:16)
+  # ---- SAU 99 ----
+  - district: Croydon
+    receiving_district: Kearsarge Regional
+    grades: [1, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    source: https://croydonsd.org/document/student-tuitioning-policy/
+    note: Croydon's anchor school from 2026-27; admits every Croydon student, full tuition paid and bused (elementary at New London). Board minutes of September 16, 2025 say a contract was signed for 2026-27 and describe a 5-year contract
+  - district: Croydon
+    receiving_district: Claremont
+    grades: [1, 12]
+    arrangement: choice
+    source: https://croydonsd.org/document/student-tuitioning-policy/
+    note: Approved alternative school; Croydon pays up to the Kearsarge rate ($17,000 for grades 1-8, $18,000 for 9-12 in 2026-27). Croydon's site says Claremont guarantees admission
+  - district: Croydon
+    receiving_district: Lebanon
+    grades: [1, 12]
+    arrangement: choice
+    source: https://croydonsd.org/document/student-tuitioning-policy/
+    note: Approved alternative school; admission not guaranteed, family pays above Croydon's rate
+  - district: Croydon
+    receiving_district: Mascoma Valley Regional
+    grades: [1, 12]
+    arrangement: choice
+    source: https://croydonsd.org/document/student-tuitioning-policy/
+    note: "Approved alternative school (\"Mascoma School District\" in the policy); admission not guaranteed, family pays above Croydon's rate"
+  - district: Croydon
+    receiving_district: Newport
+    grades: [1, 12]
+    arrangement: choice
+    source: https://croydonsd.org/document/student-tuitioning-policy/
+    note: Newport was Croydon's anchor until 2023, then by application; Croydon rejected Newport's 2026-27 contract terms in April 2026 and reapproved Newport in May 2026. Admission not guaranteed
+  - district: Croydon
+    receiving_district: Sunapee
+    grades: [1, 12]
+    arrangement: choice
+    source: https://croydonsd.org/document/student-tuitioning-policy/
+    note: Approved alternative school; admission not guaranteed
+  # ---- SAU 100 ----
+  - district: Cornish
+    receiving_district: Lebanon
+    grades: [9, 12]
+    arrangement: choice
+    source: https://www.cornishschool.org/apps/pages/index.jsp?uREC_ID=597058&type=d
+    note: Families choose among five high schools; Cornish pays up to $23,000 in 2026-27 (board vote May 18, 2026) and families pay the rest. Most Cornish students (21 in 2025-26) attend Lebanon
+  - district: Cornish
+    receiving_district: Claremont
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/nh-sboe-mtg-minutes-final-6-8-2023.pdf
+    note: Tuition agreement approved by the State Board June 8, 2023; one of five high schools Cornish families choose from; Cornish pays up to $23,000 (2026-27)
+  - district: Cornish
+    receiving_district: Dresden
+    grades: [9, 12]
+    arrangement: choice
+    source: https://www.cornishschool.org/apps/pages/index.jsp?uREC_ID=597058&type=d
+    note: Hanover High; families choose and pay the tuition above Cornish's rate
+  - district: Cornish
+    outside_school: Hartford High School (VT)
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/nh-sboe-mtg-minutes-final-6-8-2023.pdf
+    note: Tuition agreement approved by the State Board June 8, 2023; one of five high schools Cornish families choose from; Cornish pays up to $23,000 (2026-27)
+  - district: Cornish
+    outside_school: Windsor High School (VT)
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/nh-sboe-mtg-minutes-final-6-8-2023.pdf
+    note: Tuition agreement approved by the State Board June 8, 2023; one of five high schools Cornish families choose from; Cornish pays up to $23,000 (2026-27)
+  # ---- SAU 101 ----
+  - district: Wakefield
+    receiving_district: Rochester
+    grades: [9, 12]
+    arrangement: area_agreement
+    starts: 2018-07-01
+    source: https://aptg.co/QDCf4j
+    note: Spaulding High School (148 Wakefield students in 2025-26) and Bud Carlson Academy; an AREA plan since July 1, 1970, amended effective July 1, 2018
+  - district: Wakefield
+    receiving_district: Governor Wentworth Regional
+    grades: [9, 12]
+    arrangement: choice
+    source: https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/5761/Sau101/396084cf-991e-43d6-b201-582fc717c8fa/Annual-Report-2025---2026.pdf
+    note: Kingswood Regional High; 22 Wakefield students in 2025-26; the AREA plan lets Wakefield's board approve and pay tuition elsewhere for up to 10% of grades 9-12 each year; no Kingswood agreement found
+  # ---- SAU 102 ----
+  - district: Goshen
+    receiving_district: Lempster
+    grades: [K, 8]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1OL45bcpLd7LEGWVNNpEf0P0oI5XW46a_/view
+    note: Goshen's K-8 anchor school from 2026-27, with a bus from Goshen; a one-year agreement going to Goshen voters in March 2027. 14 Goshen students at Lempster Community School in September 2026
+  - district: Goshen
+    receiving_district: Unity
+    grades: [K, 8]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1o7wS1riB4bNHNzChss4iIhE4Bt1H0vTZ/view
+    note: A choice school; Goshen pays up to its anchor rate under policy JEDA, parents pay any excess; Unity charges up to $17,439
+  - district: Goshen
+    receiving_district: Sunapee
+    grades: [K, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2028-06-30
+    source: https://drive.google.com/file/d/1ZzvD9A_9ALGEPXgpU1AOdRu3bPq6OC7S/view
+    note: A choice school; students apply and interview. Goshen pays up to its anchor rate, parents pay the rest
+  - district: Goshen
+    receiving_district: Newport
+    grades: [K, 12]
+    arrangement: tuition_contract
+    source: https://docs.google.com/document/d/1Lv893YFOotlFN6Onrv67RsvqrHeacLh_/edit
+    note: A choice school with an application process; Goshen pays up to its anchor rate. Newport was Goshen's sending district until 2021 and still enrolls Goshen students (bus stop changed for 2026-27)
+  - district: Goshen
+    receiving_district: Fall Mountain Regional
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2027-06-30
+    source: https://drive.google.com/file/d/1OL45bcpLd7LEGWVNNpEf0P0oI5XW46a_/view
+    note: Goshen's 9-12 anchor school from 2026-27; a one-year agreement going to Goshen voters in March 2027. Goshen did not extend its Claremont/Unity anchor contract, which ended June 30, 2026
+  # ---- SAU 103 ----
+  - district: Hill
+    receiving_district: Newfound Area
+    grades: [7, 12]
+    arrangement: tuition_contract
+    starts: 2025-07-01
+    source: https://drive.google.com/file/d/1PekdSorUlSttZ646d6XojoNlfT3cMKhM/view
+    note: Newfound Memorial Middle and Newfound Regional High; a 13-year term that renews each year, replacing the 2015-2025 contract
+  # ---- SAU 104 ----
+  - district: Rollinsford
+    outside_school: MSAD 35 (ME)
+    grades: [7, 12]
+    arrangement: tuition_contract
+    source: https://www.sau104.org/
+    note: Marshwood Middle and High (South Berwick, Maine), attended since 2015-16; the agreement was renewed unchanged in October 2024 and approved by the State Board November 14, 2024; its term wasn't found
+  # ---- SAU 105 ----
+  - district: Strafford
+    receiving_district: Coe-Brown Northwood Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2023-07-01
+    ends: 2033-06-30
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/public-mtg-materials-sboe-4-13-2023_1.pdf
+    note: Agreement dated February 8, 2023 (PDF pages 194-214), approved by the State Board April 13, 2023; extends three more years unless notice is given before July 1, 2031; 151 of Strafford's 157 high schoolers attend in 2025-26
+  # ---- SAU 107 ----
+  - district: Nottingham
+    receiving_district: Dover
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2025-07-01
+    ends: 2032-06-30
+    source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/public-mtg-materials-sboe-5-8-2025_0.pdf
+    note: Families choose Dover High or Coe-Brown; Dover takes up to 100% of Nottingham's high schoolers; may be extended one or two years; on the State Board's May 8, 2025 consent agenda (PDF pages 100-106)
+  - district: Nottingham
+    receiving_district: Coe-Brown Northwood Academy
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2026-07-01
+    ends: 2037-06-30
+    source: https://www.nottingham-nh.gov/sites/g/files/vyhlif3611/f/uploads/nottingham_nh_school_proof_031026_sample.pdf
+    note: "Article 5, approved by voters in March 2026, subject to State Board approval; the article says \"ten (10)-year\" but its dates span eleven years"
+  # ---- SAU 108 ----
+  - district: Pasquaney
+    receiving_district: Newfound Area
+    grades: [8, 12]
+    arrangement: tuition_contract
+    starts: 2025-07-01
+    ends: 2028-06-30
+    source: https://img1.wsimg.com/blobby/go/1fe88111-8580-4a2e-bfae-899271219bdd/downloads/fe14b3ef-f55d-4577-afb8-b1e4753c7727/SAU4-SAU108%20Tuition%20Agreement%20-%20Fully%20Executed.pdf
+    note: Newfound Memorial Middle and Newfound Regional High; families choose Newfound or Plymouth for high school; Bridgewater-Hebron Village School adds a grade a year, reaching K-8 in 2027-28
+  - district: Pasquaney
+    receiving_district: Pemi-Baker Regional
+    grades: [9, 12]
+    arrangement: tuition_contract
+    starts: 2025-07-01
+    source: https://img1.wsimg.com/blobby/go/1fe88111-8580-4a2e-bfae-899271219bdd/downloads/63dfc7a2-7c8f-490f-beef-b6a68c4bc73f/SAU48-SAU108%20Agreement%20to%20Provide%20Educational%20.pdf
+    note: Plymouth Regional High, as space allows; renews each year
+  # ---- SAU 109 ----
+  - district: Unity
+    receiving_district: Claremont
+    grades: [9, 12]
+    arrangement: tuition_contract
+    source: https://drive.google.com/file/d/1S5xa2DslVnlNIZwFvAXpYt5AT_bOj2WV/view
+    note: Stevens High School; a 2-year contract that the board says is up in SY27 and needs renegotiating. Unity's tuition policy names an anchor high school of record and lets families choose others
+  - district: Unity
+    receiving_district: Fall Mountain Regional
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1wMW_acHjNe7nTBcUEm4St8pYgl0a4VKd/view
+    note: Families choose; Unity pays up to the highest of the regional high schools' tuition. A Fall Mountain tuition agreement was still being drafted in September 2026; Fall Mountain charges the most of the four (about $19,400)
+  - district: Unity
+    receiving_district: Newport
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1wMW_acHjNe7nTBcUEm4St8pYgl0a4VKd/view
+    note: Families choose; Unity pays up to the highest of the regional high schools' tuition
+  - district: Unity
+    receiving_district: Sunapee
+    grades: [9, 12]
+    arrangement: choice
+    source: https://drive.google.com/file/d/1wMW_acHjNe7nTBcUEm4St8pYgl0a4VKd/view
+    note: Families choose; Unity pays up to the highest of the regional high schools' tuition
