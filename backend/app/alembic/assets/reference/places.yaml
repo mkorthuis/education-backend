@@ -924,7 +924,7 @@ district_service:
     starts: 2024-07-01
     ends: 2027-06-30
     source: https://drive.google.com/file/d/1mTVoYZCIjmv0QmFwYrr8hIQ211_lfBND/view
-    note: Concord High; families choose Concord, Pembroke Academy or Coe-Brown; renewable a year at a time, and the board plans a one-year extension for 2027-28 (news, November 2026)
+    note: Concord High; families choose Concord, Pembroke Academy or Coe-Brown; a new one-year MOU dated October 26, 2026 (July 1, 2027 to June 30, 2028, base tuition $18,557.59) replaces this one and was on Concord's November 2, 2026 agenda for a vote (packet pp. 45-54, https://files.smartsites.parentsquare.com/8931/2026-11-02_board_packet_f.pdf); change the dates here once it is approved
   - district: Deerfield
     receiving_district: Pembroke
     grades: [9, 12]
