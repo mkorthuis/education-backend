@@ -2408,7 +2408,7 @@
 
 **Sources and notes for this section**
 
-- 7 topics, 66 facts, checked November 11, 2026: 2026 state test results (12), enrollment decline (9), HB 1727 Summer EBT (11), SB 575 bullying study committee (9), SB 507 staff-violence study committee (7), HB 1503 school emergency maps (6), firearms-and-schools bills and current law (12). No chronic absenteeism topic: no newer primary data was found (see Not retrieved).
+- 8 topics, 74 facts, checked November 11, 2026 (HB 131 added November 16): 2026 state test results (12), enrollment decline (9), HB 1727 Summer EBT (11), HB 131 bullying law changes (8, added November 16, 2026), SB 575 bullying study committee (9), SB 507 staff-violence study committee (7), HB 1503 school emergency maps (6), firearms-and-schools bills and current law (12). No chronic absenteeism topic: no newer primary data was found (see Not retrieved).
 - Sources: NH DOE press releases (via Wayback, because education.nh.gov refused direct downloads), NH DOE assessment data files and iPlatform enrollment reports (the copies the site loads), NH DHHS Summer EBT pages (Wayback), USDA FNS Summer EBT pages, the General Court's bill status, docket and chaptered-text pages (saved before gc.nh.gov stopped answering mid-session; later pages via Wayback), RSA 193-D and 198:15-y (Wayback), and the U.S. Code (Cornell LII). One bill text (HB 1830) is from a third-party copy and is flagged for recheck.
 - Review dates: enacted NH bills and RSAs 2027-08-15; open items (committee reports due November 1, 2026) 2027-05-11; bills that died, data, agency pages and federal law 2027-11-11.
 - Raw copies: `additional-data/raw/state-issues/<topic-slug>/`.
@@ -2615,6 +2615,68 @@
    - as_of: 2026-11-11
    - review_by: 2027-11-11
    - note: The New Hampshire entry reads "Good News! Summer EBT is Available in Your Location" and links to the DHHS Summer EBT page. Raw: fns-sebt-new-hampshire.html and fns-sebt-participating.html (map at https://www.fns.usda.gov/sebt/participating).
+
+## students-hb-131-bullying-law: HB 131 (2026): What Changed in New Hampshire's Bullying Law
+
+- kind: how_it_works
+- question_type: rules
+- description: What HB 131 (2026 chapter 205) changed in New Hampshire's school bullying law: the repealed "imbalance of power" part of the definition, the re-enacted policy requirements, the handbook and victim-rights rules, the state's yearly report, the dropped curriculum report, its votes and its effective dates.
+
+1. New Hampshire's HB 131 (2026), "relative to bullying and cyberbullying prevention," was signed by Governor Ayotte on July 2, 2026 and became 2026 chapter 205; it took effect August 1, 2026, except section 3, which takes effect January 1, 2027.
+   - citation: HB 131 (2026), chapter 205, bill docket
+   - source: https://gc.nh.gov/bill_status/billinfo.aspx?id=225&inflect=2
+   - as_of: 2026-11-16
+   - review_by: 2027-08-15
+   - note: Docket: "General Status: SIGNED BY GOVERNOR Chapter Number: 205"; "Signed by Governor Ayotte 07/02/2026; Chapter 205; eff. I. Sec 3 1/1/2027 II. Rem eff 8/1/2026". Chaptered text: "Approved: July 02, 2026 Effective Date: I. Section 3 effective January 1, 2027 II. Remainder effective August 1, 2026". Raw: raw/state-issues/students-hb-131-bullying-law/hb131-2026-billinfo.html (.txt), raw/state-issues/students-hb-131-bullying-law/hb131-2026-chaptered-text.html (.txt)
+
+2. HB 131 was introduced in January 2025 and kept in the House Education Policy and Administration Committee; the House passed it with an amendment that gave it its current title, 190 to 149, on January 7, 2026; the Senate Education Committee recommended a further amendment 3 to 2, the Senate passed it by voice vote on April 16, 2026, and the House agreed to the Senate's version 169 to 133 on May 7, 2026.
+   - citation: HB 131 (2026), bill docket
+   - source: https://gc.nh.gov/bill_status/billinfo.aspx?id=225&inflect=2
+   - as_of: 2026-11-16
+   - review_by: 2027-08-15
+   - note: Docket: "H Introduced 01/08/2025 and referred to Education Policy and Administration"; "H Retained in Committee"; "H Ought to Pass with Amendment 2025-3071h: MA RC 190-149 01/07/2026"; "S Committee Report: Ought to Pass with Amendment #2026-1396s , 04/16/2026, Vote 3-2"; "S Ought to Pass with Amendment #2026-1396s , MA, VV; OT3rdg; 04/16/2026"; "H House Concurs with Senate Amendment 2026-1396s (Rep. Noble): MA DV 169-133 05/07/2026". Title on the docket: "(New Title) relative to bullying and cyberbullying prevention." Raw: raw/state-issues/students-hb-131-bullying-law/hb131-2026-billinfo.txt
+
+3. HB 131 repealed and re-enacted RSA 193-F:4, the section on school bullying policies; according to the bill's analysis, it requires the procedure for reporting bullying to be in the student handbook and requires that an alleged victim get a written copy of their rights, protections and the support services available to them.
+   - citation: 2026 ch. 205:1 (RSA 193-F:4, as repealed and re-enacted); HB 131, Amended Analysis
+   - source: https://gc.nh.gov/bill_status/legacy/bs2016/billText.aspx?sy=2026&id=225&txtFormat=html
+   - as_of: 2026-11-16
+   - review_by: 2027-08-15
+   - note: Analysis: "Requires anti-bullying procedures to be included in the student handbook and that alleged victims get a written copy of their rights, protections, and support services available to them." Re-enacted text, II(f): "The procedure shall be included in the student handbook." The current requirements themselves are in bullying-school-duties (facts-rules-and-rights.md). Raw: raw/state-issues/students-hb-131-bullying-law/hb131-2026-chaptered-text.txt
+
+4. HB 131 repealed RSA 193-F:3, I(b), the part of New Hampshire's bullying definition covering actions motivated by an imbalance of power based on a student's actual or perceived personal characteristics, behaviors or beliefs, or the student's association with another person, effective August 1, 2026.
+   - citation: 2026 ch. 205:4
+   - source: https://gc.nh.gov/bill_status/legacy/bs2016/billText.aspx?sy=2026&id=225&txtFormat=html
+   - as_of: 2026-11-16
+   - review_by: 2027-08-15
+   - note: Text: "205:4 Repeal. RSA 193-F:3, I(b), relative to the definition of bullying, is repealed." The repealed paragraph's wording is in bullying-definition 2 (facts-rules-and-rights.md). Several districts' 2026-27 handbooks still print it (town research, November 16, 2026). Raw: raw/state-issues/students-hb-131-bullying-law/hb131-2026-chaptered-text.txt
+
+5. Under HB 131, the NH Department of Education's yearly report on substantiated bullying, cyberbullying and retaliation must also count the waivers granted for parent notification, the waivers granted to extend investigations, and the out-of-state cyberbullying cases reported, investigated and referred to the attorney general's office.
+   - citation: 2026 ch. 205:2 (RSA 193-F:6, II)
+   - source: https://gc.nh.gov/bill_status/legacy/bs2016/billText.aspx?sy=2026&id=225&txtFormat=html
+   - as_of: 2026-11-16
+   - review_by: 2027-08-15
+   - note: Text: "The report shall include the number and types of such incidents in the schools and the number of waivers granted for parental notification, the number of waivers granted for investigation extensions, and the number of out-of-state cyberbullying cases reported, investigated, and reported to the attorney general's office." Raw: raw/state-issues/students-hb-131-bullying-law/hb131-2026-chaptered-text.txt
+
+6. HB 131's re-enacted RSA 193-F:4, V says each district and charter school shall post, by January 1, 2027, a report on how its bullying policy has been integrated into the school's curriculum, discipline policies, behavior programs and other violence prevention efforts, but section 3 of the same act repeals that paragraph effective January 1, 2027, so the report is no longer required (**derived**).
+   - citation: 2026 ch. 205:1 (RSA 193-F:4, V); 2026 ch. 205:3; 2026 ch. 205:5, I
+   - source: https://gc.nh.gov/bill_status/legacy/bs2016/billText.aspx?sy=2026&id=225&txtFormat=html
+   - as_of: 2026-11-16
+   - review_by: 2027-08-15
+   - note: Text: "V. By January 1, 2027, each public school district and chartered public school shall make available a report or link to a report on how their policy has been integrated into the school's curriculum, discipline policies, behavior programs, and other violence prevention efforts"; "205:3 Prospective Repeal. RSA 193-F:4, V, relative to public school districts and chartered public schools making reports available on how their antibullying policies have been integrated into the school's curriculum, is repealed"; "Section 3 of this act shall take effect January 1, 2027." **Derived:** the requirement ends on the date the report would come due. Raw: raw/state-issues/students-hb-131-bullying-law/hb131-2026-chaptered-text.txt
+
+7. HB 131's re-enacted RSA 193-F:4 includes paragraph VII, which makes students who admit to or are found to have engaged in harassment, intimidation, retaliation or bullying, and students found to have filed a false report, subject to discipline including suspension and expulsion.
+   - citation: 2026 ch. 205:1 (RSA 193-F:4, VII)
+   - source: https://gc.nh.gov/bill_status/legacy/bs2016/billText.aspx?sy=2026&id=225&txtFormat=html
+   - as_of: 2026-11-16
+   - review_by: 2027-08-15
+   - note: Text: "VII. Students who have admitted to or been found to have engaged in harassment, intimidation, retaliation, or bullying shall be subject to disciplinary action, including suspension and expulsion. Any student determined to have submitted a false report of harassment, intimidation, or bullying is also subject to disciplinary action, including suspension and expulsion." This settles the library's open question (bullying-school-duties 9) about which act added paragraph VII: it is in the section HB 131 re-enacted. Raw: raw/state-issues/students-hb-131-bullying-law/hb131-2026-chaptered-text.txt
+
+8. HB 131's re-enacted RSA 193-F:4, II requires each school board and charter school board to adopt a written policy prohibiting bullying and cyberbullying "no later than 6 months after the effective date of this section," and the section took effect August 1, 2026, which points to about February 1, 2027 (**derived**); New Hampshire school districts were revising their bullying policies (usually numbered JICK) through the fall of 2026.
+   - citation: 2026 ch. 205:1 (RSA 193-F:4, II); 2026 ch. 205:5, II
+   - source: https://gc.nh.gov/bill_status/legacy/bs2016/billText.aspx?sy=2026&id=225&txtFormat=html
+   - as_of: 2026-11-16
+   - review_by: 2027-08-15
+   - note: Text: "II. The school board of each school district and the board of trustees of a chartered public school and public academy shall, no later than 6 months after the effective date of this section, adopt a written policy prohibiting bullying and cyberbullying. Such policy shall include the definitions set forth in RSA 193-F:3." **Derived:** the date assumes the re-enacted section's own effective date (August 1, 2026) starts the six months; the act doesn't state a date. The town research (Hudson, Bedford, Portsmouth, Keene, Goffstown) found policies revised in May–August 2026 or under revision in September–November 2026. Raw: raw/state-issues/students-hb-131-bullying-law/hb131-2026-chaptered-text.txt
 
 ## students-sb-575-bullying-study-committee: SB 575 (2026): Committee to Study School Bullying
 

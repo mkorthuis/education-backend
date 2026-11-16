@@ -10,7 +10,7 @@
   - EFAs: SB 295 (2025 ch. 75, effective June 10, 2025) removed the income limit. It also set an enrollment cap (10,000 in 2025–26; 12,500 in 2026–27, now reached) with priority groups that are not held to the cap.
   - The Parental Bill of Rights, RSA 189-B (2025 ch. 74), took effect July 1, 2025 and was amended in 2026.
   - Home education: RSA 193-A was rewritten by HB 1268 (2026 ch. 297), effective July 1, 2026. A declaration is now needed only to use public school programs or when a child leaves a public school, and the annual evaluation section was repealed.
-  - Bullying: the "imbalance of power … personal characteristics" part of the definition (RSA 193-F:3, I(b)) was repealed effective August 1, 2026 (2026 ch. 205). The policy and reporting sections were also amended in 2025 and 2026.
+  - Bullying: the "imbalance of power … personal characteristics" part of the definition (RSA 193-F:3, I(b)) was repealed effective August 1, 2026 by HB 131 (2026 ch. 205), which also re-enacted the policy section, RSA 193-F:4 (state-issues.md, students-hb-131-bullying-law). The policy and reporting sections were also amended in 2025.
   - School transfers: in-district transfers, RSA 193:3, were changed by SB 97 (2025 ch. 293), effective July 1, 2025. Open enrollment funding, RSA 194-D, changed effective September 13, 2025. Both 2026 bills for statewide open enrollment (SB 101 and HB 751) died.
   - New excused absences for civic and career-tech events (RSA 193:1-d), effective July 10, 2026.
   - The dual enrollment funding section (RSA 188-E:27) was amended effective June 21, 2026.
@@ -941,7 +941,7 @@
    - review_by: 2027-08-15
 
 2. Effective August 1, 2026, New Hampshire repealed paragraph I(b) of its bullying definition. That paragraph had said bullying includes actions motivated by an imbalance of power based on a student's actual or perceived personal characteristics, behaviors or beliefs, or their association with another person.
-   - citation: RSA 193-F:3, I(b) (repealed by 2026 ch. 205:4, eff. 2026-08-01)
+   - citation: RSA 193-F:3, I(b) (repealed by HB 131, 2026 ch. 205:4, eff. 2026-08-01)
    - source: https://gc.nh.gov/rsa/html/XV/193-F/193-F-3.htm
    - as_of: 2026-11-08
    - review_by: 2027-08-15
@@ -1024,7 +1024,7 @@
    - source: https://gc.nh.gov/rsa/html/XV/193-F/193-F-4.htm
    - as_of: 2026-11-08
    - review_by: 2027-08-15
-   - note: Paragraph VII was added in 2025 or 2026 (source note lists 2025 ch. 57 and 2026 ch. 205); which act added it was not checked.
+   - note: Paragraph VII is in RSA 193-F:4 as repealed and re-enacted by HB 131 (2026 ch. 205:1), effective August 1, 2026 (checked against the chaptered text November 16, 2026; state-issues.md, students-hb-131-bullying-law 7); the statute's source note also lists 2025 ch. 57.
 
 ## bullying-policies-and-reporting: Bullying Policies, Training, State Reporting and Enforcement
 
@@ -1051,7 +1051,7 @@
    - review_by: 2027-08-15
 
 4. The NH Department of Education must prepare an annual report on substantiated incidents of bullying, cyberbullying and retaliation. It must include the number and types of incidents and the number of waivers granted for parent notification and for investigation extensions.
-   - citation: RSA 193-F:6, II, as amended by 2026 ch. 205:2, eff. 2026-08-01
+   - citation: RSA 193-F:6, II, as amended by HB 131 (2026 ch. 205:2), eff. 2026-08-01
    - source: https://gc.nh.gov/rsa/html/XV/193-F/193-F-6.htm
    - as_of: 2026-11-08
    - review_by: 2027-08-15
@@ -2257,7 +2257,7 @@
    - How the NH DOE applies these was not retrieved.
 10. **Records access periods.** RSA 189-B:4, I(o) (10 business days), RSA 189:66, IV(a) (14 days) and FERPA, 34 CFR 99.10(b) (no more than 45 days) all appear in current law. Not reconciled.
 11. **RSA 186-C:5-a, III.** The published text shows two versions of the annual complaint report deadline (July 1 and September 1); which is in force was not determined.
-12. **RSA 193-F:4, VII** (discipline for bullying and false reports). The source note lists 2025 ch. 57 and 2026 ch. 205; which act added paragraph VII was not determined.
+12. **RSA 193-F:4, VII** (discipline for bullying and false reports). Resolved November 16, 2026: paragraph VII is in RSA 193-F:4 as repealed and re-enacted by HB 131 (2026 ch. 205:1), effective August 1, 2026.
 13. **Child care scholarship dollar limits.** The 85%-of-state-median-income figures by family size were not retrieved. They are on NH DHHS pages, which block automated requests.
 14. **Head Start.** Only 45 CFR 1302 was checked. Any HHS notices outside these regulations that affect eligibility were not checked.
 15. **ED's 2026 prayer guidance.** Only the press release summary was read; the full guidance document linked from it was not opened.
