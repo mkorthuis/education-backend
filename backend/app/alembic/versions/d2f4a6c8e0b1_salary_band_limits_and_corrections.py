@@ -5,8 +5,9 @@ $14 to $5,680, a $440,367 minimum above its maximum, a maximum below its minimum
 steps. They showed on district pages and pulled the state averages (the 2023-24 average bachelor's
 minimum was $44,874 with Newmarket's row). The loader now replaces NH DOE's values with those from
 a district's published schedule or teachers' agreement where the config has one (Conway, Fall
-Mountain, Jackson, Lebanon, Newmarket, Northumberland, Portsmouth and Tamworth), skips rows whose
-salaries are still impossible, and drops step counts over 60 (Lincoln-Woodstock's 2024-25 1,300).
+Mountain, Jackson, Lebanon, Newmarket, Northumberland, Portsmouth and Tamworth, and Rochester, whose
+2025-26 bands came from a schedule older than its 2025-2028 agreement), skips rows whose salaries
+are still impossible, and drops step counts over 60 (Lincoln-Woodstock's 2024-25 1,300).
 This reloads every configured year, which replaces that year's rows.
 
 Revision ID: d2f4a6c8e0b1

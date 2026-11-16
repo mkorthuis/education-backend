@@ -127,3 +127,52 @@ corrections:
     max_salary: 59394
     source: https://www.nh.gov/pelrb/collective/documents/groveton_teach9.pdf
     note: Same schedule, column MA +30, step 15. NH DOE's $60,914 is the top of the next column (CAG); its MA+30 minimum ($43,700) matches.
+  - district_id: 461  # Rochester
+    year: 2026
+    band: BA
+    min_salary: 43899
+    max_salary: 72148
+    source: https://aptg.co/5fshPK
+    note: Rochester Federation of Teachers agreement, August 25, 2025 to June 30, 2028, Schedule I (Salary Schedule 2025-2026, p. 44), column BA, steps 0-3 to step 20. NH DOE's file has $41,397-$68,148, apparently a schedule from before this agreement. Posted on the district's Collective Bargaining Agreements page.
+  - district_id: 461  # Rochester
+    year: 2026
+    band: BA15
+    min_salary: 45387
+    max_salary: 73659
+    source: https://aptg.co/5fshPK
+    note: Rochester Federation of Teachers agreement, August 25, 2025 to June 30, 2028, Schedule I (Salary Schedule 2025-2026, p. 44), column BA+15. NH DOE's file has $42,824-$69,659.
+  - district_id: 461  # Rochester
+    year: 2026
+    band: BA30
+    min_salary: 45387
+    max_salary: 73659
+    source: https://aptg.co/5fshPK
+    note: Rochester Federation of Teachers agreement, August 25, 2025 to June 30, 2028, Schedule I (Salary Schedule 2025-2026, p. 44). The schedule has no BA+30 column; NH DOE's file repeats its BA+15 figures in this row ($42,824-$69,659), so it takes the BA+15 column.
+  - district_id: 461  # Rochester
+    year: 2026
+    band: MA
+    min_salary: 47647
+    max_salary: 76090
+    source: https://aptg.co/5fshPK
+    note: Rochester Federation of Teachers agreement, August 25, 2025 to June 30, 2028, Schedule I (Salary Schedule 2025-2026, p. 44), column MA. NH DOE's file has $45,086-$72,060.
+  - district_id: 461  # Rochester
+    year: 2026
+    band: MA15
+    min_salary: 49037
+    max_salary: 77574
+    source: https://aptg.co/5fshPK
+    note: Rochester Federation of Teachers agreement, August 25, 2025 to June 30, 2028, Schedule I (Salary Schedule 2025-2026, p. 44), column MA+15. NH DOE's file has $46,514-$73,574.
+  - district_id: 461  # Rochester
+    year: 2026
+    band: MA30
+    min_salary: 50526
+    max_salary: 79261
+    source: https://aptg.co/5fshPK
+    note: Rochester Federation of Teachers agreement, August 25, 2025 to June 30, 2028, Schedule I (Salary Schedule 2025-2026, p. 44), column MA30. NH DOE's file has $47,941-$75,261.
+  - district_id: 461  # Rochester
+    year: 2026
+    band: MA45
+    min_salary: 50526
+    max_salary: 79261
+    source: https://aptg.co/5fshPK
+    note: Rochester Federation of Teachers agreement, August 25, 2025 to June 30, 2028, Schedule I (Salary Schedule 2025-2026, p. 44). The schedule has no MA+45 column; NH DOE's file repeats its MA30 figures in this row ($47,941-$75,261), so it takes the MA30 column.
