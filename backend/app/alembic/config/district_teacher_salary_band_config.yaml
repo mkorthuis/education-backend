@@ -85,3 +85,45 @@ corrections:
     min_salary: 46000
     source: https://files.smartsites.parentsquare.com/10271/personnel_polices_for_contracted_employees_2026-27_1.pdf
     note: Jackson's Salary Schedule for Hiring (Appendix A, p. 19) starts column B at $46,000; NH DOE's file has $4,600, and the rest of its Jackson rows match the schedule. NH DOE's 2024-25 file also had $46,000.
+  - district_id: 399  # Newmarket
+    year: 2024
+    band: BA
+    min_salary: 44067
+    source: https://www.nh.gov/pelrb/collective/documents/newmarket_teach9.pdf
+    note: Newmarket Teachers' Association agreement, July 1, 2022 to June 30, 2025, Appendix B, 2023-2024 table (page 18 of 23), column BA step 1; every other cell NH DOE reported matches the table. NH DOE's file has $440,367. Read from the Internet Archive's copy, since nh.gov refuses automated requests.
+  - district_id: 449  # Portsmouth
+    year: 2026
+    band: BA15
+    min_salary: 56860
+    source: https://files.portsmouthnh.gov/hr/APT+2025-2028.pdf
+    note: Association of Portsmouth Teachers agreement 2025-2028, Salary Schedule A (p. 45), 2025-26 interval 1 ($53,339) plus the Track B add-on for intervals 1-12 ($3,521); Track B is a bachelor's degree plus 15 credits (Appendix C). Its top, $88,162 plus $7,389, is NH DOE's $95,551. NH DOE's file has $5,680.
+  - district_id: 174  # Fall Mountain Regional
+    year: 2024
+    band: MA15
+    min_salary: 48693
+    source: https://drive.google.com/file/d/1XsEYiyKd4MUBsvpVOFtqwM1eraxElVvy/view
+    note: Fall Mountain Teachers Association agreement 2023-2026 (linked from sau60.org as "Teacher Agreement (23-26)"), Appendix A-1, 2023-2024 (p. 37), column MA+15, step 0 to step 14 ($68,802); the BA, MA and MA+30 columns match NH DOE. NH DOE's file has $14.
+  - district_id: 295  # Lebanon
+    year: 2026
+    band: BA15
+    min_salary: 49888
+    source: https://drive.google.com/file/d/1Q-CvreKA8arFJ6ThzW98qeUxIPh3XyF0/view
+    note: Lebanon Education Association agreement, July 1, 2025 to June 30, 2028 (linked from sau88.net), Appendix A, 2025-2026 (p. 30), column BA +15, step 1 to step 18 ($82,458); the other columns match NH DOE. NH DOE's file has $4,988.
+  - district_id: 525  # Tamworth
+    year: 2026
+    band: MA
+    max_salary: 85709
+    source: https://www.nh.gov/pelrb/collective/documents/tamworth_edu6.pdf
+    note: Tamworth teachers' agreement, July 1, 2023 to June 30, 2026, Salary Schedule 2025-2026 (p. 22), fourth column, which starts at NH DOE's MA minimum ($48,745) and tops out at $85,709; the next two columns match NH DOE's MA+15 and MA+30. NH DOE's file has $8,579. Read from the Internet Archive's copy, since nh.gov refuses automated requests.
+  - district_id: 407  # Northumberland
+    year: 2026
+    band: MA
+    min_salary: 41420
+    source: https://www.nh.gov/pelrb/collective/documents/groveton_teach9.pdf
+    note: Groveton Teachers Association agreement, July 1, 2023 to June 30, 2027 (revised March 2025), Appendix C, Salary Schedule 2025-2026 (p. 37), column MA, step 1 to step 15 ($57,114). NH DOE's file has $14,420. Read from the Internet Archive's copy, since nh.gov refuses automated requests.
+  - district_id: 407  # Northumberland
+    year: 2026
+    band: MA30
+    max_salary: 59394
+    source: https://www.nh.gov/pelrb/collective/documents/groveton_teach9.pdf
+    note: Same schedule, column MA +30, step 15. NH DOE's $60,914 is the top of the next column (CAG); its MA+30 minimum ($43,700) matches.
