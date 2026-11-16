@@ -32,13 +32,15 @@ def _utc_now() -> datetime:
     return datetime.now(timezone.utc).replace(tzinfo=None)
 
 
-def record_question(question: str, earlier_questions: List[str], deep: bool) -> Optional[int]:
-    """Logs a question as it arrives; its id, for record_outcome, or None if it couldn't be logged"""
+def record_question(question: str, earlier_questions: List[str], deep: bool, place: Optional[dict] = None) -> Optional[int]:
+    """Logs a question as it arrives, with the district or school page it came from (page_place); its
+    id, for record_outcome, or None if it couldn't be logged"""
     try:
         with Session(engine) as session:
             # Questions older than the retention period go as new ones arrive
             session.exec(delete(AskQuestion).where(AskQuestion.date_created < _utc_now() - timedelta(days=RETENTION_DAYS)))
-            row = AskQuestion(question=question, earlier_questions=earlier_questions, deep=deep)
+            row = AskQuestion(question=question, earlier_questions=earlier_questions, deep=deep,
+                              place_kind=place and place["kind"], place_id=place and place["id"])
             session.add(row)
             session.commit()
             return row.id
@@ -72,11 +74,11 @@ def export_csv(days: int, out=sys.stdout) -> int:
     with Session(engine) as session:
         rows = session.exec(select(AskQuestion).where(AskQuestion.date_created >= since).order_by(AskQuestion.date_created.desc())).all()
     writer = csv.writer(out)
-    writer.writerow(["asked_at_utc", "question", "earlier_questions", "status", "cached", "more_time", "seconds"])
+    writer.writerow(["asked_at_utc", "question", "earlier_questions", "status", "cached", "more_time", "seconds", "place_kind", "place_id"])
     for row in rows:
         writer.writerow([
             row.date_created.isoformat(timespec="seconds"), row.question, " | ".join(row.earlier_questions or []),
-            row.status, row.cached, row.deep, row.seconds,
+            row.status, row.cached, row.deep, row.seconds, row.place_kind, row.place_id,
         ])
     return len(rows)
 

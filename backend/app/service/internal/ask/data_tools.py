@@ -9,15 +9,17 @@ database.
 """
 import math
 from collections import defaultdict
+from datetime import date
 from functools import lru_cache
 from statistics import median, quantiles
 from typing import Callable, Dict, List, Optional
 from urllib.parse import urlparse
 
 from fastapi import HTTPException
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from app.etl.core import load_config
+from app.model.reference import DistrictService, OutsideSchool
 from app.service.inflation import in_dollars_of
 from app.service.public.acs_service import acs_service
 from app.service.public.adequacy_aid_service import adequacy_aid_service
@@ -248,7 +250,8 @@ CHARTER_SCHOOL = "public charter school, run by its own board rather than a scho
 def find_places(session: Session, query: str) -> List[dict]:
     """
     Public districts, schools (public charter schools too) and towns whose name contains the query,
-    best matches first. A charter school belongs to no district, so it comes without one.
+    best matches first. A district comes with where its students go for grades it doesn't run and
+    whose students it takes; a charter school belongs to no district, so it comes without one.
     """
     words = [word for word in query.lower().replace(",", " ").split() if word not in {"school", "district", "nh", "the", "of"}]
     if not words:
@@ -264,7 +267,7 @@ def find_places(session: Session, query: str) -> List[dict]:
     for district in districts:
         score = matches(district.name)
         if score:
-            results.append((score, 0, {"kind": "district", "id": district.id, "name": district.name, "page": f"/district/{district.id}"}))
+            results.append((score, 0, _district_place(session, district.id, district.name)))
     for town in location_service.get_towns(session):
         score = matches(town.name)
         district_ids = [i for i in (town.district_ids or []) if i in names]
@@ -275,28 +278,138 @@ def find_places(session: Session, query: str) -> List[dict]:
                 "districts": [{"id": i, "name": names[i], "page": f"/district/{i}"} for i in district_ids],
             }))
     for school in location_service.get_schools(session):
-        district_id = _field(school, "district_id_fk")
         # A school matches on its name or its town, so "Hampton schools" finds Marston School
         score = max(matches(school.name), matches(school.city or ""))
-        if score and (district_id in names or school.kind == "charter"):
-            found = {
-                "kind": "school",
-                "id": school.id,
-                "name": school.name,
-                "town": (school.city or "").title(),
-                "grades": _grade_span(school),
-                "page": f"/school/{school.id}",
-            }
-            if school.kind == "charter":
-                found["type"] = CHARTER_SCHOOL
-            else:
-                found["district_id"] = district_id
-            if school.not_yet_reported:
-                found["opened"] = school.open_date.isoformat()
-                found["no_figures_yet"] = school.not_yet_reported
-            results.append((score, 2, found))
+        if score and (_field(school, "district_id_fk") in names or school.kind == "charter"):
+            results.append((score, 2, _school_place(school)))
     results.sort(key=lambda item: (-item[0], item[1], item[2]["name"]))
     return [item[2] for item in results[:20]]
+
+
+def _district_place(session: Session, district_id: int, name: str) -> dict:
+    """A public district as find_places gives it, with where its students go for grades it doesn't run
+    and the districts whose students it takes (_arrangements)"""
+    found = {"kind": "district", "id": district_id, "name": name, "page": f"/district/{district_id}"}
+    for key, items in _arrangements(session).get(district_id, {}).items():
+        if items:
+            found[key] = items
+    return found
+
+
+# How find_places names each kind of district_service arrangement
+ARRANGEMENT_NAMES = {
+    "tuition_contract": "tuition contract",
+    "area_agreement": "AREA agreement",
+    "cooperative": "cooperative district",
+    "choice": "families' choice, tuition paid by the district",
+    "no_contract": "tuition paid without a written contract",
+    "interstate_district": "interstate school district",
+    "joint_maintenance": "joint maintenance agreement",
+}
+
+
+def _grade_range(low: int, high: int) -> str:
+    """Grades as "grades 9 to 12" or "kindergarten to grade 6" (0 is kindergarten)"""
+    if low == high:
+        return "kindergarten" if low == 0 else f"grade {low}"
+    return f"kindergarten to grade {high}" if low == 0 else f"grades {low} to {high}"
+
+
+def _school_year(day: date) -> str:
+    """The school year a date falls in, July to June: 2027-07-01 is in 2027-28"""
+    year = day.year if day.month >= 7 else day.year - 1
+    return f"{year}-{(year + 1) % 100:02d}"
+
+
+def _arrangements(session: Session) -> Dict[int, Dict[str, List[dict]]]:
+    """
+    Where each public district's students go for grades it doesn't run (district_service), and the
+    districts whose students it takes, by district id: {"students_attend": [...], "takes_students_from":
+    [...]}, loaded once a request. Arrangements that have ended are left out, and one that hasn't
+    started is marked upcoming. Each has an id to cite ("a" and its row's id) and, under "_source", the
+    page it came from, which the Ask keeps for the answer's sources rather than show Claude.
+    """
+    def load():
+        today = date.today()
+        names = {d.id: d.name for d in location_service.get_districts(session, is_public=True)}
+        rows = session.exec(
+            select(DistrictService, OutsideSchool)
+            .outerjoin(OutsideSchool, OutsideSchool.id == DistrictService.outside_school_id_fk)
+            .where(DistrictService.ends.is_(None) | (DistrictService.ends >= today))
+        ).all()
+        found: Dict[int, Dict[str, List[dict]]] = defaultdict(lambda: {"students_attend": [], "takes_students_from": []})
+        # Lowest grades first, then by the school or district's name, the current arrangement before the next
+        rows = sorted(rows, key=lambda pair: (pair[0].grade_low, pair[0].grade_high,
+                                              pair[1].name if pair[1] else names.get(pair[0].receiving_district_id_fk, ""),
+                                              pair[0].starts or date.min))
+        for row, outside in rows:
+            receiving = row.receiving_district_id_fk
+            if row.district_id_fk not in names or (outside is None and receiving not in names):
+                continue
+            sender = names[row.district_id_fk]
+            terms = {"id": f"a{row.id}", "grades": _grade_range(row.grade_low, row.grade_high),
+                     "arrangement": ARRANGEMENT_NAMES.get(row.arrangement, row.arrangement)}
+            if row.starts:
+                terms["first_year"] = _school_year(row.starts)
+            if row.ends:
+                terms["last_year"] = _school_year(row.ends)
+            if row.starts and row.starts > today:
+                terms["upcoming"] = True
+            if outside is not None:
+                where = {"name": outside.name, "type": f"{outside.kind.replace('_', ' ')} in {outside.state}"}
+            else:
+                where = {"name": names[receiving], "district_id": receiving, "page": f"/district/{receiving}"}
+            source = {"label": f"{sender} students attending {where['name']}", "url": row.source_url}
+            found[row.district_id_fk]["students_attend"].append(
+                {**where, **terms, **({"note": row.note} if row.note else {}), "_source": source})
+            if outside is None:
+                found[receiving]["takes_students_from"].append(
+                    {"name": sender, "district_id": row.district_id_fk, "page": f"/district/{row.district_id_fk}", **terms, "_source": source})
+        for lists in found.values():
+            lists["takes_students_from"].sort(key=lambda item: item["name"])
+        return dict(found)
+
+    return _once(session, "district_service", load)
+
+
+def _school_place(school) -> dict:
+    """A public or charter school as find_places gives it"""
+    found = {
+        "kind": "school",
+        "id": school.id,
+        "name": school.name,
+        "town": (school.city or "").title(),
+        "grades": _grade_span(school),
+        "page": f"/school/{school.id}",
+    }
+    if school.kind == "charter":
+        found["type"] = CHARTER_SCHOOL
+    else:
+        found["district_id"] = _field(school, "district_id_fk")
+    if school.not_yet_reported:
+        found["opened"] = school.open_date.isoformat()
+        found["no_figures_yet"] = school.not_yet_reported
+    return found
+
+
+def page_place(session: Session, kind: str, place_id: int) -> dict:
+    """
+    The district or school whose page on the site a question was asked from, as find_places gives
+    it; a school in a district comes with its district's name, so its page can be linked too. Only
+    the places find_places finds: public districts, and their current schools and charter schools.
+    """
+    districts = {d.id: d.name for d in location_service.get_districts(session, is_public=True)}
+    if kind == "district":
+        if place_id not in districts:
+            raise DataToolError(f"No public school district has id {place_id}.")
+        return _district_place(session, place_id, districts[place_id])
+    school = next((s for s in location_service.get_schools(session) if s.id == place_id), None)
+    if school is None or not (_field(school, "district_id_fk") in districts or school.kind == "charter"):
+        raise DataToolError(f"No current public school has id {place_id}.")
+    found = _school_place(school)
+    if "district_id" in found:
+        found["district"] = districts[found["district_id"]]
+    return found
 
 
 def list_schools(session: Session, district_id: int) -> List[dict]:

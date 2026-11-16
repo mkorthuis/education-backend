@@ -12,6 +12,7 @@ from app.core.config import settings
 from app.core.db import engine
 from app.schema.ask_schema import AskRequest, AskResponse
 from app.service.internal.ask.ask_service import MAX_EARLIER, AskFailed, AskLimitReached, AskUnavailable, answer_afresh, prepare_question
+from app.service.internal.ask.data_tools import DataToolError, page_place
 from app.service.internal.ask.question_log import record_outcome, record_question
 
 logger = logging.getLogger(__name__)
@@ -28,7 +29,8 @@ TEXT_SECONDS = 0.1
 FAILED = "We couldn't answer that question right now. Please try again."
 
 
-async def stream_answer(question: str, earlier: List[dict], deep: bool, show_text: bool, question_id: Optional[int] = None):
+async def stream_answer(question: str, earlier: List[dict], deep: bool, show_text: bool, question_id: Optional[int] = None,
+                        place: Optional[dict] = None):
     # The paragraphs written so far, set by the thread answering
     written: List[List[str]] = [[]]
 
@@ -37,7 +39,7 @@ async def stream_answer(question: str, earlier: List[dict], deep: bool, show_tex
 
     def answer() -> dict:
         with Session(engine) as session:
-            return answer_afresh(session, question, earlier, deep, write if show_text else None)
+            return answer_afresh(session, question, earlier, deep, write if show_text else None, place)
 
     task = asyncio.ensure_future(run_in_threadpool(answer))
     clock = asyncio.get_running_loop().time
@@ -78,7 +80,8 @@ async def stream_answer(question: str, earlier: List[dict], deep: bool, show_tex
         "built from the database and links to the site's pages. Limited per day across the site. "
         "A new answer can start with spaces, sent while it's being written; if it then fails, the "
         "body has only a \"detail\" message. With \"stream\", the answer's paragraphs come first as "
-        "they're written, each update a line of JSON with \"partial\", and the answer is the last line."
+        "they're written, each update a line of JSON with \"partial\", and the answer is the last line. "
+        "With \"place\", the district or school page it was asked from, a question that names no place is about that one."
     ),
 )
 def ask(request: AskRequest):
@@ -87,10 +90,18 @@ def ask(request: AskRequest):
         raise HTTPException(status_code=400, detail="Type a question to ask.")
     if len(question) > settings.ASK_MAX_QUESTION_LENGTH:
         raise HTTPException(status_code=400, detail=f"Questions can be up to {settings.ASK_MAX_QUESTION_LENGTH} characters.")
+    # The place's name and details come from the database, never from the request
+    place = None
+    if request.place:
+        with Session(engine) as session:
+            try:
+                place = page_place(session, request.place.kind, request.place.id)
+            except DataToolError as error:
+                raise HTTPException(status_code=400, detail=str(error))
     # Every question goes in the log (question_log) with its outcome: its text, never who asked
-    question_id = record_question(question, [turn.question for turn in request.history][-MAX_EARLIER:], request.deep)
+    question_id = record_question(question, [turn.question for turn in request.history][-MAX_EARLIER:], request.deep, place)
     try:
-        earlier, saved = prepare_question(question, [turn.model_dump() for turn in request.history], request.deep)
+        earlier, saved = prepare_question(question, [turn.model_dump() for turn in request.history], request.deep, place)
     except AskUnavailable:
         record_outcome(question_id, "unavailable")
         raise HTTPException(status_code=503, detail="Asking questions isn't available right now.")
@@ -101,6 +112,6 @@ def ask(request: AskRequest):
         record_outcome(question_id, saved.get("status", "answered"), cached=True)
         return saved
     return StreamingResponse(
-        stream_answer(question, earlier, request.deep, request.stream, question_id),
+        stream_answer(question, earlier, request.deep, request.stream, question_id, place),
         media_type="application/x-ndjson" if request.stream else "application/json",
     )

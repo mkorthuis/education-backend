@@ -5,7 +5,7 @@ Tests for Ask NH Education Facts, run against the local database with a fake Cla
 """
 import io
 import json
-from datetime import timedelta
+from datetime import date, timedelta
 import time
 import unittest
 from types import SimpleNamespace
@@ -111,10 +111,10 @@ class AskTests(unittest.TestCase):
         with Session(engine) as session:
             return session.exec(select(AskQuestion).where(AskQuestion.id > self.last_logged).order_by(AskQuestion.id)).all()
 
-    def answer(self, question, history=None):
+    def answer(self, question, history=None, place=None):
         """As the route answers: a saved answer, or a new one within the daily limit."""
-        earlier, saved = ask_service.prepare_question(question, history)
-        return saved or ask_service.answer_afresh(self.session, question, earlier)
+        earlier, saved = ask_service.prepare_question(question, history, place=place)
+        return saved or ask_service.answer_afresh(self.session, question, earlier, place=place)
 
     def run_with(self, responses, question="How many students graduate in New Hampshire?"):
         client = FakeClient(responses)
@@ -265,9 +265,10 @@ class AskTests(unittest.TestCase):
         url = f"{settings.API_V1_STR}/ask"
         history = [{"question": "How did Concord do in math?", "answer": ["Concord was 40% in math."]}]
         response = lambda: final({"status": "answered", "answer": ["Science was 38%."], "charts": [], "tables": [], "references": [], "follow_ups": []})
+        concord = {"kind": "district", "id": 111}
         with mock.patch.object(ask_service, "_client", FakeClient([response()])):
-            api.post(url, json={"question": "What about science?", "history": history, "deep": True})
-        api.post(url, json={"question": "what about SCIENCE", "history": history, "deep": True})
+            api.post(url, json={"question": "What about science?", "history": history, "deep": True, "place": concord})
+        api.post(url, json={"question": "what about SCIENCE", "history": history, "deep": True, "place": concord})
         with mock.patch.object(ask_service, "_client", FakeClient([reply("max_tokens")])):
             api.post(url, json={"question": "Will this fail?"})
         # The limit is two new answers a day here
@@ -275,24 +276,26 @@ class AskTests(unittest.TestCase):
         with mock.patch.object(ask_service.settings, "ASK_DAILY_LIMIT", 0):
             api.post(url, json={"question": "Is asking off?"})
         rows = self.logged()
-        self.assertEqual([(row.question, row.earlier_questions, row.deep, row.status, row.cached) for row in rows], [
-            ("What about science?", ["How did Concord do in math?"], True, "answered", False),
-            ("what about SCIENCE", ["How did Concord do in math?"], True, "answered", True),
-            ("Will this fail?", [], False, "failed", False),
-            ("Is the limit reached?", [], False, "limit", False),
-            ("Is asking off?", [], False, "unavailable", False),
+        self.assertEqual([(row.question, row.earlier_questions, row.deep, row.status, row.cached, row.place_kind, row.place_id) for row in rows], [
+            ("What about science?", ["How did Concord do in math?"], True, "answered", False, "district", 111),
+            ("what about SCIENCE", ["How did Concord do in math?"], True, "answered", True, "district", 111),
+            ("Will this fail?", [], False, "failed", False, None, None),
+            ("Is the limit reached?", [], False, "limit", False, None, None),
+            ("Is asking off?", [], False, "unavailable", False, None, None),
         ])
         self.assertIsNotNone(rows[0].seconds)
         self.assertIsNone(rows[1].seconds)
         # Nothing about who asked
         columns = {column["name"] for column in inspect(engine).get_columns("ask_question")}
-        self.assertEqual(columns, {"id", "question", "earlier_questions", "deep", "cached", "status", "seconds", "date_created", "date_updated"})
+        self.assertEqual(columns, {"id", "question", "earlier_questions", "deep", "cached", "status", "seconds", "place_kind", "place_id",
+                                   "date_created", "date_updated"})
         # Exported newest first
         out = io.StringIO()
         self.assertGreaterEqual(question_log.export_csv(1, out), 5)
         lines = out.getvalue().splitlines()
-        self.assertEqual(lines[0], "asked_at_utc,question,earlier_questions,status,cached,more_time,seconds")
+        self.assertEqual(lines[0], "asked_at_utc,question,earlier_questions,status,cached,more_time,seconds,place_kind,place_id")
         self.assertIn(",Is asking off?,,unavailable,False,False,", lines[1])
+        self.assertEqual(sum(line.endswith(",district,111") for line in lines[1:6]), 2)
 
     def test_questions_are_kept_for_a_year(self):
         old = AskQuestion(question="Asked over a year ago?", deep=False, date_created=question_log._utc_now() - timedelta(days=366))
@@ -351,6 +354,9 @@ class AskTests(unittest.TestCase):
         url = f"{settings.API_V1_STR}/ask"
         self.assertEqual(api.post(url, json={"question": "x" * 501}).status_code, 400)
         self.assertEqual(api.post(url, json={"question": "Hi?", "history": [{"question": "Q?", "answer": ["A."]}] * 21}).status_code, 422)
+        # A page the site has: not a private school's, or a town's
+        self.assertEqual(api.post(url, json={"question": "Hi?", "place": {"kind": "school", "id": 20290}}).status_code, 400)
+        self.assertEqual(api.post(url, json={"question": "Hi?", "place": {"kind": "town", "id": 111}}).status_code, 422)
         with mock.patch.object(ask_service.settings, "ANTHROPIC_API_KEY", ""):
             self.assertEqual(api.post(url, json={"question": "Any key?"}).status_code, 503)
         with mock.patch.object(ask_service, "_client", FakeClient([plain("One."), plain("Two.")])):
@@ -424,6 +430,101 @@ class AskTests(unittest.TestCase):
         self.assertEqual([row[0] for row in latest["rows"]], ["Concord", "New Hampshire"])
         with self.assertRaises(DataToolError):
             compare_places(self.session, "spending", [{"level": "district", "id": 111}])
+
+    def test_a_question_from_a_district_or_school_page_is_about_that_place(self):
+        from app.service.internal.ask.data_tools import find_places, page_place
+        concord = page_place(self.session, "district", 111)
+        self.assertEqual({key: concord[key] for key in ("kind", "id", "name", "page")},
+                         {"kind": "district", "id": 111, "name": "Concord", "page": "/district/111"})
+        # As find_places gives it, with the districts whose students it takes
+        self.assertEqual(concord, next(place for place in find_places(self.session, "Concord") if place.get("id") == 111))
+        self.assertIn("Deerfield", [item["name"] for item in concord["takes_students_from"]])
+        # A school as find_places gives it, with its district's name; a charter school has none
+        high = page_place(self.session, "school", 20285)
+        found = next(place for place in find_places(self.session, "Concord High") if place["id"] == 20285)
+        self.assertEqual(high, {**found, "district": "Concord"})
+        charter = page_place(self.session, "school", 28605)
+        self.assertNotIn("district", charter)
+        self.assertTrue(charter["type"].startswith("public charter school"))
+        # Only the places find_places finds: not a private school, a former school or a charter's board
+        for kind, ident in [("school", 20290), ("school", 20145), ("district", 727), ("district", 999999)]:
+            with self.assertRaises(DataToolError, msg=(kind, ident)):
+                page_place(self.session, kind, ident)
+
+        # Claude gets the place first, and can link its pages and its district's without looking them up
+        links = [{"label": "Concord High School", "path": "/school/20285"}, {"label": "Concord School District", "path": "/district/111"}]
+        client = FakeClient([final({"status": "answered", "answer": ["Concord High graduated 90%."], "references": links})])
+        with mock.patch.object(ask_service, "_client", client):
+            answer = self.answer("What's the graduation rate?", place=high)
+        self.assertEqual(client.requests[0]["messages"][0]["content"],
+                         f"<asked_from_page>{json.dumps(high)}</asked_from_page>\n<question>What's the graduation rate?</question>")
+        self.assertEqual(answer["references"], links)
+        # Saved for that page: the same words on another page, or on none, are asked afresh
+        self.assertTrue(self.answer("what's the graduation rate", place=high)["cached"])
+        with mock.patch.object(ask_service.settings, "ASK_DAILY_LIMIT", None):
+            for other in (concord, None):
+                client = FakeClient([plain("Another place's answer.")])
+                with mock.patch.object(ask_service, "_client", client):
+                    self.assertFalse(self.answer("What's the graduation rate?", place=other)["cached"])
+            # A follow-up has the page, then the earlier questions
+            client = FakeClient([plain("Science was 38%.")])
+            with mock.patch.object(ask_service, "_client", client):
+                self.answer("What about science?", [{"question": "How did students do in math?", "answer": ["40%."]}], concord)
+        message = client.requests[0]["messages"][0]["content"]
+        shown = DatasetRegistry().add_places([concord])[0]
+        self.assertTrue(message.startswith(f"<asked_from_page>{json.dumps(shown)}</asked_from_page>\n<earlier_questions>"), message)
+        self.assertTrue(message.endswith("<new_question>What about science?</new_question>"))
+        # The arrangements' links stay with the server
+        self.assertNotIn("_source", message)
+        self.assertIn("_source", concord["takes_students_from"][0])
+
+    def test_find_places_says_where_a_district_s_students_go(self):
+        from app.model.reference import DistrictService
+        from app.service.internal.ask.data_tools import find_places
+        jackson = next(place for place in find_places(self.session, "Jackson") if place.get("id") == 271)
+        attend = [(item["name"], item["grades"], item["arrangement"], item.get("first_year"), item.get("last_year"), item.get("upcoming", False))
+                  for item in jackson["students_attend"]]
+        # Lowest grades first; the current Conway contract before the next, which hasn't started
+        self.assertEqual(attend, [
+            ("Bartlett", "grades 7 to 8", "tuition contract", "2026-27", "2028-29", False),
+            ("Conway", "grades 9 to 12", "tuition contract", "2006-07", "2026-27", False),
+            ("Conway", "grades 9 to 12", "tuition contract", "2027-28", "2031-32", True),
+            ("Fryeburg Academy", "grades 9 to 12", "tuition contract", "2027-28", "2036-37", True),
+        ])
+        conway = jackson["students_attend"][1]
+        self.assertEqual((conway["district_id"], conway["page"]), (113, "/district/113"))
+        self.assertEqual(jackson["students_attend"][3]["type"], "private academy in ME")
+        # Read both ways: Conway takes Jackson's and Bartlett's students, and a cooperative its members'
+        conway = next(place for place in find_places(self.session, "Conway") if place.get("id") == 113)
+        self.assertTrue({"Bartlett", "Jackson"} <= {item["name"] for item in conway["takes_students_from"]})
+        coop = next(place for place in find_places(self.session, "Hollis Brookline") if place["kind"] == "district")
+        self.assertEqual([(item["name"], item["grades"], item["arrangement"]) for item in coop["takes_students_from"]],
+                         [("Brookline", "grades 7 to 12", "cooperative district"), ("Hollis", "grades 7 to 12", "cooperative district")])
+
+        # An arrangement that has ended is left out
+        ended = DistrictService(district_id_fk=271, receiving_district_id_fk=113, grade_low=5, grade_high=6, arrangement="tuition_contract",
+                                ends=date.today() - timedelta(days=1), source_url="https://example.org/ended")
+        self.session.add(ended)
+        self.session.commit()
+        try:
+            with Session(engine) as session:
+                found = next(place for place in find_places(session, "Jackson") if place.get("id") == 271)
+            self.assertNotIn(f"a{ended.id}", [item["id"] for item in found["students_attend"]])
+        finally:
+            self.session.delete(ended)
+            self.session.commit()
+
+        # Claude reads them without their links, and an answer citing one links its source
+        fryeburg = jackson["students_attend"][3]
+        lookup = reply("tool_use", tool_use("t1", "find_places", {"query": "Jackson"}))
+        cited = final({"status": "answered", "answer": ["From 2027-28, Jackson families can choose Fryeburg Academy."],
+                       "sources": [{"id": fryeburg["id"], "reason": "Jackson's agreement with Fryeburg Academy"}]})
+        answer, client = self.run_with([lookup, cited], "Can Jackson students go to Fryeburg Academy?")
+        given = client.requests[1]["messages"][-1]["content"][0]["content"]
+        self.assertIn(fryeburg["id"], given)
+        self.assertNotIn(fryeburg["_source"]["url"], given)
+        self.assertEqual(answer["sources"], [{"label": "Jackson students attending Fryeburg Academy", "url": fryeburg["_source"]["url"],
+                                              "site": "drive.google.com", "as_of": None, "reasons": ["Jackson's agreement with Fryeburg Academy"]}])
 
     def test_schools_are_found_by_town_and_listed_by_district(self):
         from app.service.internal.ask.data_tools import find_places, list_schools

@@ -25,3 +25,6 @@ class AskQuestion(BaseMixin, table=True):
     # no_data, general, declined), failed, limit (the daily limit was reached) or unavailable
     status: str = Field(default="asked", max_length=20)
     seconds: Optional[float] = None  # how long a new answer took
+    # The district or school page it was asked from, if any: district or school, and its id
+    place_kind: Optional[str] = Field(default=None, max_length=10)
+    place_id: Optional[int] = None

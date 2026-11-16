@@ -11,6 +11,12 @@ class AskEarlierTurn(BaseModel):
     answer: List[Annotated[str, Field(max_length=5000)]] = Field(default_factory=list, max_length=10)
 
 
+class AskPlace(BaseModel):
+    """The district or school page on the site a question was asked from"""
+    kind: Literal["district", "school"]
+    id: int
+
+
 class AskRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=5000, description="The visitor's question in plain English")
     history: List[AskEarlierTurn] = Field(
@@ -19,6 +25,10 @@ class AskRequest(BaseModel):
         description="The visitor's earlier questions on the page, oldest first, with their answers; the last ten are used to understand a follow-up",
     )
     deep: bool = Field(default=False, description="Take More Time: Claude thinks longer before answering; slower, for complex questions")
+    place: Optional[AskPlace] = Field(
+        default=None,
+        description="The district or school page the question was asked from: a question that names no place is about it",
+    )
     stream: bool = Field(
         default=False,
         description='Show the answer as it\'s written: a new answer comes as lines of JSON, {"partial": [paragraphs so far]} while it\'s written, then the answer',
