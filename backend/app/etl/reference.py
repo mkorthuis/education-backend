@@ -120,6 +120,8 @@ def parse_file(text_: str, name: str, config: dict) -> List[dict]:
         for key in ("question_type", "description"):
             if not t.get(key):
                 raise problem(t["line"], f"topic {t['slug']} has no {key}")
+        if t["question_type"] not in config["question_types"]:
+            raise problem(t["line"], f"topic {t['slug']} has unknown question_type {t['question_type']!r}")
         if not t["facts"]:
             raise problem(t["line"], f"topic {t['slug']} has no facts")
         positions = Counter(f["position"] for f in t["facts"])

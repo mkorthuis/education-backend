@@ -102,6 +102,7 @@ class ReferenceParseTests(unittest.TestCase):
         broken = [
             SAMPLE.replace("   - source: https://gc.nh.gov/rsa/html/XV/193-F/193-F-4.htm\n", ""),
             SAMPLE.replace("- kind: rule", "- kind: opinion"),
+            SAMPLE.replace("- question_type: rules", "- question_type: rule"),
             SAMPLE.replace("   - review_by: 2027-08-15", "   - review_by: next year"),
             SAMPLE.replace("place: district Rochester", "place: county Strafford"),
             SAMPLE.replace("   - as_of: 2026-11-08", "   - as_of: 2026-11-08\n   - author: someone"),
@@ -155,7 +156,7 @@ class ReferenceParseTests(unittest.TestCase):
     def test_facts_numbered_ten_and_up_keep_their_fields(self):
         facts = "".join(f"{n}. Fact {n}.\n{' ' * len(f'{n}. ')}- source: https://example.org/{n}\n{' ' * len(f'{n}. ')}- as_of: 2026-11-08\n"
                         f"{' ' * len(f'{n}. ')}- review_by: 2027-11-08\n" for n in range(1, 12))
-        [topic] = reference.parse_file(f"## many: Many Facts\n\n- kind: term\n- question_type: terms\n- description: d\n\n{facts}", "sample.md", CONFIG)
+        [topic] = reference.parse_file(f"## many: Many Facts\n\n- kind: term\n- question_type: meaning\n- description: d\n\n{facts}", "sample.md", CONFIG)
         self.assertEqual(topic["facts"][10]["source"], "https://example.org/11")
 
     def test_the_library_files_parse_with_unique_topics(self):

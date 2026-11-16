@@ -35,4 +35,6 @@ files:
 skip_files: [README.md, brief.md, questions.md, shared-topics.md, recommended-improvements.md, research-brief-template.md]
 
 kinds: [rule, term, how_it_works, research, programs, local]
+# The kind of question a topic answers, a label the browse API returns
+question_types: [local_practice, comparison, rules, help, meaning, governance_money, research, after_high_school]
 fact_fields: [citation, source, as_of, review_by, place, note]
