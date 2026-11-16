@@ -2195,361 +2195,361 @@ Strategy type 1 (local practices that each district sets and no state dataset re
    - review_by: 2027-11-08
    - place: district Bath
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found. NH DOE Oct 1 2026: 7 preschoolers at Bath Village School.
-9. The Bedford School District runs the Bedford Early Education Program (BEEP), an inclusive preschool for three- and four-year-olds with and without special needs, which moved to Riddle Brook School for 2026-27. Three-year-olds attend two mornings a week; four-year-olds attend Monday-Friday mornings or Monday-Thursday afternoons. Tuition for typically developing children in 2026-27 is $1,450 a year for 2 days a week, $1,800 for 3 days, $2,150 for 4 days and $2,500 for 5 days, with a 90% discount for families who qualify for free or reduced-price lunch.
+9. The Bedford School District runs the Bedford Early Education Program (BEEP), an inclusive preschool for three- and four-year-olds with and without special needs, which moved to Riddle Brook School for 2026-27. Three-year-olds attend two mornings a week; four-year-olds attend Monday-Friday mornings or Monday-Thursday afternoons. Tuition for typically developing children in 2026-27 is $1,450 a year for 2 days a week, $1,800 for 3 days, $2,150 for 4 days and $2,500 for 5 days; for families who qualify for free or reduced-price meals, the district's own 2026-27 documents are inconsistent: the tuition agreement gives a 90% discount, while the 2026-27 BEEP handbook says a 50% waiver of the monthly fee, so families should confirm the discount with the district.
    - citation: Riddle Brook School, BEEP Program page, with 2026-2027 BEEP registration letter (Feb 16, 2026) and tuition agreement
    - source: https://sites.google.com/bedfordnhk12.net/rbs/beep-program
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Bedford
-   - note: Page text: "2 $1,450 $145 $ 72.50 ... 3 $1,800 $180 $ 90.00 4 $2,150 $215 $107.50 5 $2,500 $250 $125.00 ... Families who qualify for free/reduced lunch for 2026-2027 will receive a 90% discount." Letter: registration began Feb 18, 2026; class assignment by age as of September 30, 2026; children enroll as 'typical role models'. NH DOE Oct 1, 2026 preschool count: 71 at Riddle Brook School. Raw copy: raw/districts/batch-3/bedford-beep.txt; raw/districts/batch-3/bedford-beep-letter-2026-27.txt; raw/districts/batch-3/bedford-beep-tuition-2026-27.txt
+   - note: Page text: "2 $1,450 $145 $ 72.50 ... 3 $1,800 $180 $ 90.00 4 $2,150 $215 $107.50 5 $2,500 $250 $125.00 ... Families who qualify for free/reduced lunch for 2026-2027 will receive a 90% discount." The Riddle Brook 2026-2027 Student and Parent Handbook (BEEP), "Tuition" (https://docs.google.com/document/d/1wHYwl2dfzkZCN5xuAXu_Bz_Gt1FBaRsYVNHUhb8sRpU/edit, read November 16, 2026 for the Bedford town research): "Children in families who qualify for free or reduced school meals (based on federal guidelines) are eligible to receive a 50% waiver of the monthly fee." Letter: registration began Feb 18, 2026; class assignment by age as of September 30, 2026; children enroll as 'typical role models'. NH DOE Oct 1, 2026 preschool count: 71 at Riddle Brook School. Raw copy: raw/districts/batch-3/bedford-beep.txt; raw/districts/batch-3/bedford-beep-letter-2026-27.txt; raw/districts/batch-3/bedford-beep-tuition-2026-27.txt; raw/districts/batch-3/bedford-beep-handbook-2026-27.txt
 10. The Bethlehem School District has a preschool class at Bethlehem Elementary School (registration covers PreK-6). The school said its 2025-26 preschool class was full and kept a rolling waitlist. No tuition is posted.
    - citation: Bethlehem Elementary School - New Student Registration (PreK - 6th Grade)
    - source: https://bethlehem.k12.nh.us/en-US/new-student-registration-2354a55a
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Bethlehem
    - note: Page text: "Please be advised that the 2025-2026 Preschool Class is FULL. Contact Nicole Kerstetter at the email below to put your child's name on the rolling waitlist." Handbook 2025-26 gives preschool arrival time 8:00. NH DOE Oct 1 2026: 6 preschoolers at Bethlehem Elementary School. Raw copy: raw/districts/batch-4/bethlehem-pages.txt
 11. The Bow School District has a public preschool: NH DOE counted 20 children at Bow Preschool on October 1, 2026, and the Town of Bow's schools page lists a special education preschool at Bow High School. No program details or tuition were found on the SAU 67 site.
    - citation: Town of Bow - Schools page; NH DOE iPlatform Preschool Enrollments 2026-2027
    - source: https://bownh.gov/257/Schools
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Bow
    - note: The DOE file is raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. Page text: "Bow High School (Grades 9-12 & Special Ed Preschool)" Town of Bow's separate Celebrating Children Preschool is a town recreation program, not the school district's. An NH DOE 2023 letter about Bow's preschool program could not be retrieved (403, no Wayback copy). Raw copy: raw/districts/batch-5/bow-town-schools-page.txt
 12. The Brentwood School District runs a community preschool at Swasey Central School for children ages 3 to 5, with community peers and children with specialized learning needs; children must turn 3 by September 30. Tuition for community peers is $1,300 per year, billed at the start of the school year and in January, with tuition assistance considered for families in need.
    - citation: Swasey Central School - Preschool
    - source: https://www.sau16.org/pages/dae2e181-d7a7-4d85-9f4d-066eac5debfd
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Brentwood
    - note: Page text: "Tuition for community peers is $1300 per year. Families are billed at the start of the school year and again in January." School year for the tuition not stated on the page. Community peers must be daytime toilet trained. Raw copy: raw/districts/batch-8/scs-preschool.txt
 13. The Brookline School District runs an integrated preschool at Richard Maghakian Memorial School for children ages 3 to 5, with and without identified needs, Monday to Thursday in two morning sessions and one afternoon session. Typically developing children attend on a tuition basis, $270 a month paid in 10 monthly installments. Separate waitlists are kept for 3- and 4-year-olds, and enrollment for the next school year is completed in January.
    - citation: Richard Maghakian Memorial School - Preschool Program
    - source: https://www.myrmms.org/academic-programs/preschool-program
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Brookline
    - note: Page text: "Typically developing students will be enrolled in our preschool programs on a tuition basis. Tuition is $270 for the programs. Tuition will be paid in 10 equal installments, collected monthly." NH DOE counted 24 preschool children at RMMS on Oct 1, 2026. Raw copy: raw/districts/batch-5/brookline-rmms-preschool.txt
 14. Campton Elementary School has a preschool class with its own web page (CES Preschool), linked as 'Pre-K' from the school site. No schedule, eligibility or tuition is posted.
    - citation: CES Preschool class page
    - source: https://sites.google.com/pemibaker.org/ces-preschool/home
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Campton
    - note: Page text: "Welcome to our preschool web page. Here you will find our weekly newsletter, upcoming dates, teacher & school contact information, and academic focus points." NH DOE Oct 1 2026 report shows no preschool enrollment for Campton. Raw copy: raw/districts/batch-6/ces-prek.txt
 15. The Chester School District has a pre-kindergarten (preschool) class at Chester Academy, with one preschool teacher. No tuition, schedule or eligibility details are posted.
    - citation: Chester Academy - Preschool
    - source: https://ca.sau82nh.gov/grade_level_teams/preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Chester
    - note: Page text: "The Pre- Kindergarten teacher will contact you weekly via email about classroom happenings and curriculum. ... Preschool Teacher Mrs. Johnston" NH DOE Oct 1 2026: 31 preschoolers at Chester Academy. Raw copy: raw/districts/batch-4/chester-ca-preschool.txt
 16. Chichester children ages 3 to 5 with special education needs are served by SAU 53's preschool programs, which accept children from Pembroke, Allenstown, Chichester and Epsom; they include TLC Preschool at the old Allenstown Elementary School, which also admits some children without identified needs after an April screening. No tuition is posted.
    - citation: SAU 53 - TLC Preschool
    - source: https://sau.sau53.org/pages/76e46815-3441-4987-aa11-2fbd2b55be4b
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Chichester
    - note: Page text: "SAU 53 preschool programs accept children from the towns of Pembroke, Allenstown, Chichester, and Epsom." Coordinator Paula Dyrkacz (603) 836-6294 x1. Raw copy: raw/districts/batch-7/sau53-tlc-preschool-page.txt
 17. NH Department of Education counted 14 preschool children enrolled in the Colebrook School District's schools on October 1, 2026 (Colebrook Academy and Elementary School (E) (14)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Colebrook
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: SAU 7 site (sau7.org, SchoolBlocks) checked: home, Policies, About Our School Boards. Menus for district/school pages did not render as links; no registration, preschool, warrant, annual meeting or tuition pages found. A search hit for 'colebrookschool.org' turned out to be Colebrook, Connecticut, and was discarded. NH DOE Oct 1 2026 preschool report lists 14 preschoolers in this district.
 18. The Concord School District runs the Concord Developmental Preschool for children ages 3 to 5 at Abbot-Downing, Beaver Meadow and Mill Brook schools, an integrated program for typically developing children and children with special needs. For 2026-27 the 3-year-old program meets Monday, Wednesday and Thursday 8:30-10:30 and the 4-year-old program Monday, Wednesday and Thursday 12:30-3:00. Tuition is required for typically developing children (amount not posted), and transportation is not provided for tuition students.
    - citation: Concord School District - Early Childhood & Preschool Home
    - source: https://sau8.org/early-childhood-preschool-home
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Concord
    - note: Page text: "The Concord Developmental Preschool is a regular early childhood program providing the opportunity for typically developing three and four-year-old children and children identified as having special needs to learn, play and grow together. ... Tuition is required for typically developing children. Transportation is not provided for tuition students." Page says '4-year-old program – Monday, Wednesday and Thursday mornings 12:30-3:00 (must be 4 by 9/30/26)'. The school hours page shows slightly different preschool day patterns by school. No tuition amount found. Raw copy: raw/districts/batch-5/concord-preschool-home.txt
 19. The Contoocook Valley (ConVal) School District runs First Friends Preschool, an inclusive program for three- and four-year-olds with varying abilities, at Antrim, Greenfield, Hancock and Peterborough elementary schools. Three-year-olds attend three mornings a week (8:45-11:45 a.m.); four-year-olds attend 4.5 days a week, full days Monday, Tuesday, Thursday and Friday (8:45 a.m.-3:00 p.m.) with an 11:45 a.m. dismissal on Wednesday.
    - citation: ConVal, First Friends Preschool
    - source: https://conval.edu/en-us/first-friends-preschool-c6ccfff3
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Contoocook Valley
    - note: Page text: "Students in our program for three-year olds attend three mornings a week from 8:45 to 11:45 am. Students in our program for four-year olds attend 4.5 days a week, for a full day Mon, Tues, Thu, Fri from 8:45 am to 3:00 pm, with a 11:45 am dismissal on Wed." No tuition posted on this page. A separate 'Preschool for All' page (conval.edu/en-US/preschool-for-all-5eea00e9) rendered with no body text on 2026-11-08. NH DOE Oct 1, 2026: 94 preschool students across the four schools. Raw copy: raw/districts/batch-3/conval-first-friends.html
 20. The Cornish School District runs a half-day (8 a.m.-12 p.m.) pre-kindergarten program at Cornish Elementary School for children who are 3 or 4 by September 30, capped at 16 children. Places go first to resident 4-year-olds, then resident 3-year-olds, then children tuitioned from other districts, then children of staff (2025-26 notice). No tuition amount is posted.
    - citation: Cornish Elementary School - PreK-K Pre-Enrollment Statement 2025-2026
    - source: https://www.cornishschool.org/ourpages/auto/2024/6/26/50870748/PreK-K%20Pre-Enrollment%20Statement%202025-2026.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Cornish
    - note: Page text: "To register for our half-day (8 am-12 pm) Pre-Kindergarten program, children must be either 3 or 4 years old on or before September 30, 2025. Please understand that there is a cap of 16 children in this program." NH DOE Oct 1 2026 preschool count: 16. Raw copy: raw/districts/batch-2/cornish-prek-k-statement-2025-26.txt
 21. The Croydon School District runs a half-day preschool at Croydon Village School for children who are 4 on September 30, Monday to Thursday, 8:00 to 11:30, priced at $268 per week, with no residency requirement and no transportation. Applications open January 1; places go first-come, first-served to siblings of current students, then other Croydon children, then non-Croydon children, with families notified by March 31.
    - citation: Croydon School District - Program for Early Learners at Croydon Village School (Our Program at a Glance)
    - source: https://croydonsd.org/cvs/
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Croydon
    - note: Page text: "Price $268 per Week No Charge Residency Requirement No Requirement Croydon Only Transportation Not Provided" Table columns are PRESCHOOL then KINDERGARTEN ('$268 per Week' preschool, 'No Charge' kindergarten). Enrollment rules from https://croydonsd.org/cvs/enrollment/ (raw croydon-cvs-enrollment.txt). Page shows no school year for the price. NH DOE Oct 1 2026: Croydon Village School 2 preschoolers. Raw copy: raw/districts/batch-6/croydon-cvs.txt
 22. The Deerfield School District runs the DCS Preschool Program at Deerfield Community School for Deerfield residents: a class for 3- and 4-year-olds on Tuesday and Thursday and a pre-kindergarten class for 4- and 5-year-olds on Monday, Wednesday and Friday, each in a morning or afternoon session. Children must be 3 (or 4 for pre-K) by September 30; space is limited, and sign-ups are held each March. No tuition is posted.
    - citation: Deerfield Community School - Pre-School
    - source: https://dcs.sau53.org/pages/b1863d35-f7dd-4f08-8c61-fb5eedb2a6f9
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Deerfield
    - note: Page text: "Our preschool program groups student by age. The program for 3- and 4-year-olds takes place two days a week and the program for 4 and 5-year-olds is three days a week. Each class is available in either morning or afternoon sessions." Contact JoAnna Sarrasin jsarrasin@sau53.org. NH DOE counted 33 preschool children at Deerfield on Oct 1, 2026. Raw copy: raw/districts/batch-7/sau53-dcs-preschool.txt
 23. The Derry Cooperative School District runs the Derry Early Education Program (DEEP), an inclusive preschool for three- and four-year-olds at Gilbert H. Hood Middle School that serves typically developing children and children with IEPs. Registration gives priority to children with IEPs; others are enrolled as space allows. In 2026-27 sessions run 8:30-11:00 a.m. and 12:20-2:50 p.m.
    - citation: Derry Early Education Program, Program Overview
    - source: https://www.sau10.nh.gov/schools/deep/program-overview
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Derry Cooperative
    - note: Page text: "The program utilizes an inclusion model (typically developing children and those who require an individualized education plan) ... Programs are held in a space designed specifically for preschool education located at Gilbert H. Hood Middle School." Tuition not found on the DEEP pages. NH DOE Oct 1, 2026: 91 preschool students at Derry Early Education Program. Raw copy: raw/districts/batch-3/derry-deep-overview.txt; raw/districts/batch-3/derry-school-hours.txt; raw/districts/batch-3/derry-k-registration.txt
 24. The Dover School District runs the Dover District Preschool Program at Woodman Park School, an integrated preschool for children ages 3 to 5 with and without disabilities. Children without disabilities attend on a tuition basis chosen by lottery; for 2026-27 tuition was $55 a month for two half-day sessions a week and $82 a month for three (morning 8:15-10:45 or afternoon 11:15-1:40), applications were due March 11, 2026, and parents provide transportation.
    - citation: Woodman Park Elementary School - Preschool; Application for Dover District Preschool Program Tuition Enrollment 2026-2027 (https://4.files.edl.io/d6d7/02/10/26/131649-b7d6fdf5-df9e-47a9-82ca-c487b7a56e08.pdf)
    - source: https://wps.sau11.nh.gov/apps/pages/index.jsp?uREC_ID=1423700&type=d
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Dover
    - note: Page text: "2 half days a week $55.00 ... 3 half days a week $82.00 ... *AM Session- 8:15-10:45* *PM Session 11:15-1:40* Transportation must be provided by parents" Page: 'integrated Preschool that addresses the developmental needs of children with and without disabilities'; 'entered into the lottery for school year 2026-2027'. Raw copy: raw/districts/batch-8/dover-wps-preschool.txt; raw/districts/batch-8/dover-preschool-tuition-2026-27.txt
 25. The East Kingston School District does not run its own preschool program: its page says that, because of small enrollment, East Kingston Elementary has no in-house preschool, and preschoolers who receive special education services are served through community partners (such as the Exeter Developmental Preschool).
    - citation: East Kingston Elementary School - Preschool
    - source: https://www.sau16.org/pages/4ad03979-d941-4368-8d6d-8130591fd815
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district East Kingston
    - note: Page text: "Due to the small size of enrollment, East Kingston Elementary does not have an in-house preschool program." SAU 16 Preschool Coordinator: Karen Ringuette, 603-775-8644. Raw copy: raw/districts/batch-8/eks-preschool.txt
 26. The Epping School District has an integrated developmental preschool program; children must be the appropriate age for the program by September 30 of the year they enter, and the school board sets the age span each year (Policy JEB). No tuition or schedule is posted.
    - citation: Epping School District Policy JEB - Age of Attendance and Entrance
    - source: https://www.sau14.org/school-board/files/documents/JEB%20-%20Age%20of%20Attendance%20and%20Entrance.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Epping
    - note: Page text: "Preschool - Any child entering the integrated developmental preschool program shall be the appropriate age for the program by September 30 of the year of entering school. The School Board shall annually determine the chronological age span of children serviced in this program." NH DOE Oct 1 2026: 44 preschoolers at Epping Elementary School. 2025 annual report mentions 'the Preschool' at EES. Raw copy: raw/districts/batch-4/epping-policy-jeb.txt
 27. Epsom children ages 3 to 5 with special education needs are served by SAU 53's preschool programs, which accept children from Pembroke, Allenstown, Chichester and Epsom; they include TLC Preschool, a special education preschool at the old Allenstown Elementary School, which also admits some children without identified needs after an April screening. No tuition is posted.
    - citation: SAU 53 - TLC Preschool
    - source: https://sau.sau53.org/pages/76e46815-3441-4987-aa11-2fbd2b55be4b
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Epsom
    - note: Page text: "SAU 53 preschool programs accept children from the towns of Pembroke, Allenstown, Chichester, and Epsom." Coordinator Paula Dyrkacz (603) 836-6294 x1. Raw copy: raw/districts/batch-7/sau53-tlc-preschool-page.txt
 28. The Exeter School District runs the Exeter Developmental Preschool at 13 School Street, an inclusive program for Exeter children ages 3 to 5 with typical and specialized learning needs. Its page lists a morning session for 3-year-olds (9:00-11:30 a.m.) and an afternoon session for 4-year-olds (12:30-3:00 p.m.), says a small tuition is charged with tuition assistance available, and says only children living in Exeter can be accepted. No tuition amount is posted.
    - citation: SAU 16 - Exeter Developmental Preschool
    - source: https://www.sau16.org/pages/67aaeb1d-1f58-4e97-9b84-27597c4a762e
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Exeter
    - note: Page text: "We charge a small tuition for our preschool program. To inquire about tuition assistance, please reach out to our principal, Beth Cadorette." Page also: 'At this time we can only accept children residing in Exeter.' The Main Street School preschool page (https://www.sau16.org/pages/56996e9f-3258-45a8-b294-4d701725d909) describes a two-day-a-week program (Mon/Thu or Tue/Fri, 9:00-11:30 or 12:00-2:30); the two pages' schedules differ. NH DOE counted 31 preschool children at Main Street School on Oct 1, 2026. Raw copy: raw/districts/batch-8/sau16-exeter-dev-preschool.txt; raw/districts/batch-8/mss-preschool.txt
 29. NH Department of Education counted 68 preschool children enrolled in the Fall Mountain Regional School District's schools on October 1, 2026 (Alstead Primary School (17); Charlestown Primary School (27); Walpole Primary School (24)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Fall Mountain Regional
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found on the SAU site. NH DOE Oct 1, 2026 preschool enrollment shows 68 students at Alstead, Charlestown and Walpole primary schools (statewide source held by coordinator).
 30. The Farmington School District runs a preschool (pre-K) program at Valley View Community School, with morning and afternoon sessions (drop-off at 8:00 a.m. for AM Pre-K and 11:30 a.m. for PM Pre-K), according to its 2025-2026 student and family handbook. No tuition or enrollment details were found.
    - citation: Farmington School District Student Family Handbook 2025-2026
    - source: https://www.sau61.org/files/documents/Student%20Family%20Handbook%202025-2026%20Together.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Farmington
    - note: Page text: "Drop-off times: 8:00 AM for AM Pre-K, 11:30 AM for PM Pre-K." Handbook also says Middleton's departure in 2015 allowed room to expand the Preschool and Kindergarten programs at Valley View. NH DOE Oct 1 2026 preschool count: 22 (Valley View Community School). Raw copy: raw/districts/batch-2/farmington-handbook-2025-26.txt
 31. NH Department of Education counted 35 preschool children enrolled in the Franklin School District's schools on October 1, 2026 (Paul A. Smith School (35)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Franklin
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found in site navigation. NH DOE Oct 1 2026 preschool report lists 35 preschoolers at Paul A. Smith School.
 32. Freedom children can attend the SAU 13 preschool program at Madison Elementary School, open to children who turn three by September 30, 2026 and live in Freedom, Madison or Tamworth. Sessions are half day (9:00-11:45) or full day (9:00-3:00); tuition for children without an identified disability is $11.50 per day for half day and $23.00 per day for full day.
    - citation: SAU 13 - Preschool Program
    - source: https://www.sau13.org/preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Freedom
    - note: Page text: "Children turning three by September 30, 2026, residing in SAU #13 towns (Freedom, Madison, or Tamworth) are eligible for this program." Raw copy: raw/districts/batch-7/sau13-preschool.txt
 33. The Fremont School District runs the Ellis Preschool Program, an integrated preschool for children ages 3 to 5. Children with special needs attend free; other Fremont children are chosen by lottery and pay a fee (amount not posted). There is a morning session (8:30-11:00 a.m., Monday, Tuesday, Thursday and Friday) and two afternoon sessions (12:30-3:05), each with up to 12 children; preschool does not meet on Wednesdays. A 2026-27 preschool application is posted.
    - citation: Fremont Preschool Information Flyer (linked from https://www.sau83.org/page/preschool/)
    - source: https://aptg.co/gX7TRn
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Fremont
    - note: Page text: "We are an integrated preschool program for children ages 3 to 5. ... These children are chosen in a lottery and have the opportunity to enroll in the preschool program for a fee." Flyer is an image PDF; quote transcribed by hand. School hours page gives AM preschool 8:20-11:30 and PM 12:30-3:05 (slightly different morning times). Contact: Special Services (603) 895-2511 x551. NH DOE Oct 1 2026: 18 preschoolers at Ellis School. Raw copy: raw/districts/batch-4/fremont-preschool-flyer.pdf; raw/districts/batch-4/fremont-scans-transcription.txt
 34. The Goffstown School District runs the Glen Lake Preschool Program at Glen Lake School, a developmental program for three- and four-year-olds where children with and without special needs learn together. Children eligible for special education attend without charge; typically developing "role model" peers pay tuition (amount not posted), apply with an on-site visit, are accepted by late March for the following September, and a lottery is used if there are more applicants than spots. Sessions run 8:30-10:55 a.m. or 12:30-2:55 p.m., Monday through Thursday (2025-26 program description), and parents transport peer students.
    - citation: Glen Lake Preschool Program 25-26 (PDF)
    - source: https://www.sau19.org/attachments/article/32/Glen%20Lake%20Preschool%20Program%2025-26.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Goffstown
    - note: Page text: "The Glen Lake Preschool Program is a developmental program for three- and four-year-olds where children with and without special needs have the opportunity to play and learn together." Tuition is stated in the principal's message: 'for typically developing peers, who pay tuition to attend' and 'For information about preschool for typically developing students (tuition based), please contact the school office at (603)497-3550.' No dollar amount posted. PDF quote on charges: 'Children who meet the New Hampshire standards for special education are eligible to attend the program without charge.' Raw copy: raw/districts/batch-7/goffstown-preschool-25-26.txt; raw/districts/batch-7/goffstown-glenlake-principals-message.txt
 35. In the Governor Wentworth Regional School District, preschool children who may need special education receive services with non-disabled peers in public or local private preschools or day care centers, according to Ossipee Central School's preschool page. NH DOE counted 42 preschool children in the district's schools on October 1, 2026 (New Durham Elementary 10, Ossipee Central 32). No tuition or enrollment details for other children were found.
    - citation: Ossipee Central School - PreSchool
    - source: https://ossipeecentralschool.sau49nh.gov/our-school/preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Governor Wentworth Regional
    - note: Page text: "Preschool children who may require special education receive services with non-disabled peers in public or local private preschools, or day care centers. Related services may be provided as specified in the child's IEP." New Durham School has a 'Little Wildcats (Pre-K & K)' page with no text content. NH DOE preschool count from iPlatform Preschool Enrollments 2026-27 (raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx). Raw copy: raw/districts/batch-5/gwrsd-ocs-preschool.txt
 36. The Grantham School District runs a part-time public preschool at Grantham Village School for Grantham residents ages 3 to 5, with priority for children with or at risk for special education needs and remaining spaces for peer models. In 2026-27, 3-year-olds meet Monday to Thursday 8:30-11:15 and 4-year-olds Monday to Thursday 12:00-3:15. Peer-model tuition is $1,207 a year for PK3 and $1,420 a year for PK4; children who qualify for free lunch attend at no cost and those who qualify for reduced lunch at 50%. Screenings are in March and placements in April; both classes were full for 2026-27.
    - citation: Grantham Village School - Preschool
    - source: https://www.gvshawks.org/apps/pages/index.jsp?uREC_ID=3298781&type=d&pREC_ID=2578756
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Grantham
    - note: Page text: "PK3 tuition: $1,207.00/year, which equates to $8.50/day or $120.70/month PK 4 tuition: $1,420.00/year, which equates to $10/day or $142/month" NH DOE counted 23 preschool children at Grantham Village School on Oct 1, 2026. Raw copy: raw/districts/batch-5/grantham-preschool.txt
 37. The Greenland School District does not have its own preschool listed; Greenland children ages 3 to 5 are eligible for the SAU 50 Community Preschool at Rye Elementary School, an inclusive half-day program (2026-27 tuition $200 a month for two sessions a week or $400 for four, September-June).
    - citation: SAU 50 Community Pre-School
    - source: https://www.sau50.org/pages/3051f5d8-1184-40ce-95bf-5c7fef95c2c6
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Greenland
    - note: Page text: "Preschool-aged students, ages 3 to 5) who live in any of our SAU 50 towns (Greenland, New Castle, Newington, and Rye) are eligible to attend." 'Does not have its own preschool listed' is based on the SAU 50 schools overview, which lists preschools only at Rye Elementary and Newington Public School. Raw copy: raw/districts/batch-8/sau50-preschool.txt
 38. The Hampstead School District runs the T.E.E.C.H. preschool program at Hampstead Central School for children ages 3 to 5, including children with special needs and typical peer models; families do not have to live in Hampstead. Four groups each meet four days a week, mornings 9:00-11:35 or afternoons 12:50-3:20. The page lists a total program cost of $2,000 for 2024-25 (tuition $1,800, or 10 monthly payments of $180, plus a non-refundable $200 registration fee), with needs-based reductions.
    - citation: Hampstead Central School - TEECH Preschool Program
    - source: https://hcs.hampsteadschools.net/o/hcs/page/preschool-program
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hampstead
    - note: Page text: "The total program cost is $2000 for the 2024-25 school year. The tuition will be $1800 or 10 monthly payments of $180." Tuition shown is for 2024-25; no newer figure on the page. 'you do not have to be a town resident to enroll your child in our preschool program.' Raw copy: raw/districts/batch-8/hampstead-teech.txt
 39. The Hampton School District runs the Centre School Community Preschool, an inclusive program for Hampton children ages 3 to 5. It is a 2.5-hour program that meets four days a week (Monday-Thursday), with morning or afternoon sessions; space is limited and children are enrolled as space allows during the year. No tuition is posted.
    - citation: Centre School - Preschool Information
    - source: https://centre-school.sau90.org/o/centre-school/page/preschool-information
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hampton
    - note: Page text: "Hampton children ages 3-5 are eligible for this 2.5 hour program, which meets 4 days/week (Mon-Thurs) with morning or afternoon sessions available." Contact: Lauren Young, Centre School, 603-926-8706. Linked Google Site (https://sites.google.com/sau90.org/centre-preschool/childfind-preschool) has no tuition either. Raw copy: raw/districts/batch-8/hampton-centre-preschool.txt
 40. The Hampton Falls School District runs the Tiger Cub Preschool at Lincoln Akerman School for children who are three or four by September 30, 2026: morning (8:30-11:00) and afternoon (12:15-2:45) classes Monday through Thursday, with an extra Friday afternoon "Get Ready for Kindergarten" session for 4-year-olds. Tuition for 2026-27 is $2,700 a year for the 3-year-old program and $3,375 for the 4-year-old program; applications were due March 2, 2026, with a lottery on March 6, 2026 if needed.
    - citation: Lincoln Akerman School - Tiger Cub Preschool Program information (2026-2027)
    - source: https://docs.google.com/document/d/1E3JtT3xDR5sK3sFiEEKQYpr9KbZmtu22hXVdopT-qy4/edit
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hampton Falls
    - note: Page text: "Tuition for the preschool programs are $2700 (3 year old program) per year and $3375 (4 year old program) per year." Linked from https://www.sau21.nh.gov/las/about-las/preschool. Children must be fully toilet trained. The document's second line says 'accepting applications for the 2025-2026 school year' but its heading and dates are for 2026-2027. Contact BettyAnne Binette 603-926-2539 x302. Raw copy: raw/districts/batch-7/hamptonfalls-las-preschool-info.txt; raw/districts/batch-7/hamptonfalls-las-preschool.txt
 41. NH Department of Education counted 40 preschool children enrolled in the Haverhill Cooperative School District's schools on October 1, 2026 (Woodsville Elementary School (40)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Haverhill Cooperative
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found on SAU 23 or Woodsville Elementary site. NH DOE Oct 1 2026 preschool report lists 40 preschoolers at Woodsville Elementary School.
 42. NH Department of Education counted 19 preschool children enrolled in the Henniker School District's schools on October 1, 2026 (Henniker Community School (19)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Henniker
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found. NH DOE Oct 1, 2026: 19 preschool students at Henniker Community School (statewide source).
 43. NH Department of Education counted 9 preschool children enrolled in the Hill School District's schools on October 1, 2026 (Jennie D. Blake School (9)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hill
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page; the 2021-22 handbook lists a 'Pre-K & Kindergarten' teacher. NH DOE counted 9 preschool children at Jennie D. Blake School on Oct 1, 2026.
 44. The Hillsboro-Deering Cooperative School District runs an integrated preschool at Hillsboro-Deering Elementary School, with places filled by lottery. For 2026-27, children living in Hillsboro, Deering or Windsor who would be three or four on or before September 30, 2026 were eligible; families pre-registered online and picked up packets March 30-April 10, 2026, and placements were announced by the end of June. No tuition is posted.
    - citation: SAU #34 News, '2026-2027 Hillsboro-Deering Elementary School Integrated Preschool Registration' (posted March 26, 2026)
    - source: https://sau34.org/en-US
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hillsboro-Deering Cooperative
    - note: Page text: "Children who reside in the towns of Hillsboro, Deering or Windsor and who will be three or four years of age on or before September 30, 2026 are eligible for the preschool lottery." NH DOE Oct 1 2026: Hillsboro-Deering Elementary 46 preschoolers. Raw copy: raw/districts/batch-6/sau34-home.txt
 45. The Hinsdale School District runs the Hinsdale Preschool at Hinsdale Elementary School. For 2026-27 it offers a three-year-old program (Tuesday-Thursday, 8:30-11:00), a half-day four-year-old program (Monday-Friday, 12:30-3:20) and a full-day four-year-old program (Monday-Friday, 8:30-3:20). Monthly tuition for regular education students is $200 for full day, $100 for the half-day four-year-old program and $60 for the three-year-old program, with reduced and free rates tied to lunch eligibility; children with IEPs attend at no cost. Places are limited and chosen by lottery.
    - citation: Hinsdale Elementary School Student Handbook 2026-2027, 'The Hinsdale Preschool' (linked from https://www.hnhsd.org/?page_id=4363)
    - source: https://www.hnhsd.org/wp-content/uploads/2026/08/HES-Student-Handbook-2026-2027-2.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hinsdale
    - note: Page text: "-5 full day 4-year-old option -Nap time and lunch is built in -Cost: $200/$170 Reduced/$120 Free MONTHLY" 'Students who receive special education services through an IEP attend at no cost'; 'entry into the programs is decided by lottery'. Half-day PM 4-year-old: $100/$85/$60; AM 3-year-old: $60/$51/$36 monthly. Raw copy: raw/districts/batch-8/hinsdale-hes-handbook-2026-27.txt
 46. The Hollis School District runs a preschool program at Hollis Primary School, Monday to Thursday in three classes across two daily sessions. The cost is $270 a month for typically developing students; families join a waitlist to register.
    - citation: Hollis Primary School - Preschool Program
    - source: https://www.myhps.org/learning/preschool-program-1
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hollis
    - note: Page text: "Our program runs Monday- Thursday, taking place in three classes across two daily sessions. ... The cost is $270/monthly for typically developing students only." Page describes it as the Hollis Early Learning Program; services include speech and language therapy. NH DOE counted 21 preschool children at Hollis Primary on Oct 1, 2026. Raw copy: raw/districts/batch-5/hollis-hps-preschool.txt
 47. The Hooksett School District runs the Hooksett Early Learning Program (HELP) at Fred C. Underhill School, a preschool coordinated by the special education department for children ages three to five with special needs; children who do not need specialized instruction may attend on a tuition basis, chosen by lottery. The program has morning and afternoon sessions.
    - citation: Hooksett Early Learning Program website (linked from Underhill School Preschool page)
    - source: https://sites.google.com/sau15.net/preschool/home
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hooksett
    - note: Page text: "The Hooksett Early Learning Program (HELP) is an Early Childhood Program coordinated by the Special Education Department servicing children from the ages of three to five with special needs. Children that do not require specialized instruction may attend on a tuition basis, through a lottery system." Tuition amount not stated on the site or in the program guide PDF. Calendar on the site mentions AM and PM preschool. NH DOE Oct 1, 2026: 25 at Fred C. Underhill School. Raw copy: raw/districts/batch-3/hooksett-preschool-site.txt; raw/districts/batch-3/hooksett-preschool-guide.txt
 48. The Hopkinton School District runs an early childhood preschool program at Harold Martin School, which serves grades preschool through 3; the program also holds annual Child Find screenings for children ages three to five. No tuition is posted.
    - citation: Hopkinton School District - District Profile; Harold Martin School Handbook 2025-2026
    - source: https://www.hopkintonschools.org/pages/02cfab42-fbab-4117-a94a-b9387c60f172
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hopkinton
    - note: Page text: "Harold Martin School serves approximately 270 students in grades Preschool–3. | The district early childhood preschool program holds annual 'Child Find' screenings for children between the ages of three and five" Handbook: https://drive.google.com/file/d/195oTJoMU21JZnmoodZCnbsjfKdO4Qba8 . NH DOE Oct 1 2026: 42 preschoolers at Harold Martin School. Raw copy: raw/districts/batch-4/hopkinton-pages.txt; raw/districts/batch-4/hopkinton-harold-martin-handbook.txt
 49. The Hudson School District runs integrated preschool classes for children with and without educational disabilities, all at Nottingham West Elementary School, with an AM session (8:50-11:20) and a PM session (12:20-2:50). The page asks families to call for tuition and availability; no tuition amount is posted.
    - citation: Nottingham West Elementary School - Preschool
    - source: https://www.sau81.org/nws/families/preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hudson
    - note: Page text: "Our integrated preschool programs serve children who have been identified with educational disabilities as well as those without disabilities. ... *All preschool classes are now located at Nottingham West Elementary School! There are both AM and PM sessions offered for Preschool." Page still refers to applications for 2024-2025 or 2025-2026; phone 603-595-1570 ext. 55032 for tuition. Raw copy: raw/districts/batch-5/hudson-preschool.txt
 50. The Inter-Lakes School District runs a preschool program at Inter-Lakes Elementary School for children of residents of Center Harbor, Meredith and Sandwich. For 2026-27 the 3-year-old program meets Tuesday to Thursday, 8:15 am to 11:00 am, and the 4-year-old program Tuesday to Friday, 12:00 to 2:45 pm (age 3 or 4 on or before September 30, 2026). Parents provide transportation. Applications received by May 8, 2026 had priority, and registration is ongoing. No tuition is stated on the sheet.
    - citation: Inter-Lakes Elementary School 2026-2027 Preschool Program Registration (linked from https://iles.interlakes.org)
    - source: https://resources.finalsite.net/images/v1774884695/sau2k12nhus/aghz5dmwyhyl1qbzgjky/2627PreKRegistrationInfoSheet.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Inter-Lakes Cooperative
    - note: Page text: "Applications are now being accepted for the Inter-Lakes Elementary Preschool program for the 2026/2027 school year. Open to children of residents of the Inter-Lakes School District (Center Harbor, Meredith, and Sandwich). Parents are responsible for transporting their child to and from the program." ILES office 603-279-7968. NH DOE counted 29 preschool children at Inter-Lakes Elementary on Oct 1, 2026. Raw copy: raw/districts/batch-5/interlakes-prek-registration-2026-27.txt
 51. The Jaffrey-Rindge Cooperative School District has public preschool classes: NH DOE counted 64 preschool children on October 1, 2026 (31 at Jaffrey Grade School and 33 at Rindge Memorial School), and the district's kindergarten registration notice refers to children continuing from its preschool. No program page, schedule or tuition was found on the district site.
    - citation: JRCSD kindergarten registration notice; NH DOE iPlatform Preschool Enrollments 2026-2027
    - source: https://www.sau47.org/news/sau47/kindergarten_registration_opening_april_1
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Jaffrey-Rindge Cooperative
    - note: Page text: "If your child attended preschool and is continuing to kindergarten in the district, you will follow the steps for a 'Annual Learner Update'" District runs free Child Find screenings for ages 2.5-5 (https://www.sau47.org/departments/student_services/child_find_screening). Raw copy: raw/districts/batch-5/jaffrey-rindge-k-registration.txt; raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx
 52. The Kearsarge Regional School District runs Kearsarge Regional Preschool in New London and Bradford, a tuition-based program for 3- and 4-year-olds from its seven towns serving children with a variety of learning needs. Half-day sessions run Tuesday-Friday, 8:30-11:30 or 12:00-3:00, with limited full-day places by lottery. 2026-27 tuition for the 3-year-old program: $200 a month half day, $400 full day, $450 full day with Mondays. The preschool filled all spaces for 2026-27; applications for 2027-28 begin in January 2027.
    - citation: Kearsarge Regional Preschool - 3 Year Old Program
    - source: https://www.kearsarge.org/james-house-preschool/about-us/pages/3-year-old-program
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Kearsarge Regional
    - note: Page text: "Tuition rates for 2026-2027 School Year: Half Day Programming AM or PM- $200 per month Full Day- $400 per month Full Day with Mondays- $450 per month" Program description: https://www.kearsarge.org/krps-bradford-and-new-london/about-kearsarge-regional-preschool (raw kearsarge-krps-about.txt). Filled notice: https://www.kearsarge.org/krps-bradford-and-new-london/news/kearsarge-regional-preschool-no-longer-accepting-applications-26 ('Applications for the 2027-2028 school year will begin in January 2027'). 4-year-old tuition page saved (kearsarge-krps-4yo.txt) but not checked for amounts. NH DOE Oct 1 2026: 49 preschoolers (Bradford 27, New London 22). Raw copy: raw/districts/batch-6/kearsarge-krps-3yo.txt
 53. The Keene School District runs Jonathan Daniels Preschool, an integrated, play-based preschool for children ages 3 and 4, with morning (7:45-10:30 am) and afternoon (11:15 am-2:00 pm) sessions. Monthly tuition for 2026-27 is $110 for two half days a week, $165 for three half days and $280 for five half days; reductions may be available for families that qualify under the free and reduced lunch income guidelines.
    - citation: Jonathan Daniels Preschool Tuition Rates for 2026-2027 (linked from https://dan.keeneschoolsnh.org)
    - source: https://docs.google.com/document/d/11evrHfj-KAYgvwV11pNyqubcddl2QSDvwGnv4cYSaCU/edit
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Keene
    - note: Page text: "Jonathan Preschool Tuition Rates for 2026-2027 Monthly Rates Two Half Days a Week $110 ... Three Half Days a Week $165 ... Five Half Days a Week $280 | Jonathan Daniels Preschool is a fun, play based, integrated preschool for children ages 3 and 4 years old." Handbook: https://docs.google.com/document/d/1lgieqhWni0mAviUH5HtIhYT7MAA5cUirBP9fL-rIG6k ; rolling enrollment once a child turns 3. NH DOE Oct 1 2026: 88 preschoolers at Jonathan Daniels School. Raw copy: raw/districts/batch-4/sau29-school-tuition-rates.txt; raw/districts/batch-4/keene-jd-handbook.txt
 54. The Kensington School District does not run its own preschool program: its page says that, because of small enrollment, Kensington Elementary has no in-house preschool, and preschoolers who receive special education services are served through community partners (such as the Exeter Developmental Preschool).
    - citation: Kensington Elementary School - Preschool
    - source: https://www.sau16.org/pages/f4d07ee4-a641-4ee9-b467-7ae70c34c886
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Kensington
    - note: Page text: "Due to the small size of enrollment, Kensington Elementary does not have an in-house preschool program." SAU 16 Preschool Coordinator: Karen Ringuette, 603-775-8644. Raw copy: raw/districts/batch-8/kes-preschool.txt
 55. The Laconia School District runs a preschool; for 2026-27, families pick up a preschool registration packet at the SAU office, 39 Harvard Street, Laconia. The site's preschool page was not available, and no hours or tuition were found.
    - citation: Laconia School District (SAU 30) home page
    - source: https://www.sau30.org
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Laconia
    - note: Page text: "Preschool Registration for the 2026–2027 School Year Is Now Open! ... To begin the registration process, please visit the Laconia School District SAU Office, located at 39 Harvard Street, Laconia, NH, to pick up a preschool registration packet." https://www.sau30.org/preschool.html returned 404 on 2026-11-08. NH DOE Oct 1 2026 preschool count: 57 (Elm Street 13, Pleasant Street 13, Woodland Heights 31). Raw copy: raw/districts/batch-2/laconia-sau30-home.txt
 56. The Lebanon School District runs Beginnings Preschool in two classrooms at Mount Lebanon Elementary School, each with a session for 3-year-olds and one for 4-year-olds. Spaces are limited and filled by lottery; all age-appropriate children living in the district may apply. The lottery for 2026-27 was completed and all spots were full.
    - citation: Mount Lebanon Elementary School, Beginnings Preschool
    - source: https://mls.sau88.net/programs/preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Lebanon
    - note: Page text: "The SAU 88 Beginnings Preschool Program offers a limited number of spaces to Lebanon residents with preschool aged children. We have completed the lottery for the 2026-2027 school year and all spots are full at this time." No tuition on the page. NH DOE Oct 1, 2026: 41 preschool students at Mt. Lebanon School. Raw copy: raw/districts/batch-3/lebanon-preschool.txt
 57. Lempster Community School runs a Pre-K program: 4-year-olds attend Monday, Wednesday and Friday and 3-year-olds Tuesday and Thursday, from 8:15 to 11:00 am. Children must be fully toilet trained. No tuition was posted.
    - citation: Mrs. Dow's Pre-K (Lempster Community School teacher site, linked from https://www.sau71.org)
    - source: https://sites.google.com/sau71.org/mrsdowspre-k/home
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Lempster
    - note: Page text: "Pre-K Program Age 4: Monday, Wednesday & Friday Age 3:Tuesday & Thursday ... Drop-off: 8:15 AM at the Pre-K Door (A2) ... Pick-up: 11:00 AM" Teacher page, not a district program page; NH DOE counted 13 preschool children at Lempster Community School on Oct 1, 2026. Raw copy: raw/districts/batch-5/lempster-prek-site.txt
 58. The Lisbon Regional School District has a pre-kindergarten (Grade PK) class at Lisbon Regional School; the 2026-27 student handbook lists a Grade PK teacher and describes assessment for '(pre-school)/kindergarten through grade 5'. No tuition, schedule or eligibility details are posted.
    - citation: Lisbon Regional School 2026-27 Student Handbook
    - source: https://www.lisbon.k12.nh.us/uploads/4/6/0/3/4603503/26-27_student_handbook.docx__1_.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Lisbon Regional
    - note: Page text: "Andrews, Karin - Grade PK | For students in (pre-school)/kindergarten through grade 5 the school year is divided into trimesters." NH DOE Oct 1 2026: 13 preschoolers at Lisbon Regional School (Elem). Raw copy: raw/districts/batch-4/lisbon-handbook-2026-27.txt
 59. In the Litchfield School District, Griffin Memorial School serves grades Pre-K to 4. No page describing the preschool program, eligibility or tuition was found on the district site.
    - citation: Litchfield School District - Student Registration (School Placement)
    - source: https://www.litchfieldsd.org/StudentRegistration1.aspx
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Litchfield
    - note: Page text: "Griffin Memorial School - Grades Pre-K - 4" Partial: only the grade span shows a district Pre-K. NH DOE Oct 1 2026: Griffin Memorial 35 preschoolers. Student Services page (raw litchfield-studentservices.txt) does not describe preschool. Raw copy: raw/districts/batch-6/litchfield-registration.txt
 60. The Londonderry School District runs the Londonderry Early Education Program (LEEP) at Moose Hill School, a developmental preschool for children aged three to four with and without special needs. Children who qualify for special education attend at no charge; typically developing 'inclusion' children pay tuition, which for 2026-27 is $160 a month for the two-day program (3-year-olds), $190 for the three-day program (4-year-olds) and $210 for the four-day program, in nine payments, with registration mainly in March. Sessions run 8:25-10:55 AM or 12:00-2:30 PM, Monday through Thursday.
@@ -2562,428 +2562,428 @@ Strategy type 1 (local practices that each district sets and no state dataset re
 61. The SAU 13 preschool program is held at Madison Elementary School for children who turn three by September 30, 2026 and live in Freedom, Madison or Tamworth. Sessions are half day (9:00-11:45) or full day (9:00-3:00); tuition for children without an identified disability is $11.50 per day for half day and $23.00 per day for full day.
    - citation: SAU 13 - Preschool Program
    - source: https://www.sau13.org/preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Madison
    - note: Page text: "The SAU #13 preschool program will be held at Madison Elementary School in Madison, NH. Session options include Half day (9:00 AM - 11:45 AM) or full day (9:00 AM - 3:00 PM)." NH DOE counted 21 preschool children at Madison on Oct 1, 2026. Raw copy: raw/districts/batch-7/sau13-preschool.txt
 62. The Manchester School District runs a preschool, the Selma Deitch Early Learning Program, with two ways in: special education for children with identified disabilities, and a limited number of Title I openings for children living in Title I school neighborhoods, taught in the same classrooms. Sites include the Bishop O'Neil Center and Jewett Street, Parker Varney, Smyth Road and Weston elementary schools. The district also places some preschoolers with IEPs in community centers under formal agreements. No tuition is posted.
    - citation: Selma Deitch Early Learning Program
    - source: https://www.mansd.org/page/preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Manchester
    - note: Page text: "The Manchester School District offers two ways to access our preschool program. ... Special Education for children with identified disabilities ... Title I for children residing in Title I school neighborhoods" Also https://www.mansd.org/o/msd/page/preschool-title-i ('a limited number of Title I preschool openings in which children are taught in the same classroom with students identified with educational disabilities') and https://www.mansd.org/o/msd/page/preschool-special-education, https://www.mansd.org/page/preschool-outreach-programs. FAQ answers (age, transport) are in collapsed accordions that did not render. NH DOE Oct 1 2026: 418 preschoolers. Raw copy: raw/districts/batch-1/manchester-preschool.txt
 63. The Marlborough School District has a preschool (Pre-K) at Marlborough School; the 2026-27 handbook lists a preschool teacher and a preschool paraprofessional. An older SAU 29 registration page said Pre-K children must be 4 years old by September 30. No tuition is posted.
    - citation: Marlborough School Handbook 2026-2027; SAU29 Towns Kindergarten Registration page
    - source: https://docs.google.com/document/d/1VP4s-4Qmw8ABomOs0_BvCuwze743qI3kp0Ss8_m2Y58/edit
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Marlborough
    - note: Page text: "Rachel Hoglund - Preschool Teacher/Case Mngr ... Jasmine Roach - Preschool Para | Marlborough School - (603) 876-4465 - For Pre-K – must be 4 years old by 9/30/24" NH DOE Oct 1 2026: 21 preschoolers at Marlborough Elementary School. The Pre-K age line on the SAU page refers to 2024. Raw copy: raw/districts/batch-4/marlborough-school-handbook.txt; raw/districts/batch-4/sau29-towns-k-registration.txt
 64. The Marlow School District provides half-day pre-kindergarten at the John D. Perkins, Sr. Academy of Marlow, from 8:00 am to 12:00 pm, for children who are 4 by September 30 (2024-25 handbook). No tuition is posted.
    - citation: John D. Perkins, Sr. Academy of Marlow Student Handbook 2024-2025
    - source: https://drive.google.com/file/d/1ZEvjTSSpNPfO-XQc9L_5Wlw1AFaHwJ2w/view
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Marlow
    - note: Page text: "The Marlow School District provides half-day pre-kindergarten and full day kindergarten. Pre-kindergarten begins at 8:00 am and ends at 12:00 pm. ... Students must be 4 years old by September 30 in order to enter the pre-kindergarten program." NH DOE Oct 1 2026 preschool report lists no Marlow preschoolers, so the program may not be running in 2026-27; flag for confirmation. Raw copy: raw/districts/batch-4/marlow-school-handbook.txt
 65. NH Department of Education counted 13 preschool children enrolled in the Mascenic Regional School District's schools on October 1, 2026 (Highbridge Hill Elementary School (13)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Mascenic Regional
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found on https://www.mascenic.org. NH DOE Oct 1 2026 preschool count: 13 (Highbridge Hill Elementary School).
 66. The Mascoma Valley Regional School District runs preschool with morning and afternoon sessions for 3- and 4-year-olds, through Canaan Elementary School and Enfield Village School. For 2026-27, current preschool families registered February 5-6, 2026 and enrollment for others began February 16, 2026. No tuition is posted.
    - citation: Mascoma Valley Regional School District - Enrollment
    - source: https://www.mascomaschools.org/our-district/enrollment
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Mascoma Valley Regional
    - note: Page text: "PRESCHOOL REGISTRATION ... February 5th & February 6th (Current Preschool Families) ... February 16th (Enrollment Begins) ... Morning and afternoon sessions available for 3- and 4-year-olds." NH DOE Oct 1 2026 preschool count: 77 (Canaan Elementary 46, Enfield Village 31). Raw copy: raw/districts/batch-2/mascoma-enrollment.txt
 67. The Mason School District runs Mason Integrated Preschool at Mason Elementary School, Monday through Thursday, 9:00 a.m. to 12:00 p.m., for children 3 to 5 years old (3 by September 30). There is a wait list for 2027-28; families contact the school secretary at (603) 878-2962.
    - citation: Mason Elementary School, Preschool
    - source: https://www.sau89.nh.gov/apps/pages/index.jsp?uREC_ID=4462428&type=d&pREC_ID=2731607
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Mason
    - note: Page text: "Mason Integrated Preschool is held Monday through Thursday from 9:00 AM to 12:00 PM For children 3 to 5 years old (3 years old by September 30th) There is a wait list for the 2027-2028 school year." No tuition stated. NH DOE Oct 1, 2026: 8 at Mason Elementary School. Raw copy: raw/districts/batch-3/mason-preschool.txt
 68. The Merrimack School District runs the Merrimack Early Education Program (MEEP), a preschool for three- and four-year-olds with and without special needs, in classrooms at Reeds Ferry, Thorntons Ferry and Mastricola elementary schools. Families pay monthly tuition, except for children with special needs placed by the district. Parents transport children who do not have special needs. The page does not post the tuition amount.
    - citation: Early Education Program (MEEP)
    - source: https://www.sau26.org/departments/early-education-program-meep
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Merrimack
    - note: Page text: "The Merrimack Early Education Program (MEEP) is a developmental preschool program for three and four-year-olds where children with and without special needs have the opportunity to play and learn together. ... Families pay monthly tuition to the Merrimack School District. There are no tuition fees for children with special needs who are placed in the program by the school district." NH DOE Oct 1 2026 preschool enrollment: 95. Raw copy: raw/districts/batch-1/merrimack-meep.txt
 69. In the Merrimack Valley School District, Boscawen Elementary School and Penacook Elementary School serve students from Pre-K through grade 5, according to the district's 2026 Annual Report. The district's pages give no preschool tuition, schedule or eligibility.
    - citation: Merrimack Valley School District 2026 Annual Report
    - source: https://drive.google.com/file/d/1P82wi-vCYJExipzNQDwTwCyBLqYbK7T9/view
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Merrimack Valley
    - note: Page text: "Boscawen Elementary School (BES) serves students in Pre-K through Fifth Grade. ... Penacook Elementary School serves roughly 315 students in grades Pre-K through 5." Annual report linked from https://www.mvsdpride.org/school-board/2026-27-budget-information. NH DOE Oct 1 2026: 28 preschoolers (Boscawen 16, Penacook 12). Raw copy: raw/districts/batch-1/mvsd-2026-annual-report.txt
 70. Middleton Elementary School lists a preschool teacher in its family handbook, and NH DOE counted 6 preschool children there on October 1, 2026. No preschool program page, schedule or tuition was found.
    - citation: Middleton Elementary School Family Handbook 2025-2026; NH DOE iPlatform Preschool Enrollments 2026-2027
    - source: https://docs.google.com/document/d/1cjZwmmdGQfuVr0qLuLMQFhEoZcVLcn88RlJQ3qjbD8o/edit
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Middleton
    - note: Page text: "PreSchool Jennifer Larson - jennifer.larson@sau69.org" Thin evidence; program details not found. Raw copy: raw/districts/batch-5/middleton-mes-family-handbook.txt; raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx
 71. The Milford School District runs the Milford Early Education Experience (MEEE) preschool program through its Office of Student Support Services. Sessions run Mondays, Tuesdays, Thursdays and Fridays, mornings (8:55-11:30) or afternoons (12:35-3:15). Tuition for peer models is $250 a month; from 2026-27 cash payments are no longer accepted.
    - citation: Milford Office of Student Support Services - Milford Early Education Experience (MEEE)
    - source: https://spsvcs.milfordk12.org/apps/pages/index.jsp?uREC_ID=1620096&type=d&pREC_ID=2726511
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Milford
    - note: Page text: "Tuition Tuition for peer models: $250.00 per month Payable by check or On-Line in PowerSchool NEW 2026-2027 Cash Payments will no longer be accepted" NH DOE Oct 1 2026: Milford Early Education Experiences 51 preschoolers. Online registration page lists Heron Pond Elementary as 'Grades Pre-K, 2 to 5'. Raw copy: raw/districts/batch-6/milford-meee.txt
 72. The Milton School District has public preschool enrollment: NH DOE counted 23 preschool children at Milton Elementary School on October 1, 2026. No preschool program page, schedule or tuition was found on the district site.
    - citation: NH DOE iPlatform - Preschool Enrollments 2026-2027 (as of October 1, 2026)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Milton
    - note: Page text: "64,Milton,359,Milton,22075,Milton Elementary School,23 (row of the NH DOE 2026-2027 Preschool Enrollments export: SAU #, SAU name, District #, District name, School #, School name, Enrollment count)" Based only on the state count; district site checked (home, MES home, handbook). Raw copy: raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx
 73. The Monadnock Regional School District's Dr. George S. Emerson School website lists a preschool class. No program details, hours or tuition were found on the district site.
    - citation: Dr. George S. Emerson School home page
    - source: https://emerson.mrsd.org/
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Monadnock Regional
    - note: Page text: "PreSchool with Ms. Gove" Thin evidence. NH DOE Oct 1 2026 preschool count: 62 (Emerson 25, Mt. Caesar 36, Troy 1). Student Services page notes special education from age 2 1/2 and Child Find. Raw copy: raw/districts/batch-2/mrsd-emerson.txt
 74. The Monroe School District runs a preschool at Monroe Consolidated School. For 2026-27, preschoolers had to be 4 years old by September 30, 2026, and preschool started August 26. Registration is online through Alma Start. The page posts no tuition.
    - citation: Monroe Consolidated School - New Student Registration
    - source: https://sites.google.com/a/monroeschool77.com/monroe-consolidated-school/new-student-registration
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Monroe
    - note: Page text: "Preschoolers must be 4 years old by Sept 30, 2026 ... Our first day of school for Preschool is August 26th" NH DOE Oct 1 2026: 9 preschoolers at Monroe Consolidated School. Raw copy: raw/districts/batch-1/monroe-new-student-registration.txt
 75. The Moultonborough School District offers a universal preschool program at Moultonborough Central School for all 3- and 4-year-olds living in Moultonborough. No schedule or tuition is posted on that page.
    - citation: Moultonborough Central School - welcome/about page
    - source: https://www.sau45.org/pages/ba451203-9b5d-44d1-a6ef-b17009a3275d
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Moultonborough
    - note: Page text: "The school also offers a universal preschool program for all 3 and 4 year olds living in Moultonborough." SAU 45 site search for 'preschool' found no separate preschool page. NH DOE counted 27 preschool children at Moultonborough Central School on Oct 1, 2026. Raw copy: raw/districts/batch-8/moultonborough-mcs-about.txt
 76. The Nashua School District runs the Nashua Early Education Program (NEEP) at Franklin Street School, where children with special needs and typically developing children learn together. Its PlayPals program meets Tuesday to Thursday (3-year-olds 9:15-11:45 a.m., 4-year-olds 1:00-3:30 p.m.); children must be 3 or 4 by September 30, tuition is $240 a month plus a $25 registration fee, and parents provide transportation. Enrollment for 2026-27 opened March 2, 2026. The district also runs Purple Panther Preschool for 3- and 4-year-olds.
    - citation: NEEP - PlayPals; NEEP - Purple Panther Preschool
    - source: https://franklin.nashua.edu/fs/pages/5534
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Nashua
    - note: Page text: "Students attend on Tuesday, Wednesday and Thursday, from September through June ... Tuition is $240/month ... A $25 non-refundable registration fee is required ... Students must be 3 or 4 by September 30th to qualify ... Enrollment will open on March 2nd, 2026 ... designed for 3- and 4-year-old children" Also https://franklin.nashua.edu/neep/programs/purple-panther-preschool (no tuition posted there). NH DOE Oct 1 2026 preschool count: 277 in Nashua schools. Raw copy: raw/districts/batch-2/nashua-playpals.txt; raw/districts/batch-2/nashua-purple-panther.txt
 77. NH Department of Education counted 14 preschool children enrolled in the New Boston School District's schools on October 1, 2026 (New Boston Central School (14)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district New Boston
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found on the SAU 19 New Boston pages (kindergarten registration page, finance page). A search result pointed to a Town of New Boston page (https://www.newbostonnh.gov/node/1223) mentioning a New Boston Central School Preschool Program, but it returned 404 when fetched. NH DOE counted 14 preschool children at New Boston schools on Oct 1, 2026.
 78. The New Castle School District does not have its own preschool listed; New Castle children ages 3 to 5 are eligible for the SAU 50 Community Preschool at Rye Elementary School, an inclusive half-day program (2026-27 tuition $200 a month for two sessions a week or $400 for four, September-June).
    - citation: SAU 50 Community Pre-School
    - source: https://www.sau50.org/pages/3051f5d8-1184-40ce-95bf-5c7fef95c2c6
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district New Castle
    - note: Page text: "Preschool-aged students, ages 3 to 5) who live in any of our SAU 50 towns (Greenland, New Castle, Newington, and Rye) are eligible to attend." 'Does not have its own preschool listed' is based on the SAU 50 schools overview, which lists preschools only at Rye Elementary and Newington Public School. Raw copy: raw/districts/batch-8/sau50-preschool.txt
 79. The Newfields School District does not run its own preschool program: its page says that, because of small enrollment, Newfields Elementary has no in-house preschool, and preschoolers who receive special education services are served through community partners (such as the Exeter Developmental Preschool).
    - citation: Newfields Elementary School - Preschool
    - source: https://www.sau16.org/pages/597b6316-b39b-47f0-a431-d091a7a13772
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Newfields
    - note: Page text: "Due to the small size of enrollment, Newfields Elementary does not have an in-house preschool program." SAU 16 Preschool Coordinator: Karen Ringuette, 603-775-8644. Raw copy: raw/districts/batch-8/nes-preschool.txt
 80. The Newfound Area School District runs a special education preschool at Newfound Elementary School at New Hampton; all district families interested in it are asked to contact that school (603-744-3221). No tuition or peer-model details are posted.
    - citation: SAU 4 - Prospective Families
    - source: https://www.sau4.org/for-students-families/prospective-families
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Newfound Area
    - note: Page text: "New Hampton also houses our Special Education Preschool. ... Families who live in New Hampton, and all district families interested in the Special Education Preschool, should contact NES at New Hampton" NH DOE Oct 1 2026: 17 preschoolers at Newfound Elementary School at New Hampton. Raw copy: raw/districts/batch-4/sau4-prospective-families.txt
 81. The Newington School District's Newington Public School runs a Pre-K that meets Monday-Friday, 8:05-3:00, for children who are 4 by September 30; tuition is $3,300 a year for Newington residents and $8,500 for non-residents. Newington children ages 3 to 5 are also eligible for the SAU 50 Community Preschool at Rye Elementary School.
    - citation: SAU 50 - schools overview; SAU 50 Community Pre-School (https://www.sau50.org/pages/3051f5d8-1184-40ce-95bf-5c7fef95c2c6)
    - source: https://www.sau50.org/pages/32bfca09-8390-4f0b-bc2d-c425b4ea9011
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Newington
    - note: Page text: "The Newington PreK meets Monday through Friday, 8:05 am to 3:00 pm. Students must be 4 by September 30th to join. Tuition for Newington residents is $3,300.00" NH DOE counted 4 preschool children at Newington Public School on Oct 1, 2026. Raw copy: raw/districts/batch-8/sau50-schools.txt; raw/districts/batch-8/sau50-preschool.txt
 82. The Newmarket School District runs Newmarket Preschool at Newmarket Elementary School, an inclusive program with a limited number of places for peer-model children each year; it is not a universal public program, and families apply to be placed on a wait list. No tuition or hours are posted.
    - citation: Newmarket Elementary School - Preschool
    - source: https://www.newmarket.k12.nh.us/schools/newmarket-elementary-school/curriculum-instruction/preschool/index
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Newmarket
    - note: Page text: "As Newmarket Preschool is not a universal public program, there are limited spots for peer-model children each year." Page still invites applications 'for the 2025-26 school year' (not updated). NH DOE counted 34 preschool children at Newmarket Elementary on Oct 1, 2026. Raw copy: raw/districts/batch-8/newmarket-preschool.txt
 83. NH Department of Education counted 24 preschool children enrolled in the Newport School District's schools on October 1, 2026 (Richards Elementary School (24)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Newport
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found on sau43.nh.gov (Richards School home page rendered; guessed /page/preschool URLs return 'Page Not Found'). NH DOE Oct 1 2026 report lists 24 preschoolers at Richards Elementary School, so a program likely exists but the district site was not found to describe it.
 84. The North Hampton School District runs a preschool program at North Hampton School, with hours of 8:30 a.m. to 1:30 p.m., Monday through Friday (2025-26 handbook); families submit a Preschool Intent to Enroll form. Tuition and eligibility were not posted on the pages checked.
    - citation: North Hampton School - NHS Preschool Program (and Student & Family Handbook)
    - source: https://www.northhamptonschool.org/nhs-curriculum/nhs-preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district North Hampton
    - note: Page text: "SCHOOL HOURS Preschool Monday through Friday - 8:30 a.m. -1:30 p.m." Hours quote is from the handbook (https://docs.google.com/document/d/1kZE3qKrVZhh6HrHM6b570OOEH601BlXybEfrOkgLU2o/edit). Intent form https://forms.gle/869uk6icPerWaEp56. NH DOE counted 9 preschool children on Oct 1, 2026. Raw copy: raw/districts/batch-7/northhampton-preschool.txt; raw/districts/batch-7/northhampton-family-handbook.txt
 85. SAU 44 runs the Step by Step Preschool for the Northwood School District; its page takes tuition payments online but posts no schedule, eligibility or tuition amount. The 2026-27 budget funds one full-time preschool teacher and two preschool assistants.
    - citation: SAU 44 - Step by Step Preschool; 2026 Deliberative Session Packet (https://aptg.co/xX6DT7)
    - source: https://www.sau44.org/o/sau/page/step-by-step-preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Northwood
    - note: Page text: "This account funds 1 full time Preschool Instructor and 2 Preschool Assistants." Page: 'Cheddar Up Payment (Click Here)' -> https://my.cheddarup.com/c/step-by-step-preschool-tuition-collection (not opened). Contact Jenn Adrien, Preschool Coordinator, 603-942-8101. NH DOE counted 28 preschool children at Northwood Elementary on Oct 1, 2026. Raw copy: raw/districts/batch-8/northwood-preschool.txt; raw/districts/batch-8/northwood-deliberative-packet-2026.txt
 86. The Nottingham School District runs the Nottingham Preschool in the Nottingham School building, an early childhood program with about half children with disabilities and half typically developing peers. Sessions run Monday to Thursday: 3-year-olds 8:45-11:15 a.m. and 4-year-olds 11:15 a.m.-1:45 p.m., capped at 12 children per session. Peer-model children are chosen by a lottery drawn in April; lottery forms are available from February 1. No tuition is posted.
    - citation: Nottingham Preschool (linked from the school's Pre-K page)
    - source: https://sites.google.com/nottingham.k12.nh.us/nottinghampreschool/home
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Nottingham
    - note: Page text: "Our preschool is an Early Childhood Program that has a 50/50 ratio of neurodiverse to neurotypical children. Two sessions are held Monday through Thursday with 3 year old children attending during the AM session(8:45-11:15) while 4 year old children attend during the PM session(11:15-1:45). Peer model children are enrolled via a lottery system." NH DOE Oct 1 2026 preschool count: 37. Raw copy: raw/districts/batch-2/nottingham-preschool-site.txt
 87. The Oyster River Cooperative School District runs the Preschool Education Program (PEP), an integrated preschool at Oyster River High School staffed by Strafford Learning Center. It mainly serves children ages 3-5 who qualify for special education, and some other children from the community also enroll. Classes meet Monday to Thursday: mornings (8:15-10:45) for 3-year-olds and afternoons (12:00-2:30) for 4-year-olds. No tuition is posted.
    - citation: ORCSD - Preschool Education Program
    - source: https://www.orcsd.org/departments/student-services/pep
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Oyster River Coop
    - note: Page text: "The program runs M-Th morning classes (8:15-10:45) for 3 years old students, and M-Th afternoon classes (12:00-2:30) for 4 years old students. ... In addition, some children from the community are also enrolled in the program." NH DOE Oct 1 2026 preschool count: 27 (Oyster River Preschool Education Program). Raw copy: raw/districts/batch-2/orcsd-pep.txt
 88. The Pasquaney School District's Bridgewater-Hebron Village School serves pre-kindergarten through grade 6 and has a preschool teacher on staff, according to the district's 2026 annual report. No preschool schedule, eligibility or tuition was found.
    - citation: Pasquaney School District Annual Report, March 17, 2026 (linked from https://www.sau108.org/ menu 'District Annual Report')
    - source: https://aptg.co/_b-b0k
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Pasquaney
    - note: Page text: "noting this would be for the upcoming school year (pre-Kindergarten through 6 th grade)." Staff list includes 'Preschool Teacher'. NH DOE counted 14 preschool children at Bridgewater-Hebron Village School on Oct 1, 2026. Raw copy: raw/districts/batch-8/pasquaney-annual-report.txt
 89. The Pelham School District runs a preschool at Pelham Elementary School with Pre-K 3 and Pre-K 4 programs; places for 2026-27 were filled by lottery. Tuition and hours were not posted on the pages checked.
    - citation: Pelham Elementary School - NEW Student Registration Information (PRE-K)
    - source: https://www.pelhamsd.org/2022-2023Pre-KKand1stGradeRegistration-GoingLive129213pm.aspx
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Pelham
    - note: Page text: "PRE-K 2026-2027 Preschool Lottery Video's **Any questions please reach out to Nicole Desmarais at 603.635.8875 x 1008" Preschool class site: https://sites.google.com/pelhamsd.org/preschool (no tuition or eligibility details). NH DOE counted 50 preschool children in Pelham schools on Oct 1, 2026. Raw copy: raw/districts/batch-7/pelham-prek-k-registration.txt; raw/districts/batch-7/pelham-preschool-site-rendered.txt
 90. Pembroke children ages 3 to 5 with special education needs are served by SAU 53's preschool programs, which accept children from Pembroke, Allenstown, Chichester and Epsom; they include TLC Preschool, a special education preschool at the old Allenstown Elementary School (30 Main Street, Allenstown) with four 2.5-hour sessions, which also admits some children without identified needs after an April screening. No tuition is posted.
    - citation: SAU 53 - TLC Preschool
    - source: https://sau.sau53.org/pages/76e46815-3441-4987-aa11-2fbd2b55be4b
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Pembroke
    - note: Page text: "SAU 53 preschool programs accept children from the towns of Pembroke, Allenstown, Chichester, and Epsom. SAU 53 preschool programs are located at the old Allenstown Elementary School, 30 Main Street Allenstown, NH." Sessions: one for 3-year-olds Tue/Thu 8:15-10:45; three for 4-year-olds (Mon/Wed/Fri 8:15-10:45; two Tue/Wed/Thu 11:30-2:00). Placement is decided by the child's IEP team; non-identified students are screened in April. Coordinator Paula Dyrkacz (603) 836-6294 x1. NH DOE showed 0 preschool children in Pembroke's own schools on Oct 1, 2026 (program is SAU-run in Allenstown). Raw copy: raw/districts/batch-7/sau53-tlc-preschool-page.txt
 91. Piermont Village School has a combined 'Grade Kindergarten & PreK' classroom and posted its newsletters for fall 2026. The site gives no preschool enrollment rules or tuition.
    - citation: Piermont Village School - Grade Kindergarten & PreK
    - source: https://pvs.sau23.org/classroom-newsletters/grade-kindergarten-prek
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Piermont
    - note: Page text: "Grade Kindergarten & PreK Jones Newsletter 11.9.26.pdf" NH DOE Oct 1 2026: 3 preschoolers at Piermont Village School. Raw copy: raw/districts/batch-1/piermont-k-prek.txt
 92. NH Department of Education counted 5 preschool children enrolled in the Pittsburg School District's schools on October 1, 2026 (Pittsburg School (Elem) (5)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Pittsburg
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: SAU 7 site (sau7.org, SchoolBlocks) checked: home, Policies, About Our School Boards. Menus for district/school pages did not render as links; no registration, preschool, warrant, annual meeting or tuition pages found. A search hit for 'colebrookschool.org' turned out to be Colebrook, Connecticut, and was discarded. NH DOE Oct 1 2026 preschool report lists 5 preschoolers in this district.
 93. Plymouth Elementary School has a preschool class (Plymouth Elementary Preschool), with Monday/Wednesday/Friday and Tuesday/Thursday morning groups and a PM session listed on its 2026-27 class page; the school links a preschool registration form. No eligibility rules or tuition are posted.
    - citation: Plymouth Elementary Preschool class page (linked as 'Pre-K' from https://pes.pemibaker.org/)
    - source: https://sites.google.com/pemibaker.org/pespre-school/home
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Plymouth
    - note: Page text: "October 29th: T/Th parade 9:15 am, PM session 12:45 pm October 30th: M/W/F session Parade 9:15 am" Session pattern inferred only from the class calendar notes. 'Pre-School Registration' form (https://drive.google.com/file/d/1I4cqeEOrSRK2IZorTB-lc5q2HXn7CYc1/view) is a scanned PDF with no text. NH DOE Oct 1 2026 report shows no preschool enrollment for Plymouth. Raw copy: raw/districts/batch-6/pes-prek.txt
 94. The Portsmouth School Department runs the Portsmouth Early Education Program (PEEP), an inclusive preschool at Little Harbour School for children ages 3 to 5 with and without educational disabilities. For 2026-27, sessions run 8:30 a.m. to 12:30 p.m., Monday through Thursday; tuition is $400 a month for four days a week or $200 a month for two days; children must be 3 to 5 by September 30, 2026 and toilet trained, and parents provide transportation. Portsmouth High School also lists the Little Clipper Preschool.
    - citation: Portsmouth Early Education Program 2026-2027 flyer (linked from https://www.cityofportsmouth.com/school/peep)
    - source: https://www.portsmouthnh.gov/sites/default/files/2026-01/2026-2027%20PEEP%20Flyer.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Portsmouth
    - note: Page text: "Sessions are 8:30AM-12:30PM Monday through Thursday. Two options for attendance are available: 4 days weekly for $400 monthly 2 days weekly for $200 monthly" Application says families selected for enrollment are notified by May 15. Little Clipper page (https://www.cityofportsmouth.com/school/phs/little-clipper-preschool-0) is 'under construction' and gives no tuition or schedule. Raw copy: raw/districts/batch-8/portsmouth-peep-flyer-2026-27.txt; raw/districts/batch-8/portsmouth-peep.txt; raw/districts/batch-8/portsmouth-peep-application-2026-27.txt; raw/districts/batch-8/portsmouth-little-clipper.txt
 95. The Raymond School District runs a preschool program at Raymond High School for children with special education needs and for typically developing children who live in Raymond. Sessions run 8:45-11:15 a.m. and 12:30-3:00 p.m.; enrolled typically developing peers may attend up to four days a week, Monday to Thursday, and some attend on a tuition basis. Families join a waiting list through an online form rather than enrolling online. No tuition amount is posted.
    - citation: Raymond School District Preschool Program 2026-2027 Parent & Student Handbook; Preschool page; Enrollment page
    - source: https://www.sau33.com/district/preschool/files/2026-2027-preschool-parentstudent-handbook
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Raymond
    - note: Page text: "Preschool is open to typically developing children who reside in the town of Raymond. ... Morning Session - 8:45 AM to 11:15 AM ○ Afternoon Session - 12:30 PM to 3:00 PM ... Enrolled typical peers are eligible to join PK programming up to 4 days per week, Monday -Thursday." Handbook mentions 'preschool students who attend on a tuition basis' but gives no amount. Waiting-list instruction on https://www.sau33.com/district/pages/enrollment. NH DOE Oct 1 2026 preschool count: 50. Raw copy: raw/districts/batch-2/raymond-preschool-handbook-2026-27.txt; raw/districts/batch-2/raymond-preschool.txt
 96. The Rivendell Interstate School District runs the Rivendell Early Childhood Program (RECP), a public preschool. It is free for in-district children from 8:00 to 11:30, and $20 a morning for children from outside the district. An extended day (11:30 to 3:00) costs $20 a day, and Extended Plus (11:30 to 5:00) costs $35. The Samuel Morey classroom serves the towns of Fairlee and Orford.
    - citation: Rivendell Early Childhood Program (Preschools)
    - source: https://www.rivendellschool.org/preschools
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Rivendell
    - note: Page text: "FREE preschool for in district students from 8:00 to 11:30 $20 a morning for out of district students Extended Day program from 11:30 to 3:00 for $20 a day Extended Plus program from 11:30 to 5:00 for $35" Page also: 'Hours for the Samuel Morey Classroom Serving the Towns of Fairlee and Orford: 8:00 - 11:30 Morning Option; 8:00 - 3:00 Full Day Option; 8:00 - 5:30 Full Day option with After School Care'. Classrooms are in Vermont schools; follows Vermont early learning standards. NH DOE count includes NH resident students only and lists none. Raw copy: raw/districts/batch-1/rivendell-preschools.txt
 97. The Rochester School District runs REACH Preschool at East Rochester School (773 Portland St), with special education and early childhood classrooms. Community peer spots: three-year-olds attend three mornings a week for 2 hours, tuition $80 a month; four-year-olds attend four afternoons a week (12-2:30 PM), tuition $100 a month. There is a waiting list.
    - citation: East Rochester School - REACH Preschool
    - source: https://www.rochesterschools.com/o/ers/page/reach-preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Rochester
    - note: Page text: "Three-year-old students will attend three mornings of preschool a week for 2 hours each session. Tuition is $80 a month for community peer spots. Four-year-old students will attend four afternoons a week for 2.5 hours each session. Monday, Tuesday, Thursday, and Friday 12-2:30 PM Tuition is $100 a month." Page shows no school year. NH DOE Oct 1 2026 preschool enrollment: East Rochester School 41. Separately, Small Wonders lab preschool at Spaulding High School (https://sites.google.com/sau54.org/smallwonderspreschool/home) lists tuition $125/$85 a month but its page refers to 2020-2021, so not used. Raw copy: raw/districts/batch-6/rochester-reach-preschool.txt
 98. Rye Elementary School houses two preschool programs: the SAU 50 Community Preschool, an inclusive half-day program for children ages 3 to 5 from Greenland, New Castle, Newington and Rye (2026-27 tuition $200 a month for two sessions a week or $400 for four, September-June), and the Rye PreK, which meets Monday-Friday 8:15-2:15 for children who are 4 by September 30, with tuition of $8,250 a year for Rye residents and $9,000 for non-residents.
    - citation: SAU 50 - schools overview; SAU 50 Community Pre-School (https://www.sau50.org/pages/3051f5d8-1184-40ce-95bf-5c7fef95c2c6)
    - source: https://www.sau50.org/pages/32bfca09-8390-4f0b-bc2d-c425b4ea9011
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Rye
    - note: Page text: "The Rye PreK meets Monday through Friday, 8:15 am to 2:15 pm. Students must be 4 by September 30th to join. Tuition for Rye residents is $8,250.00 per year" Community Preschool: mornings 8:15-11:00 (ages 3-4, two mornings a week) and afternoons 11:30-2:15 (ages 4-5, two to four afternoons), Monday-Thursday; 'Financial assistance is available for families who qualify for other public assistance programs'; for 2026-27 waitlist preference to siblings. Rye PreK tuition year not stated. Raw copy: raw/districts/batch-8/sau50-schools.txt; raw/districts/batch-8/sau50-preschool.txt
 99. The Salem School District runs Salem Preschool at 24 School Street, an integrated preschool for children ages 3 to 5 with a morning (8:30-11:00) or afternoon (12:15-2:45) session; typical peers attend Tuesday, Wednesday and Thursday, and the posted cost is $200 a month. It is open only to Salem residents, children must be 3 by September 30, 2026-27 registration is full (waitlist), and pre-registration for 2027-28 opens January 25, 2027 at 9:00 a.m.
    - citation: Salem Preschool - Programs and Hours
    - source: https://preschool.sau57.org/seed-program
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Salem
    - note: Page text: "Salem Preschool offers an AM or PM session of Integrated preschool for children ages 3-5. Typical peers attend preschool 3 days a week (Tue, Wed, and Thur). ... COST: $200 a month" Registration details from https://preschool.sau57.org/preschool-registration: 'Salem Preschool pre-registration will open January 25th, 2027 at 9:00am.' 'Children must be 3 years old by September 30th to register.' 'Salem Preschool is exclusively open to Salem, NH residents only.' Children must be fully potty trained. Students with specialized plans may also attend Friday mornings or Monday afternoons on team recommendation. Raw copy: raw/districts/batch-7/salem-preschool-programs-hours.txt; raw/districts/batch-7/salem-preschool-registration.txt
 100. The Sanborn Regional School District runs a preschool at Daniel J. Bakie School. Children are selected through a lottery held around January and February, then registered; a separate Preschool Referral Application is used for referrals. No tuition was posted. NH DOE counted 31 preschool children at Bakie School on October 1, 2026.
    - citation: Daniel J. Bakie School - Registration Information
    - source: https://docs.google.com/document/d/1kTAEsgxD1GN7QQpko-mSth1Ni1-3FgAt9NjXqVPL4qE/edit
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Sanborn Regional
    - note: Page text: "To attend our Preschool, your child must be selected through our lottery, which is held in January/February timeframe. Once you have been informed that they have been accepted, you will complete their registration." NH DOE count from iPlatform Preschool Enrollments 2026-27 (statewide raw file). Raw copy: raw/districts/batch-5/sanborn-bakie-registration-doc.txt
 101. The Seabrook School District runs a preschool at Seabrook Elementary School with a morning session (8:00-10:45) and an afternoon session (11:45-2:30) (2026-27 handbook). Tuition and eligibility were not posted on the pages checked.
    - citation: Seabrook Elementary School Student Handbook 2026-2027
    - source: https://www.sau21.nh.gov/ses/files/documents/SESHandbook_2026-2027.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Seabrook
    - note: Page text: "Preschool: AM Sessions 8:00 am to 10:45 PM Sessions 11:45 am to 2:30 pm" NH DOE counted 34 preschool children in Seabrook schools on Oct 1, 2026. Raw copy: raw/districts/batch-7/seabrook-ses-handbook-2026-27.txt
 102. The Shaker Regional School District runs a preschool program through its Office of Student Services. For 2026-27, children had to be 3 on or before September 30, 2026; applications were due April 17, 2026, with a mandatory screening at Belmont Elementary School on May 20, 2026 and the first day of school on September 3, 2026. No tuition is posted.
    - citation: Shaker Regional School District - Preschool Program
    - source: https://www.sau80.org/departments/student_services/preschool_program
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Shaker Regional
    - note: Page text: "Preschool Application Timeline Must be age 3 on or before September 30, 2026 April 17, 2026 Completed Applications Due" Quote has a tab between '2026' and 'Completed' on the page. Page also directs families who suspect a disability to Student Services (603) 267-9222. NH DOE Oct 1 2026: Belmont Elementary 26 preschoolers. Raw copy: raw/districts/batch-6/shaker-preschool.txt
 103. The Somersworth School District's 2026-27 budget presentation lists preschool tuition among its estimated revenues ('Increase in Preschool Tuition: $8,000'). No page describing the preschool program, its schedule or tuition rates was found on the district site.
    - citation: Somersworth School District 2026-2027 Proposed Budget Presentation to City Council, April 6, 2026
    - source: https://www.sau56.org/common/pages/GetFile.ashx?key=3sMsAQ09
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Somersworth
    - note: Page text: "• Increase in Preschool Tuition: $8,000" Partial: shows a tuition-charging preschool exists but not details. NH DOE Oct 1 2026: Idlehurst Elementary 36 preschoolers. Idlehurst page and student services page do not describe preschool. Raw copy: raw/districts/batch-6/somersworth-council-budget-presentation-2026.txt
 104. NH Department of Education counted 2 preschool children enrolled in the Stewartstown School District's schools on October 1, 2026 (Stewartstown Community School (2)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Stewartstown
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: SAU 7 site (sau7.org, SchoolBlocks) checked: home, Policies, About Our School Boards. Menus for district/school pages did not render as links; no registration, preschool, warrant, annual meeting or tuition pages found. A search hit for 'colebrookschool.org' turned out to be Colebrook, Connecticut, and was discarded. NH DOE Oct 1 2026 preschool report lists 2 preschoolers in this district.
 105. The Strafford School District runs the Little Spartans Preschool at Strafford School, an integrated class of typically developing children and children with disabilities, ages 3-5. Children must be 3 years old and live in Strafford; hours are 9:00-11:30. Places are filled by a spring lottery from a waiting list. No tuition is posted.
    - citation: Strafford School - Little Spartans Preschool
    - source: https://www.strafford.k12.nh.us/information/little-spartans-preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Strafford
    - note: Page text: "Children must be 3 years old and a resident of Strafford to attend the preschool program. Preschool Hours are 9:00-11:30." The page's enrollment note is out of date (refers to 2024-25 being full and a 2025-26 lottery). NH DOE Oct 1 2026 preschool count: 13. Raw copy: raw/districts/batch-2/strafford-preschool.txt
 106. NH Department of Education counted 3 preschool children enrolled in the Stratford School District's schools on October 1, 2026 (Stratford Public School (3)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Stratford
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No district preschool page found; SAU 58 has a page for a free online at-home pre-K program (https://www.sau58.org/page/free-online-at-home-prek-program), not checked as a district-run preschool. NH DOE Oct 1 2026 preschool count: 3 (Stratford Public School).
 107. Stratham Memorial School, the Stratham School District's elementary school, serves preschool through grade 5. Its preschool pages give no schedule, eligibility or tuition details.
    - citation: Stratham Memorial School - home page
    - source: https://sms.sau16.org/en-US
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Stratham
    - note: Page text: "Stratham Memorial School is the elementary school for Stratham, NH, serving Preschool through Grade 5." Preschool pages https://www.sau16.org/pages/6aadd27f-1c43-45f2-a612-882684c777b7 and .../590f6c8b-e764-46cf-baf7-8b4fb6f08ca1 show only resource links. NH DOE counted 21 preschool children at Stratham Memorial School on Oct 1, 2026. Raw copy: raw/districts/batch-8/sms-home.txt
 108. The Sunapee School District runs the Sunapee Integrated Preschool at Sunapee Elementary School for children ages 3 to 5 of all abilities; places are filled by lottery, and 2026 lottery applications were due February 6, 2026 (families call 603-763-5675 for an application). Tuition was not posted on the page checked.
    - citation: SAU 85 Sunapee School District - 2026 Preschool Lottery
    - source: https://www.sau85.org/news/what_s_new/2026_preschool_lottery
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Sunapee
    - note: Page text: "Sunapee Integrated Preschool welcomes children ages 3-5 years old of all abilities. Lottery applications must be received by Feb. 6, 2026 for consideration." Site also has a 'Tuition' page (not read). Raw copy: raw/districts/batch-7/sunapee-2026-preschool-lottery.txt
 109. Tamworth children can attend the SAU 13 preschool program at Madison Elementary School, open to children who turn three by September 30, 2026 and live in Freedom, Madison or Tamworth. Sessions are half day (9:00-11:45) or full day (9:00-3:00); tuition for children without an identified disability is $11.50 per day for half day and $23.00 per day for full day.
    - citation: SAU 13 - Preschool Program
    - source: https://www.sau13.org/preschool
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Tamworth
    - note: Page text: "Children turning three by September 30, 2026, residing in SAU #13 towns (Freedom, Madison, or Tamworth) are eligible for this program. Non-identified student tuition is $11.50 per day (half day), $23.00 per day (full day)." Before and after care may be available at extra cost. Office 603-323-5088. Raw copy: raw/districts/batch-7/sau13-preschool.txt
 110. The Timberlane Regional School District runs multiage early childhood programs for 3- and 4-year-olds (age 3 or 4 by September 30, 2026) at its neighborhood schools (Atkinson Academy, Danville School, Pollard School and Sandown Central), five days a week in morning or afternoon sessions. Tuition for 2026-27 is $2,200 for the school year, with a $220 deposit due April 30, 2026.
    - citation: Timberlane Regional School District - New Student Enrollment Process
    - source: https://www.timberlane.net/enrollment/student-enrollment/student-enrollment-process
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Timberlane Regional
    - note: Page text: "Multiage Early Childhood programs are offered at your neighborhood school (Atkinson Academy, Danville School, Pollard School, and Sandown Central) 5 days a week in either AM or PM sessions. ... Early Childhood Multiage Programming is $2,200 for the school year." NH DOE Oct 1 2026 preschool count: 135. Raw copy: raw/districts/batch-2/timberlane-enrollment-process.txt
 111. NH Department of Education counted 9 preschool children enrolled in the Unity School District's schools on October 1, 2026 (Unity Elementary School (9)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Unity
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found on https://www.sau109.org. NH DOE Oct 1 2026 preschool count: 9 (Unity Elementary School).
 112. NH Department of Education counted 19 preschool children enrolled in the Wakefield School District's schools on October 1, 2026 (Paul Elementary School (19)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Wakefield
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found on https://www.sau101.org. NH DOE Oct 1 2026 preschool count: 19 (Paul Elementary School).
 113. NH Department of Education counted 5 preschool children enrolled in the Warren School District's schools on October 1, 2026 (Warren Village School (5)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Warren
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found. NH DOE Oct 1 2026: 5 preschoolers at Warren Village School.
 114. The Washington School District offers an Early Learning Program, funded through Title I, for Washington resident children who will be 3 or 4 by September 30. For 2026-27 it accepted online applications for anticipated openings, with screenings in June and placement announced within two weeks. No tuition is posted.
    - citation: SAU #34 News, 'Washington Elementary School Kindergarten and Early Learning Group Registration' (posted March 26, 2026)
    - source: https://sau34.org/en-US
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Washington
    - note: Page text: "The program is available to children who will reach the age of 3 or 4 by September 30, 2026 and are a resident of Washington. Early Learning Program screenings will be scheduled for June and placement will be announced within two weeks from the screening date." 'funded through Title I' from the Washington FY2027 Proposed Budget book (raw washington-budget-book-fy27.txt). NH DOE Oct 1 2026 report shows no preschool enrollment for Washington. Raw copy: raw/districts/batch-6/sau34-home.txt
 115. NH Department of Education counted 35 preschool children enrolled in the Weare School District's schools on October 1, 2026 (Center Woods School (35)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Weare
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found. NH DOE Oct 1, 2026: 35 preschool students at Center Woods School (statewide source).
 116. NH Department of Education counted 28 preschool children enrolled in the White Mountains Regional School District's schools on October 1, 2026 (Lancaster Elementary School (16); Whitefield Elementary School (12)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district White Mountains Regional
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found. NH DOE Oct 1, 2026 preschool enrollment shows 28 students (Lancaster Elementary 16, Whitefield Elementary 12) - statewide source held by coordinator.
 117. The Wilton-Lyndeborough Cooperative School District has Pre-K at Lyndeborough Central School, which serves Pre-K and kindergarten (registration contact 603-732-9228). No tuition, schedule or eligibility details are posted.
    - citation: Welcome to SAU63 (2026), linked from https://www.sau63.org/for-parents/new-student-registration
    - source: https://resources.finalsite.net/images/v1792690101/sau63org/sxtjlfsspx8fh8ebsv49/2026WELCOMETOSAU63.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Wilton-Lyndeborough Cooperative
    - note: Page text: "Lyndeborough Central School 603-732-9228 X4481 or s.leblanc@sau63.org Pre-K – Kindergarten" NH DOE Oct 1 2026: 4 preschoolers at Lyndeborough Central School. Raw copy: raw/districts/batch-4/wlc-welcome-2026.txt
 118. NH Department of Education counted 33 preschool children enrolled in the Winchester School District's schools on October 1, 2026 (Winchester School (33)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Winchester
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No working district website found. NH DOE counted 33 preschool children in Winchester on Oct 1, 2026.
 119. The Windham School District runs an integrated Early Childhood Program (preschool) at Golden Brook School for typical learners and children with special learning needs. New children apply through a lottery and must turn three (or four) before September 30. For 2026-27, three-year-olds attend two mornings a week (8:50-11:30) and four-year-olds four mornings (8:50-11:30) or four afternoons (12:15-2:50); tuition is $150 a month for the 2-day session and $300 a month for the 4-day session.
    - citation: Windham School District - Preschool Information 2026-27
    - source: https://www.windhamsd.org/registration/student_registration/preschool_information_2026-27
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Windham
    - note: Page text: "Tuition: 2 Day Session - $150.00/month 4 Day Session: $300.00/ month" Page also links a separate '2026-27 Preschool Tuition' document (not opened). NH DOE Oct 1 2026: Golden Brook Elementary 60 preschoolers. Raw copy: raw/districts/batch-6/windham-preschool-2627.txt
 120. The Windsor School District operates no schools. Its budget book says the district provides public education from an Early Learning Program for 3- and 4-year-olds through grade 12, and Windsor children who are three or four by September 30 are eligible for the Hillsboro-Deering Elementary School integrated preschool lottery.
    - citation: SAU #34 News, '2026-2027 Hillsboro-Deering Elementary School Integrated Preschool Registration' (posted March 26, 2026)
    - source: https://sau34.org/en-US
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Windsor
    - note: Page text: "Children who reside in the towns of Hillsboro, Deering or Windsor and who will be three or four years of age on or before September 30, 2026 are eligible for the preschool lottery." Budget book quote (raw windsor-budget-book-fy27.txt): 'The Windsor School District provides a program of public education from an Early Learning Program for 3 and 4 year olds through grade 12.' Raw copy: raw/districts/batch-6/sau34-home.txt
 121. NH Department of Education counted 19 preschool children enrolled in the Winnisquam Regional School District's schools on October 1, 2026 (Winnisquam Early Learning Center (19)). The district's site does not describe the program, who may attend, or tuition.
    - citation: NH Department of Education, iPlatform "Preschool Enrollments", 2026-2027, as of October 1, 2026 (preliminary)
    - source: https://my.doe.nh.gov/iPlatform/Report/Report?path=%2FBDMQ%2FiPlatform%20Reports%2FEnrollment%20Data%2FEnrollments%20by%20Grade%2FPreschool%20Enrollments&name=Preschool%20Enrollments&categoryName=Enrollments%20by%20Grade&categoryId=10
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Winnisquam Regional
    - note: Statewide count only; raw copy raw/districts/statewide/nhdoe-preschool-enrollments-2027.xlsx. District site checked: No preschool page found on wrsdsau59.org (home, resources, registration pages; district site menus). NH DOE Oct 1 2026 report lists 'Winnisquam Early Learning Center' with 19 preschoolers, so a program exists but the district site describes none that was found.
 
