@@ -389,13 +389,13 @@ Strategy type 1 (local practices that each district sets and no state dataset re
    - review_by: 2027-11-08
    - place: district Barnstead
    - note: Page text: "School Hours K-8 For the 2026-2027 school year, the hours at Barnstead Elementary are 7:45 AM - 2:25 PM, Monday - Friday." The page gives hours for K-8 together and does not use the words 'full-day kindergarten'. Raw copy: raw/districts/batch-5/barnstead-bes-school-hours-and-bell-schedule.txt
-4. The Bedford School District offers full-day kindergarten; the superintendent's FY2027 budget summary (December 2025) refers to the implementation of full-day kindergarten in 2025-26. Kindergarten is taught at the district's three elementary schools (Memorial, Peter Woodbury and Riddle Brook), which serve kindergarten through grade 4.
+4. The Bedford School District offers full-day kindergarten, funded by voters on March 11, 2025 (2,516 to 2,502); the superintendent's FY2027 budget summary (December 2025) refers to the implementation of full-day kindergarten in 2025-26. Kindergarten is taught at the district's three elementary schools (Memorial, Peter Woodbury and Riddle Brook), which serve kindergarten through grade 4.
    - citation: Bedford School District, 12.01.25 Superintendent's Executive Summary FY27 (FY27 Budget Information for Website folder, linked from Business Services)
    - source: https://drive.google.com/file/d/1BstfNbxZKij42JDryLYQP-TZgriyyCVP/view
    - as_of: 2026-11-08
    - review_by: 2027-11-08
    - place: district Bedford
-   - note: Page text: "These enrollments are 56 students higher than our 9.03.24 projections. We believe this increase in students is due to the implementation of full day Kindergarten. ... All three schools educate Bedford students in grades Kindergarten through fourth grade." Memorial School's traffic procedures page (raw bedford-mem-traffic.txt) still describes morning and afternoon kindergarten sessions; it also places BEEP at Memorial, so it appears to predate 2026-27. A March 2025 news report (Union Leader via Yahoo) said voters approved full-day kindergarten funding 2,515-2,502; used only as a lead. Raw copy: raw/districts/batch-3/bedford-fy27-supt-summary.txt
+   - note: Page text: "These enrollments are 56 students higher than our 9.03.24 projections. We believe this increase in students is due to the implementation of full day Kindergarten. ... All three schools educate Bedford students in grades Kindergarten through fourth grade." Memorial School's traffic procedures page (raw bedford-mem-traffic.txt) still describes morning and afternoon kindergarten sessions; it also places BEEP at Memorial, so it appears to predate 2026-27. The official result of the March 11, 2025 vote (Article 02), in the district's 2025 annual report: "YES [check] 2516 NO 2502" (transcribed for the Bedford town research, November 16, 2026); a March 2025 news report (Union Leader via Yahoo) had given 2,515-2,502. Raw copies: raw/districts/batch-3/bedford-fy27-supt-summary.txt; raw/districts/batch-3/bedford-annual-report-2025-transcriptions.txt
 5. The Brookline School District offers full-day kindergarten at Richard Maghakian Memorial School for eligible children living in Brookline.
    - citation: Richard Maghakian Memorial School - Kindergarten Registration
    - source: https://www.sau41.org/fs/pages/2136
@@ -515,13 +515,13 @@ Strategy type 1 (local practices that each district sets and no state dataset re
    - review_by: 2027-11-08
    - place: district Hudson
    - note: Page text: "Full-day kindergarten is held at Library Street school ... Kindergarten - Library Street Building, 22 Library Street ... Hours 8:50 am to 3:05pm" Raw copy: raw/districts/batch-5/hudson-elc-home.txt; raw/districts/batch-5/hudson-elc-about.txt
-22. In the Keene School District, the Symonds School handbook (2025-26) says kindergarten students are dismissed at 2:35 PM; the school's hours are 8:00 AM to 2:40 PM. No district page found states 'full day' or 'half day' in words.
-   - citation: Symonds School Handbook (SAU 29 School Handbooks folder)
-   - source: https://docs.google.com/document/d/16dWArIceN0c9V36ycWNSohhtP6-O9LZWQH0cP-SfwJs/edit
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+22. In the Keene School District, all four elementary schools (Franklin, Fuller, Symonds and Wheelock) keep the same 8:00 AM to 2:40 PM day in 2026-27, and the Symonds handbook (2025-26) dismisses kindergarten students at 2:35 PM, so kindergarten runs a full school day; no district page states 'full day' or 'half day' in words.
+   - citation: SAU 29, 2026-2027 Schedule of School Hours; Symonds School Handbook (SAU 29 School Handbooks folder)
+   - source: https://docs.google.com/document/d/167LuBz8Rw_yCYioT9ImyVJn_jonySeMrwfKJ3F5So4M/edit
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Keene
-   - note: Page text: "Kindergarten students who are being picked up by a parent will be dismissed at 2:35 PM. ... School Hours 8:00 AM - 2:40 PM" Evidence of a full school day at one Keene school (Symonds) only; Franklin, Fuller and Wheelock handbooks (2026-27) did not state kindergarten hours. Coordinator may prefer to treat as 'not found' for an explicit full/half-day statement. Handbooks folder: https://drive.google.com/drive/folders/1AHbNBroFGq-Wt9MNsMAG3JXrvlhYFIP5 Raw copy: raw/districts/batch-4/keene-symonds-school-handbook.txt
+   - note: Page text: "Kindergarten students who are being picked up by a parent will be dismissed at 2:35 PM. ... School Hours 8:00 AM - 2:40 PM" SAU 29's 2026-27 schedule (read November 16, 2026 for the Keene town research): "Benjamin Franklin 8:00 AM 2:40 PM Fuller 8:00 AM 2:40 PM Symonds 8:00 AM 2:40 PM Wheelock 8:00 AM 2:40 PM". The Franklin, Fuller and Wheelock handbooks (2026-27) don't state kindergarten hours separately. Symonds handbook: https://docs.google.com/document/d/16dWArIceN0c9V36ycWNSohhtP6-O9LZWQH0cP-SfwJs/edit. Handbooks folder: https://drive.google.com/drive/folders/1AHbNBroFGq-Wt9MNsMAG3JXrvlhYFIP5 Raw copies: raw/districts/batch-4/keene-symonds-school-handbook.txt; raw/districts/batch-4/keene-sau29-school-hours-2026-27.txt
 23. The Londonderry School District offers full-day kindergarten starting in 2026-27, at its three neighborhood elementary schools (Matthew Thornton, North and South). Voters approved the full-day kindergarten article (Article 3) on March 10, 2026, 3,255 yes to 1,369 no. Before 2026-27, kindergarten was held at Moose Hill School.
    - citation: Town of Londonderry, 2026 Town & School Election Results (official, March 10, 2026); Londonderry School District, Full Day Kindergarten in Neighborhood Schools 2026
    - source: https://www.londonderrynh.gov/DocumentCenter/View/2480/2026-03-10-Town-School-Election-Results-Official-PDF
@@ -907,13 +907,13 @@ Strategy type 1 (local practices that each district sets and no state dataset re
    - review_by: 2027-11-08
    - place: district Hooksett
    - note: Page text: "A child entering kindergarten must be five years of age on or before September 30th." Grade one: six on or before September 30. No early-entrance provision in the policy text. Raw copy: raw/districts/batch-3/hooksett-jeb.txt
-41. In the Hudson School District, a child must be five years old on or before September 30 to attend kindergarten.
-   - citation: Hudson School District - Registration
+41. In the Hudson School District, a child must be five years old on or before September 30 to attend kindergarten; under policy JEB (updated February 16, 2026), parents may ask for early or delayed entrance with a waiver form by March 15, the child takes a screener in the spring, and the superintendent decides by May 15.
+   - citation: Hudson School District - Registration; Policy JEB, Age of Entrance (updated February 16, 2026)
    - source: https://www.sau81.org/families/registration
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Hudson
-   - note: Page text: "A child must be 5 years of age on or before September 30 to attend Kindergarten." A search snippet mentioned an early/delayed entrance waiver under Policy JEB with a March 15, 2026 deadline, but that text is no longer on the registration page; policy JEB itself not retrieved. Raw copy: raw/districts/batch-5/hudson-registration.txt
+   - note: Page text: "A child must be 5 years of age on or before September 30 to attend Kindergarten." Policy JEB (https://www.sau81.org/schoolboard/files/documents/Section%20J/JEB%20Age%20of%20Entrance.pdf, read November 16, 2026 for the Hudson town research): "1. March 15 - A parent or guardian submits the waiver request form by March 15, prior to the school year in question. All students applying for a waiver will need to take the appropriate grade-level screener in the spring"; decisions by May 15, appeals concluded by June 30, and a waiver placement is probationary for three months. Raw copies: raw/districts/batch-5/hudson-registration.txt; raw/districts/batch-5/hudson-policy-jeb.txt
 42. In the Inter-Lakes School District, a child is eligible for kindergarten if he or she will be at least five years old on or before September 30 of that year (Policy JEB/5111). Early admission can be considered for a child who will be five on or by October 31, after a written request to the Superintendent (preferably by mid-August) and district assessments in July and August.
    - citation: Inter-Lakes Policy JEB/5111 - Age of Entrance (Kindergarten), linked from https://www.interlakes.org/school-district-policies
    - source: https://www.interlakes.org/fs/resource-manager/view/c089dce8-e27d-45b3-9779-2d22f20466dc
@@ -1243,13 +1243,13 @@ Strategy type 1 (local practices that each district sets and no state dataset re
    - review_by: 2027-11-08
    - place: district Plainfield
    - note: Page text: "Children are eligible to begin Kindergarten if they are 5 years old before September 30th." Same text on https://sites.google.com/plainfieldschool.org/studentenrollment/home. Policy JEB not checked. Raw copy: raw/districts/batch-5/plainfield-registration-info.txt; raw/districts/batch-5/plainfield-enrollment.txt
-89. The Portsmouth School Department's kindergarten registration page for 2017-18 said a child had to be five years old on or before September 30 to register for kindergarten. No newer statement of the cutoff, and no posted entrance-age policy (JEB), was found on the district site.
-   - citation: Portsmouth School Department - Kindergarten Registration & Screening for the 2017-2018 School Year
-   - source: https://www.portsmouthnh.gov/node/3106
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+89. Portsmouth School Board policy JFAA (approved April 9, 2024) admits children to kindergarten if they will be 5 by September 30, the same cutoff the district's older kindergarten registration page gave for 2017-18.
+   - citation: Portsmouth School Board Policy JFAA, Admission (approved April 9, 2024)
+   - source: https://drive.google.com/file/d/1030mmEM4UHFdqX5VrI-_H4mDNojk4w6w/view
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Portsmouth
-   - note: Page text: "If your child will be 5 years old on or before September 30, 2017, they will be eligible to register for the 2017-2018 school year." Old page (2017-18), still online. The Section J policy list (https://www.cityofportsmouth.com/school-department/portsmouth-school-district-policies-section-j) has no JEB. A WebSearch summary mentioned a 2024-25 version of the page, but it was not opened, so not used. The PEEP 2026-27 flyer uses 'by September 30, 2026' for preschool age. Raw copy: raw/districts/batch-8/portsmouth-node3106.txt; raw/districts/batch-8/portsmouth-k-registration-pdf.txt
+   - note: Page text: "If your child will be 5 years old on or before September 30, 2017, they will be eligible to register for the 2017-2018 school year." Policy JFAA (read November 16, 2026 for the Portsmouth town research): "Students will be admitted into kindergarten if they will have attained the age of 5 by September 30." The 2017-18 page (https://www.portsmouthnh.gov/node/3106) is still online. The Section J policy list (https://www.cityofportsmouth.com/school-department/portsmouth-school-district-policies-section-j) has no JEB. A WebSearch summary mentioned a 2024-25 version of the page, but it was not opened, so not used. The PEEP 2026-27 flyer uses 'by September 30, 2026' for preschool age. Raw copies: raw/districts/batch-8/portsmouth-policy-jfaa.txt; raw/districts/batch-8/portsmouth-node3106.txt; raw/districts/batch-8/portsmouth-k-registration-pdf.txt
 90. In the Raymond School District, a child may enter kindergarten if they will be five before September 30 of the year of entry, and grade one if they will be six before September 30 (Policy JEB). Under Policy JEBA, a child whose fifth birthday falls between October 1 and December 1 may be allowed to enter kindergarten if skills and maturity strongly indicate readiness, as determined by the Superintendent or designee.
    - citation: Raymond School District Policy JEB - Entrance Age Requirements; Policy JEBA - Early Entrance into Kindergarten (adopted October 2, 2019)
    - source: https://www.sau33.com/school-board/school-board-policies/files/jeb-entrance-age-requirements
@@ -3294,13 +3294,13 @@ Strategy type 1 (local practices that each district sets and no state dataset re
    - review_by: 2027-11-08
    - place: district Gilmanton
    - note: Page text: "First Session of Annual Meeting (Deliberative Session) Date: Saturday, February 1, 2025 ... Second Session of Annual Meeting (Official Ballot Voting) Date: Tuesday, March 11, 2025 Time: 7:00 AM to 7:00 PM Location: Gilmanton Academy Building" Scanned PDF read from the Drive viewer image. On NHMA/DRA SB2 list. Older-year dates; 2026 warrant not found because the live sites require sign-in. Raw copy: raw/districts/batch-5/gilmanton-warrant-2025.pdf; raw/districts/batch-5/gilmanton-sau79-wayback-20260716.txt
-44. The Goffstown School District votes on its budget by official ballot: its 2026 school district election and ballot vote on warrant articles, including the operating budget, was held on March 10, 2026. The 2026 school deliberative session date was not found on the district's site.
-   - citation: Town of Goffstown - 2026 Sample Ballot, School District Officials and Articles
+44. The Goffstown School District votes on its budget by official ballot: its 2026 school district election and ballot vote on warrant articles, including the operating budget, was held on March 10, 2026, after the school deliberative session on Monday, February 2, 2026 at 7 p.m. in the Goffstown High School Theater.
+   - citation: Town of Goffstown - 2026 Sample Ballot, School District Officials and Articles; Public Notice - Town & School Deliberative Sessions 2026
    - source: https://goffstownnh.gov/DocumentCenter/View/5641/2026-Sample-Ballot---School-District-Officials-and-Articles-PDF
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district Goffstown
-   - note: Page text: "Official Ballot 2026 School District Election March 10, 2026 Goffstown, NH ... the amounts set forth on the budget posted with the warrant or as amended by vote of the first session" Ballot wording ('as amended by vote of the first session', default budget) is the SB2 form; the NHMA/DRA list also shows Goffstown as SB2. The town's own deliberative session was February 3, 2026 (town meeting guide), but no page found states the school district's 2026 deliberative session date; SAU 19 finance pages load documents by JavaScript and did not list it. Raw copy: raw/districts/batch-7/goffstown-2026-sample-ballot-school.txt
+   - note: Page text: "Official Ballot 2026 School District Election March 10, 2026 Goffstown, NH ... the amounts set forth on the budget posted with the warrant or as amended by vote of the first session" Ballot wording ('as amended by vote of the first session', default budget) is the SB2 form; the NHMA/DRA list also shows Goffstown as SB2. The town's public notice (https://goffstownnh.gov/DocumentCenter/View/5586/Public-Notice---Town--School-Deliberative-Sessions-2026-PDF, read for the Goffstown town research, November 16, 2026): "7:00 PM Monday, February 2, 2026 - School Deliberative Session ... Location: Goffstown High School Theater". The town's own deliberative session was February 3, 2026 (town meeting guide). Raw copies: raw/districts/batch-7/goffstown-2026-sample-ballot-school.txt; raw/districts/batch-7/goffstown-deliberative-sessions-notice-2026.txt
 45. The Gorham Randolph Shelburne Cooperative School District holds a traditional annual meeting for its budget and other business, with school officers elected by ballot in each town. In 2026 the business session was on March 5, 2026, at 6:30 p.m. at Gorham Middle High School (Alumni Gymnasium), and ballot voting for officers was on March 10, 2026, at the town halls (Gorham 10 a.m.-6 p.m.).
    - citation: 2024-2025 GRS Annual District Report (contains the 2026 warrant), GRS School Board site Annual Reports
    - source: https://drive.google.com/file/d/1-rLoSfOF-W9LMCbLCLk1djuD937M5pAV/view
@@ -3776,7 +3776,7 @@ Strategy type 1 (local practices that each district sets and no state dataset re
    - as_of: 2026-11-08
    - review_by: 2027-11-08
    - place: district Portsmouth
-   - note: Page text: "The following FY27 budget resolutions were adopted by the City Council on June 8, 2026." Line 'SCHOOL $71,637,655'; General Fund adopted 8-1. Portsmouth has a charter tax/budget cap (NHMA list). Raw copy: raw/districts/batch-8/portsmouth-fy27-adopted-budget.txt
+   - note: Page text: "The following FY27 budget resolutions were adopted by the City Council on June 8, 2026." Line 'SCHOOL $71,637,655'; General Fund adopted 8-1. Portsmouth's posted charter has no limit on growth in the budget or tax levy; its one limit on appropriations, Section 7.20, caps money put into reserve funds in a year at one quarter of 1% of the city's assessed value ("The City Council shall not raise and appropriate and or transfer from any of its unencumbered surplus funds in any one year for such reserves, a total amount in excess of one-quarter of one percent"). NHMA's 2025 list, citing NH DRA, counts Portsmouth among cities that control spending through charter limits without naming the provision; Section 7.20 is the likely reason. Checked for the Portsmouth town research, November 16, 2026. Raw copies: raw/districts/batch-8/portsmouth-fy27-adopted-budget.txt; raw/districts/batch-8/portsmouth-city-charter.txt; raw/districts/batch-8/portsmouth-nhma-municipal-tax-caps-2025.txt
 113. The Profile School District holds a traditional annual district meeting. In 2026 the annual election (polls 7:00-7:30 P.M.) and school district meeting were held on March 19, 2026, where voters of Bethlehem, Easton, Franconia and Sugar Hill acted on the budget by voice vote. A SAU 35 budget hearing was held November 5, 2026, and individual district budget hearings are planned for January and February 2027.
    - citation: Profile School District 2026 School District Meeting Minutes, March 19, 2026 (linked from Profile School's School Board Minutes page)
    - source: https://drive.google.com/file/d/17xieCb39xkTDmkLTIw0bM9CXzXBh5ZFR/preview
@@ -4449,13 +4449,13 @@ Strategy type 1 (local practices that each district sets and no state dataset re
    - review_by: 2027-11-08
    - place: district Nelson
    - note: Page text: "Nelson Elementary School, SAU 29, currently enrolls students in grades K-5 who reside in Nelson, NH and Sullivan, NH. Nelson students in grades 6-8 attend Keene Middle School ... Nelson students in grades 9-12 attend Keene High School" Raw copy: raw/districts/batch-4/keene-ksd-home.txt
-60. The New Boston School District runs New Boston Central School and pays tuition for its students at Goffstown's Mountain View Middle School and Goffstown High School under an AREA agreement with the Goffstown School District; the tuition is calculated with a formula in that agreement. The FY26 (2025-26) budget assumed 157 New Boston students at Mountain View and 338 at Goffstown High School.
-   - citation: 2025 New Boston School District Warrant Article Voters' Guide (FY26)
-   - source: https://www.sau19.org/attachments/article/751/NBSD%20-FINAL%20-Voters%20Guide%20FY%2026%20School%20Year%202-5-2025_247.pdf
-   - as_of: 2026-11-08
-   - review_by: 2027-11-08
+60. The New Boston School District runs New Boston Central School and pays tuition for its students at Goffstown's Mountain View Middle School and Goffstown High School under an AREA agreement with the Goffstown School District; the tuition is calculated with a formula in that agreement. The FY27 (2026-27) budget assumes 157 New Boston students at Mountain View at $18,357 each and 307 at Goffstown High School at $19,842 each (the FY26 budget assumed 157 and 338).
+   - citation: New Boston School District, FY27 Deliberative Session slides (February 3, 2026), slides 20–21; 2025 New Boston School District Warrant Article Voters' Guide (FY26)
+   - source: https://www.sau19.org/index.php/files/1178/2026-2027-School-Year/6719/FY27-NB-Deliberative-Session-PowerPoint-for-2-3-2026
+   - as_of: 2026-11-16
+   - review_by: 2027-11-16
    - place: district New Boston
-   - note: Page text: "The proposed operating budget also includes the cost of tuition for New Boston to send 157 students to Mountain View Middle School (the same as in FY 25 ) and 338 students to Goffstown High School (decrease of 1). The tuition payments to the Goffstown School District are calculated using a formula from the AREA Agreement ." SAU 19 posts the signed 'Final AREA Agreement (2024-2034) with Appendix A and B' at https://www.sau19.org/attachments/article/215/Final%20AREA%20Agreement%20%28%202024-2034%29%20%20with%20Appendix%20A%20and%20B%20%28Signed%29%20%204-18-2022.pdf (scanned; no text layer, raw goffstown-newboston-area-agreement-2024-2034.pdf). The guide names the schools, not the grade levels. Raw copy: raw/districts/batch-7/newboston-voters-guide-fy26.txt
+   - note: Page text: "The proposed operating budget also includes the cost of tuition for New Boston to send 157 students to Mountain View Middle School (the same as in FY 25 ) and 338 students to Goffstown High School (decrease of 1). The tuition payments to the Goffstown School District are calculated using a formula from the AREA Agreement ." SAU 19 posts the signed 'Final AREA Agreement (2024-2034) with Appendix A and B' at https://www.sau19.org/attachments/article/215/Final%20AREA%20Agreement%20%28%202024-2034%29%20%20with%20Appendix%20A%20and%20B%20%28Signed%29%20%204-18-2022.pdf (scanned; no text layer, raw goffstown-newboston-area-agreement-2024-2034.pdf). The guide names the schools, not the grade levels. FY27 slides (read for the Goffstown town research, November 16, 2026): Mountain View "0157157Total Students +$1,690$18,357$16,667Rate" and Goffstown High "-31307338Total Students +$2,357$19,842 $17,485 Rate" (columns: change, 2026-27 projected, 2025-26 budgeted). FY26 guide: https://www.sau19.org/attachments/article/751/NBSD%20-FINAL%20-Voters%20Guide%20FY%2026%20School%20Year%202-5-2025_247.pdf. Raw copies: raw/districts/batch-7/newboston-voters-guide-fy26.txt; raw/districts/batch-7/newboston-fy27-deliberative-session-slides.txt
 61. The New Castle School District runs Maude H. Trefethen School (K-5); its students in grades 6-8 attend either Portsmouth Middle School or Rye Junior High School. SAU 50 Policy JFAC says the SAU 50 districts pay the per diem tuition rate charged by the Portsmouth School District for resident high school students under their Authorized Regional Enrollment Area (AREA) agreement.
    - citation: SAU 50 Policy JFAC, Tuition for Resident High School Students; SAU 50 schools overview (https://www.sau50.org/pages/32bfca09-8390-4f0b-bc2d-c425b4ea9011)
    - source: https://www.sau50.org/pages/2d7687e0-b29d-4edb-be9c-3d8ade7f1ec8

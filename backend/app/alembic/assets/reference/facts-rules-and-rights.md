@@ -2017,7 +2017,7 @@
    - source: https://gc.nh.gov/rsa/html/XV/188-E/188-E-27.htm
    - as_of: 2026-11-08
    - review_by: 2027-08-15
-   - note: CCSNH's own page (fact 6) describes up to two tuition-free courses a year, subject to funding. How the two fit is unresolved; give both, attributed.
+   - note: CCSNH's own page (fact 6) describes up to two tuition-free courses a year, subject to funding. Lakes Region Community College's high school programs page (https://www.lrcc.edu/programs/high-school/, read November 16, 2026 for the Laconia town research) shows how the two fit: "Students are eligible for up to two tuition-free On Campus or Online classes each school year, subject to available funding" and "Students can take up to four tuition-free classes each year across all Early College modalities (High School, Online, and On Campus). If a student has already received four free classes, additional Early College at the High School classes cost $150." Raw copy: raw/programs/lrcc-high-school-programs-2026-11-16.txt
 
 4. Under New Hampshire law, the state pays CCSNH $150 per concurrent enrollment course, and half the regular course cost per dual enrollment course (which CCSNH accepts as full tuition), for students from public high schools, CTE centers and non-residential nonpublic high schools.
    - citation: RSA 188-E:27, III
