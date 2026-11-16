@@ -26,6 +26,7 @@ from app.service.internal.ask.data_tools import DataToolError
 from app.service.internal.ask.national_tools import NAEP_SOURCE, naep_results
 from app.service.internal.ask import reference_tools
 from app.service.internal.ask.reference_tools import look_up_reference, site, tool_definition
+from app.service.public.reference_service import FACTS_PER_PAGE, MAX_FACTS_PER_PAGE
 
 CONFIG = load_config(reference.CONFIG)
 
@@ -374,6 +375,22 @@ class ReferenceApiTests(unittest.TestCase):
         review = self.api.get(f"{self.url}/review", params={"within_days": 730}).json()
         self.assertTrue(review)
         self.assertEqual([r["review_by"] for r in review], sorted(r["review_by"] for r in review))
+
+    def test_a_topics_facts_come_a_page_at_a_time(self):
+        biggest = max(self.api.get(f"{self.url}/topic").json(), key=lambda t: t["current_facts"])
+        total = biggest["current_facts"]
+        self.assertGreater(total, FACTS_PER_PAGE)
+        url = f"{self.url}/topic/{biggest['slug']}"
+        first = self.api.get(url).json()
+        self.assertEqual((first["current_facts"], first["offset"], first["limit"], len(first["facts"])), (total, 0, FACTS_PER_PAGE, FACTS_PER_PAGE))
+        # The pages follow on, in load order, without repeating a fact
+        second = self.api.get(url, params={"offset": FACTS_PER_PAGE, "limit": 10}).json()
+        ids = [f["id"] for f in first["facts"] + second["facts"]]
+        self.assertEqual(ids, sorted(set(ids)))
+        self.assertEqual(len(second["facts"]), 10)
+        self.assertEqual(self.api.get(url, params={"offset": total}).json()["facts"], [])
+        for params in ({"limit": 0}, {"limit": MAX_FACTS_PER_PAGE + 1}, {"offset": -1}):
+            self.assertEqual(self.api.get(url, params=params).status_code, 422)
 
 
 if __name__ == "__main__":

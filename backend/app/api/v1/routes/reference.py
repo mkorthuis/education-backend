@@ -5,7 +5,7 @@ from fastapi import APIRouter, Query
 from app.api.v1.deps import SessionDep
 from app.core.cache import cache_response
 from app.schema.reference_schema import ReferenceReviewGet, ReferenceTopicDetailGet, ReferenceTopicGet
-from app.service.public.reference_service import reference_service
+from app.service.public.reference_service import FACTS_PER_PAGE, MAX_FACTS_PER_PAGE, reference_service
 
 router = APIRouter()
 
@@ -24,15 +24,17 @@ def get_topics(
 
 @router.get("/topic/{slug}",
     response_model=ReferenceTopicDetailGet,
-    summary="Get a reference topic and its facts",
-    description="A topic's facts that are within their review date, each with its citation, source link and the date it was checked. For district practices, district_id narrows the facts to one district.")
+    summary="Get a reference topic and a page of its facts",
+    description="A topic's facts that are within their review date, each with its citation, source link and the date it was checked, a page at a time in load order; current_facts counts them all. For district practices, district_id narrows the facts to one district.")
 @cache_response("reference_topic")
 def get_topic(
     slug: str,
     session: SessionDep,
     district_id: Optional[int] = Query(default=None, description="Only facts about this district, and those about no district"),
+    limit: int = Query(default=FACTS_PER_PAGE, ge=1, le=MAX_FACTS_PER_PAGE, description="Facts per page"),
+    offset: int = Query(default=0, ge=0, description="Facts to skip, for later pages"),
 ):
-    return reference_service.get_topic(session=session, slug=slug, district_id=district_id)
+    return reference_service.get_topic(session=session, slug=slug, district_id=district_id, limit=limit, offset=offset)
 
 
 @router.get("/review",

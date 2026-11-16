@@ -35,7 +35,9 @@ class ReferenceFactGet(BaseModel):
 
 
 class ReferenceTopicDetailGet(ReferenceTopicGet):
-    """A topic and its current facts (those within their review date)"""
+    """A topic and a page of its current facts (those within their review date); current_facts counts them all"""
+    offset: int
+    limit: int
     facts: List[ReferenceFactGet]
 
 
