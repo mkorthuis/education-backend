@@ -16,6 +16,7 @@ from typing import Callable, Dict, List, Optional
 from urllib.parse import urlparse
 
 from fastapi import HTTPException
+from sqlalchemy import text
 from sqlmodel import Session, select
 
 from app.etl.core import load_config
@@ -251,9 +252,11 @@ def find_places(session: Session, query: str) -> List[dict]:
     """
     Public districts, schools (public charter schools too) and towns whose name contains the query,
     best matches first. A district comes with where its students go for grades it doesn't run and
-    whose students it takes; a charter school belongs to no district, so it comes without one.
+    whose students it takes; a charter school belongs to no district, so it comes without one. When no
+    place's name has every word, a name the reference library's facts give (a career center, a program,
+    a private school) comes first, with the districts whose facts name it (_named_in_research).
     """
-    words = [word for word in query.lower().replace(",", " ").split() if word not in {"school", "district", "nh", "the", "of"}]
+    words = [word for word in query.lower().replace(",", " ").split() if word not in {"school", "schools", "district", "nh", "the", "of"}]
     if not words:
         raise DataToolError("Give part of a district, school or town name to search for.")
 
@@ -283,7 +286,52 @@ def find_places(session: Session, query: str) -> List[dict]:
         if score and (_field(school, "district_id_fk") in names or school.kind == "charter"):
             results.append((score, 2, _school_place(school)))
     results.sort(key=lambda item: (-item[0], item[1], item[2]["name"]))
-    return [item[2] for item in results[:20]]
+    found = [item[2] for item in results[:20]]
+    if not results or results[0][0] < len(words):
+        named = _named_in_research(session, query, names)
+        if named:
+            found.insert(0, named)
+    return found
+
+
+# The districts whose questions get each matching fact (reference_tools.related_places): a district's
+# own facts, its towns', its SAU's and those of the outside schools its students attend. Facts past
+# their review date aren't given, so they aren't counted.
+RESEARCH_DISTRICTS = """
+    WITH f AS (SELECT * FROM reference_fact WHERE search @@ {match} AND review_by >= CURRENT_DATE)
+    SELECT district_id, count(*) AS facts FROM (
+        SELECT f.district_id_fk AS district_id FROM f WHERE f.district_id_fk IS NOT NULL
+        UNION ALL
+        SELECT x.district_id_fk FROM f JOIN town_district_xref x ON x.town_id_fk = f.town_id_fk
+        UNION ALL
+        SELECT d.id FROM f JOIN district d ON d.sau_id_fk = f.sau_id_fk
+        UNION ALL
+        SELECT s.district_id_fk FROM f JOIN district_service s ON s.outside_school_id_fk = f.outside_school_id_fk
+    ) found GROUP BY district_id ORDER BY facts DESC, district_id"""
+MAX_RESEARCH_DISTRICTS = 5
+
+
+def _named_in_research(session: Session, query: str, names: Dict[int, str]) -> Optional[dict]:
+    """
+    A name the site's data doesn't have as a district, school or town but the reference library's facts
+    give, such as the Seacoast School of Technology (Exeter Region Cooperative) or Project DRIVE
+    (Milford), with the public districts whose facts name it, most facts first: the phrase, or failing
+    that every word. None when no fact names it.
+    """
+    for match in ("phraseto_tsquery('english', :q)", "plainto_tsquery('english', :q)"):
+        counts = session.execute(text(RESEARCH_DISTRICTS.format(match=match)), {"q": query}).all()
+        districts = [{"id": row.district_id, "name": names[row.district_id], "page": f"/district/{row.district_id}", "facts": row.facts}
+                     for row in counts if row.district_id in names]
+        if districts:
+            return {
+                "kind": "named_in_research",
+                "name": query.strip(),
+                "note": ("No district, school or town in the site's data has this whole name, but facts in the reference library give it. "
+                         "Call look_up_reference with a district's id (the first has the most facts naming it) and a query of the name; "
+                         "say which place the facts are about."),
+                "districts": districts[:MAX_RESEARCH_DISTRICTS],
+            }
+    return None
 
 
 def _district_place(session: Session, district_id: int, name: str) -> dict:

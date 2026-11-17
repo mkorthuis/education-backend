@@ -534,6 +534,22 @@ class AskTests(unittest.TestCase):
         self.assertTrue(any(school["name"] == "Concord High School" for school in schools))
         self.assertTrue(all(school["page"].startswith("/school/") for school in schools))
 
+    def test_find_places_gives_the_districts_whose_research_names_a_school_it_doesn_t_have(self):
+        from app.service.internal.ask.data_tools import find_places
+        # A regional career center isn't a school in the site's data, but Exeter's and Hampton's research name it
+        found = find_places(self.session, "Seacoast School of Technology")
+        named = found[0]
+        self.assertEqual((named["kind"], named["name"]), ("named_in_research", "Seacoast School of Technology"))
+        self.assertEqual(named["districts"][0]["id"], 172)  # Exeter Region Cooperative
+        self.assertIn(581, [district["id"] for district in named["districts"]])  # Winnacunnet Cooperative
+        self.assertTrue(all(district["page"] == f"/district/{district['id']}" and district["facts"] > 0 for district in named["districts"]))
+        # A program known only by its name in the research
+        self.assertEqual(find_places(self.session, "Project DRIVE")[0]["districts"][0]["id"], 357)  # Milford
+        # Not for a place the site has, or a name no fact gives
+        self.assertNotIn("named_in_research", [place["kind"] for place in find_places(self.session, "Exeter")])
+        self.assertNotIn("named_in_research", [place["kind"] for place in find_places(self.session, "Hampton schools")])
+        self.assertNotIn("named_in_research", [place["kind"] for place in find_places(self.session, "Zxqv Academy")])
+
     def test_charter_schools_are_found_and_ranked_without_a_district(self):
         from app.service.internal.ask.data_tools import find_places, rank_schools
         found = find_places(self.session, "Virtual Learning Academy")
