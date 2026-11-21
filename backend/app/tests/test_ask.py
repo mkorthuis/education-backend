@@ -540,8 +540,11 @@ class AskTests(unittest.TestCase):
         found = find_places(self.session, "Seacoast School of Technology")
         named = found[0]
         self.assertEqual((named["kind"], named["name"]), ("named_in_research", "Seacoast School of Technology"))
-        self.assertEqual(named["districts"][0]["id"], 172)  # Exeter Region Cooperative
-        self.assertIn(581, [district["id"] for district in named["districts"]])  # Winnacunnet Cooperative
+        # Exeter Region Cooperative (SST's own district) leads with the sending districts, such as Winnacunnet
+        # Cooperative and Raymond; their order follows how many facts each town's research has
+        ids = [district["id"] for district in named["districts"]]
+        self.assertIn(172, ids[:2])
+        self.assertTrue({581, 453} <= set(ids), ids)
         self.assertTrue(all(district["page"] == f"/district/{district['id']}" and district["facts"] > 0 for district in named["districts"]))
         # A program known only by its name in the research
         self.assertEqual(find_places(self.session, "Project DRIVE")[0]["districts"][0]["id"], 357)  # Milford

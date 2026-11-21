@@ -11,6 +11,8 @@ The file passes the backend's parser (`tools/check_town.sh winnacunnet`), and al
 
 **For a member town's research:** read this file first. Then add only that town's own terms: its board seat, its share of the cost, its students' counts and its K–8 school. Winnacunnet's budget, warrant and cost shares by town are in Hampton's `money-and-governance.md` (placed `district Winnacunnet Cooperative`). SST's own programs, schedule and enrollment by sending school are in Exeter's `cms-sst-and-getting-to-school.md`. In 2026-27 SST counts 79 Winnacunnet students (table `sst_enrollment_by_sending_school`).
 
+**Added by the Seabrook research (November 21, 2026):** `../Seabrook/winnacunnet-and-sst-for-seabrook.md` holds 41 more Winnacunnet facts, placed `district Winnacunnet Cooperative`: bus routes and times from Seabrook, the late bus and SST bus, the conduct and bullying rules, the trimester schedule, Early College, the Evening Program, class rank, Seabrook-only scholarships and Sea to Summit. Read it with this file.
+
 **Still not retrieved:**
 - **The school profile PDF:** AP results, the college list and SST counts. winnacunnet.org refuses automated requests, and Chrome's PDF viewer can't be read.
 - **The SAU 21 board portal (Simbli):** minutes and policy texts, behind a bot check.

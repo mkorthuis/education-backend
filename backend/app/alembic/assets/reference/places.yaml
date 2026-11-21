@@ -324,7 +324,7 @@ district_service:
     starts: 2023-07-01
     ends: 2028-06-30
     source: https://hooksetthighschoolinfo.sau15.net/wp-content/uploads/sites/12/2023/07/SIGNED-Bow.pdf
-    note: MOU under RSA 193:3, IV; families petition; up to 10 students per grade; Hooksett pays Pinkerton's rate
+    note: MOU under RSA 193:3, IV; families petition; up to 10 students per grade; base tuition equals Dunbarton's AREA rate; Hooksett pays the contribution its board sets (Pinkerton's rate) and Bow may bill parents the rest
   - district: Hooksett
     receiving_district: Goffstown
     grades: [9, 12]
@@ -332,7 +332,7 @@ district_service:
     starts: 2023-07-01
     ends: 2028-06-30
     source: https://hooksetthighschoolinfo.sau15.net/wp-content/uploads/sites/12/2023/07/SIGNED-Goffstown-2023-2028.pdf
-    note: MOU under RSA 193:3, IV; families petition; Hooksett pays Pinkerton's rate
+    note: MOU under RSA 193:3, IV; families petition; base tuition similar to New Boston's AREA rate; Hooksett pays the contribution its board sets (Pinkerton's rate) and Goffstown may bill parents the rest; no busing
   - district: Hooksett
     receiving_district: Londonderry
     grades: [9, 12]
@@ -348,7 +348,7 @@ district_service:
     starts: 2023-07-01
     ends: 2028-06-30
     source: https://hooksetthighschoolinfo.sau15.net/wp-content/uploads/sites/12/2023/07/Pembroke-SIGNED.pdf
-    note: Pembroke Academy; MOU under RSA 193:3, IV; families petition; up to 20 students per grade; Hooksett pays Pinkerton's rate
+    note: Pembroke Academy; MOU under RSA 193:3, IV; families petition; up to 20 students per grade; Pembroke's own rate; Hooksett pays the contribution its board sets (Pinkerton's rate) and Pembroke may bill parents the rest
   # ---- SAU 16 ----
   - district: Brentwood
     receiving_district: Exeter Region Cooperative
@@ -1023,7 +1023,7 @@ district_service:
     starts: 2025-07-01
     ends: 2033-06-30
     source: https://drive.google.com/file/d/1rac3oxfs_3JDdSXWfnYDenNlCr-qaeVN/view
-    note: Up to 200 students in 2025-26, admitted by lottery; continues year to year after 2033, with four years' notice to end it; State Board approved April 10, 2025
+    note: Up to 55 Barrington 9th graders a year (68 from 2028-29) and 200 students in all (rising to 260 by 2032-33), by lottery when over the cap; Barrington pays for at least 95% of a 125-student minimum; continues year to year after 2033, with four years' notice to end it; State Board approved April 10, 2025
   - district: Barrington
     receiving_district: Coe-Brown Northwood Academy
     grades: [9, 12]
@@ -1316,7 +1316,7 @@ district_service:
     grades: [1, 12]
     arrangement: choice
     source: https://croydonsd.org/document/student-tuitioning-policy/
-    note: Approved alternative school; Croydon pays up to the Kearsarge rate ($17,000 for grades 1-8, $18,000 for 9-12 in 2026-27). Croydon's site says Claremont guarantees admission
+    note: Approved alternative school; Croydon pays up to the Kearsarge rate ($17,000 for grades 1-8, $18,000 for 9-12 in 2026-27). Croydon's site says Claremont guarantees admission; Claremont's superintendent said in November 2026 that Croydon appeared to have breached its agreement by making Kearsarge its anchor school
   - district: Croydon
     receiving_district: Lebanon
     grades: [1, 12]
@@ -1353,7 +1353,7 @@ district_service:
     grades: [9, 12]
     arrangement: tuition_contract
     source: https://www.education.nh.gov/sites/g/files/ehbemt326/files/inline-documents/sonh/nh-sboe-mtg-minutes-final-6-8-2023.pdf
-    note: Tuition agreement approved by the State Board June 8, 2023; one of five high schools Cornish families choose from; Cornish pays up to $23,000 (2026-27)
+    note: Tuition agreement approved by the State Board June 8, 2023; one of five high schools Cornish families choose from; Cornish pays up to $23,000 (2026-27). Claremont's superintendent wrote in November 2026 that every tuition agreement he found had expired in June 2026 or been breached, and new ones were being sent
   - district: Cornish
     receiving_district: Dresden
     grades: [9, 12]
@@ -1494,7 +1494,7 @@ district_service:
     grades: [9, 12]
     arrangement: tuition_contract
     source: https://drive.google.com/file/d/1S5xa2DslVnlNIZwFvAXpYt5AT_bOj2WV/view
-    note: Stevens High School; a 2-year contract that the board says is up in SY27 and needs renegotiating. Unity's tuition policy names an anchor high school of record and lets families choose others
+    note: Stevens High School; a 2-year contract that the board says is up in SY27 and needs renegotiating. Unity's tuition policy names an anchor high school of record and lets families choose others. Claremont's superintendent reported in November 2026 that Unity's agreement expired in June 2026 ($16,000 tuition) and that new agreements were being sent; Unity left SAU 6 on July 1, 2026
   - district: Unity
     receiving_district: Fall Mountain Regional
     grades: [9, 12]
