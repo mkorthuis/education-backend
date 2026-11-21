@@ -252,9 +252,11 @@ def find_places(session: Session, query: str) -> List[dict]:
     """
     Public districts, schools (public charter schools too) and towns whose name contains the query,
     best matches first. A district comes with where its students go for grades it doesn't run and
-    whose students it takes; a charter school belongs to no district, so it comes without one. When no
-    place's name has every word, a name the reference library's facts give (a career center, a program,
-    a private school) comes first, with the districts whose facts name it (_named_in_research).
+    whose students it takes; a charter school belongs to no district, so it comes without one. A private
+    school or charter school board whose name has every word and that the reference library has facts
+    about comes after them (_reference_places). When no place's name has every word, a name the library's
+    facts give (a career center, a program) comes first, with the districts whose facts name it
+    (_named_in_research).
     """
     words = [word for word in query.lower().replace(",", " ").split() if word not in {"school", "schools", "district", "nh", "the", "of"}]
     if not words:
@@ -285,13 +287,62 @@ def find_places(session: Session, query: str) -> List[dict]:
         score = max(matches(school.name), matches(school.city or ""))
         if score and (_field(school, "district_id_fk") in names or school.kind == "charter"):
             results.append((score, 2, _school_place(school)))
+    others = _reference_places(session)
+    for ident, (name, kind, topics) in others.items():
+        if matches(name) == len(words):
+            results.append((len(words), 3, _reference_place(ident, name, kind, topics)))
     results.sort(key=lambda item: (-item[0], item[1], item[2]["name"]))
     found = [item[2] for item in results[:20]]
     if not results or results[0][0] < len(words):
-        named = _named_in_research(session, query, names)
+        named = _named_in_research(session, query, names, others)
         if named:
             found.insert(0, named)
     return found
+
+
+# How find_places describes a place that isn't a public district, by its district row's kind
+REFERENCE_PLACE_TYPES = {
+    "charter": "the board of a public charter school, which runs the school instead of a school district",
+    "private": "a private school or organization",
+}
+
+
+def _reference_places(session: Session) -> Dict[int, tuple]:
+    """
+    The district rows that aren't public school districts (charter school boards, private schools, the
+    Diocese of Manchester) but that the reference library has facts about, by id, with the topics that
+    hold their facts, most facts first: {740: ("Next Charter School", "charter", ["district-transportation"])},
+    loaded once a request. look_up_reference takes their ids, so their facts on local topics reach the Ask.
+    """
+    def load():
+        rows = session.execute(text("""
+            SELECT d.id, d.name, d.kind, t.slug, count(*) AS facts
+            FROM district d JOIN reference_fact f ON f.district_id_fk = d.id JOIN reference_topic t ON t.id = f.reference_topic_id_fk
+            WHERE NOT d.is_public AND f.review_by >= CURRENT_DATE
+            GROUP BY d.id, d.name, d.kind, t.slug ORDER BY d.id, facts DESC, t.slug""")).all()
+        found: Dict[int, tuple] = {}
+        for row in rows:
+            found.setdefault(row.id, (row.name, row.kind, []))[2].append(row.slug)
+        return found
+
+    return _once(session, "reference_places", load)
+
+
+def _reference_place(ident: int, name: str, kind: str, topics: List[str]) -> dict:
+    """A charter school board or private school as find_places gives it: no page and no data, only facts,
+    and the topics that hold them"""
+    return {
+        "kind": "reference_place",
+        "id": ident,
+        "name": name,
+        "type": REFERENCE_PLACE_TYPES.get(kind, kind),
+        "topics": topics[:MAX_REFERENCE_TOPICS],
+        "note": ("Not a public school district: the site has no data or page for it, but the reference library has facts about it, "
+                 "under these topics. Call look_up_reference with this id as district_id and the topics that fit the question."),
+    }
+
+
+MAX_REFERENCE_TOPICS = 8
 
 
 # The districts whose questions get each matching fact (reference_tools.related_places): a district's
@@ -311,17 +362,23 @@ RESEARCH_DISTRICTS = """
 MAX_RESEARCH_DISTRICTS = 5
 
 
-def _named_in_research(session: Session, query: str, names: Dict[int, str]) -> Optional[dict]:
+def _named_in_research(session: Session, query: str, names: Dict[int, str], others: Dict[int, tuple]) -> Optional[dict]:
     """
     A name the site's data doesn't have as a district, school or town but the reference library's facts
     give, such as the Seacoast School of Technology (Exeter Region Cooperative) or Project DRIVE
-    (Milford), with the public districts whose facts name it, most facts first: the phrase, or failing
-    that every word. None when no fact names it.
+    (Milford), with the districts whose facts name it, most facts first: the phrase, or failing that
+    every word. Public districts come with their page; charter school boards and private schools
+    (others, from _reference_places) with what they are. None when no fact names it.
     """
     for match in ("phraseto_tsquery('english', :q)", "plainto_tsquery('english', :q)"):
         counts = session.execute(text(RESEARCH_DISTRICTS.format(match=match)), {"q": query}).all()
-        districts = [{"id": row.district_id, "name": names[row.district_id], "page": f"/district/{row.district_id}", "facts": row.facts}
-                     for row in counts if row.district_id in names]
+        districts = []
+        for row in counts:
+            if row.district_id in names:
+                districts.append({"id": row.district_id, "name": names[row.district_id], "page": f"/district/{row.district_id}", "facts": row.facts})
+            elif row.district_id in others:
+                name, kind, _topics = others[row.district_id]
+                districts.append({"id": row.district_id, "name": name, "type": REFERENCE_PLACE_TYPES.get(kind, kind), "facts": row.facts})
         if districts:
             return {
                 "kind": "named_in_research",

@@ -550,6 +550,35 @@ class AskTests(unittest.TestCase):
         self.assertNotIn("named_in_research", [place["kind"] for place in find_places(self.session, "Hampton schools")])
         self.assertNotIn("named_in_research", [place["kind"] for place in find_places(self.session, "Zxqv Academy")])
 
+    def test_find_places_gives_private_schools_and_charter_boards_the_research_has_facts_about(self):
+        from app.service.internal.ask.data_tools import find_places
+        from app.service.internal.ask.reference_tools import look_up_reference
+        # A private school's facts are under its own district row, which isn't a public district
+        woods = next(place for place in find_places(self.session, "Windham Woods School") if place["kind"] == "reference_place")
+        self.assertEqual((woods["id"], woods["name"]), (1138, "Windham Woods School"))
+        self.assertNotIn("page", woods)
+        self.assertTrue(woods["type"].startswith("a private school"))
+        # With the topics that hold its facts, so Claude knows where to look
+        self.assertIn("town-school-options-nearby", woods["topics"])
+        topics = look_up_reference(self.session, ["town-school-options-nearby"], woods["id"])["topics"]
+        self.assertTrue(any("54,500" in fact["statement"] for fact in topics[0]["facts"]), topics[0]["facts"])
+        # A charter school comes as a school, for its figures, and its board as a reference place, for its facts
+        found = find_places(self.session, "Academy for Science and Design")
+        self.assertIn("school", [place["kind"] for place in found])
+        board = next(place for place in found if place["kind"] == "reference_place")
+        self.assertEqual(board["id"], 725)
+        self.assertTrue(board["type"].startswith("the board of a public charter school"))
+        topics = look_up_reference(self.session, ["district-school-day-and-calendar"], board["id"])["topics"]
+        self.assertTrue(any("8:15" in fact["statement"] for fact in topics[0]["facts"]), topics[0]["facts"])
+        # Only names with every word, after the public places
+        kinds = [place["kind"] for place in find_places(self.session, "Windham")]
+        self.assertEqual((kinds[0], kinds[-1]), ("district", "reference_place"))
+        self.assertNotIn("reference_place", [place["kind"] for place in find_places(self.session, "Windham Middle")])
+        # Claude reads them without a page, and an answer can't link one
+        lookup = reply("tool_use", tool_use("t1", "find_places", {"query": "Windham Woods School"}))
+        answer, client = self.run_with([lookup, plain("Windham Woods School is a private school.")], "What is Windham Woods School?")
+        self.assertIn("reference_place", client.requests[1]["messages"][-1]["content"][0]["content"])
+
     def test_charter_schools_are_found_and_ranked_without_a_district(self):
         from app.service.internal.ask.data_tools import find_places, rank_schools
         found = find_places(self.session, "Virtual Learning Academy")

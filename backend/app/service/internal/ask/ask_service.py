@@ -69,7 +69,7 @@ SYSTEM_PROMPT = f"""You answer questions from visitors to NH Education Facts (nh
 
 How to answer:
 - Use only figures from your tools. Look up any named district, school or town with find_places first, then call get_data for each topic and place you need. Never estimate, recall or invent a number; if the tools don't have it, say plainly that the site doesn't have that data and point to the closest page that helps.
-- A school, program or center that isn't a place in the site's data (a regional career center, an alternative program, a private school, a local name for a building) may still be in the reference library. find_places gives it as named_in_research with the districts whose facts name it: call look_up_reference with the first district's id, the topics that fit and a query of the name. When a question names a district and a school or program find_places doesn't know, look in that district's facts the same way before saying the site has no record of it.
+- A school, program or center that isn't a place in the site's data (a regional career center, an alternative program, a private school, a local name for a building) may still be in the reference library. find_places gives a private school or a charter school's board that the library has facts about as reference_place: it has no data or page, but look_up_reference with its id as district_id gives its facts (hours, buses, tuition, admission). A charter school's figures (get_data) stay under the charter school's own id. A name with no place of its own comes as named_in_research with the districts whose facts name it: call look_up_reference with the first district's id, the topics that fit and a query of the name. When a question names a district and a school or program find_places doesn't know, look in that district's facts the same way before saying the site has no record of it.
 - A town usually has one school district with the same name; when a town belongs to more than one (or to a cooperative district), say which district you used.
 - Where students go: many districts run only some grades, or none, and send their students elsewhere for the rest. find_places gives a district's arrangements for the grades it doesn't run (students_attend: the New Hampshire district or out-of-state school, the grades, the arrangement, a note, and the first and last school years where known), and the districts whose students it takes (takes_students_from). The arrangements: a tuition contract between districts; an AREA agreement, under which the receiving district educates the sending district's students in those grades; a cooperative district, which runs those grades for its member districts; families' choice, with the district paying tuition at the school a family picks, often up to a set amount; tuition paid without a written contract; an interstate school district, shared with Vermont towns; and a joint maintenance agreement, under which districts run a school together. One marked upcoming hasn't started: say the school year it starts. The test scores and graduation of the schools students attend are the receiving district's, by its district_id. Cite each arrangement the answer relies on by its id ("a…"). For tuition amounts, buses and how families apply, beyond the notes, call look_up_reference.
 - Public charter schools are public schools run by their own boards rather than a school district. find_places and rank_schools include them, and get_data has their test scores, graduation, enrollment and safety as schools; the site has no spending, staff or EFA figures for them. A charter school belongs to no district, so never describe one as part of the district of the town it's in. For their rules (admission, cost, transportation), call look_up_reference.
@@ -108,7 +108,7 @@ How to answer:
 TOOLS = [
     {
         "name": "find_places",
-        "description": "Find New Hampshire public school districts, schools (public charter schools too) and towns by name. Returns ids for get_data and each place's page on the site. Towns list the districts that serve them; districts list where their students go for grades they don't run, and whose students they take. A name that isn't a place in the site's data but that its reference facts give (a career center, a program, a private school) comes first as named_in_research, with the districts whose facts name it.",
+        "description": "Find New Hampshire public school districts, schools (public charter schools too) and towns by name. Returns ids for get_data and each place's page on the site. Towns list the districts that serve them; districts list where their students go for grades they don't run, and whose students they take. Private schools and charter school boards that the reference library has facts about come as reference_place, with an id for look_up_reference and no data. A name that isn't a place in the site's data but that its reference facts give (a career center, a program) comes first as named_in_research, with the districts whose facts name it.",
         "strict": True,
         "input_schema": {
             "type": "object",
@@ -493,8 +493,10 @@ class DatasetRegistry:
         for place in places:
             if place.get("page"):
                 self.pages.setdefault(place["page"], place["name"])
+            # A charter school board or private school has no page (data_tools._reference_place)
             for district in place.get("districts", []):
-                self.pages.setdefault(district["page"], district["name"])
+                if district.get("page"):
+                    self.pages.setdefault(district["page"], district["name"])
             # A school whose page a question came from names its district (page_place)
             if place.get("district"):
                 self.pages.setdefault(f"/district/{place['district_id']}", place["district"])

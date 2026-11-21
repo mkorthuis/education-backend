@@ -66,7 +66,7 @@ def tool_definition() -> dict:
             "Cited facts from this site's reference library on New Hampshire schools: what state and federal law require and "
             "what families can do (rule), what terms and the site's measures mean (term), how schools are run and paid for "
             "(how_it_works), what research says works (research), programs and where to get help (programs), and each "
-            "district's own practices (local; give the district's id from find_places). A district's facts come with those of "
+            "district's own practices (local; give the district's id from find_places, or a reference_place's id for a private school or charter school board). A district's facts come with those of "
             "its towns, its SAU and the schools its students attend for grades it doesn't run, including schools in other "
             "states, then those of the districts that send it students, such as a cooperative's member districts; each fact "
             "says which place it's about. A topic gives at most "
@@ -80,7 +80,7 @@ def tool_definition() -> dict:
             "type": "object",
             "properties": {
                 "topics": {"type": "array", "items": {"type": "string", "enum": [slug for slug, _, _ in topics]}},
-                "district_id": {"type": ["integer", "null"], "description": "For local topics: the district's id from find_places; otherwise null"},
+                "district_id": {"type": ["integer", "null"], "description": "For local topics: the district's id from find_places, or a reference_place's id (a private school or charter school board); otherwise null"},
                 "query": {"type": ["string", "null"], "description": "Optional: a few words to rank a topic's facts by, such as \"late bus\""},
             },
             "required": ["topics", "district_id"],
