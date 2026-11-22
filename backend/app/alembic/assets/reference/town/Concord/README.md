@@ -163,3 +163,10 @@ Added from pages read in Chrome or linked from them: the new Deerfield–Concord
 - Not found anywhere: Concord High's AP exam results; Concord's own Seal of Biliteracy process; remedial math placement by high school; translated project documents beyond the 2023 hearing invitations; air-quality monitoring of the construction; a deferred maintenance total; staff counts by race; teacher turnover; front-office training on custody orders; vacation-week meals; the tax year 2026 rate.
 
 The shared web search limit ran out early in most agents' work, so news coverage was searched little.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 16 saved bus and transportation copies (159 in all; schools, child care centers, businesses and other public places keep theirs).
+- 4 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- Graduates' names removed from 3 saved annual report copies; 3 PDFs deleted.

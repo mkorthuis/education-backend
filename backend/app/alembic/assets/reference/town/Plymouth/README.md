@@ -81,3 +81,9 @@ The agents' blocked pages were:
 - NH DOE's enrollment report.
 
 None is essential to the answers.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 4 saved bus and transportation copies (5 in all; schools, child care centers, businesses and other public places keep theirs).
+- The state's resident birth, marriage and death lists removed from 1 saved town report copy (headings and record counts kept); 1 report PDF deleted.

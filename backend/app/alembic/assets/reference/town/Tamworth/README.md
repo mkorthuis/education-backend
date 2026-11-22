@@ -115,3 +115,9 @@ Reviewed with the other towns' proposals on November 13, 2026 and added to `../s
 - Late-bus drop points and the Moultonborough route sheet (folder link returns 404).
 - The March 2026 annual meeting results, the October 7, 2026 tuition presentation and the Governor Wentworth contract terms.
 - Recreation and camp fees; NH Works Conway office (refused access).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 4 saved bus and transportation copies (22 in all; schools, child care centers, businesses and other public places keep theirs).
+- 5 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

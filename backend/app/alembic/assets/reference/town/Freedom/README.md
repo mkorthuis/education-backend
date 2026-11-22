@@ -107,3 +107,10 @@ Noted, not changed: Freedom's 2026-27 handbook names a McKinney-Vento liaison wh
 - Fire and EMS response times (the 2024 town report's chart is unreadable).
 - The town's 2022 hazard mitigation and emergency operations plans.
 - State birth records.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 10 saved bus and transportation copies (84 in all; schools, child care centers, businesses and other public places keep theirs).
+- 7 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- The state's resident birth, marriage and death lists removed from 10 saved town report copies (headings and record counts kept); 6 report PDFs deleted.

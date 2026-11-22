@@ -6,7 +6,7 @@ Gathered November 21, 2026, in the third wave of the ToLoad towns. Hollis is in 
 - **The Hollis School District** runs Hollis Primary School (preschool to grade 3) and Hollis Upper Elementary School (grades 4–6).
 - **The Hollis-Brookline Cooperative** runs Hollis-Brookline Middle School (grades 7–8) and High School (grades 9–12).
 
-Both districts decide their budgets at annual meetings. Brookline has no research of its own; facts about the cooperative are placed `district Hollis-Brookline Cooperative` and serve both towns.
+Both districts decide their budgets at annual meetings. Facts about the cooperative are placed `district Hollis-Brookline Cooperative` and serve both towns. Brookline's own research is in `../Brookline/` and cites these files.
 
 ## Files
 
@@ -71,9 +71,6 @@ Both districts decide their budgets at annual meetings. Brookline has no researc
 - **`questions.md`:** its intro said both districts vote by official ballot; corrected.
 - **Hudson and Merrimack:** their counts of Hollis-Brookline students at Palmer and its programs are consistent with this research.
 
-## Site data issue
-
-Hollis-Brookline Middle School's class size in the site's data is 191.00 for 2023 and 184.50 for 2024 and 2025, against 14–21 in other years. These look like enrollment counts. Logged as item 10 in `../recommended-improvements.md` (A8).
 
 ## Browser pass (November 21, 2026)
 
@@ -88,3 +85,9 @@ SAU 41's policy book and minutes load only by script.
   - Hollis Recreation's program list;
   - NH DRA's 2026 tax rates;
   - NH DOT road miles (HTTP 403).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 11 saved bus and transportation copies (383 in all; schools, child care centers, businesses and other public places keep theirs).
+- 5 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

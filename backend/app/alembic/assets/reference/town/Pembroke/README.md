@@ -76,9 +76,6 @@ The district decides its budget at a traditional annual meeting.
 - **Allenstown fact 2 and Epsom fact 28** said the Academy arrangement "may be an AREA agreement; not confirmed." Allenstown's and Chichester's 2026 articles call Pembroke Academy their AREA high school.
 - **The coverage table** still marks Pembroke's kindergarten day as not found; it's here now.
 
-## Site data issue
-
-The site's Question 2 row for Pembroke has election night's 2,104 to 1,224. The recount gives 2,114 to 1,231, still adopted. Logged as item 11 in `../recommended-improvements.md` (A8).
 
 ## Browser pass
 
@@ -88,3 +85,12 @@ The agents' blocked pages were:
 - the home education form (SharePoint sign-in).
 
 None is essential to the answers.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 4 saved bus and transportation copies (290 in all; schools, child care centers, businesses and other public places keep theirs).
+- 2 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- House numbers of home stops removed from quotes in the research files.
+- The state's resident birth, marriage and death lists removed from 1 saved town report copy (headings and record counts kept); 1 report PDF deleted.
+- Graduates' names removed from 1 saved annual report copy.

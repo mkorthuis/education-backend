@@ -140,14 +140,14 @@ Answered wholly by earlier files: none of the 12.
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Hollis
-   - note: Transcribed from image (the PDF is a scan with no text layer). Lines: "3:31 PM Howe Ln & Shipley Dr. (Turn around Only)" (Elem 1 PM); "7:45 AM Chapman Lane Turnaround" (Elem 6 AM); "7:51 AM Northfield Drive (NOT A STOP)" and "7:58 AM Pine Hill & (paved) Nartoff Rd" (Elem 9 AM). The sheets don't explain the notes; "NOT A STOP" appears to mark a road the bus passes through. Linked from https://www.sau41.org/resources/bussing. Raw: raw/support/hollis-elementary-bus-routes-2026-27.pdf; raw/support/bus-routes-2026-27-transcription.txt
-14. SAU 41's 2026-27 Hollis cooperative bus route sheets, for Hollis-Brookline Middle and High School, list a stop at "Nartoff Rd (dirt) & PINE HILL RD" and mark "129 Farley Rd (Turnaround Only)" and "13 Parker Ln (Not a Stop)," and their afternoon routes end at Hollis Primary School between 3:01 and 3:17 p.m.
+   - note: Transcribed from image (the PDF is a scan with no text layer). Lines: "3:31 PM Howe Ln & Shipley Dr. (Turn around Only)" (Elem 1 PM); "7:45 AM Chapman Lane Turnaround" (Elem 6 AM); "7:51 AM Northfield Drive (NOT A STOP)" and "7:58 AM Pine Hill & (paved) Nartoff Rd" (Elem 9 AM). The sheets don't explain the notes; "NOT A STOP" appears to mark a road the bus passes through. Linked from https://www.sau41.org/resources/bussing. Raw: raw/support/bus-routes-2026-27-transcription.txt
+14. SAU 41's 2026-27 Hollis cooperative bus route sheets, for Hollis-Brookline Middle and High School, list a stop at "Nartoff Rd (dirt) & PINE HILL RD" and mark "Farley Rd (Turnaround Only)" and "Parker Ln (Not a Stop)," and their afternoon routes end at Hollis Primary School between 3:01 and 3:17 p.m.
    - citation: SAU 41, Hollis COOP bus routes 2026-27 (HollisCOOPBusRoutes.pdf, scanned August 21, 2026), routes Hollis Coop 1, 4 and 10
    - source: https://www.sau41.org/fs/resource-manager/view/4afbfe33-17fe-48a5-86ca-4fdcd5e0289f
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Hollis-Brookline Cooperative
-   - note: Transcribed from image. Lines: "6:42 AM Nartoff Rd (dirt) & PINE HILL RD" (Coop 1 AM); "3:09 PM 13 Parker Ln (Not a Stop)" (Coop 4 PM); "6:47 AM 129 Farley Rd (Turnaround Only)" (Coop 10 AM). Pages 1–5 and 7 were read (routes 1–7, 9 and 10); page 6 (route 8) was not. Raw: raw/support/hollis-coop-bus-routes-2026-27.pdf; raw/support/bus-routes-2026-27-transcription.txt
+   - note: Transcribed from image. Lines: "6:42 AM Nartoff Rd (dirt) & PINE HILL RD" (Coop 1 AM); "3:09 PM Parker Ln (Not a Stop)" (Coop 4 PM); "6:47 AM Farley Rd (Turnaround Only)" (Coop 10 AM). Pages 1–5 and 7 were read (routes 1–7, 9 and 10); page 6 (route 8) was not. Raw: raw/support/bus-routes-2026-27-transcription.txt
 15. The Hollis-Brookline Cooperative's policy EEA says Hollis and Brookline residents who attend a New Hampshire charter school and are enrolled in a career and technical education program may be bused between the charter school and the program, or to or from home if all parties agree.
    - citation: Hollis Brookline Cooperative School Board Policy EEA, Student Transportation Services, paragraph E
    - source: https://sau41.community.highbond.com/document/10153
@@ -189,7 +189,7 @@ Answered wholly by earlier files: none of the 12.
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Hollis-Brookline Cooperative
-   - note: **Derived** by reading the first "Bus Barn" line of each route transcribed from image: cooperative routes 1–7, 9 and 10 (for example "6:34 AM Bus Barn" on Coop 3, "6:35 AM Bus Barn" and "6:38 AM 7 Pine Hill Rd" on Coop 1, "6:45 AM Bus Barn" on Coop 9) and elementary routes 1–8 and 10 ("7:26 AM Bus Barn" on Elem 8, "7:39 AM Bus Barn" on Elem 4; Elem 9 starts at a stop). So a closing decision has to be made before the first buses leave at about 6:35 a.m. Elementary source: https://www.sau41.org/fs/resource-manager/view/4c1b971e-0891-4db9-9d58-7706e181ba9f. Raw: raw/support/bus-routes-2026-27-transcription.txt
+   - note: **Derived** by reading the first "Bus Barn" line of each route transcribed from image: cooperative routes 1–7, 9 and 10 (for example "6:34 AM Bus Barn" on Coop 3, "6:35 AM Bus Barn" and "6:38 AM Pine Hill Rd" on Coop 1, "6:45 AM Bus Barn" on Coop 9) and elementary routes 1–8 and 10 ("7:26 AM Bus Barn" on Elem 8, "7:39 AM Bus Barn" on Elem 4; Elem 9 starts at a stop). So a closing decision has to be made before the first buses leave at about 6:35 a.m. Elementary source: https://www.sau41.org/fs/resource-manager/view/4c1b971e-0891-4db9-9d58-7706e181ba9f. Raw: raw/support/bus-routes-2026-27-transcription.txt
 21. SAU 41's 2022–2027 transportation contract bases its rates on a 178-day school year and lets the district reschedule school days, open late or close early with little notice because of weather or other emergencies, paying the bus company for any added days.
    - citation: Transportation Contract, July 1, 2022 – June 30, 2027, section 4
    - source: https://www.sau41.org/fs/resource-manager/view/b14ea1cd-ff62-44a1-a860-289e7e486e31
@@ -705,7 +705,7 @@ Answered wholly by earlier files: none of the 12.
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: town Hollis
-   - note: **Derived** by matching the scenic list against the route sheets transcribed from image (cooperative route 8 not read): Farley, Federal Hill, Flagg (as "RIDGE RD & FLAGG RD"), Hardy (as "WHEELER RD & HARDY LN"), Hayden, Nevins, North Pepperell, Parker, Plain, Richardson, Rideout, Ridge, Rocky Pond, South Merrimack, Van Dyke, Wheeler, Worcester and Wright. The sources don't say whether scenic status has affected any bus route. Raw: raw/support/hollis-scenic-roads-list.txt; raw/support/hollis-elementary-bus-routes-2026-27.pdf; raw/support/hollis-coop-bus-routes-2026-27.pdf
+   - note: **Derived** by matching the scenic list against the route sheets transcribed from image (cooperative route 8 not read): Farley, Federal Hill, Flagg (as "RIDGE RD & FLAGG RD"), Hardy (as "WHEELER RD & HARDY LN"), Hayden, Nevins, North Pepperell, Parker, Plain, Richardson, Rideout, Ridge, Rocky Pond, South Merrimack, Van Dyke, Wheeler, Worcester and Wright. The sources don't say whether scenic status has affected any bus route. Raw: raw/support/hollis-scenic-roads-list.txt; raw/support/bus-routes-2026-27-transcription.txt
 4. Hollis Public Works, which maintains town roads, is at 10 Muzzey Road, takes requests through an online service request form monitored Monday–Thursday 7:30 a.m.–3 p.m. and Friday until noon, sends emergencies to the Communications Center at 603-465-2303, and keeps winter sand for residents at the Lawrence Barn lot and the transfer station.
    - citation: Town of Hollis, Public Works
    - source: https://www.hollisnh.org/1259/Public-Works

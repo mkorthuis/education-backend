@@ -73,9 +73,6 @@ None needed. The library's career-center CSV matches the Hartford center's guide
 - **`early-college-at-your-high-school` 5 and `dual-enrollment-rules` 7** (two free Early College courses a year) differ from Lebanon High's page on what families pay.
 - **NH DOE's 2024-25 foster care contact list** (in Rochester's raw files) names a Lebanon contact no longer on the Student Services page.
 
-## Site data issue
-
-The site's class size for Lebanon Middle School in 2024 is 114.5, against 15–24 in every other year. Logged as item 12 in `../recommended-improvements.md` (A8).
 
 ## Browser pass
 
@@ -87,3 +84,9 @@ The agents' blocked pages were:
 - the city charter site.
 
 None is essential to the answers.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 13 saved bus and transportation copies (201 in all; schools, child care centers, businesses and other public places keep theirs).
+- 1 original route sheet (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

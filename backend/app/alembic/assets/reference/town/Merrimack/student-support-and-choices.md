@@ -590,7 +590,7 @@ Questions answered wholly by earlier files: none. Several draw on library rule t
    - as_of: 2026-11-15
    - review_by: 2027-11-15
    - place: district Merrimack
-   - note: Searched the five route PDFs' text for "Gate City," "Henry Clay," "charter" and "academy": no matches. Sheets read like "ROUTE: 24 JMUES - AM 1 7:46 55A Baboosic Lk Rd". The sources don't say how Gate City riders are served (for example, by a transfer stop or a separate run) or how many ride. Bus questions go to Student Transportation of America dispatch at 603-424-7880 (transportation page). Raw: raw/support/routes/routes-mhs-mms.txt; routes-jmues.txt; routes-mes.txt; routes-rfs.txt; routes-tfs.txt; raw/support/sau26-departments-transportation.txt
+   - note: Searched the five route PDFs' text for "Gate City," "Henry Clay," "charter" and "academy": no matches. Sheets read like "ROUTE: 24 JMUES - AM 1 7:46 Baboosic Lk Rd". The sources don't say how Gate City riders are served (for example, by a transfer stop or a separate run) or how many ride. Bus questions go to Student Transportation of America dispatch at 603-424-7880 (transportation page). Raw: raw/support/routes/routes-mhs-mms.txt; routes-jmues.txt; routes-mes.txt; routes-rfs.txt; routes-tfs.txt; raw/support/sau26-departments-transportation.txt
 3. Merrimack's appendix IHBG-R says home-educated, charter and private school students who come to a district school for a class are generally not given transportation to and from school unless the principal makes an exception, and policy JFAB gives no district transportation to non-resident or tuition students.
    - citation: Merrimack School Board Appendix IHBG-R, A.3; Policy JFAB
    - source: https://drive.google.com/file/d/1mJqbyXgbxzFgq1964e4bcH-8sY96q8vO/view

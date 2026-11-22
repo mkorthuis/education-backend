@@ -83,3 +83,10 @@ The agents' blocked pages were:
 - DRA's 2026 tax rates.
 
 None is essential to the answers.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 26 saved bus and transportation copies (273 in all; schools, child care centers, businesses and other public places keep theirs).
+- 22 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- Graduates' names removed from 1 saved annual report copy; 1 PDF deleted.

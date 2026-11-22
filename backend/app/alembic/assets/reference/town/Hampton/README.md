@@ -94,3 +94,8 @@ None needed. Hart's Location's elderly exemption minimums and Portsmouth's and D
   - YMCA rates (HTTP 429).
   - NH DES's tide-gauge page.
   - DRA's 2026 split of the school rate between the two districts.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- The state's resident birth, marriage and death lists removed from 1 saved town report copy (headings and record counts kept).

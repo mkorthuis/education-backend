@@ -11,7 +11,7 @@ Dates: `as_of` is the day you check a page, `review_by` is one year later for lo
 - **Atkinson** is a town in Rockingham County on the Massachusetts line (Haverhill), along Routes 111 and 121, with Big Island Pond and the Atkinson Resort & Country Club. Site town id 27.
 - **The Timberlane Regional School District** (site district id 534) is a cooperative of four towns: Atkinson, Danville, Plaistow and Sandown. The site's data put it in **SAU 106**; residents still call it SAU 55, and Hampstead is SAU 55 in the site's data. Check whether and when Timberlane became its own SAU (premise).
 - **Its schools** (site school ids):
-  - Atkinson Academy (22740): preschool to grade 5 in Atkinson; 364 students in 2025-26.
+  - Atkinson Academy (22740): preschool to grade 5 in Atkinson; 364 students in 2024-25 (the site labels it 2025).
   - Pollard Elementary (22765, Plaistow): preschool to grade 5; 434 students.
   - Danville Elementary (22745); Sandown Central (22775, preschool and K) and Sandown North (27910, grades 1–5).
   - Timberlane Regional Middle School (22760): grades 6–8, in Plaistow; 723 students.

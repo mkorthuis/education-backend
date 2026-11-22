@@ -68,7 +68,7 @@ This file covers Amherst Middle School (AMS, grades 5–8) and the choices aroun
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Amherst
-   - note: Transcribed from image (the PDF is scanned; 32 sheets, one AM and one PM sheet per route). Sheet titles "AMS/SHS 4 AM" through "AMS/SHS 16 PM" and "AMS/SHS MV 1 AM" through "AMS/SHS MV 3 PM"; route 4 AM ends "8:21 AM MIDDLE SCHOOL HIGH SCHOOL LOOP". The sheets list stops, not riders by grade. "MV" is not spelled out on the sheets; its first stops ("7 Wilton Road", "N MAIN ST & WILTON RD") suggest Mont Vernon. Raw: raw/middle/sau39/ams-shs-bus-routes-2026-27-9-21-26.pdf; raw/middle/sau39/ams-shs-bus-routes-2026-27-transcribed.txt
+   - note: Transcribed from image (the PDF is scanned; 32 sheets, one AM and one PM sheet per route). Sheet titles "AMS/SHS 4 AM" through "AMS/SHS 16 PM" and "AMS/SHS MV 1 AM" through "AMS/SHS MV 3 PM"; route 4 AM ends "8:21 AM MIDDLE SCHOOL HIGH SCHOOL LOOP". The sheets list stops, not riders by grade. "MV" is not spelled out on the sheets; its first stops ("7 Wilton Road", "N MAIN ST & WILTON RD") suggest Mont Vernon. Raw: raw/middle/sau39/ams-shs-bus-routes-2026-27-transcribed.txt
 2. Amherst Middle School's 2026-27 handbook says the school day runs from 8:30 a.m. to 3:24 p.m. and that bus riders are dropped off at the Souhegan High School bus loop and walk to the middle school; SAU 39's 2026-27 afternoon route sheets list their first stop, the middle school/high school loop, at times from 3:20 to 3:43 p.m.
    - citation: Amherst Middle School Student Handbook 2026-2027, "Arrival"; SAU 39 AMS/SHS 2026-2027 bus routes (9.21.26)
    - source: https://docs.google.com/document/d/17xFWVCZZvl-35_gMBqz_noTJLafa9Ddif9KHDgZBkLc

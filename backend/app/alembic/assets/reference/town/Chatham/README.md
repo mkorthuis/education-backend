@@ -132,3 +132,9 @@ Reviewed with the other towns' proposals on November 13, 2026 and added to `../s
 - MSAD 72's gifted plan and its pre-K terms for non-residents.
 - Who pays a tuition student's AP exams, lab fees and college-course charges at Fryeburg Academy.
 - Chatham town reports after 2015, and the DRA 2026 tax rate.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 10 saved bus and transportation copies (357 in all; schools, child care centers, businesses and other public places keep theirs).
+- 1 original route sheet (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

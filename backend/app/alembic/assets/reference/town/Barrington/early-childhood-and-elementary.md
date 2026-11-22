@@ -250,7 +250,7 @@ This file covers the Early Childhood Learning Center (ECLC: the integrated presc
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Barrington
-   - note: **Derived** from the 18 AM and PM sheets. Example (Brown AM): "8:05 AM 18 Calef Hwy (SSW) ... 8:13 AM Barrington Elementary School / 570 CALEF HWY ... 8:30 AM Early Childhood Learning Center". Blue sheet footer "10.16.26"; the Drive folder shows every sheet modified October 16. Afternoon buses stop at the ECLC (2:50–3:10 p.m.) before BES on seven routes. See table barrington_bes_eclc_bus_routes_2026_27. Raw: raw/elementary/bus-routes-2026-27/*.pdf (.txt)
+   - note: **Derived** from the 18 AM and PM sheets. Example (Brown AM): "8:05 AM Calef Hwy (SSW) ... 8:13 AM Barrington Elementary School / 570 CALEF HWY ... 8:30 AM Early Childhood Learning Center". Blue sheet footer "10.16.26"; the Drive folder shows every sheet modified October 16. Afternoon buses stop at the ECLC (2:50–3:10 p.m.) before BES on seven routes. See table barrington_bes_eclc_bus_routes_2026_27. Raw: raw/elementary/bus-routes-2026-27/*.pdf (.txt)
 
 3. Barrington's 2026-27 BES and ECLC buses stop at many individual homes: 178 of the 283 morning stops on the nine route sheets are listed at a street address rather than at an intersection (**derived**).
    - citation: Barrington School District, BES and ECLC Bus Routes 2026/2027
@@ -258,7 +258,7 @@ This file covers the Early Childhood Learning Center (ECLC: the integrated presc
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Barrington
-   - note: **Derived:** counted the AM stops on each sheet (school stops excluded) and those whose stop name begins with a house number, e.g. "7:50 AM 80 Brewster Rd" versus "7:49 AM BREWSTER RD & FORD DR (NNW)". Counts by route are in table barrington_bes_eclc_bus_routes_2026_27. Raw: raw/elementary/bus-routes-2026-27/*.txt
+   - note: **Derived:** counted the AM stops on each sheet (school stops excluded) and those whose stop name begins with a house number, e.g. "7:50 AM Brewster Rd" versus "7:49 AM BREWSTER RD & FORD DR (NNW)". Counts by route are in table barrington_bes_eclc_bus_routes_2026_27. Raw: raw/elementary/bus-routes-2026-27/*.txt
 
 4. Barrington Elementary sits on Calef Highway, which is Route 125, and three of the nine 2026-27 BES and ECLC routes (Brown, Green and Purple) have nine morning stops on Calef Highway, some at street addresses and some at intersections such as Calef Highway and Chapman Drive or Signature Drive (**derived**).
    - citation: BES Directions and Hours page; Barrington School District, BES and ECLC Bus Routes 2026/2027 (Brown, Green, Purple)
@@ -266,7 +266,7 @@ This file covers the Early Childhood Learning Center (ECLC: the integrated presc
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Barrington
-   - note: Hours page: "570 Calef Highway (formerly 347 Route 125)". Route text: "8:06 AM CALEF HWY & CHAPMAN DR (NNE)" (Brown), "7:27 AM CALEF HWY & (N) / 970 Calef Hwy" (Green), "7:40 AM CALEF HWY & SIGNATURE DR (S)" (Purple); six of the nine are at a street address (house numbers not repeated). **Derived** by searching the sheets for "Calef Hwy" or "Calef Highway". Raw: raw/elementary/bes-hours.txt; raw/elementary/bus-routes-2026-27/brown.txt, green.txt, purple.txt
+   - note: Hours page: "570 Calef Highway (formerly 347 Route 125)". Route text: "8:06 AM CALEF HWY & CHAPMAN DR (NNE)" (Brown), "7:27 AM CALEF HWY & (N) / Calef Hwy" (Green), "7:40 AM CALEF HWY & SIGNATURE DR (S)" (Purple); six of the nine are at a street address (house numbers not repeated). **Derived** by searching the sheets for "Calef Hwy" or "Calef Highway". Raw: raw/elementary/bes-hours.txt; raw/elementary/bus-routes-2026-27/brown.txt, green.txt, purple.txt
 
 5. Barrington's transportation policy EEA has the bus contractor set routes, schedules and stops to keep riding time low and balanced, says "priority in distance to stops will be given to younger children," and lets parents send a request to change any bus route or stop, or for an exemption from a transportation policy, to the Transportation Liaison, who is the superintendent or a designee.
    - citation: SAU 74 Barrington School District Policy EEA, Student Transportation Services (adopted August 19, 2025), sections 1–2

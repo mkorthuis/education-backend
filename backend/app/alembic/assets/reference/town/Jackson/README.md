@@ -147,3 +147,8 @@ Not loaded yet, on purpose: more towns come first. What's still to do before loa
   - U.S. News pages;
   - NHIAA 2026 ski results;
   - the JBES handbook (access denied).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 6 saved bus and transportation copies (23 in all; schools, child care centers, businesses and other public places keep theirs).

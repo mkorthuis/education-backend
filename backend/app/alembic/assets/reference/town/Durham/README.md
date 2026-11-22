@@ -7,7 +7,7 @@ Gathered November 21, 2026, in the second wave of the ToLoad towns. Durham's stu
 - Mast Way (in Lee) and Moharimet (in Madbury), K–4;
 - Oyster River Middle (5–8) and Oyster River High (9–12), both in Durham.
 
-Facts about the cooperative are placed `district Oyster River Coop` and serve all three towns; Lee and Madbury have no research of their own yet.
+Facts about the cooperative are placed `district Oyster River Coop` and serve all three towns; Lee's research is in `../Lee/` and cites these files; Madbury has none of its own yet.
 
 ## Files
 
@@ -83,3 +83,10 @@ The agents' blocked pages were:
 - the middle school's solar monitor (a script page).
 
 The first three are PDFs or refuse automated requests, and the monitor needs a browser. None is essential.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 14 saved bus and transportation copies (14 in all; schools, child care centers, businesses and other public places keep theirs).
+- Students' names removed from the January 21, 2026 board minutes (art award winners.
+- Both PDFs deleted) and from a program of studies cover credit.

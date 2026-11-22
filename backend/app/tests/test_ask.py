@@ -585,7 +585,7 @@ class AskTests(unittest.TestCase):
     def test_charter_schools_are_found_and_ranked_without_a_district(self):
         from app.service.internal.ask.data_tools import find_places, rank_schools
         found = find_places(self.session, "Virtual Learning Academy")
-        vlacs = [place for place in found if place["name"].startswith("Virtual Learning Academy")]
+        vlacs = [place for place in found if place["kind"] == "school" and place["name"].startswith("Virtual Learning Academy")]
         self.assertEqual(len(vlacs), 2, found)
         self.assertTrue(all("district_id" not in place and place["type"].startswith("public charter school") for place in vlacs), vlacs)
         # Ranked with the other schools statewide, though not in a district's ranking

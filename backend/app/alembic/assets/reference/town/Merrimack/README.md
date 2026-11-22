@@ -133,3 +133,9 @@ Niche's page, read in Chrome, confirms Merrimack High's C+ and gives its categor
 - **Blocked to automated requests (for the browser pass):** Niche (the C+ rating), NH DOE (2025-26 enrollment by grade, the state's school security grant list), SNHU's high school course prices.
 - **Couldn't open:** the December 1 and 8, 2025 board minutes (the elementary budget sessions); Gate City's website.
 - **Not found anywhere:** 2026-27 class sizes, aides in K–2 classrooms, minutes of specials and screen time, MEEP and child care prices, grade 8 Algebra I credit and placement, JMUES clubs, how the phone rule is enforced, CTE acceptance counts, bus on-time data, Thorntons Ferry's own security, staff and principal turnover, booster dues, a building condition report, Bedford's and Amherst's 2026 tax rates, any district breakdown of how EFAs affect its state aid.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 14 saved bus and transportation copies (1,232 in all; schools, child care centers, businesses and other public places keep theirs).
+- 5 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

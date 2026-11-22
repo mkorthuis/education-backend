@@ -164,7 +164,7 @@ Questions answered wholly by earlier files: none. P11.2 leans on the library's W
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Weare
-   - note: **Derived** from the sheets' highlighted (active) rows; see table weare_cwes_am_bus_routes_2026_27. The sheets don't give a Center Woods arrival time, so a full ride is a few minutes longer than the span. Examples: Red "7:29 183 Pine Hill Rd" (first active) to "8:15 139 Center Rd"; Blue "7:12 44 Quaker St" to "8:04 86 Reservoir Dr"; Green "7:47 Rolling Hill Dr at Eastman Way" to "8:11 81 Gould Rd". Raw: raw/elementary/cwes-bus-routes-2026-27.pdf; raw/elementary/derived-cwes-bus-route-rows-2026-27.csv
+   - note: **Derived** from the sheets' highlighted (active) rows; see table weare_cwes_am_bus_routes_2026_27. The sheets don't give a Center Woods arrival time, so a full ride is a few minutes longer than the span. Examples: Red "7:29 Pine Hill Rd" (first active) to "8:15 Center Rd"; Blue "7:12 Quaker St" to "8:04 Reservoir Dr"; Green "7:47 Rolling Hill Dr at Eastman Way" to "8:11 Gould Rd". Raw: raw/elementary/cwes-bus-routes-2026-27.txt; raw/elementary/derived-cwes-bus-route-rows-2026-27.csv
 5. Center Woods' Blue morning route in 2026-27 is combined with John Stark's Bus 3: the bus picks up both elementary and high school students, drops at John Stark, then goes on to Center Woods, and in the afternoon it leaves John Stark at 3:05 p.m. and Center Woods at 3:10.
    - citation: SAU 24, 2026-2027 CWES Bus Routes (September update), Blue route; 2026-2027 JSRHS Bus Routes
    - source: https://www.sau24.org/about/files/documents/Bus%20Routes/2026-2027%20CWES%20Routes%20September%20Update.pdf
@@ -178,7 +178,7 @@ Questions answered wholly by earlier files: none. P11.2 leans on the library's W
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Weare
-   - note: **Derived** from the highlighted rows; see table weare_wms_am_bus_routes_2026_27. Examples: Route 2 "6:33 678 North Stark Hwy (Sizemore Motors)" ... "7:10 Drop off at Weare Middle School"; Route 5 "Left into Weare Middle School, drop @ 7:15"; Bus 10 "6:47 Old Francestown Rd at Lull Rd". Raw: raw/elementary/wms-bus-routes-2026-27.pdf; raw/elementary/derived-wms-bus-route-rows-2026-27.csv
+   - note: **Derived** from the highlighted rows; see table weare_wms_am_bus_routes_2026_27. Examples: Route 2 "6:33 678 North Stark Hwy (Sizemore Motors)" ... "7:10 Drop off at Weare Middle School"; Route 5 "Left into Weare Middle School, drop @ 7:15"; Bus 10 "6:47 Old Francestown Rd at Lull Rd". Raw: raw/elementary/wms-bus-routes-2026-27.txt; raw/elementary/derived-wms-bus-route-rows-2026-27.csv
 7. Weare's 2026-27 route sheets call Concord Stage Road "Rte 77" (and one route labels Dustin Tavern Road "Rt 77"); Center Woods' Red route runs along Concord Stage Road from its first active stop at 7:29 a.m., stops twice on Fox Hollow Drive (8:03 and 8:04), and picks up at the corners where Al's Drive (7:48) and Dunbar Road (7:50) meet South Sugar Hill Road; NHDOT lists Fox Hollow Drive, Al's Drive and Dunbar Road as unpaved town roads (derived match).
    - citation: SAU 24, 2026-2027 CWES and WMS Bus Routes (September update); NH Department of Transportation, Paved and Unpaved Roads map service, layer "Unpaved Roads" (Weare)
    - source: https://www.sau24.org/about/files/documents/Bus%20Routes/2026-2027%20CWES%20Routes%20September%20Update.pdf
@@ -729,7 +729,7 @@ Questions answered wholly by earlier files: none. P11.2 leans on the library's W
 - period: 2026-27 route sheets, September update (sheets dated 9/16/26–9/18/26); year: 2027
 - source: SAU 24, 2026-2027 CWES Bus Routes (September Update) — https://www.sau24.org/about/files/documents/Bus%20Routes/2026-2027%20CWES%20Routes%20September%20Update.pdf
 - as_of: 2026-11-21
-- raw: raw/elementary/cwes-bus-routes-2026-27.pdf; raw/elementary/derived-cwes-bus-route-rows-2026-27.csv; raw/elementary/nhdot-unpaved-roads-weare.json
+- raw: raw/elementary/cwes-bus-routes-2026-27.txt; raw/elementary/derived-cwes-bus-route-rows-2026-27.csv; raw/elementary/nhdot-unpaved-roads-weare.json
 - topic: district-transportation
 - place: district Weare
 - note: **Derived.** Value = minutes from the route's first active (highlighted) timed stop to its last active timed stop. The sheets give no Center Woods arrival time, so a ride from the first stop is a few minutes longer; drop-off at school is 8:15–8:30 and school starts at 8:30. Active stops were read from the sheets' yellow highlighting; times are "approximate". "Stops on or at unpaved town roads" lists active stops on, or at the corner of, a road NHDOT shows as an unpaved class V road; roads marked * are partly paved, so the stop may be on pavement. Afternoon times aren't published. See facts 4–7 of district-transportation.
@@ -737,7 +737,7 @@ Questions answered wholly by earlier files: none. P11.2 leans on the library's W
 | Place | Route | Value | Bus starts | First active stop | Last active stop | Active timed stops | Stops on or at unpaved town roads |
 |---|---|---|---|---|---|---|---|
 | Weare (district 555) | Red (old 1 & 2) | 46 | Leaves WMS 7:20 | 7:29, 183 Pine Hill Rd | 8:15, 139 Center Rd | 26 | S. Sugar Hill Rd at Al's Dr 7:48; S. Sugar Hill Rd at Dunbar Rd 7:50; Fox Hollow Dr 8:03 and 8:04; Center Rd at Center Brook Ln 8:13 |
-| Weare (district 555) | Blue (combined with John Stark Bus 3) | 52 | Leaves WMS 7:10 | 7:12, 44 Quaker St | 8:04, 86 Reservoir Dr | 30 | Quaker St* 7:12, 7:19; Abijah Bridge Rd* 7:33, 7:41; Shady Hill Rd at Tobey Hill Rd 7:40; Dudley Brook Rd 7:48, 7:49; Craney Hill Rd at Winslow Rd 8:01 |
+| Weare (district 555) | Blue (combined with John Stark Bus 3) | 52 | Leaves WMS 7:10 | 7:12, Quaker St | 8:04, Reservoir Dr | 30 | Quaker St* 7:12, 7:19; Abijah Bridge Rd* 7:33, 7:41; Shady Hill Rd at Tobey Hill Rd 7:40; Dudley Brook Rd 7:48, 7:49; Craney Hill Rd at Winslow Rd 8:01 |
 | Weare (district 555) | Orange | 35 | Leaves terminal 7:30 | 7:32, 99 Buzzell Hill Rd | 8:07, 85 East Rd | 20 | Buzzell Hill Rd 7:32–7:34; Barnard Hill Rd* 7:42; Bart Clough Rd* 7:43; River Rd at Chuck St* 7:48; East Rd* 8:06, 8:07 |
 | Weare (district 555) | Yellow | 33 | Leaves WMS 7:25 | 7:29, Maplewold Rd at Orchard Path Rd | 8:02, 447 Dustin Tavern Rd | 22 | Maplewold Rd* 7:29; Old Francestown Rd* 7:33, 7:52; Peacock Hill Rd corner 7:37; Mountain Rd* 7:40–7:41; Dustin Tavern Rd at Ridgeview Rd 8:00 |
 | Weare (district 555) | Green | 24 | Leaves terminal 7:37 | 7:47, Rolling Hill Dr at Eastman Way | 8:11, 81 Gould Rd | 15 | Old Town Rd 8:07–8:09 |
@@ -749,23 +749,23 @@ Questions answered wholly by earlier files: none. P11.2 leans on the library's W
 - period: 2026-27 route sheets, September update (sheets dated 9/17/26); year: 2027
 - source: SAU 24, 2026-2027 WMS Bus Routes (September Update) — https://www.sau24.org/about/files/documents/Bus%20Routes/2026-2027%20WMS%20Routes%20September%20Update.pdf
 - as_of: 2026-11-21
-- raw: raw/elementary/wms-bus-routes-2026-27.pdf; raw/elementary/derived-wms-bus-route-rows-2026-27.csv
+- raw: raw/elementary/wms-bus-routes-2026-27.txt; raw/elementary/derived-wms-bus-route-rows-2026-27.csv
 - topic: district-transportation
 - place: district Weare
 - note: **Derived.** Value = minutes from the first active (highlighted) timed stop to the listed drop-off at Weare Middle School where the sheet gives one, otherwise to the last active timed stop (marked "to last stop"). Drop-off is 7:10–7:20 and school starts at 7:20. Times are "approximate". See fact 6 of district-transportation.
 
 | Place | Route | Value | Bus starts | First active stop | Last active stop | Drop-off listed | Note |
 |---|---|---|---|---|---|---|---|
-| Weare (district 555) | Route 1 | 33 | Leaves terminal 6:30 | 6:37, 492 Concord Stage Rd | 7:10, Center Rd at Centerbrook Ln | not listed | to last stop; passes Center Woods (7:13) on the way to WMS |
-| Weare (district 555) | Route 2 | 37 | Leaves terminal (time not listed) | 6:33, 678 North Stark Hwy | 7:04, 18 Rockland Rd | 7:10 | |
+| Weare (district 555) | Route 1 | 33 | Leaves terminal 6:30 | 6:37, Concord Stage Rd | 7:10, Center Rd at Centerbrook Ln | not listed | to last stop; passes Center Woods (7:13) on the way to WMS |
+| Weare (district 555) | Route 2 | 37 | Leaves terminal (time not listed) | 6:33, 678 North Stark Hwy | 7:04, Rockland Rd | 7:10 | |
 | Weare (district 555) | Route 3 | 24 | Leaves terminal 6:21 | 6:44, Shady Hill Rd at Chevey Hill Rd | 7:08, Reservoir Dr at John Connor Rd | not listed | to last stop; Craney Hill/Winslow stop moves in winter |
-| Weare (district 555) | Route 4 | 30 | Leaves terminal 6:35 | 6:40, 1163 River Rd ("usually PM only") | 7:01, 38 Buzzell Hill Rd | 7:10 | |
-| Weare (district 555) | Route 5 | 40 | Leaves terminal 6:30 | 6:35, 225 East Rd | 6:56, 640 B River Rd | 7:15 | |
+| Weare (district 555) | Route 4 | 30 | Leaves terminal 6:35 | 6:40, River Rd ("usually PM only") | 7:01, Buzzell Hill Rd | 7:10 | |
+| Weare (district 555) | Route 5 | 40 | Leaves terminal 6:30 | 6:35, East Rd | 6:56, River Rd | 7:15 | |
 | Weare (district 555) | Route 6 | 29 | Leaves terminal 6:35 | 6:41, Deering Center Rd at Corliss Dr | 7:00, Mountain Rd at Lawrence Rd | 7:10 | |
 | Weare (district 555) | Route 7 | 26 | Leaves terminal 6:42 | 6:45, South Stark Hwy at Town House Rd | 7:08, South Stark Hwy at Martin Rd | 7:11 | |
-| Weare (district 555) | Route 8 | 35 | Leaves terminal 6:25 | 6:35, 93 Colby Rd | 6:59, 800 South Stark Hwy | 7:10 | |
-| Weare (district 555) | Route 9 | 24 | Leaves terminal 6:30 | 6:38, South Stark Hwy at Renshaw Rd | 7:02, 93 Gould Rd | not listed | to last stop |
-| Weare (district 555) | Bus 10 | 24 | Leaves terminal 6:37 | 6:47, Old Francestown Rd at Lull Rd | 7:11, 44 Quaker St | not listed | to last stop |
+| Weare (district 555) | Route 8 | 35 | Leaves terminal 6:25 | 6:35, Colby Rd | 6:59, South Stark Hwy | 7:10 | |
+| Weare (district 555) | Route 9 | 24 | Leaves terminal 6:30 | 6:38, South Stark Hwy at Renshaw Rd | 7:02, Gould Rd | not listed | to last stop |
+| Weare (district 555) | Bus 10 | 24 | Leaves terminal 6:37 | 6:47, Old Francestown Rd at Lull Rd | 7:11, Quaker St | not listed | to last stop |
 
 ## weare_opening_day_enrollment_2025_26: Students and Classes by Grade on the First Day of School, Center Woods and Weare Middle, 2025-26
 

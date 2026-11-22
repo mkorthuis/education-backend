@@ -137,3 +137,9 @@ None. The agents found nothing contradicting earlier towns' files. The student s
 - **Blocked to automated requests (for the browser pass):** NH DOE's special education public reporting (Salem's evaluation timeliness), two policy PDFs on ParentSquare's file server (other copies were read), St. Joseph's old domains (its current site was used), BLS area definitions.
 - **Behind a password or script:** the School Board Portal (minutes and presentations; only agendas are public), Salem High's bell schedule images, the federal FAFSA completion tracker, the NHIAA school list, the town's crossing guard search.
 - **Not found anywhere:** the Town's full Tuscan Village tax report (404), a five-year capital plan or building condition report, Woodbury's elective list, bus on-time data, crossing guards at Woodbury and Broadway, the preschool waitlist size, how Woodbury places students in Algebra I, CTE applicants and waitlists by program, counselor wait times and IEP service data, the 2026 tax rate.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 18 saved bus and transportation copies (1,295 in all; schools, child care centers, businesses and other public places keep theirs).
+- 7 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

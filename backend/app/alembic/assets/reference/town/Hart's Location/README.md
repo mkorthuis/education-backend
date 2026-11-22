@@ -119,3 +119,8 @@ Reviewed with the other towns' proposals on November 13, 2026 and added to `../s
 - Whether the town adopted an elderly exemption.
 - The voter checklist count, the FCC broadband maps and NHDOT's winter pages (all refused automated access).
 - Board minutes for 2011–2023.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 2 saved bus and transportation copies (2 in all; schools, child care centers, businesses and other public places keep theirs).

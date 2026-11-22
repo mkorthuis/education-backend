@@ -56,7 +56,7 @@ This file covers Clark-Wilkins School (Clark: preschool and kindergarten; Wilkin
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Amherst
-   - note: **Derived** from the 24 route pages (an AM and a PM sheet per route). See table amherst_clark_wilkins_bus_routes_2026_27. Handbook: "The Amherst School District has partnered with STA to provide bus transportation for students." The voter guide names the contractor: "the new transportation contract with Student Transportation of America, for home to school and athletics bus service." Transportation page: "Bus routes are subject to change as they are continually evaluated." Raw: raw/elementary/cw-bus-routes-2026-27.pdf (.txt); raw/elementary/sau39-transportation.txt; raw/elementary/cw-handbook-2026-27.txt; raw/elementary/asd-2026-voter-guide.txt
+   - note: **Derived** from the 24 route pages (an AM and a PM sheet per route). See table amherst_clark_wilkins_bus_routes_2026_27. Handbook: "The Amherst School District has partnered with STA to provide bus transportation for students." The voter guide names the contractor: "the new transportation contract with Student Transportation of America, for home to school and athletics bus service." Transportation page: "Bus routes are subject to change as they are continually evaluated." Raw: raw/elementary/cw-bus-routes-2026-27.txt; raw/elementary/sau39-transportation.txt; raw/elementary/cw-handbook-2026-27.txt; raw/elementary/asd-2026-voter-guide.txt
 
 2. Two Clark-Wilkins routes stop on Baboosic Lake Road in 2026-27: route CW 7's first morning stop is at Baboosic Lake Road and Tranquility Lane at 6:45 a.m., with one more Baboosic Lake Road stop at 6:46, and route CW 8 stops along Baboosic Lake Road from 7:10 to 7:15 a.m., ending at Pettingale Road; both reach Clark at 7:20 and Wilkins at 7:30 a.m., and in the afternoon CW 7 reaches Baboosic Lake Road at 2:50–2:55 p.m. and CW 8 at 2:59–3:06 p.m.
    - citation: SAU 39, Clark-Wilkins Elementary School 2026-2027 Bus Routes (9.21.26), routes CW 7 and CW 8
@@ -722,7 +722,7 @@ This file covers Clark-Wilkins School (Clark: preschool and kindergarten; Wilkin
 - period: 2026-27 school year, route sheets dated September 21, 2026; year: 2027
 - source: SAU 39, Clark-Wilkins Elementary School 2026-2027 Bus Routes (9.21.26) — https://drive.google.com/file/d/1IMAA8jOoR9xT-fR8pE25QSKPzxKRdunE/view
 - as_of: 2026-11-21
-- raw: raw/elementary/cw-bus-routes-2026-27.pdf; raw/elementary/cw-bus-routes-2026-27.txt
+- raw: raw/elementary/cw-bus-routes-2026-27.txt
 - topic: district-transportation
 - place: district Amherst
 - note: **Derived** layout. Value is the minutes from the first morning stop to the listed Wilkins arrival. Roads are taken from the stop names (house numbers dropped); a road appears on a route only where the sheet lists a stop. Afternoon sheets list Wilkins at 2:15 p.m. and Clark at 2:42 p.m. (CW 11 lists Clark first) before the first home stop. Routes "are subject to change." See facts 1–2 of district-transportation.
@@ -800,7 +800,7 @@ This file covers Clark-Wilkins School (Clark: preschool and kindergarten; Wilkin
   - The FY28 drafts (raw/elementary/asd-fy28-budget-draft1-presentation.txt, draft2) put the FY28 operating budget at $34,697,327 (+1.0%) and add two Wilkins custodians; the transportation lines in the FY27 workbook rose 18.7–21.3% with the new STA contract.
 - **Amherst Middle School (agent 2):**
   - The YMCA's "Before the Bell" runs at AMS (14 Cross Road) 7:00–8:00 a.m. for ages 10–12 (district-school-day-and-calendar fact 6). AMS hours are 8:30–3:24 and its early-release dismissal is 12:50 p.m. (calendar).
-  - The AMS/SHS 2026-27 bus routes are saved at raw/elementary/ams-shs-bus-routes-2026-27.pdf (.txt).
+  - The AMS/SHS 2026-27 bus routes are saved at raw/elementary/ams-shs-bus-routes-2026-27.txt.
   - The Wilkins Q&A describes AMS's "two-tier model consisting of a lower middle school and an upper middle school" built over three years, with grade 5 having "access to middle-school specialists, interventionists" (P5.3).
   - FY27 budget AMS student-support staffing (one BCBA, three social workers, two counselors) and the FY28 plan to cut three AMS paras are in district-student-support fact 3 and district-classrooms-and-staff fact 5; Amherst Rec's "Tuesday Night Lights" ski program buses from AMS, and Rec runs a Makerspace at AMS (https://www.amherstnh.gov/1346/Makerspace-at-AMS).
 - **Souhegan (agent 3):** the 2026-27 Souhegan handbook is saved at raw/elementary/shs-handbook-2026-27.txt (open campus, phones locked in Student Services, Community Review Board, impact testing for contact sports, the Learning Commons). The October 2026 data report gives the class of 2026 four-year diploma rate as 92.8% and the class of 2025 five-year rate as 94.2% (raw/elementary/asd-fall-data-report-2026-10.pdf, slide 13).

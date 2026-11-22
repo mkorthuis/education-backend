@@ -106,7 +106,7 @@ Part of the Concord research (town/Concord). Gathered November 15, 2026.
    - as_of: 2026-11-15
    - review_by: 2027-11-15
    - place: district Concord
-   - note: Read from the rendered page (raw/staff/sau8-annual-report-2024-25-p22-cip.png): "Roof Replacement and Nuclear roof moisture test (RMS) (2025 patching) * $ 10,000.00 ... Upgrade Plumbing System (RMS) add shut off valves * $ 6,000.00 ... Upgrade Mechanical Systems (Heating Valve Replacement) (RMS) * $ 10,000.00". The same amounts appear in both the "Proposed FY26" and "2025" columns. The full plan is in table concord_capital_improvement_plan_fy26. Raw: raw/staff/sau8-annual-report-2024-25.pdf, .txt.
+   - note: Read from the rendered page (raw/staff/sau8-annual-report-2024-25-p22-cip.png): "Roof Replacement and Nuclear roof moisture test (RMS) (2025 patching) * $ 10,000.00 ... Upgrade Plumbing System (RMS) add shut off valves * $ 6,000.00 ... Upgrade Mechanical Systems (Heating Valve Replacement) (RMS) * $ 10,000.00". The same amounts appear in both the "Proposed FY26" and "2025" columns. The full plan is in table concord_capital_improvement_plan_fy26. Raw: raw/staff/sau8-annual-report-2024-25.txt.
 
 8. In summer 2025 the Concord School District repaired 33 areas of Rundlett Middle School's roof that a May 2025 moisture test had flagged, replaced heating valves "to ensure good, consistent heat in the winter," and put in new flooring.
    - citation: Concord School District, Capital Facilities Committee minutes, August 25, 2025, p. 1
@@ -154,7 +154,7 @@ Part of the Concord research (town/Concord). Gathered November 15, 2026.
    - as_of: 2026-11-15
    - review_by: 2027-11-15
    - place: district Concord
-   - note: Read from the rendered pages (raw/staff/sau8-annual-report-2024-25-p22-cip.png, -p23-cip.png). The plan has columns "PROPOSED FY26" (total $703,223.00) and "2025" (total $1,051,393.00); items without a figure show "$ -" and no cost estimate. A "Considerations" list adds disposition of Eastman, a bus garage upgrade shared with the city, universal preschool, "RMS Safety Upgrades," a Concord High front office reconfiguration and an elevator at the central office. See table concord_capital_improvement_plan_fy26. Raw: raw/staff/sau8-annual-report-2024-25.pdf, .txt.
+   - note: Read from the rendered pages (raw/staff/sau8-annual-report-2024-25-p22-cip.png, -p23-cip.png). The plan has columns "PROPOSED FY26" (total $703,223.00) and "2025" (total $1,051,393.00); items without a figure show "$ -" and no cost estimate. A "Considerations" list adds disposition of Eastman, a bus garage upgrade shared with the city, universal preschool, "RMS Safety Upgrades," a Concord High front office reconfiguration and an elevator at the central office. See table concord_capital_improvement_plan_fy26. Raw: raw/staff/sau8-annual-report-2024-25.txt.
 
 14. In December 2024 the Concord School District's facilities director reviewed the 10-year capital improvement plan with the Capital Facilities Committee, noting that its costs were estimates and that formal quotes would be sought for any project the board pursued; topics included the annual landscaping plan, repairs to areas of Rundlett, Memorial Field, Eastman and White Farm, sustainability and a traffic engineer for the elementary sites.
    - citation: Concord School District, Capital Facilities Committee minutes, December 5, 2024
@@ -633,7 +633,7 @@ Part of the Concord research (town/Concord). Gathered November 15, 2026.
 - period: Capital improvement plan presented March 2025 (FY26 budget process); year: 2026
 - source: Concord School District Annual Report 2024-2025, pp. 19–20 — https://files.smartsites.parentsquare.com/8931/2024-2025_annual_report_web.pdf
 - as_of: 2026-11-15
-- raw: raw/staff/sau8-annual-report-2024-25-p22-cip.png; raw/staff/sau8-annual-report-2024-25-p23-cip.png; raw/staff/sau8-annual-report-2024-25.pdf
+- raw: raw/staff/sau8-annual-report-2024-25-p22-cip.png; raw/staff/sau8-annual-report-2024-25-p23-cip.png; raw/staff/sau8-annual-report-2024-25.txt
 - topic: district-facilities-and-capital
 - place: district Concord
 - note: Transcribed from the rendered pages. Value is the "PROPOSED FY26" column; "2025" is the plan's second column, which the plan doesn't label further. Blank means "$ -" (no amount). The plan's asterisk column is unexplained. School abbreviations: ADS Abbot-Downing, BMS Beaver Meadow, BGS Broken Ground, CMS Christa McAuliffe, MBS Mill Brook, RMS Rundlett, CHS Concord High. See district-facilities-and-capital facts 7 and 13.

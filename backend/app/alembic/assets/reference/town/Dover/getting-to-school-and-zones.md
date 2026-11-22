@@ -223,7 +223,7 @@ This file covers how Dover students get to school and how the school day and sch
    - as_of: 2026-11-15
    - review_by: 2027-11-15
    - place: district Dover
-   - note: Route text: Woodman Park D7 "163 Tolend Rd 7:41 3:25", "70 Watson Rd 7:48 3:31", "471 Tolend Rd 7:50 3:33", "148 Tolend Rd 7:57 3:41"; D9 "128 Columbus Ave 7:47 3:32"; D21 "10 Footbridge 8:04 3:32"; Hopkins D2 "416 Blackwater Rd 7:48 3:40". Which elementary school serves an address is in district-attendance-zones-and-transfers 8. Raw: raw/daily/dover-bus-routes-2026-27.txt
+   - note: Route text: Woodman Park D7 "Tolend Rd 7:41 3:25", "Watson Rd 7:48 3:31", "Tolend Rd 7:50 3:33", "Tolend Rd 7:57 3:41"; D9 "Columbus Ave 7:47 3:32"; D21 "Footbridge 8:04 3:32"; Hopkins D2 "Blackwater Rd 7:48 3:40". Which elementary school serves an address is in district-attendance-zones-and-transfers 8. Raw: raw/daily/dover-bus-routes-2026-27.txt
 26. Dover's 2026-27 elementary route sheet includes stops at child care programs, among them Kids Culture (Garrison route D1, 7:37 a.m. and 3:32 p.m.), Happy Helpers (Horne Street route D17) and an afternoon-only stop at Smart Start (Horne Street route D6, 3:21 p.m.).
    - citation: Dover School District, Dover Bus Routes 26-27
    - source: https://4.files.edl.io/d38d/09/03/26/121237-08ece266-6911-43dc-91bb-4d30475514a6.pdf
@@ -412,7 +412,7 @@ This file covers how Dover students get to school and how the school day and sch
    - as_of: 2026-11-15
    - review_by: 2027-11-15
    - place: district Dover
-   - note: **Derived** from the route sheet, not from a zone map, which Dover doesn't publish. Route text under "WOODMAN PARK... D7": "163 Tolend Rd 7:41 3:25"; "471 Tolend Rd 7:50 3:33"; "148 Tolend Rd 7:57 3:41". Garrison's routes (D1, D3, D5, D8, D13, D15) serve Back River Road, Piscataqua Road, Dover Point Road, Middle Road, Mast Road, Spruce Lane, Back Road and Court Street. Tolend Road is long, and a stop list shows only where riders were in September 2026; the district confirms the school for an address. Checks the P24.1 premise that Tolend Road is zoned for Garrison. Raw: raw/daily/dover-bus-routes-2026-27.txt
+   - note: **Derived** from the route sheet, not from a zone map, which Dover doesn't publish. Route text under "WOODMAN PARK... D7": "Tolend Rd 7:41 3:25"; "Tolend Rd 7:50 3:33"; "Tolend Rd 7:57 3:41". Garrison's routes (D1, D3, D5, D8, D13, D15) serve Back River Road, Piscataqua Road, Dover Point Road, Middle Road, Mast Road, Spruce Lane, Back Road and Court Street. Tolend Road is long, and a stop list shows only where riders were in September 2026; the district confirms the school for an address. Checks the P24.1 premise that Tolend Road is zoned for Garrison. Raw: raw/daily/dover-bus-routes-2026-27.txt
 9. Dover last redrew elementary school lines in 2007: on April 9, 2007 the School Board voted 5–2 to accept its Future Needs Redistricting Committee's recommendation to move students from overcrowded Horne Street School to Garrison, which had room.
    - citation: Dover School Board Regular Meeting #4 minutes, April 9, 2007, item M.2; Workshop Session #1 minutes, March 19, 2007
    - source: https://publicrecords.dover.nh.gov/FileDownload/22333/Public_Meetings/0

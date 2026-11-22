@@ -83,3 +83,11 @@ The browser pass (November 16, 2026) didn't open these: both are PDFs on hosts t
 
 - UNH Library's late-1990s Hudson town reports (HTTP 403), for Alvirne's enrollment then and the Litchfield history (P12.1, P12.3).
 - A federal 504 guide on ed.gov (HTTP 403); the library's 504 topics already cover it.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 7 saved bus and transportation copies (228 in all; schools, child care centers, businesses and other public places keep theirs).
+- 3 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- Graduates' names removed from 1 saved annual report copy.
+- A student's name removed from the strategic plan's committee list.

@@ -79,3 +79,10 @@ The agents' blocked pages were:
 - one bus driver job posting.
 
 The NH DOE pages are PDFs or report tools Chrome can't read, so they remain gaps.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 8 saved bus and transportation copies (639 in all; schools, child care centers, businesses and other public places keep theirs).
+- 2 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- The state's resident birth, marriage and death lists removed from 1 saved town report copy (headings and record counts kept).

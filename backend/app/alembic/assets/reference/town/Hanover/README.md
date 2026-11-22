@@ -79,3 +79,9 @@ The agents' blocked pages were:
 - Dartmouth Real Estate's page (HTTP 403).
 
 The board policies would add the bullying, residency and alternative-credit texts. The facts already cite the handbooks' versions.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 19 saved bus and transportation copies (1,667 in all; schools, child care centers, businesses and other public places keep theirs).
+- Graduates' names removed from 3 saved annual report copies; 3 PDFs deleted.

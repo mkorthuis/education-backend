@@ -145,3 +145,9 @@ Added from pages that refused automated requests, read in Chrome: the city chart
   - the Seymour Osman Community Center's listing and its 2026 job posting (the agent fetched the job posting a second way after the block, against the brief, and didn't cite it).
 - **Behind a sign-in or script:** the Title I plans and compacts on Google Drive, the Tri-City application, Dover's board minutes before February 2026 (each meeting's documents open through JavaScript), menus.
 - **Not found anywhere:** CTC applicant and credential counts, partner employers, NJROTC unit size, rider counts, a late bus, a zone map, the Seymour Osman program's fee, paraeducator and substitute turnover, the middle school's world language and how accelerated math students are chosen, the district communication plan, the 2026 tax rate (not certified yet).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 5 saved bus and transportation copies (180 in all; schools, child care centers, businesses and other public places keep theirs).
+- 1 original route sheet (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

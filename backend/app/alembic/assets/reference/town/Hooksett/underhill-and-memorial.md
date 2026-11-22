@@ -288,7 +288,7 @@ This file covers the Hooksett School District's two elementary schools, Fred C. 
    - place: district Hooksett
    - note: Handbook p.32: "Bus stops are established by the bus contractor and SAU #15 administration. Students may be required to walk up to .6 of a mile to his/her bus stop. Parents who wish for their child to walk to and from school should request so in writing ... Students are not permitted to ride a bike, skateboard, scooter or the like to school." p.33: "Students will be transported to and from the stop closest to their residence." Raw: raw/elementary/hsd-handbook-2026-27.txt
 
-9. Hooksett's 2026-27 elementary route sheets (updated September 11, 2026) list 15 buses, each serving both Underhill and Memorial, with stops listed either at a house number (for example "205 Whitehall Road") or at an intersection (for example "Whitehall Rd @ Harmony Ln"); of about 268 morning stops, about 156 are house numbers, about 102 intersections and about 10 named places such as condominium entrances.
+9. Hooksett's 2026-27 elementary route sheets (updated September 11, 2026) list 15 buses, each serving both Underhill and Memorial, with stops listed either at a house number or at an intersection (for example "Whitehall Rd @ Harmony Ln"); of about 268 morning stops, about 156 are house numbers, about 102 intersections and about 10 named places such as condominium entrances.
    - citation: Hooksett – Underhill & Memorial Bus Routes 2026-2027 (updated 9.11.2026)
    - source: https://hooksett.sau15.net/wp-content/uploads/sites/3/2026/09/Hooksett-Elem-Bus-Routes-Updated-9-11-26.pdf
    - as_of: 2026-11-21

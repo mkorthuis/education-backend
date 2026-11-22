@@ -277,7 +277,7 @@ This file covers the Hollis School District's two schools: Hollis Primary School
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Hollis
-   - note: **Derived** by reading the 10 AM and PM lists (image PDF, transcribed from image by OCR). Example, route 1: "7:29 AM Bus Barn ... 8:10 AM Hollis Primary School 8:15 AM Hollis Upper Elementary School"; "3:00 PM Hollis Primary School 3:15 PM Hollis Upper Elementary School ... 4:02 PM Bus Barn". Route 9's first listed AM stop is at 7:33. Route 10's AM school times are jumbled in the scan and are left out of the AM arrival range. The route lists include street addresses, which this file doesn't repeat. Raw: raw/elementary/hollis-bus-routes.pdf (.txt)
+   - note: **Derived** by reading the 10 AM and PM lists (image PDF, transcribed from image by OCR). Example, route 1: "7:29 AM Bus Barn ... 8:10 AM Hollis Primary School 8:15 AM Hollis Upper Elementary School"; "3:00 PM Hollis Primary School 3:15 PM Hollis Upper Elementary School ... 4:02 PM Bus Barn". Route 9's first listed AM stop is at 7:33. Route 10's AM school times are jumbled in the scan and are left out of the AM arrival range. The route lists include street addresses, which this file doesn't repeat. Raw: raw/elementary/hollis-bus-routes.txt
 4. The 2026-27 Hollis elementary routes list stops both at house numbers and at road intersections, Depot Road included: routes 1, 3, 4, 6 and 7 stop on Depot Road at intersections (Sherwood Drive, Fieldstone Drive, Ladd Lane, Orchard Drive and Richardson Road) and at individual addresses (derived).
    - citation: Hollis Elementary Bus Routes (HollisBusRoutes.pdf, scanned August 21, 2026)
    - source: https://www.myhps.org/fs/resource-manager/view/4c1b971e-0891-4db9-9d58-7706e181ba9f

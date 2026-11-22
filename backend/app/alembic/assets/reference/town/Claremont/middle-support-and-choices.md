@@ -422,7 +422,7 @@ This file covers Claremont Middle School (CMS, grades 6–8, 107 South Street) a
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Claremont
-   - note: Sheet rows, e.g. Bus 4: "6:34 | 2:28 | 491 Main Street" ... "7:15 | DROP OFF SHS"; "7:25 | DROP OFF CMS SCHOOL"; "2:20 | LEAVE CMS SCHOOL"; Bus 13 first stop "6:10 ... 234 North Street"; elementary sheets: "8:15AM - 8:30AM | DROP OFF DISNARD SCHOOL"; "8:35AM - 8:50AM | DROP OFF MAPLE AVE SCHOOL." Bus 7 drops Stevens at 7:00, its CMS riders transfer to Bus 10, and it "LEAVES W/CLAREMONT STUDENTS TO NEWPORT TECH" at 7:10. **Derived:** counts and earliest and latest times from all 14 sheets; see table claremont_shs_cms_bus_routes_2026_27. Raw: raw/middle/bus/shs-cms-routes.xlsx (.txt); raw/middle/bus/elem-routes.xlsx (.txt).
+   - note: Sheet rows, e.g. Bus 4: "6:34 | 2:28 | Main Street" ... "7:15 | DROP OFF SHS"; "7:25 | DROP OFF CMS SCHOOL"; "2:20 | LEAVE CMS SCHOOL"; Bus 13 first stop "6:10 ... North Street"; elementary sheets: "8:15AM - 8:30AM | DROP OFF DISNARD SCHOOL"; "8:35AM - 8:50AM | DROP OFF MAPLE AVE SCHOOL." Bus 7 drops Stevens at 7:00, its CMS riders transfer to Bus 10, and it "LEAVES W/CLAREMONT STUDENTS TO NEWPORT TECH" at 7:10. **Derived:** counts and earliest and latest times from all 14 sheets; see table claremont_shs_cms_bus_routes_2026_27. Raw: raw/middle/bus/shs-cms-routes.txt; raw/middle/bus/elem-routes.txt.
 3. Claremont policy EEA (2016) says pupils attending charter schools in the district and private schools "shall be entitled to the same transportation privileges within the District as are provided for pupils in public school," but the 2026-27 route sheets show no stop at Claremont Christian Academy's Lower Campus (97 Maple Avenue), and its Upper Campus for the middle and high school grades is in Charlestown, outside the district (**derived** search of the route sheets).
    - citation: Claremont School Board Policy EEA, Student Transportation Services (adopted November 16, 2016); SAU 6 2026-27 route sheets
    - source: https://drive.google.com/open?id=1dK_De97HubMARMkxz8hYzNhQ6-OL6EkTEd7VjDS3EjM
@@ -786,7 +786,7 @@ This file covers Claremont Middle School (CMS, grades 6–8, 107 South Street) a
 - period: 2026-27 route sheets (modified September 25, 2026); year: 2027
 - source: SAU 6, "SAU6 - SHS/CMS Bus Routes" (Google Sheets) — https://drive.google.com/drive/folders/1jurpWnpnX3ttBGvjTfcO4k2je_X-2K4U
 - as_of: 2026-11-21
-- raw: raw/middle/bus/shs-cms-routes.xlsx; raw/middle/bus/shs-cms-routes.txt
+- raw: raw/middle/bus/shs-cms-routes.txt
 - topic: district-transportation
 - place: district Claremont
 - note: **Derived**: morning stops counted from each bus's sheet, leaving out drop-off, leave and transfer rows and "PM ONLY" stops. All buses on these sheets also run an elementary route afterward (separate sheets). Bus 7's CMS riders transfer to Bus 10 at Stevens; Bus 7 then takes Claremont students to the Newport technical center at 7:10. Afternoon: buses leave Stevens at 2:10 and CMS at 2:20.

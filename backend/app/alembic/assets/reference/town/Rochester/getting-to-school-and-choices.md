@@ -107,7 +107,7 @@ This file covers how Rochester students get to school (Student Transportation of
    - as_of: 2026-11-15
    - review_by: 2027-11-15
    - place: district Rochester
-   - note: Raw: raw/daily/rsd-routes-2026-27-article.txt; the article page, dated "August 18, 2026"; raw/daily/rsd-elementary-bus-routes-2026-27.pdf and rsd-ms-hs-bus-routes-2026-27.pdf (mostly scanned; .ocr.txt transcribed from image). Sheet text: "9/1/2026 - 6/25/2027". The sheets list stops by street corner or house number; only morning runs are posted. File names: "Elem-Bus-Routes-26-27_08.28.26-updated.pdf", "HSMS-Bus-Routes-26-27_08.28.26.pdf".
+   - note: Raw: raw/daily/rsd-routes-2026-27-article.txt; the article page, dated "August 18, 2026"; raw/daily/rsd-elementary-bus-routes-2026-27.ocr.txt and rsd-ms-hs-bus-routes-2026-27.ocr.txt (mostly scanned; .ocr.txt transcribed from image). Sheet text: "9/1/2026 - 6/25/2027". The sheets list stops by street corner or house number; only morning runs are posted. File names: "Elem-Bus-Routes-26-27_08.28.26-updated.pdf", "HSMS-Bus-Routes-26-27_08.28.26.pdf".
 8. Rochester School District added the My Ride K-12 app for 2026-27: a parent registers in the app or at myridek12.tylerapp.com, chooses Rochester School District, adds each child with the student number shown in the Infinite Campus Parent Portal, and then sees the child's transportation information, which can be shared with another adult by email.
    - citation: Rochester School District, My Ride K-12 App page; "Transportation Routes for the 26-27 School Year" ("New for this school year")
    - source: https://www.rochesterschools.com/o/rsd/page/my-ride-k-12

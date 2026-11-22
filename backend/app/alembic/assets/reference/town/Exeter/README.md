@@ -85,3 +85,8 @@ Both districts vote by official ballot.
   - **The YMCA's Exeter registration listing** (HTTP 429, not retried).
   - **The six-town totals of the March 2026 cooperative vote.**
   - **The image pages of the cooperative's FY2028 draft budget.**
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 4 saved bus and transportation copies (8 in all; schools, child care centers, businesses and other public places keep theirs).

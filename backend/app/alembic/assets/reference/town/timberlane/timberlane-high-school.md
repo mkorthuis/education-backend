@@ -469,7 +469,7 @@ This file covers TRHS's course levels and Advanced Placement (AP) courses, dual 
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Timberlane Regional
-   - note: **Derived:** 931 ÷ 5 = 186.2; the profile's other figure, "currently enrolls 944 students," gives 188.8; counting the director as a sixth counselor gives about 155. The sources do not say whether each counselor is full time. State limit: library school-staffing-and-class-size 2. The site's enrollment for TRHS in 2025-26 is 932. Raw: raw/high/trhs-school-profile.txt.
+   - note: **Derived:** 931 ÷ 5 = 186.2; the profile's other figure, "currently enrolls 944 students," gives 188.8; counting the director as a sixth counselor gives about 155. The sources do not say whether each counselor is full time. State limit: library school-staffing-and-class-size 2. The site's enrollment for TRHS in 2024-25 (October 1, 2024) is 932. Raw: raw/high/trhs-school-profile.txt.
 
 3. Timberlane Regional High School's 2026-27 counseling calendar includes freshman orientation (August 25, 2026), a college fair for juniors and seniors with over 80 colleges and military branches (September 14), a senior parent post-secondary planning night (September 24), a senior Financial Aid 101 night (October 7), Apply NH Day (October 29), the juniors' SAT School Day (April 1, 2027), and in spring 2027 a senior "Paying for College" night and a junior parent night introducing Naviance, college selection, applications, visits and financial aid.
    - citation: Timberlane Regional High School, Office of School Counseling page, "Upcoming Events"

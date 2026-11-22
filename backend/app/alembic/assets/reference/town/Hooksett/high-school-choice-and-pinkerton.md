@@ -244,7 +244,7 @@ This file covers Hooksett's side of high school: how the choice works (Pinkerton
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Hooksett
-   - note: Pinkerton's day runs 7:15 a.m. to 1:58 p.m. (Pinkerton file `pinkerton-student-life.md`, district-school-day-and-calendar 1). The earliest stop is Bus 12's at Smyth Road and Prescott Heights Road (5:57 a.m.); Bus 12 also stops at the Underhill School entrance. Bus 10's sheet lists both 1:45 and 2:00 p.m. departures from Pinkerton. The district asks students to be at the stop 10 minutes early. Stop names with house numbers are left out here. See table hooksett_pinkerton_bus_times_2026_27. Raw copy: raw/high/pinkerton-bus-routes-2026-27.pdf and .txt; raw/high/hsd-transportation.txt
+   - note: Pinkerton's day runs 7:15 a.m. to 1:58 p.m. (Pinkerton file `pinkerton-student-life.md`, district-school-day-and-calendar 1). The earliest stop is Bus 12's at Smyth Road and Prescott Heights Road (5:57 a.m.); Bus 12 also stops at the Underhill School entrance. Bus 10's sheet lists both 1:45 and 2:00 p.m. departures from Pinkerton. The district asks students to be at the stop 10 minutes early. Stop names with house numbers are left out here. See table hooksett_pinkerton_bus_times_2026_27. Raw copy: raw/high/pinkerton-bus-routes-2026-27.txt; raw/high/hsd-transportation.txt
 3. On Hooksett's 2026-27 Pinkerton routes, a rider at the first stop is scheduled on the bus 55 to 63 minutes in the morning and a rider at the last afternoon stop 41 to 56 minutes (derived), and Hooksett's 2023–2028 bus contract says routes are planned so no route is more than 60 minutes and students don't arrive more than 15 minutes before school opens.
    - citation: Hooksett – Pinkerton Bus Routes 2026-2027; School Bus Transportation Services Agreement, Hooksett School District and First Student, Inc. (July 1, 2023 to June 30, 2028), section 6
    - source: https://hooksett.sau15.net/wp-content/uploads/sites/3/2026/08/Pinkerton-Bus-Routes-Updated-8-28-26.pdf
@@ -695,7 +695,7 @@ This file covers Hooksett's side of high school: how the choice works (Pinkerton
 - period: 2026-27 route sheets, updated August 28, 2026; year: 2027
 - source: Hooksett School District, Hooksett – Pinkerton Bus Routes 2026-2027 — https://hooksett.sau15.net/wp-content/uploads/sites/3/2026/08/Pinkerton-Bus-Routes-Updated-8-28-26.pdf
 - as_of: 2026-11-21
-- raw: raw/high/pinkerton-bus-routes-2026-27.pdf; raw/high/pinkerton-bus-routes-2026-27.txt
+- raw: raw/high/pinkerton-bus-routes-2026-27.txt
 - topic: district-transportation
 - place: district Hooksett
 - note: Times are the route sheets' scheduled times. "Value" is the scheduled minutes from the first morning stop to the listed Pinkerton time, and "PM minutes" from the 2:00 p.m. departure to the last afternoon stop, both **derived**. Bus 10 also lists a 1:45 p.m. departure. Pinkerton's day runs 7:15 a.m.–1:58 p.m. See district-transportation 2–3.

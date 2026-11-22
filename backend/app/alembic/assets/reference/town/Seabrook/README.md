@@ -81,3 +81,10 @@ Gathered November 21, 2026, in the first wave of the ToLoad towns (with Atkinson
   - SAU 21's Simbli board portal (minutes, the capital plan, Winnacunnet's homeschool policy);
   - winnacunnet.org (booster dues, AP results);
   - the Adventure Zone's current fees (its site is down).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 4 saved bus and transportation copies (76 in all; schools, child care centers, businesses and other public places keep theirs).
+- 4 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- The state's resident birth, marriage and death lists removed from 2 saved town report copies (headings and record counts kept); 1 report PDF deleted.

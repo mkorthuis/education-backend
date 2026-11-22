@@ -73,3 +73,8 @@ No pages important to these questions refused the agents. The missing pieces are
 - the 2026 school rate split between the two districts;
 - the November 18 board decision on the remaining surplus;
 - CMS bus route sheets.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 5 saved bus and transportation copies (11 in all; schools, child care centers, businesses and other public places keep theirs).

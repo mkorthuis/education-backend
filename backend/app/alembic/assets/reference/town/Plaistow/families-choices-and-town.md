@@ -247,7 +247,7 @@ This file covers what Plaistow families ask about outside the classroom: who to 
 - question_type: local_practice
 - description: Counseling, social work and mental health support, English learner services, homeless student support, welcoming families of all backgrounds, and enrollment documents
 
-1. Pollard School's staff directory lists two school counselors, one social worker, one school psychologist, a special education coordinator and two nurses; with 434 students in 2025-26 (the site's data), that is about 217 students for each listed counselor (derived), though the directory doesn't say whether each position is full-time.
+1. Pollard School's staff directory lists two school counselors, one social worker, one school psychologist, a special education coordinator and two nurses; with 434 students in 2024-25 (the site's data), that is about 217 students for each listed counselor (derived), though the directory doesn't say whether each position is full-time.
    - citation: Pollard School - Staff Directory, School Staff
    - source: https://ps.timberlane.net/staff-directory/school-staff
    - as_of: 2026-11-21

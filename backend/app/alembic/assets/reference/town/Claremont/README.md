@@ -88,3 +88,10 @@ The agents' blocked pages were:
 - Claremont Christian Academy's site (read through WebFetch; no verbatim copy).
 
 None is essential to the answers.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 9 saved bus and transportation copies (133 in all; schools, child care centers, businesses and other public places keep theirs).
+- 2 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- House numbers of home stops removed from quotes in the research files.

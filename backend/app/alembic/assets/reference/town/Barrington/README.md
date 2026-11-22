@@ -81,3 +81,9 @@ The agents' blocked pages were:
 - Dover's records portal (script-only).
 
 None is essential to the answers.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 15 saved bus and transportation copies (434 in all; schools, child care centers, businesses and other public places keep theirs).
+- 13 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

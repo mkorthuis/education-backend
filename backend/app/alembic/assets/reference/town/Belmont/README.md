@@ -80,3 +80,10 @@ The agents' blocked pages were:
 - the State Board's December 2023 minutes.
 
 None is essential to the answers.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 7 saved bus and transportation copies (1,634 in all; schools, child care centers, businesses and other public places keep theirs).
+- 3 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- House numbers of home stops removed from quotes in the research files.

@@ -515,7 +515,7 @@ It builds on the Jackson research (November 13, 2026), which already covers SAU 
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: town Bartlett
-   - note: Text: "ARTICLE 19. To see if the Town will vote to raise and appropriate the sum of $4,000.00 for the Family Resource Center at Children Unlimited, Inc. Agreeable to a petition signed by [a resident] and others. Selectmen favor." and "32 Children Unlimited 4,000.00 4,000.00 0.00". Children Unlimited also runs a licensed infant-to-preschool program (site data: child_care, Conway district). The 2026 vote result was not checked. The report was reached through the Selectmen's Office page (an Adobe link). Raw copy: raw/community/town/bartlett-annual-report-2025.pdf (.txt)
+   - note: Text: "ARTICLE 19. To see if the Town will vote to raise and appropriate the sum of $4,000.00 for the Family Resource Center at Children Unlimited, Inc. Agreeable to a petition signed by [a resident] and others. Selectmen favor." and "32 Children Unlimited 4,000.00 4,000.00 0.00". Children Unlimited also runs a licensed infant-to-preschool program (site data: child_care, Conway district). The 2026 vote result was not checked. The report was reached through the Selectmen's Office page (an Adobe link). Raw copy: raw/community/town/bartlett-annual-report-2025.txt
 
 ## town-recreation-and-summer: Bartlett Recreation, Shared With Jackson and Hart's Location
 

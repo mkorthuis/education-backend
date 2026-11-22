@@ -163,7 +163,7 @@ This file covers Concord High School's academic program and the Concord Regional
    - as_of: 2026-11-15
    - review_by: 2027-11-15
    - place: district Concord
-   - note: Text: "As defined in RSA 188-E, a student's sending district is financially responsible for 25 percent of tuition"; "Column (B) represents the amount the state did not pay, causing a tuition shortfall or underpayment. Consequently, the sending schools pick up the shortfall in addition to their 25% tuition bill"; "As a result, to manage costs, two local districts capped the number of students they would send to CRTC." The districts aren't named. Table checked against the rendered page. See table concord_crtc_sending_tuition_per_student. For agent 8. Raw: raw/high/sau8-annual-report-2024-25.pdf (page 54); .txt
+   - note: Text: "As defined in RSA 188-E, a student's sending district is financially responsible for 25 percent of tuition"; "Column (B) represents the amount the state did not pay, causing a tuition shortfall or underpayment. Consequently, the sending schools pick up the shortfall in addition to their 25% tuition bill"; "As a result, to manage costs, two local districts capped the number of students they would send to CRTC." The districts aren't named. Table checked against the rendered page. See table concord_crtc_sending_tuition_per_student. For agent 8. Raw: raw/high/sau8-annual-report-2024-25.txt (page 54)
 
 ## school-programs-after-grade-6: Concord High School: AP, College Credit, ELOs, Computer Science and Graduation Rules
 
@@ -761,7 +761,7 @@ This file covers Concord High School's academic program and the Concord Regional
 - period: Academic years 2020-21 to 2024-25; year: 2021–2025
 - source: Concord School District Annual Report 2024-2025, p. 51 — https://files.smartsites.parentsquare.com/8931/2024-2025_annual_report_web.pdf
 - as_of: 2026-11-15
-- raw: raw/high/sau8-annual-report-2024-25.pdf (page 54, checked against the rendered image)
+- raw: raw/high/sau8-annual-report-2024-25.txt (page 54, checked against the rendered image)
 - topic: cte-center-programs
 - place: district Concord
 - note: Per student per year. The report: "Column (A) represents the annual tuition bill to attend CRTC. Column (B) represents the amount the state did not pay ... the sending schools pick up the shortfall in addition to their 25% tuition bill." The total is (A) plus (B). The full tuition rate itself isn't given.

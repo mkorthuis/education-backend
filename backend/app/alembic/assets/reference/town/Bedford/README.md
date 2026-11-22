@@ -80,3 +80,8 @@ The browser pass (November 16, 2026) found NH DRA's 2026 tax rates only as a PDF
 - IB's own pages (HTTP 403).
 - NH DRA's 2026 tax rate (HTTP 403), for the school share of the $14.73 rate.
 - The district's School Finder street list and BHS's course database (a Google sign-in; can't be opened without an account), the town's recreation portal, and Census commute data (the API now needs a key).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 1 saved bus and transportation copy (1 in all; schools, child care centers, businesses and other public places keep theirs).

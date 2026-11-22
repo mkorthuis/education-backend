@@ -190,7 +190,7 @@ This file covers the community and family side of the Albany residents' question
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: town Albany
-   - note: Scanned; read from page images (PDF pp. 26 and 17). Cost-share page: "Recreation & Rec Revolving Operating Expenses 871,013 ... Offsetting Revenues (269,679) ... Capital Improvements Total 22,734 ... 624,068"; "ALBANY 5.9412% ... EATON 5.0257% ... CONWAY 89.0331%"; "2025 amount owed $37,077 $31,364 $555,628 $624,068". Budget line: actual 2025 $37,077.00, budget 2025 $39,039.00, proposed 2026 $39,012.00. The town website's "Recreation" menu item links to Conway Rec. Raw: raw/community/town/albany-town-report-2025.pdf (.ocr.txt); town-albany-home.txt
+   - note: Scanned; read from page images (PDF pp. 26 and 17). Cost-share page: "Recreation & Rec Revolving Operating Expenses 871,013 ... Offsetting Revenues (269,679) ... Capital Improvements Total 22,734 ... 624,068"; "ALBANY 5.9412% ... EATON 5.0257% ... CONWAY 89.0331%"; "2025 amount owed $37,077 $31,364 $555,628 $624,068". Budget line: actual 2025 $37,077.00, budget 2025 $39,039.00, proposed 2026 $39,012.00. The town website's "Recreation" menu item links to Conway Rec. Raw: raw/community/town/albany-town-report-2025.ocr.txt; town-albany-home.txt
 2. Conway Parks & Recreation's 2026 summer day camp was "open to all children who reside in Conway & Albany" aged 6 to 13, running 8:30 a.m. to 4:15 p.m. Monday to Friday, with an early drop-off from 8:00 and late pick-up until 5:00 for a one-time fee per child; families provide transportation to camp and pay before the child attends, with payment plans available.
    - citation: Conway Parks & Recreation Department, 2026 Summer Parent/Camper Handbook, pp. 3–6
    - source: https://conwaynh.myrec.com/forms/6044_2026__summer_camp_handbook.pdf
@@ -253,7 +253,7 @@ This file covers the community and family side of the Albany residents' question
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: town Albany
-   - note: Page text: "Fees for non-resident cards are as follows: $45 per year for an individual or family"; "Albany residents may apply for a voucher at the Albany Town Hall to recieve a library card at no cost."; "The minimum age to receive a library card is 5." Budget (page image): actual 2025 $4,230.00, budget 2025 $4,000.00, proposed 2026 $4,000.00. The library's 2025 report lists story-time programs. Raw: raw/community/town/conway-public-library-card-information.txt; albany-town-report-2025.pdf
+   - note: Page text: "Fees for non-resident cards are as follows: $45 per year for an individual or family"; "Albany residents may apply for a voucher at the Albany Town Hall to recieve a library card at no cost."; "The minimum age to receive a library card is 5." Budget (page image): actual 2025 $4,230.00, budget 2025 $4,000.00, proposed 2026 $4,000.00. The library's 2025 report lists story-time programs. Raw: raw/community/town/conway-public-library-card-information.txt; albany-town-report-2025.ocr.txt
 11. Summer meals and the weekend and summer food programs near Conway are in the Conway daily-life file, and the Jackson file covers the Bushee Thorn Mountain camp scholarship and the Eastern Slope Ski Club fund for Carroll County children.
    - citation: Pointer: town/Conway/daily-life.md, district-meals fact 5 and town-family-help fact 1; town/Jackson/community-and-families.md, town-family-help 2–4; district-pe-outdoor-and-athletics 1 in `Jackson/community-and-families.md`
    - source: https://nhfoodbank.org/find-food/
@@ -305,7 +305,7 @@ This file covers the community and family side of the Albany residents' question
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: district Albany
-   - note: Contract OCR: "Albany School District is desirous of having its pupils, grades K through 6 attend school in Conway". Budget page image (PDF p. 92): "SPEECH SERVICES" FY25 actual $1,819, FY26 $1,900, FY27 proposed $13,691 (+620.58%); "OT/PT SERVICES" FY25 actual $2,735, FY26 $2,200, FY27 $3,000; "PSYCHOLOGICAL SERVICES" FY26 $1,000, FY27 $13,150. Budget reasons are for the money file. Raw: raw/community/homeschool/albany-conway-k6-contract-2025.ocr.txt; raw/community/town/albany-town-report-2025.pdf (.ocr.txt)
+   - note: Contract OCR: "Albany School District is desirous of having its pupils, grades K through 6 attend school in Conway". Budget page image (PDF p. 92): "SPEECH SERVICES" FY25 actual $1,819, FY26 $1,900, FY27 proposed $13,691 (+620.58%); "OT/PT SERVICES" FY25 actual $2,735, FY26 $2,200, FY27 $3,000; "PSYCHOLOGICAL SERVICES" FY26 $1,000, FY27 $13,150. Budget reasons are for the money file. Raw: raw/community/homeschool/albany-conway-k6-contract-2025.ocr.txt; raw/community/town/albany-town-report-2025.ocr.txt
 4. Outside help for young children near Albany includes Northern Human Services' Family-Centered Early Supports and Services in Conway (birth to 3, no cost to families), Children Unlimited's children's clinic (speech, occupational and physical therapy, sliding fee) and inclusive preschool, MaineHealth Memorial Hospital's speech therapists, and Head Start in Conway, which reserves at least 10% of places for children with disabilities.
    - citation: Pointer: town/Conway/community-and-choice.md, town-family-help facts 1–7; this file, town-child-care fact 3; library topics fcess-early-supports and head-start-eligibility fact 5
    - source: https://northernhs.org/family-centered-early-support-services/
@@ -395,7 +395,7 @@ This file covers the community and family side of the Albany residents' question
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: town Albany
-   - note: Read from page image (PDF p. 16): "4445.01 · Direct Assistance 440.00 4,000.00 4,000.00" (actual 2025, budget 2025, proposed 2026). No separate welfare page was found on the town site; contact details are the Selectmen's: "Phone number: (603) 447-6038". The budget also has a "NH Welfare Assn" dues line. Raw: raw/community/town/albany-town-report-2025.pdf; raw/community/town-albany-home.txt
+   - note: Read from page image (PDF p. 16): "4445.01 · Direct Assistance 440.00 4,000.00 4,000.00" (actual 2025, budget 2025, proposed 2026). No separate welfare page was found on the town site; contact details are the Selectmen's: "Phone number: (603) 447-6038". The budget also has a "NH Welfare Assn" dues line. Raw: raw/community/town/albany-town-report-2025.ocr.txt; raw/community/town-albany-home.txt
 4. Albany's 2026 town warrant asked voters, by petition, to give $2,000 to the Family Resource Center at Children Unlimited, $1,708 to Tri-County Community Action Program (including Head Start, energy assistance and homeless prevention), $4,000 to the Gibson Center for meals and senior services, $4,214 to Starting Point, $3,600 to White Mountain Community Health Center and $3,000 to the Way Station; in 2025, voters passed requests from the first five (some for different amounts) in one combined vote.
    - citation: Albany 2026 Town Warrant, Articles 12–18; Albany 2025 Town Meeting minutes as printed with the 2025 Warrant (2025 Town Report, pp. 5–6 and 16–17)
    - source: https://albanynh.org/wp-content/2026/02/2026-Warrant-Signed.pdf
@@ -495,14 +495,14 @@ This file covers the community and family side of the Albany residents' question
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: town Albany
-   - note: Scanned; counted from page images (names not repeated). 2025 report p. 28: "RESIDENT BIRTHS FOR ANNUAL TOWN REPORT 01/01/2025 - 12/31/2025 ... Total number of records 4". The 2022 report prints death and marriage reports but no birth report. The reports do not say whether every birth is listed. See table albany_resident_births_town_reports (with each report's URL). NH vital records data sites refused automated access in the Jackson research. Raw: raw/community/town/albany-town-report-2019.pdf to albany-town-report-2025.pdf (.ocr.txt)
+   - note: Scanned; counted from page images (names not repeated). 2025 report p. 28: "RESIDENT BIRTHS FOR ANNUAL TOWN REPORT 01/01/2025 - 12/31/2025 ... Total number of records 4". The 2022 report prints death and marriage reports but no birth report. The reports do not say whether every birth is listed. See table albany_resident_births_town_reports (with each report's URL). NH vital records data sites refused automated access in the Jackson research. Raw: raw/community/town/albany-town-report-2019.ocr.txt to albany-town-report-2025.ocr.txt
 7. The Albany School District's own counts of its students, printed in each town report, fell from 96 on December 31, 2019 (51 in K–6, 12 in grades 7–8, 33 in grades 9–12) to 58 on February 9, 2026 (18 in K–5, 17 in grades 6–8, 23 in grades 9–12), a drop of about 40% (derived), with 2 to 6 kindergartners a year.
    - citation: Albany Annual Town Reports 2019–2025, Albany School District "Enrollment (as of ...)" tables
    - source: https://albanynh.org/wp-content/2026/02/202612-Albany-Town-Report-2025.pdf
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: district Albany
-   - note: Does not support the P20.1 premise that the school-age population is "steady." Scanned; read from page images and checked by adding the grade rows. 2026 page (2025 report p. 102): "ENROLLMENT (as of February 9, 2026) Total K-5 ... 18 Total 6-8 ... 17 Total 9-12 ... 23". Derived: (96 − 58) ÷ 96 = 39.6%. In the 2024 report (February 13, 2025) the printed totals (31, 16, 23) repeat the year before, while its grade rows add to 24, 11 and 24 (59). The tables do not say whether homeschooled or private-school children are counted. See table albany_district_students_by_level. Raw: raw/community/town/albany-town-report-2019.pdf … 2025.pdf (.ocr.txt)
+   - note: Does not support the P20.1 premise that the school-age population is "steady." Scanned; read from page images and checked by adding the grade rows. 2026 page (2025 report p. 102): "ENROLLMENT (as of February 9, 2026) Total K-5 ... 18 Total 6-8 ... 17 Total 9-12 ... 23". Derived: (96 − 58) ÷ 96 = 39.6%. In the 2024 report (February 13, 2025) the printed totals (31, 16, 23) repeat the year before, while its grade rows add to 24, 11 and 24 (59). The tables do not say whether homeschooled or private-school children are counted. See table albany_district_students_by_level. Raw: raw/community/town/albany-town-report-2019.ocr.txt … 2025.ocr.txt
 8. **Derived:** counts of Albany's school-age children differ by source and date: the 2020 Census counted 111 residents aged 5 to 17, the 2024 SAIPE model 94, the 2020-2024 ACS 68 (±34), Albany's February 2026 count 58 students, and Conway's March 2026 count 59 Albany students in its schools; no source found explains the gaps, which may include homeschooled, private, charter or EFA students and changes over time.
    - citation: Derived comparison of town-community-profile facts 3, 5 and 7; ACS S1701 (5–17); Conway file money-and-governance, students by home district table (March 2026)
    - source: https://data.census.gov/table/DECENNIALDHC2020.P12?g=060XX00US3300300420
@@ -591,7 +591,7 @@ This file covers the community and family side of the Albany residents' question
 - period: Calendar years 2019–2025; year: 2019–2025
 - source: Albany Annual Town Reports, Vital Statistics — https://albanynh.org/ (Reports list); 2025: https://albanynh.org/wp-content/2026/02/202612-Albany-Town-Report-2025.pdf
 - as_of: 2026-11-13
-- raw: raw/community/town/albany-town-report-2019.pdf … albany-town-report-2025.pdf (.ocr.txt)
+- raw: raw/community/town/albany-town-report-2019.ocr.txt … albany-town-report-2025.ocr.txt
 - note: Counted from page images of the NH Division of Vital Records resident birth reports printed in each town report; names are not repeated. The reports do not say whether every birth is listed. Report URLs: 2019 https://albanynh.org/wp-content/2020/03/Town-Report-2019.pdf; 2020 https://albanynh.org/wp-content/2021/03/2020-Town-Report_Albany-NH.pdf; 2021 https://albanynh.org/wp-content/2022/02/2021-Town-Report.pdf; 2022 https://albanynh.org/wp-content/2023/02/2022-Albany-Town-Report.pdf; 2023 https://albanynh.org/wp-content/2024/02/Albany-Town-Report-2023-web.pdf; 2024 https://albanynh.org/wp-content/2025/03/Albany-Town-Report-2024-proof.pdf.
 
 | Place | town_id | Year | Value | Note |
@@ -610,7 +610,7 @@ This file covers the community and family side of the Albany residents' question
 - period: Count dates December 31, 2019 to February 9, 2026 (as printed); year: 2020–2026
 - source: Albany Annual Town Reports 2019–2025, Albany School District "Enrollment" tables — https://albanynh.org/wp-content/2026/02/202612-Albany-Town-Report-2025.pdf
 - as_of: 2026-11-13
-- raw: raw/community/town/albany-town-report-2019.pdf … albany-town-report-2025.pdf (.ocr.txt)
+- raw: raw/community/town/albany-town-report-2019.ocr.txt … albany-town-report-2025.ocr.txt
 - note: Read from page images and checked by adding the grade rows. Grade bands changed in 2026 (K–5, 6–8, 9–12) after Conway moved grade 6 to Kennett Middle. Totals are **derived**. The 2021 report prints "as of January 14, 2021", but its counts follow on from the December 31, 2020 count by one grade, so the year may be a misprint. In the 2024 report the printed band totals (31, 16, 23) repeat the 2023 report's, while the grade rows add to 24, 11 and 24; the grade-row sums are shown. The tables do not say whether homeschooled students are included.
 
 | Place | district_id | Report | Count date (as printed) | Elementary (K–6; K–5 in 2026) | Middle (7–8; 6–8 in 2026) | Grades 9–12 | Total (derived) | Kindergarten |
@@ -748,7 +748,7 @@ This file covers the community and family side of the Albany residents' question
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: town Albany
-   - note: Budget page image (PDF p. 16): "4200.02 · Sheriff Department 72,760.00 72,760.00 63,540.00". Minutes text: "The Board discussed the option of increasing patrols during the busy seasons (summer/fall) and reducing patrols during the quieter months (winter/spring)." Raw: raw/community/town/albany-town-report-2025.pdf; selectmen-minutes/albany-bos-minutes-2026-02-04.ocr.txt
+   - note: Budget page image (PDF p. 16): "4200.02 · Sheriff Department 72,760.00 72,760.00 63,540.00". Minutes text: "The Board discussed the option of increasing patrols during the busy seasons (summer/fall) and reducing patrols during the quieter months (winter/spring)." Raw: raw/community/town/albany-town-report-2025.ocr.txt; selectmen-minutes/albany-bos-minutes-2026-02-04.ocr.txt
 3. The Carroll County Sheriff reported, for its directed patrols and calls in Albany in 2025, 20 accidents, 31 arrests, 10 drug-involved incidents, 27 alarms, 27 parking tickets and 526 citations and warnings, mostly lower than in 2024, and said it works with the Forest Service along the Kancamagus Highway and campgrounds in summer.
    - citation: Carroll County Sheriff's Office, 2025 Report for the Town of Albany (February 13, 2026), in the Albany 2025 Town Report, p. 42
    - source: https://albanynh.org/wp-content/2026/02/202612-Albany-Town-Report-2025.pdf
@@ -769,7 +769,7 @@ This file covers the community and family side of the Albany residents' question
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: town Albany
-   - note: Budget page image (PDF p. 15): "4200.01 · Ambulance & Rescue & Fire 213,000.00 213,000.00 240,000.00". February 4, 2026: "The T.A advised that the Town is in their final year of the contract for services and will renegotiate a new contract with the Fire Chief after the 2026 Town Meeting." October 28, 2026: "Fire / EMS MOU with Town of Conway - waiting on draft from Conway - no action taken." Raw: raw/community/town/albany-town-report-2025.pdf; selectmen-minutes/albany-bos-minutes-2026-02-04.ocr.txt; -2026-10-14.ocr.txt; -2026-10-28.ocr.txt
+   - note: Budget page image (PDF p. 15): "4200.01 · Ambulance & Rescue & Fire 213,000.00 213,000.00 240,000.00". February 4, 2026: "The T.A advised that the Town is in their final year of the contract for services and will renegotiate a new contract with the Fire Chief after the 2026 Town Meeting." October 28, 2026: "Fire / EMS MOU with Town of Conway - waiting on draft from Conway - no action taken." Raw: raw/community/town/albany-town-report-2025.ocr.txt; selectmen-minutes/albany-bos-minutes-2026-02-04.ocr.txt; -2026-10-14.ocr.txt; -2026-10-28.ocr.txt
 6. Under Albany's 2019 emergency plan, 911 calls go to the state E-911 center and are passed to Carroll County Dispatch, which dispatches the Sheriff's Office, Conway Fire Rescue and the road agent; the town's 2017 hazard plan instead listed the Conway Police Dispatch Center for fire and ambulance calls, and the 2019 plan mentions both.
    - citation: Albany Emergency Operations Plan (2019), Communications and Carroll County Dispatch sections; Albany Hazard Mitigation Plan Update 2017, Table 2.1
    - source: https://albanynh.org/wp-content/2023/05/EOP_Final_Jul10_19.pdf
@@ -838,7 +838,7 @@ This file covers the community and family side of the Albany residents' question
    - as_of: 2026-11-13
    - review_by: 2027-11-13
    - place: town Albany
-   - note: Read from the rotated page image (PDF p. 16), columns actual 2025, budget 2025, proposed 2026: "4312.01 · Winter Plowing & Snow Removal 25,882.50 85,500.00 85,500.00"; "4312.03 · Winter Salt 40,551.63 40,000.00 40,000.00"; "4312.05 · Winter Labor & Materials 111,312.11 10,000.00 10,000.00"; "4312.06 · Ferncroft Rd Plowing 9,590.00 7,500.00 7,500.00"; "Total 4312.0 · Highways & Streets 247,522.74 253,500.00 253,500.00". October 28, 2026 minutes: "Ferncroft Rd. agreement with Town of Sandwich - review formal response letter from the Town of Sandwich - discussion included leave as is with landfill privilege for winter road plowing". Voters were also asked for $50,000 for paving in 2026 (warrant Article 5). Raw: raw/community/town/albany-town-report-2025.pdf; selectmen-minutes/albany-bos-minutes-2026-10-28.ocr.txt
+   - note: Read from the rotated page image (PDF p. 16), columns actual 2025, budget 2025, proposed 2026: "4312.01 · Winter Plowing & Snow Removal 25,882.50 85,500.00 85,500.00"; "4312.03 · Winter Salt 40,551.63 40,000.00 40,000.00"; "4312.05 · Winter Labor & Materials 111,312.11 10,000.00 10,000.00"; "4312.06 · Ferncroft Rd Plowing 9,590.00 7,500.00 7,500.00"; "Total 4312.0 · Highways & Streets 247,522.74 253,500.00 253,500.00". October 28, 2026 minutes: "Ferncroft Rd. agreement with Town of Sandwich - review formal response letter from the Town of Sandwich - discussion included leave as is with landfill privilege for winter road plowing". Voters were also asked for $50,000 for paving in 2026 (warrant Article 5). Raw: raw/community/town/albany-town-report-2025.ocr.txt; selectmen-minutes/albany-bos-minutes-2026-10-28.ocr.txt
 6. Albany's selectmen reported in early 2026 that they were working with NHDOT on upcoming Route 16 projects, asking for a lower speed limit on Albany's section and pressing for safety work at the intersections of NH 16, NH 113 and Wildwood Road, and NHDOT held a public hearing on Albany project 45056 at the Town Hall on November 19, 2025.
    - citation: Albany 2025 Town Report, Selectmen's letter (p. 4); Selectmen's minutes, November 12, 2025 (correspondence)
    - source: https://albanynh.org/wp-content/2026/02/202612-Albany-Town-Report-2025.pdf

@@ -140,3 +140,9 @@ These likely come from NH DOE's source data rather than the site's import code, 
 - The Town of Conway's budget committee minutes after January 2024.
 - NHHFA rents.
 - Any Kennett apprenticeship by name.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 8 saved bus and transportation copies (17 in all; schools, child care centers, businesses and other public places keep theirs).
+- 11 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

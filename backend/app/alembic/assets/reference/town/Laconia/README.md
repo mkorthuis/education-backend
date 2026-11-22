@@ -82,3 +82,10 @@ Applied November 16, 2026 to both library copies (backend commit `c7c868a`), exc
 ## For the district
 
 A public Google Doc of the district's after-school bus routes, and one Project EXTRA schedule, list children's names. The agent didn't save the names. The district may want to know.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 2 saved bus and transportation copies (208 in all; schools, child care centers, businesses and other public places keep theirs).
+- 1 original route sheet (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- House numbers of home stops removed from quotes in the research files.

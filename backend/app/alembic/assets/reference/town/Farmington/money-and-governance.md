@@ -185,7 +185,7 @@ Part of the Farmington research (town/Farmington). Gathered November 21, 2026.
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Farmington
-   - note: Text: "Net Local School Appropriations $15,247,619 ... Net Education Grant ($6,293,918) Locally Retained State Education Tax ($1,080,183) Net Required Local Education Tax Effort $7,873,518." Derived: (6,293,918 + 1,080,183) ÷ 15,247,619 = 48.4%. The site's data give the resulting rates (local school $7.56 of a $15.64 total in 2025). Raw: raw/money/town/town-report-2025.pdf (PDF p. 190); raw/money/town/town-report-2025.txt
+   - note: Text: "Net Local School Appropriations $15,247,619 ... Net Education Grant ($6,293,918) Locally Retained State Education Tax ($1,080,183) Net Required Local Education Tax Effort $7,873,518." Derived: (6,293,918 + 1,080,183) ÷ 15,247,619 = 48.4%. The site's data give the resulting rates (local school $7.56 of a $15.64 total in 2025). Raw: raw/money/town/town-report-2025.txt (PDF p. 190); raw/money/town/town-report-2025.txt
 2. Farmington completed a town-wide statistical update in 2024 that moved every property to 2024 market value, and its next full revaluation is due in 2029; the update is why the town's total tax rate fell from $25.66 in 2023 to $14.88 in 2024 while assessed values roughly doubled (**derived** reading of the site's tax data).
    - citation: Town of Farmington Assessing Department 2024 Report
    - source: https://www.farmington.nh.us/DocumentCenter/View/448
@@ -304,7 +304,7 @@ Part of the Farmington research (town/Farmington). Gathered November 21, 2026.
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Farmington
-   - note: Read from the rendered page (text layer jumbled). School subtotal: principal beginning $803,563.47, withdrawals $107,941.24 (Bus $92,000; Kitchen $15,941.24), principal end $695,622.23, income end $178,810.36, grand total $874,432.59; the "New funds created/add" column is blank for every school fund. See table farmington_school_capital_reserves_2025. Raw: raw/money/town/town-report-2025.pdf (PDF p. 198); raw/money/town/town-report-2025.trust-funds-p198.transcribed.txt
+   - note: Read from the rendered page (text layer jumbled). School subtotal: principal beginning $803,563.47, withdrawals $107,941.24 (Bus $92,000; Kitchen $15,941.24), principal end $695,622.23, income end $178,810.36, grand total $874,432.59; the "New funds created/add" column is blank for every school fund. See table farmington_school_capital_reserves_2025. Raw: raw/money/town/town-report-2025.txt (PDF p. 198); raw/money/town/town-report-2025.trust-funds-p198.transcribed.txt
 4. In March 2024 Farmington voters approved nine articles moving a total of $700,000 (**derived** sum) from the June 30, 2024 fund balance into school reserve funds, including $25,000 for outdoor athletic facilities, $50,000 for capital improvements and renovations, $125,000 for the heating system and $100,000 for special education, with nothing raised from taxes.
    - citation: Official Ballot, Annual School Election, March 12, 2024, Articles 11–19 (Annual Report March 2025, pp. 54–55)
    - source: https://www.sau61.org/departments/business-office/files/documents/24-25%20Annual%20Report%20Document.pdf

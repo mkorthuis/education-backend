@@ -146,3 +146,8 @@ None were needed; nothing here contradicts an earlier town. Jackson's file has t
 - Not found anywhere: deliberative session minutes and attendance; the West Running Brook drop-off study; measured bus ride times; before-care rates; specials minutes; how PACE students are chosen; counselor wait times; teacher turnover; whether Next students can take Pinkerton AP courses.
 
 The shared web search limit was used up before most Derry agents started, so nearly all sources came from direct visits to known sites.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 11 saved bus and transportation copies (51 in all; schools, child care centers, businesses and other public places keep theirs).

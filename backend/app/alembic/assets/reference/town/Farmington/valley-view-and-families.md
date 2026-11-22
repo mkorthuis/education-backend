@@ -170,14 +170,14 @@ This file covers Valley View Community School (pre-K to grade 3) for the young-f
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Farmington
-   - note: **Derived:** 7:45 − 6:18 = 87 minutes; 3:45 − 2:35 = 70 minutes. Sheet: "6:18 Horne Town Road @ Willow Lane" (first stop) ... "7:20 Meetinghouse Hill Road @ #346" (last pickup) ... "7:45 Valley View Comm. School". The afternoon page lists "3:45 Ten Rod Road @ #291" and then "3:44 Meetinghouse Hill Road @ #346", so the last time is approximate. These are scheduled times; a child's ride depends on the stop. The sheets name roads, not neighborhoods, and don't mention Blue Job Mountain. Raw: raw/elementary/docs/route-blue.txt
+   - note: **Derived:** 7:45 − 6:18 = 87 minutes; 3:45 − 2:35 = 70 minutes. Sheet: "6:18 Horne Town Road @ Willow Lane" (first stop) ... "7:20 Meetinghouse Hill Road" (last pickup) ... "7:45 Valley View Comm. School". The afternoon page lists "3:45 Ten Rod Road" and then "3:44 Meetinghouse Hill Road", so the last time is approximate. These are scheduled times; a child's ride depends on the stop. The sheets name roads, not neighborhoods, and don't mention Blue Job Mountain. Raw: raw/elementary/docs/route-blue.txt
 4. **Derived:** on Farmington's Purple route (Main Street, Cocheco, Chestnut Hill, Governors, Dodge Cross, Elm, Charles, Silver and Bay roads), the first morning stop is at 6:50 a.m. and the bus reaches Valley View at 7:50 a.m., about 60 minutes later; the afternoon run leaves Valley View at 2:35 p.m. and makes its last stop at 3:38 p.m., about 63 minutes later.
    - citation: Farmington School District, First Student Bus Stops 2026-2027, Route Purple
    - source: https://www.sau61.org/departments/transportation/files/documents/Farmington%20Purple.docx
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Farmington
-   - note: **Derived:** 7:50 − 6:50 = 60; 3:38 − 2:35 = 63. Sheet: "6:50 Main Street @ Pearson Road" ... "7:40 Bay Road @ #196" ... "7:50 Valley View community Sciool"; PM "3:38 Bay Road @ #229". The scheduled 7:50 arrival is after Valley View's 7:45 start. Raw: raw/elementary/docs/route-purple.txt
+   - note: **Derived:** 7:50 − 6:50 = 60; 3:38 − 2:35 = 63. Sheet: "6:50 Main Street @ Pearson Road" ... "7:40 Bay Road" ... "7:50 Valley View community Sciool"; PM "3:38 Bay Road". The scheduled 7:50 arrival is after Valley View's 7:45 start. Raw: raw/elementary/docs/route-purple.txt
 5. **Derived:** Farmington's Red route (Spring Street, Ridge Road, Old Trotting Park and Route 11 near the town center) makes its first morning stop at 6:45 a.m. and reaches Farmington High and Valley View at 7:25 a.m., about 40 minutes later; the sheet says the afternoon run follows the same order, starting at Henry Wilson at 2:45 p.m., without times.
    - citation: Farmington School District, First Student Bus Stops 2026-2027, Route Red
    - source: https://www.sau61.org/departments/transportation/files/documents/farmington%20red%20route.docx

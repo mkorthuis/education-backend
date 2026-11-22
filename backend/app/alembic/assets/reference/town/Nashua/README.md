@@ -170,3 +170,8 @@ Manchester and Nashua each wrote some of the same state rules with no place (gua
 - Not found anywhere: on-time bus data; crossing guard posts by school; an elementary zone map; teacher turnover by school; gifted services; recess and specials minutes at Charlotte Avenue; which middle schools teach Algebra 1 in grade 8; middle school activity fees; how charter and private students fare after moving to South; college enrollment by high school.
 
 The shared web search limit ran out partway through most agents' work, so news coverage was searched little.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 14 saved bus and transportation copies (20 in all; schools, child care centers, businesses and other public places keep theirs).

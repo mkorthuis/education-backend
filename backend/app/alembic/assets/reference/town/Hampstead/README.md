@@ -77,3 +77,8 @@ Gathered November 21, 2026, in the first wave of the ToLoad towns. Hampstead is 
   - **Those Drive folders:** their links need an access key from the full link. The money agent couldn't open them, so board minutes (what was cut after the default budgets, the class-size cap) and the contracts are unread. Teacher pay comparisons can come from the site's salary schedules.
   - **The HMS handbook:** not linked from HMS's home page.
   - **A state labor board (PELRB) ruling on the SRO post:** HTTP 403.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 7 saved bus and transportation copies (28 in all; schools, child care centers, businesses and other public places keep theirs).

@@ -559,7 +559,7 @@ This file covers how Salem students are assigned to elementary schools and get t
    - as_of: 2026-11-15
    - review_by: 2027-11-15
    - place: district Salem
-   - note: Listing text: "6:41 AM 48 N BROADWAY"; "6:43 AM N BROADWAY & FRANCIS ST (ESE)"; "6:46 AM N BROADWAY AT WALMART ENTRANCE (E)"; "2:37 PM 375 S BROADWAY -PARENT WILL CROSS"; Salem High: "6:49 AM 37 MAIN ST (St. Joe's Crosswalk) / 41 Main Street". No published crash, crosswalk or traffic counts near Woodbury (206 Main Street) or Lancaster were found on the town or district sites. Raw: raw/daily/woodbury_2026-2027_updated_routes.txt; raw/daily/salemhsroutebusstoplisting26-27.txt
+   - note: Listing text: "6:41 AM 48 N BROADWAY"; "6:43 AM N BROADWAY & FRANCIS ST (ESE)"; "6:46 AM N BROADWAY AT WALMART ENTRANCE (E)"; "2:37 PM S BROADWAY -PARENT WILL CROSS"; Salem High: "6:49 AM 37 MAIN ST (St. Joe's Crosswalk) / 41 Main Street". No published crash, crosswalk or traffic counts near Woodbury (206 Main Street) or Lancaster were found on the town or district sites. Raw: raw/daily/woodbury_2026-2027_updated_routes.txt; raw/daily/salemhsroutebusstoplisting26-27.txt
 
 5. Woodbury Middle School's 2026-27 handbook and website give no crossing guard, walking route or car-line instructions for its Main Street site, and the June 13, 2023 board minutes recorded that Woodbury's new bus drop-off would not be ready that fall.
    - citation: Woodbury Student/Parent Handbook 2026-27; Salem School Board minutes, June 13, 2023

@@ -174,3 +174,8 @@ Every page on mansd.org and its school subdomains returned a bot check on Novemb
 - Not found anywhere: dual language seat allocation; Jewett's kindergarten aides; a list of daycare bus stops; which schools serve free meals to all; crossing guard posts near Parkside; Kreiva students' city bus fares; Trinity's tuition; Goffstown's tuition rate; Gossler Park's reading coaches.
 
 The shared web search limit ran out near the end of several agents' work.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 21 saved bus and transportation copies (23 in all; schools, child care centers, businesses and other public places keep theirs).

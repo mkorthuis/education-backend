@@ -170,3 +170,9 @@ Nothing else in Rochester's files contradicts an earlier town.
 
 - **Blocked to automated requests (for the browser pass):** all of rochesterschools.com (school pages, handbooks, the middle school's schedule, courses, clubs and sports, Creteau's program pages, Bud Carlson's page, the policy index and the 504, foster care, ESL and military family pages), rochesternh.gov (crossing guards, council minutes, the planning pipeline), the city charter on ecode360, Wakefield's school and town sites, the state labor board's contract library (PELRB) and NH DES lead test results. Each file's "Not retrieved" section lists the URLs.
 - **Not found anywhere:** therapy and counseling wait times, a chronic absenteeism rate for Rochester, how many Rochester students attend charter or private schools, current pay scales, any document on Rochester Middle School's repairs, CTE seat and waitlist counts, NH DOE's Title I lists for 2025-26 and later.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 10 saved bus and transportation copies (603 in all; schools, child care centers, businesses and other public places keep theirs).
+- 2 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

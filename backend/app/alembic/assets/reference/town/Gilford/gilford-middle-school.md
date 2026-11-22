@@ -391,7 +391,7 @@ Questions answered wholly by earlier files: none. The library has the state home
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Gilford
-   - note: **Derived** summary of the seven "GILFORD HIGH/MIDDLE SCHOOL PICK UP" runs (routes 2–8). Earliest: route 8, 6:37 at Stone Road; latest first stop: routes 4 and 7, 6:49. See table gilford_high_middle_bus_runs_2026_27. File posted August 28, 2026 in the Bus Routes folder linked from the transportation page. GHS address from its site footer (raw/middle/web/ghs-sequencing.txt). Raw: raw/middle/buses/gilford-bus-routes-2026-27-revised.pdf and .txt; raw/middle/buses/derived-high-middle-runs-2026-27.csv
+   - note: **Derived** summary of the seven "GILFORD HIGH/MIDDLE SCHOOL PICK UP" runs (routes 2–8). Earliest: route 8, 6:37 at Stone Road; latest first stop: routes 4 and 7, 6:49. See table gilford_high_middle_bus_runs_2026_27. File posted August 28, 2026 in the Bus Routes folder linked from the transportation page. GHS address from its site footer (raw/middle/web/ghs-sequencing.txt). Raw: raw/middle/buses/gilford-bus-routes-2026-27-revised.txt; raw/middle/buses/derived-high-middle-runs-2026-27.csv
 
 3. In the afternoon, Gilford's seven 2026-27 high/middle school bus runs leave Gilford High School at 2:18 or 2:20 p.m., after the middle school's 2:14 dismissal, and make their last stops between 2:49 and 3:06 p.m.
    - citation: First Student, Gilford School District 2026-2027 bus routes
@@ -741,7 +741,7 @@ Questions answered wholly by earlier files: none. The library has the state home
 - period: 2026-27 school year, route sheets "Gilford Bus Routes 26-27 Revised" (posted August 28, 2026); year: 2027
 - source: First Student, Gilford School District 2026-2027 bus routes, linked from the SAU 73 Transportation page — https://drive.google.com/file/d/1wQ3ze1hgAXz91HjRzXFg8TYzRE6v3bUo/view
 - as_of: 2026-11-21
-- raw: raw/middle/buses/gilford-bus-routes-2026-27-revised.pdf; raw/middle/buses/gilford-bus-routes-2026-27-revised.txt; raw/middle/buses/derived-high-middle-runs-2026-27.csv
+- raw: raw/middle/buses/gilford-bus-routes-2026-27-revised.txt; raw/middle/buses/derived-high-middle-runs-2026-27.csv
 - topic: district-transportation
 - place: district Gilford
 - note: **Derived** layout. Value is the scheduled minutes from the route's first morning stop to its Gilford High School arrival. Middle and high school students ride the same "HIGH/MIDDLE SCHOOL" runs; GMS starts at 7:25 a.m. and ends at 2:14 p.m. "PM last stop" is the last home stop before the bus goes on to Gilford Elementary. Roads are taken from the stop names (house numbers dropped); a road is listed only where the sheet shows a morning stop. Scheduled times only. Route 5 continues to the Meadows at 7:34 a.m. after Gilford High. See facts 2–4 of district-transportation.

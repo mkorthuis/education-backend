@@ -1006,7 +1006,7 @@ district_service:
     grades: [9, 12]
     arrangement: joint_maintenance
     source: https://5il.co/2bclq
-    note: Prospect Mountain High School, run by a joint board of the Alton and Barnstead school boards under a joint maintenance agreement (RSA 194:21); the State Board approved it in October 2001 and Alton adopted it December 19, 2001; Alton pays 45.55% of joint costs
+    note: Prospect Mountain High School, run by a joint board of the Alton and Barnstead school boards under a joint maintenance agreement (RSA 194:21); the State Board approved it in October 2001 and Alton adopted it December 19, 2001; operating costs are split by each town's share of students, so Alton's share changes yearly (45.55% in 2026-27, 50.64% in 2023-24), and capital costs 50/50
   # ---- SAU 74 ----
   - district: Barrington
     receiving_district: Dover
@@ -1159,7 +1159,7 @@ district_service:
     grades: [9, 12]
     arrangement: joint_maintenance
     source: https://5il.co/2bclq
-    note: Prospect Mountain High School, run by a joint board of the Alton and Barnstead school boards under a joint maintenance agreement (RSA 194:21); the State Board approved it in October 2001 and Barnstead adopted it November 20, 2001; Barnstead pays 54.45% of joint costs
+    note: Prospect Mountain High School, run by a joint board of the Alton and Barnstead school boards under a joint maintenance agreement (RSA 194:21); the State Board approved it in October 2001 and Barnstead adopted it November 20, 2001; operating costs are split by each town's share of students, so Barnstead's share changes yearly (54.45% in 2026-27), and capital costs 50/50
   # ---- SAU 89 ----
   - district: Mason
     receiving_district: Milford
@@ -1469,9 +1469,9 @@ district_service:
     grades: [9, 12]
     arrangement: tuition_contract
     starts: 2026-07-01
-    ends: 2037-06-30
-    source: https://www.nottingham-nh.gov/sites/g/files/vyhlif3611/f/uploads/nottingham_nh_school_proof_031026_sample.pdf
-    note: "Article 5, approved by voters in March 2026, subject to State Board approval; the article says \"ten (10)-year\" but its dates span eleven years"
+    ends: 2036-06-30
+    source: https://drive.google.com/file/d/1EmO-Aj6m1tab-qbCX2oo-A75lOBkLUnY/view
+    note: "The agreement (paragraphs 2 and 19, in the December 17, 2025 and April 1, 2026 board packets) runs ten years to June 30, 2036 and renews automatically for one three-year period unless either side gives notice before March 30, 2035; voters approved it in March 2026 (Article 5, whose text says ending June 30, 2037), subject to State Board approval"
   # ---- SAU 108 ----
   - district: Pasquaney
     receiving_district: Newfound Area

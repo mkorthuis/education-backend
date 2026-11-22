@@ -656,7 +656,7 @@ This file covers Somersworth Middle School (grades 6–8), Somersworth High Scho
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Somersworth
-   - note: Sheet: "S1 PM HIGH/MIDDLE SCHOOLS 2:13 Pick Up Middle School Students 2:17 Pick Up High School Students"; S2 "2:13 ... 2:16"; S3 "2:13 ... 2:16"; S4 "2:15 ... 2:18"; S5 "2:15 ... 2:18". A search of the 18-page text for "late" and "activity" found nothing. Contact on the SAU's bus page (https://www.sau56.org/resources/parent_resources/bus_routes_and_information; raw/high/sau/resources_parent_resources_bus_routes_and_information.txt): "Regular Student Transportation First Student ... 603-692-4406". The high school handbook says students may not stay on campus after 2:30 pm unless supervised by staff. The elementary file covers Maple Wood and Idlehurst buses. Raw: raw/high/sau/bus-routes-2026-27.pdf (.txt)
+   - note: Sheet: "S1 PM HIGH/MIDDLE SCHOOLS 2:13 Pick Up Middle School Students 2:17 Pick Up High School Students"; S2 "2:13 ... 2:16"; S3 "2:13 ... 2:16"; S4 "2:15 ... 2:18"; S5 "2:15 ... 2:18". A search of the 18-page text for "late" and "activity" found nothing. Contact on the SAU's bus page (https://www.sau56.org/resources/parent_resources/bus_routes_and_information; raw/high/sau/resources_parent_resources_bus_routes_and_information.txt): "Regular Student Transportation First Student ... 603-692-4406". The high school handbook says students may not stay on campus after 2:30 pm unless supervised by staff. The elementary file covers Maple Wood and Idlehurst buses. Raw: raw/high/sau/bus-routes-2026-27.txt
 
 ## district-school-day-and-calendar: The School Day at Somersworth Middle and High Schools
 

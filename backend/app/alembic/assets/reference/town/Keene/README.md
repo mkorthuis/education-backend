@@ -91,3 +91,8 @@ The browser pass (November 16, 2026) opened what it could. NH DRA's 2026 tax rat
 - MC2's document library (HTTP 403).
 - NH DOE's special education evaluation-timeliness data (HTTP 403).
 - PELRB's copy of the Keene teachers' contract (HTTP 403).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 8 saved bus and transportation copies (174 in all; schools, child care centers, businesses and other public places keep theirs).

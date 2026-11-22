@@ -80,3 +80,9 @@ Applied November 16, 2026 to both library copies (backend commit `c7c868a`), exc
 
 - NH DOE's gifted-and-talented report pages (HTTP 403); the reports themselves are posted as files, not pages.
 - The athletic participation fee amount (policy requires one; no page gives it), MST bus times, Mountain View's advanced math entry criteria, and the midday kindergarten bus schedule.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 6 saved bus and transportation copies (6 in all; schools, child care centers, businesses and other public places keep theirs).
+- The state's resident birth, marriage and death lists removed from 3 saved town report copies (headings and record counts kept); 3 report PDFs deleted.

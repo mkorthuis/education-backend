@@ -81,3 +81,10 @@ The browser pass (November 16, 2026): NH DOE's special education page lists only
 - The PEAK after-school page (a bot check).
 - Portsmouth Naval Shipyard's careers pages and Coast Guard and Navy housing pages (HTTP 403).
 - The district's Title I plans and 2026 annual report (Google sign-in; can't be opened without an account).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 15 saved bus and transportation copies (340 in all; schools, child care centers, businesses and other public places keep theirs).
+- 5 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- House numbers of home stops removed from quotes in the research files.

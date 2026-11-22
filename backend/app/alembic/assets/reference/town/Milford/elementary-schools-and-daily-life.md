@@ -543,7 +543,7 @@ This file covers how Milford children start school and what their days look like
    - as_of: 2026-11-16
    - review_by: 2027-11-16
    - place: district Milford
-   - note: Each sheet (M01 to M13, AM and PM) lists "Jacques Memorial Elementary School Heron Pond" after the morning stops and before the afternoon stops; route M01 AM, for example, runs from 7:49 at 17 Souhegan St to 8:07 at 15 Shady Ln. The earliest and latest times are **derived** from all 26 sheets. Questions go to Butler's Bus (603-213-6401 for late buses). Raw: raw/elementary/elem-bus-routes-2026-27.txt (pages 1–4 also read as rendered images); raw/elementary/bus-route-time-windows-derived.txt
+   - note: Each sheet (M01 to M13, AM and PM) lists "Jacques Memorial Elementary School Heron Pond" after the morning stops and before the afternoon stops; route M01 AM, for example, runs from 7:49 on Souhegan St to 8:07 on Shady Ln. The earliest and latest times are **derived** from all 26 sheets. Questions go to Butler's Bus (603-213-6401 for late buses). Raw: raw/elementary/elem-bus-routes-2026-27.txt (pages 1–4 also read as rendered images); raw/elementary/bus-route-time-windows-derived.txt
 
 2. Milford's middle and high school bus routes for 2026-27 use the same 13 route numbers (M01 to M13) as the elementary routes and run earlier: morning pickups from 6:42 to 7:08 a.m. and afternoon drop-offs from 2:24 to 2:56 p.m. (derived); the sheets don't say whether the same buses run both sets.
    - citation: Milford MMS & MHS Bus Routes 2026-2027 (revised September 9, 2026)

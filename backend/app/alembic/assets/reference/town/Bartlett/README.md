@@ -101,3 +101,9 @@ Gathered November 13, 2026. This is the second town, after Jackson, and the firs
 - Results for Kennett students by sending town.
 - Whether ParentSquare translation is on.
 - A written JBES-to-Kennett IEP procedure.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 2 saved bus and transportation copies (2 in all; schools, child care centers, businesses and other public places keep theirs).
+- The state's resident birth, marriage and death lists removed from 1 saved town report copy (headings and record counts kept); 1 report PDF deleted.

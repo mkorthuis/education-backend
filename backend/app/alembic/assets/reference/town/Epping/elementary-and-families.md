@@ -153,7 +153,7 @@ This file covers Epping Elementary School (EES, preschool to grade 5) and the ye
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Epping
-   - note: Raw: raw/elementary/ees-bus-routes-2026-27-redacted.txt. Road names as printed on the sheets ("L on Blake ... R on Old State ... R on Old Bridge Rd"; "R on Fogg Rd, L on 125, R on 87 Hedding Rd"). Routes may change during the year; First Student (603-778-6900) gives a family's stop.
+   - note: Raw: raw/elementary/ees-bus-routes-2026-27-redacted.txt. Road names as printed on the sheets ("L on Blake ... R on Old State ... R on Old Bridge Rd"; "R on Fogg Rd, L on 125, R on Hedding Rd"). Routes may change during the year; First Student (603-778-6900) gives a family's stop.
 6. Epping Elementary's afternoon buses load at 3:15 p.m.; the two afternoon route sheets that print times show last drop-offs at 4:05 p.m. (Route 2) and 4:07 p.m. (Route 4), about 50 minutes after loading (**derived**), and the other four afternoon sheets print no times.
    - citation: Epping Elementary School bus route sheets, Routes 1–6 PM, 2026-27; EES FAQ, Car Line Route
    - source: https://drive.google.com/drive/folders/1iIGNz1341KWwvd9BNlX_Ii4bwIaBajiw

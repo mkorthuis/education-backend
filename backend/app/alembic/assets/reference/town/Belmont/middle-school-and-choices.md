@@ -282,7 +282,7 @@ This file covers Belmont Middle School (BMS, grades 5–8, 38 School Street) and
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Shaker Regional
-   - note: Text: "Open Library is available to all students Monday through Thursday in the Library Media Center from 2:45 pm - 4:50 pm. A late bus for Canterbury students is available in the front lot at 4:50 pm that will bring students into Canterbury. An Open Library Parent Permission form will need to be filled out and on file before a student may access the Open Library." The route sheets linked from the BMS home page (https://bms.sau80.org/UserFiles/Servers/Server_319300/File/26-27%20Bus%20Routes.pdf) were searched for "late," "activity" and afternoon runs after 4:30 p.m.; none were found (**derived** search). Standards recovery sessions have transportation (district-curriculum-and-assessment 9). The clubs page lists no Open Library adviser or times yet ("TBD"). Raw: raw/middle/bms-handbook-2026-27.txt; raw/middle/bms-bus-routes-2026-27.pdf (.txt).
+   - note: Text: "Open Library is available to all students Monday through Thursday in the Library Media Center from 2:45 pm - 4:50 pm. A late bus for Canterbury students is available in the front lot at 4:50 pm that will bring students into Canterbury. An Open Library Parent Permission form will need to be filled out and on file before a student may access the Open Library." The route sheets linked from the BMS home page (https://bms.sau80.org/UserFiles/Servers/Server_319300/File/26-27%20Bus%20Routes.pdf) were searched for "late," "activity" and afternoon runs after 4:30 p.m.; none were found (**derived** search). Standards recovery sessions have transportation (district-curriculum-and-assessment 9). The clubs page lists no Open Library adviser or times yet ("TBD"). Raw: raw/middle/bms-handbook-2026-27.txt; raw/middle/bms-bus-routes-2026-27.txt.
 2. Belmont Middle School says changes to a student's usual way home must be entered in PickUp Patrol before 1:30 p.m., that no student may stay in the building after 2:45 p.m. unless supervised by a coach or teacher, and that parents are responsible for transportation home from after-school detention.
    - citation: Belmont Middle School 2026-27 Student & Parent Handbook, "Pick Up Patrol," pp. 21–22; "School Hours," p. 12; "Expectations and Responsibilities of Students," p. 37
    - source: https://bms.sau80.org/common/pages/GetFile.ashx?key=ffpSAtAH
@@ -303,7 +303,7 @@ This file covers Belmont Middle School (BMS, grades 5–8, 38 School Street) and
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Shaker Regional
-   - note: The route sheets were searched for "Christian," "Trinity," "Meredith Center," "Sant Bani," "Tilton School," "private" and "Laconia" (**derived** search); the only Laconia stop is "8:59 Laconia High School Out Dewey Street" on one route. Whether SAU 80 would carry a Belmont private school student to a stop on an existing route is not stated. Raw: raw/middle/bms-bus-routes-2026-27.pdf (.txt).
+   - note: The route sheets were searched for "Christian," "Trinity," "Meredith Center," "Sant Bani," "Tilton School," "private" and "Laconia" (**derived** search); the only Laconia stop is "8:59 Laconia High School Out Dewey Street" on one route. Whether SAU 80 would carry a Belmont private school student to a stop on an existing route is not stated. Raw: raw/middle/bms-bus-routes-2026-27.txt.
 
 ## district-enrichment-and-advanced-learners: Advanced Math, Enrichment, Arts, Music and Clubs at Belmont Middle School
 

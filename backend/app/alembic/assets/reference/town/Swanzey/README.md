@@ -84,3 +84,10 @@ The district's BoardDocs policies and minutes refused the agents.
   - NHIAA's co-op lists;
   - the town site;
   - mrsdproject.com (a configuration error).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 3 saved bus and transportation copies (279 in all; schools, child care centers, businesses and other public places keep theirs).
+- 3 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- House numbers of home stops removed from quotes in the research files.

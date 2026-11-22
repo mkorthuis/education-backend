@@ -6,7 +6,7 @@ Gathered November 21, 2026, in the fourth wave of the ToLoad towns. Weare is in 
 - **The Weare School District** runs Center Woods School (preschool to grade 3) and Weare Middle School (grades 4–8).
 - **The John Stark Regional School District** (Weare and Henniker) runs John Stark Regional High School (grades 9–12). Its students may take career programs at the Concord Regional Technical Center (CRTC).
 
-Henniker has no research of its own; facts about John Stark and SAU 24 serve both towns.
+Facts about John Stark and SAU 24 serve both towns. Henniker's own research is in `../Henniker/` and cites these files.
 
 ## Files
 
@@ -81,3 +81,10 @@ The agents' blocked pages were:
 - the state's 2022 release on John Stark.
 
 The Weare School Board's public Drive folder covered minutes and policies through June 2026. Later minutes are on Simbli and weren't read.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 12 saved bus and transportation copies (1,849 in all; schools, child care centers, businesses and other public places keep theirs).
+- 5 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- House numbers of home stops removed from quotes in the research files.

@@ -79,3 +79,9 @@ The agents' blocked pages were:
 None is essential to the answers.
 
 **Site data labels:** the site's town enrollment year "2026" is the October 1, 2025 count (2025-26). The brief called it 2026-27.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 8 saved bus and transportation copies (28 in all; schools, child care centers, businesses and other public places keep theirs).
+- House numbers of home stops removed from quotes in the research files.

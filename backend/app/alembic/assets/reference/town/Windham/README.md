@@ -115,3 +115,8 @@ Salem and Londonderry are loaded locally, so the folders were re-synced.
   - individual job postings;
   - the YMCA's waitlist length;
   - the FY2028 default budget and 2027 warrant (not posted yet).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 4 saved bus and transportation copies (4 in all; schools, child care centers, businesses and other public places keep theirs).

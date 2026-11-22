@@ -94,3 +94,9 @@ Mason sends its grades 6–12 on tuition. The district votes by official ballot.
   - the tax year 2026 rate;
   - teacher turnover;
   - the Mason contract.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 11 saved bus and transportation copies (565 in all; schools, child care centers, businesses and other public places keep theirs).
+- 3 original route sheets (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.

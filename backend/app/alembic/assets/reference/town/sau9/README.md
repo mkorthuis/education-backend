@@ -34,3 +34,8 @@ Raw copies are in `raw/` (110 MB in all).
 ## SAU 9 and Kennett facts in the Jackson files
 
 Many SAU-wide and Kennett facts were gathered for Jackson before this folder existed. On November 13, 2026 the Jackson files were folded into the shared topics: the 50 SAU-wide facts now carry `place: sau 9`, and the 92 Kennett and career center facts keep `place: district Conway`, under the same shared topics this folder uses. They stay in the Jackson files; the loader merges shared topics across files, and the place decides who sees each fact. `kennett-and-sau9.md` ends with the list of them, now in the new topic names and numbers.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 2 saved bus and transportation copies (2 in all; schools, child care centers, businesses and other public places keep theirs).

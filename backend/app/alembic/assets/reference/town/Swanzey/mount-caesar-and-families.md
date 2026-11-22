@@ -128,13 +128,13 @@ This file covers Mount Caesar Elementary School (Mt. Caesar, "MTC"), the Monadno
    - review_by: 2027-11-21
    - place: district Monadnock Regional
    - note: Minutes: "the information for the bussing contract went out to 7 or 8 companies, 2 interested and 2 companies presented bids. The administration would recommend the Board accept the First Student bid which came in lower than the previous extension ... MOTION: H. Blood MOVED to approve the 5-year transportation bid from First Student as presented." Bus Routes page: "Please call 603-352-2303 with any questions or concerns involving bus transportation". The summer 2026 Beyond the Bell camp used Student Transportation of NH instead, after a lower bid (September 1, 2026 minutes). Raw: raw/elementary/minutes/_MRSDBoardMarch182025.txt; raw/elementary/mrsd-bus-routes.txt
-2. On the district's 2026-27 elementary bus routes (posted as of August 13, 2026), route M-8 "West Swanzey" picks up at 27, 37 and 59 South Winchester Street at 7:47 a.m. and at the Riverbend crosswalk and 94 South Winchester Street after 8:08 a.m., and arrives at Mount Caesar at 8:21 a.m.; route M-12 "Swanzey Lake/West Swanzey" stops at Cobble Hill Road and South Winchester Street at 7:44 a.m. and arrives at 8:13 a.m.
+2. On the district's 2026-27 elementary bus routes (posted as of August 13, 2026), route M-8 "West Swanzey" picks up at three South Winchester Street stops at 7:47 a.m. and at the Riverbend crosswalk and a South Winchester Street stop after 8:08 a.m., and arrives at Mount Caesar at 8:21 a.m.; route M-12 "Swanzey Lake/West Swanzey" stops at Cobble Hill Road and South Winchester Street at 7:44 a.m. and arrives at 8:13 a.m.
    - citation: Monadnock Regional School District, 2026-2027 Elementary Bus Routes (as of 8/13/2026)
    - source: https://www.mrsd.org/fs/resource-manager/view/f7112cc0-a2a4-4f68-bcd1-36455668ca63
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Monadnock Regional
-   - note: Route text: "M-8 West Swanzey 7:28 @ 50 Basehill Rd ... 7:46 @ Swanzey & West ST 7:47 @ 27 S. Winchester @ 37 S. Winchester @ 59 S. Winchester 7:50 @ Princeton Properties ... 8:08 @ Riverbend (@ cross walk on S. Winchester) @ 94 S. Winchester ST 8:21 Arrive Mt. Caesar"; "M-12 Swanzey Lake/West Swanzey 7:42 @ 16 Denman Thomsen ... 7:44 @ Cobble & South Winchester ... 8:13 @ Arrive Mt. Caesar". Only morning times are posted. See table swanzey_mtc_bus_ride_minutes_2026_27. Raw: raw/elementary/mrsd-elementary-bus-routes-2026-27.txt
+   - note: Route text: "M-8 West Swanzey 7:28 @ Basehill Rd ... 7:46 @ Swanzey & West ST 7:47 @ S. Winchester @ S. Winchester @ S. Winchester 7:50 @ Princeton Properties ... 8:08 @ Riverbend (@ cross walk on S. Winchester) @ S. Winchester ST 8:21 Arrive Mt. Caesar"; "M-12 Swanzey Lake/West Swanzey 7:42 @ 16 Denman Thomsen ... 7:44 @ Cobble & South Winchester ... 8:13 @ Arrive Mt. Caesar". Only morning times are posted. See table swanzey_mtc_bus_ride_minutes_2026_27. Raw: raw/elementary/mrsd-elementary-bus-routes-2026-27.txt
 3. **Derived:** on the 2026-27 morning routes, the scheduled ride from South Winchester Street to Mount Caesar is about 34 minutes from the 7:47 stops and about 13 minutes from the Riverbend stop, the longest West Swanzey ride (M-8's first stop on Basehill Road) is about 53 minutes, and Mount Caesar's buses are scheduled to arrive between 8:10 and 8:21 a.m., before the 8:30 school day.
    - citation: Monadnock Regional School District, 2026-2027 Elementary Bus Routes (as of 8/13/2026); 2026-2027 Elementary Parent and Student Guide (p. 7)
    - source: https://www.mrsd.org/fs/resource-manager/view/f7112cc0-a2a4-4f68-bcd1-36455668ca63
@@ -611,13 +611,13 @@ This file covers Mount Caesar Elementary School (Mt. Caesar, "MTC"), the Monadno
 
 | Place | Trip | Value | Note |
 |---|---|---|---|
-| Swanzey | M-8 West Swanzey: 50 Basehill Rd, first stop (7:28) to Mt. Caesar (8:21) | 53 | Longest West Swanzey ride |
-| Swanzey | M-8: 27, 37 and 59 S. Winchester St (7:47) to Mt. Caesar (8:21) | 34 | |
-| Swanzey | M-8: Riverbend crosswalk on S. Winchester St, and 94 S. Winchester St (8:08) to Mt. Caesar (8:21) | 13 | 94 S. Winchester has no time of its own |
+| Swanzey | M-8 West Swanzey: Basehill Rd, first stop (7:28) to Mt. Caesar (8:21) | 53 | Longest West Swanzey ride |
+| Swanzey | M-8: three S. Winchester St stops (7:47) to Mt. Caesar (8:21) | 34 | |
+| Swanzey | M-8: Riverbend crosswalk on S. Winchester St, and a S. Winchester St stop (8:08) to Mt. Caesar (8:21) | 13 | 94 S. Winchester has no time of its own |
 | Swanzey | M-12 Swanzey Lake/West Swanzey: 16 Denman Thomsen, first stop (7:42) to Mt. Caesar (8:13) | 31 | |
 | Swanzey | M-12: Cobble Hill Rd and S. Winchester St (7:44) to Mt. Caesar (8:13) | 29 | |
 | Richmond | Richmond feeder: 360 Taylor Hill, first stop (7:25) to Mt. Caesar (8:20) | 55 | Longest ride to Mt. Caesar |
-| Richmond | M-7 Richmond/Swanzey: 37 Fitzwilliam Rd, first stop (7:35) to Mt. Caesar (8:20) | 45 | |
+| Richmond | M-7 Richmond/Swanzey: Fitzwilliam Rd, first stop (7:35) to Mt. Caesar (8:20) | 45 | |
 | Swanzey | M-9 Marcy Hill/N. Swanzey: first stop (7:45) to Mt. Caesar (8:18) | 33 | |
 | Swanzey | M-10 Old Homestead Hwy/Flat Roof: first stop (7:45) to Mt. Caesar (8:15) | 30 | |
 | Swanzey | M-11 East Swanzey: Day Road, first stop (7:42) to Mt. Caesar (8:15) | 33 | |

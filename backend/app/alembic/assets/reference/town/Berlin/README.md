@@ -94,3 +94,8 @@ SAU 3's site loads in Chrome.
   - the bus stop lists, in a Drive folder;
   - board minutes;
   - the labor board's contract library (HTTP 403), so paraprofessional pay is missing.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 1 saved bus and transportation copy (3 in all; schools, child care centers, businesses and other public places keep theirs).

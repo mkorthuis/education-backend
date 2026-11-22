@@ -19,3 +19,14 @@ All three files pass the backend's parser (`tools/check_town.sh timberlane`), an
 - district-wide totals for the March 2026 ballot;
 - board policies IK, IHBH and JG;
 - the NH DRA tax rate files (HTTP 403).
+
+## Later research and corrections
+
+- **Danville and Sandown** were researched on November 21, 2026 (`../Danville/`, `../Sandown/`). They cite these files and add district-wide facts these lacked: the 2026 district-wide vote totals, bus stop times, CTE and athletics budget lines, and SNHU's $100 course fee.
+- **Year labels corrected:** the site's school enrollment "2025" rows are the October 1, 2024 count. So "364 at Atkinson Academy, 723 at TRMS" and TRHS's 932 are now labeled 2024-25, not 2025-26. The same fix was made in the Atkinson and Plaistow files; the error came from the first-wave briefs.
+- **Algebra I:** the middle school file's premise note now adds that TRMS reported no grade 7–8 Algebra I classes to the federal Civil Rights Data Collection for 2023-24 (Danville `middle-and-high-school.md`).
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 6 saved bus and transportation copies (6 in all; schools, child care centers, businesses and other public places keep theirs).

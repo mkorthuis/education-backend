@@ -111,3 +111,11 @@ Reviewed with the other towns' proposals on November 13, 2026 and added to `../s
 - Conway Recreation camp fees, posted in spring.
 - Cell coverage along the Kancamagus and NHDOT's winter standards for Route 112.
 - The 2026 town meeting results.
+
+## Privacy cleanup, November 22, 2026
+
+Done by the main session after loading:
+- House numbers removed from street addresses in 3 saved bus and transportation copies (11 in all; schools, child care centers, businesses and other public places keep theirs).
+- 1 original route sheet (PDFs, spreadsheets or page images) deleted, with citations pointed to the redacted text copies.
+- House numbers of home stops removed from quotes in the research files.
+- The state's resident birth, marriage and death lists removed from 8 saved town report copies (headings and record counts kept); 8 report PDFs deleted.
