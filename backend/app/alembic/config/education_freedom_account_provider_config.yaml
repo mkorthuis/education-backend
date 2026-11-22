@@ -1,0 +1,44 @@
+# Where Education Freedom Account money and students go, by provider: the Children's Scholarship Fund's
+# EFA Expenditure Reports (every provider paid, by allowable category; years 1-4, 2021-22 to 2024-25)
+# and its "Number Served Last Year" list (students served by each provider with 10 or more; calendar
+# 2025 only). All are marked DRAFT. https://nh.scholarshipfund.org/efa-reporting-and-fact-sheets/
+#
+# The reports are PDFs (years 2-4 scanned), copied into the CSVs below by
+# backend/scripts/extract_education_freedom_account_expenditures.py, which checks every category against its printed total.
+# Loaded by app/etl/education_freedom_account_provider.py. The towns' EFA students and aid (education-freedom-account) are a
+# separate dataset.
+directory: "../assets/education-freedom-account-provider"
+expenditure_input: "efa-expenditures-****.csv"
+year_start: 2022
+year_end: 2025
+served_files:
+  2025: efa-served-2025.csv
+# Which providers are private schools on the state's list, by the provider's name key (its name in
+# capitals, letters and digits only); a provider not listed isn't a school on the list
+school_match_file: efa-school-match.csv
+
+# Each report's grand total, which its lines must add up to
+grand_totals:
+  2022: 5378153.38
+  2023: 10415844.51
+  2024: 17277942.87
+  2025: 20221069.81
+
+# The allowable categories (RSA 194-F:2), found in a category as published by their patterns (case-
+# insensitive, matched with spaces removed, since the scans lose and gain them). A purchase charged to
+# several categories is published as "A & B", and gets a combined category of its own.
+categories:
+  - {code: private_school, name: "Tuition and fees at a private school", pattern: "privateschool"}
+  - {code: curriculum, name: "Textbooks, curriculum and instructional materials", pattern: "textbooks|supplementalmaterials|curriculum,orother"}
+  - {code: education_programs, name: "Summer and specialized education programs", pattern: "summereducation|specializededucation|educationalprograms"}
+  - {code: technology, name: "Computer hardware and technology", pattern: "computerhardware|technologicalservices|devices"}
+  - {code: tutoring, name: "Tutoring services", pattern: "tutoring"}
+  - {code: online_programs, name: "Private online learning programs", pattern: "onlinelearning"}
+  - {code: uniforms, name: "School uniforms", pattern: "uniforms"}
+  - {code: therapies, name: "Educational services and therapies", pattern: "therap|occupational"}
+  - {code: higher_education, name: "Tuition and fees at a college or university", pattern: "highereducation|institutionofhigher"}
+  - {code: exams, name: "Standardized tests, AP exams and test preparation", pattern: "standardized|placementexamination"}
+  - {code: career_technical, name: "Career or technical school", pattern: "careerortechnical|technicalschool"}
+  - {code: software, name: "Educational software and applications", pattern: "software"}
+  - {code: public_school_classes, name: "Classes and services at a public school", pattern: "districtpublicschool|charteredpublicschool|publicacademy"}
+  - {code: transportation, name: "Transportation to an education provider", pattern: "transportation"}

@@ -1,3 +1,5 @@
+from decimal import Decimal
+from datetime import date
 from typing import Optional, List, TYPE_CHECKING
 from sqlmodel import Field, Relationship, SQLModel
 from .base import BaseMixin
@@ -233,4 +235,114 @@ class DistrictCostPerPupil(BaseMixin, table=True):
     high: Optional[int] = None
     total: Optional[int] = None
     
-    district: "District" = Relationship(back_populates="cost_per_pupil") 
+    district: "District" = Relationship(back_populates="cost_per_pupil")
+
+
+class PrivateOrg(BaseMixin, table=True):
+    """An organization that files, or needn't file, a private school's Form 990: the school itself or its operator"""
+    __tablename__ = "private_org"
+
+    ein: str = Field(unique=True)
+    name: str
+    founded: Optional[int] = None
+    # From its latest return that gives one
+    mission: Optional[str] = None
+
+
+class School990Link(BaseMixin, table=True):
+    """Who files a private school's Form 990: the school, an operator whose one return covers it, or no one (and why)"""
+    __tablename__ = "school_990_link"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    # own_return, operator_return, postcard_only, not_required_religious, no_irs_record or placeholder
+    status: str
+    ein: Optional[str] = Field(default=None, foreign_key="private_org.ein")
+    note: Optional[str] = None
+
+
+class PrivateOrg990(BaseMixin, table=True):
+    """The figures from one of a private school organization's 990 or 990-EZ returns, as filed"""
+    __tablename__ = "private_org_990"
+
+    ein: str = Field(foreign_key="private_org.ein")
+    tax_period_end: date
+    form: str
+    total_revenue: Optional[int] = None
+    prior_total_revenue: Optional[int] = None
+    program_service_revenue: Optional[int] = None
+    contributions: Optional[int] = None
+    government_grants: Optional[int] = None
+    investment_income: Optional[int] = None
+    # Realized and unrealized, apart from interest and dividends; part of total revenue
+    investment_gains: Optional[int] = None
+    fundraising_event_income: Optional[int] = None
+    total_expenses: Optional[int] = None
+    prior_total_expenses: Optional[int] = None
+    program_expenses: Optional[int] = None
+    management_expenses: Optional[int] = None
+    fundraising_expenses: Optional[int] = None
+    salaries_benefits: Optional[int] = None
+    total_assets_eoy: Optional[int] = None
+    total_liabilities_eoy: Optional[int] = None
+    net_assets_eoy: Optional[int] = None
+    land_buildings_equipment_eoy: Optional[int] = None
+    public_investments_eoy: Optional[int] = None
+    tax_exempt_bonds_eoy: Optional[int] = None
+    employees: Optional[int] = None
+    volunteers: Optional[int] = None
+    # A count of people, not who they are
+    paid_over_100k: Optional[int] = None
+    endowment_eoy: Optional[int] = None
+    endowment_board_designated_share: Optional[float] = None
+    endowment_permanent_share: Optional[float] = None
+    endowment_term_share: Optional[float] = None
+    object_id: str
+
+
+class PrivateOrg990RevenueLine(BaseMixin, table=True):
+    """A return's program service revenue line, as filed, with the category the config's rules give it"""
+    __tablename__ = "private_org_990_revenue_line"
+
+    return_id: int = Field(foreign_key="private_org_990.id")
+    line_no: int
+    description: str
+    business_code: Optional[str] = None
+    amount: int
+    # tuition, school_program, room_and_board, summer_auxiliary, extended_care, student_activities,
+    # transportation, therapy_tutoring, human_services, unspecified_program, rental or other
+    category: str
+
+
+class SchoolTuitionSource(BaseMixin, table=True):
+    """Whether a private school publishes its tuition for a school year, where, and who gets financial aid"""
+    __tablename__ = "school_tuition_source"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    year: int
+    # published, not_published or site_unavailable
+    status: str
+    source_url: Optional[str] = None
+    retrieved_on: date
+    # Who gets financial aid, as the school words it: "37% of students", "Nearly 35% of families", "74%"
+    with_aid: Optional[str] = None
+    note: Optional[str] = None
+
+
+class SchoolTuition(BaseMixin, table=True):
+    """A private school's published tuition for a grade band and kind of rate, with the fees every student pays"""
+    __tablename__ = "school_tuition"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    year: int
+    rate_no: int
+    band: str
+    lowest_grade_id_fk: int = Field(foreign_key="grades.id")
+    highest_grade_id_fk: int = Field(foreign_key="grades.id")
+    # standard, day, boarding, parishioner, non_parishioner, international, half_day, full_day or other
+    rate_type: str
+    rate_label: Optional[str] = None
+    tuition: Decimal
+    # None where the school names a required fee but not its amount
+    required_fee: Optional[Decimal] = None
+    fee_note: Optional[str] = None
+    rate_note: Optional[str] = None

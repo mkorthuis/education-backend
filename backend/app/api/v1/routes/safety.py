@@ -10,7 +10,7 @@ from app.schema.safety_schema import (
     BullyingClassificationTypeGet, SchoolBullyingClassificationGet,
     BullyingImpactTypeGet, SchoolBullyingImpactGet,
     HarassmentClassificationGet, SchoolHarassmentGet,
-    SchoolRestraintGet, SchoolSeclusionGet,
+    SchoolRestraintGet, SchoolSeclusionGet, PrivateSchoolRestraintSeclusionGet,
     StateSafetyGet, StateTruancyGet,
     StateDisciplineIncidentGet, StateDisciplineCountGet,
     StateBullyingGet, StateBullyingClassificationGet, 
@@ -294,6 +294,19 @@ def get_school_seclusion(
         school_id=school_id,
         district_id=district_id
     )
+
+@router.get("/private-school/restraint-seclusion",
+    response_model=List[PrivateSchoolRestraintSeclusionGet],
+    summary="Get private school restraint and seclusion data",
+    description="Retrieves private schools' restraints and seclusions, with their enrollment, as each reported them to NHED",
+    response_description="List of private school restraint and seclusion data, oldest year first")
+@cache_response("safety_private_school_restraint_seclusion")
+def get_private_school_restraint_seclusion(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None, description="Filter by year"),
+    school_id: Optional[int] = Query(default=None, description="Filter by school ID")
+):
+    return safety_service.get_private_school_restraint_seclusion(session=session, year=year, school_id=school_id)
 
 @router.get("/school/enrollment",
     response_model=List[SchoolSafetyEnrollmentGet],

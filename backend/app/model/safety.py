@@ -151,6 +151,24 @@ class SchoolSeclusion(BaseMixin, table=True):
     closed_investigation: Optional[int] = None
 
 
+class PrivateSchoolRestraintSeclusion(BaseMixin, table=True):
+    """A private school's restraints and seclusions for a year, as it reported them to NHED, with its enrollment.
+    Apart from school_restraint and school_seclusion, which hold the public schools' and feed the state and district totals."""
+    __tablename__ = "private_school_restraint_seclusion"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    year: int
+    enrollment: Optional[int] = None
+    restraint_reports: Optional[int] = None
+    restraints_bodily_harm: Optional[int] = None
+    restraints_serious_injury_or_death: Optional[int] = None
+    restraint_investigations_active: Optional[int] = None
+    restraint_investigations_closed: Optional[int] = None
+    seclusion_reports: Optional[int] = None
+    seclusion_investigations_active: Optional[int] = None
+    seclusion_investigations_closed: Optional[int] = None
+
+
 # -------------------- State-level Models --------------------
 
 class StateTruancy(BaseMixin, table=True):

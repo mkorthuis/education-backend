@@ -60,6 +60,12 @@ installed Chrome with `headless=False`.
 | 29 | Adequacy aid calculation (`adequacy-aid`) | NH DOE Bureau of School Finance, State Adequacy Aid Funding (https://www.education.nh.gov/who-we-are/division-of-education-and-analytic-resources/bureau-school-finance/state-adequacy-aid-funding): each year's municipal summary workbook and split of towns among cooperative districts, saved through a browser | `adequacy-aid/*.xlsx` (two per year, listed in `adequacy_aid_config.yaml`) | FY2020–FY2027 | ✅ Loaded 2026-11-14: 237 towns, every part of the calculation, each district's share; FY2027 is the October 1, 2026 calculation |
 | 30 | Property tax rates by town (`property-tax`) | Not NHED: NH Department of Revenue Administration, Municipal and Village District Tax Rates (https://www.revenue.nh.gov/about-dra/municipal-and-property-division/municipal-and-property-reports/municipal-and-village) and Equalization reports; the files are listed under *Property tax* below | `property-tax/dra/*`, read through `property-tax/dra-tax-rates.csv` | Tax years 2014–2025 | ✅ Loaded 2026-11-15 into `town_property_tax`: 236–237 towns a year. 2026 waits for DRA's final file (36 towns had rates set by October 30, 2026) |
 | 31 | NAEP equivalents of state proficiency standards (`naep-state-standard`) | Not NHED: NCES's state mapping study, Data Tables page (https://nces.ed.gov/nationsreportcard/studies/statemapping/data_tables.aspx): each per-year table's "Download Excel" file (https://nces.ed.gov/nationsreportcard/subject/studies/excel/state_mapping/YYYY/table_YYYYa.xlsx for 2017–2022; `.../excel/state mapping/YYYY/...`, with a space, for 2009–2015) and the 2005–2009 study's HTML tables (https://nces.ed.gov/nationsreportcard/studies/statemapping/findings_table1.aspx, 2 and 3), downloaded 2026-11-15 | `naep-state-mapping/table_YYYY{a,b}.xlsx`, `naep-state-mapping/findings_table{1,2,3}.html` | 2005, 2007 and 2009 (2005–2009 study, NCES 2011-458); 2009–2022 (per-year tables) | ✅ Loaded 2026-11-15 into `naep_state_standard`: every state and DC, reading and math, grades 4 and 8, as published (2009 twice: per-year and 2005–2009 study). NH has no estimate in 2005, 2017 or 2019; its 2015 grade 8 rows repeat the SBAC-wide estimate. Not loaded: the consortium rows (SBAC, PARCC, ACT), Puerto Rico, and the 2024 preliminary findings (levels only; the full 2024 report is due) |
+| 32 | Private school restraints & seclusions (`private-safety`) | Restraint and Seclusion page (https://www.education.nh.gov/who-we-are/division-of-educator-and-analytic-resources/bureau-of-education-statistics/restraint-and-seclusion): the nonpublic pages at the end of each year's report to the legislature (2018-19 to 2022-23, and 2025-26's "corrected annual" report) and the separate "NonPublic School Restraint and Seclusion Report" (2023-24, 2024-25), PDFs copied into CSVs by `backend/scripts/extract_private_restraint_seclusion.py` (the page needs a normal browser window) | `private-safety/nonpublic-restraint-seclusion-YYYY.csv` | 2019–2026 | ✅ Loaded 2026-11-21 into `private_school_restraint_seclusion`: 107–134 schools a year with their enrollment; every row checked against its report's text, and each year against its printed totals (the newer reports' reprinted totals for earlier years match). Earlier reports give statewide private totals only |
+| 33 | Private school Form 990s (`private-990`) | Not NHED: the IRS e-file indexes (https://apps.irs.gov/pub/epostcard/990/xml/YYYY/index_YYYY.csv) and each return's XML from the GivingTuesday copy of the IRS e-file data, saved by `python -m app.etl fetch private-990`; who files for each school is the research's match, kept in `school-990-link.csv` | `private-990/school-990-link.csv`, `private-990/returns.json` | Returns filed 2023–2026 | ✅ Loaded 2026-11-21 into `private_org` (89 organizations), `school_990_link` (all 136 private schools), `private_org_990` (195 returns from 59 filers, mostly fiscal years 2022–2025: 185 990s, 10 990-EZs). 11 returns filed in 2026 aren't in the GivingTuesday copy yet; Seven Hills Foundation (Crotched Mountain School) has no e-filed return in these years; and `private_org_990_revenue_line` (517 lines) |
+| 34 | EFA payments and students by provider (`education-freedom-account-provider`) | Not NHED: the Children's Scholarship Fund's EFA reporting page (https://nh.scholarshipfund.org/efa-reporting-and-fact-sheets/): the EFA Expenditure Reports, years 1–4, and "Number Served Last Year", all marked DRAFT; copied into CSVs by `backend/scripts/extract_education_freedom_account_expenditures.py` (years 2–4 are scans, read by `backend/scripts/efa_ocr.swift`) | `education-freedom-account-provider/efa-expenditures-YYYY.csv`, `education-freedom-account-provider/efa-served-2025.csv`, `education-freedom-account-provider/efa-school-match.csv` | School years 2022–2025; served: calendar 2025 | ✅ Loaded 2026-11-21 into `education_freedom_account_category` (14 allowable categories and 11 combinations), `education_freedom_account_provider` (4,319 providers, 92 private schools on the state's list), `education_freedom_account_expenditure` (6,662 lines; every category and grand total matches the report) and `education_freedom_account_served` (225 lines, 10,158 students) |
+| 35 | NCES Private School Survey (`private-school-survey`) | Not NHED: NCES's Private School Survey public-use files (https://nces.ed.gov/surveys/pss/pssdata.asp), every two years; their New Hampshire rows, saved for the 2026-11 research | `private-school-survey/pssYYZZ-nh.csv`, `private-school-survey/pss-school-match.csv` | 2017-18, 2019-20, 2021-22, 2023-24 | ✅ Loaded 2026-11-21 into `school_private_survey` (352 school-years: 85, 85, 87 and 95 schools) and `school_private_survey_grade` (2,726 rows) |
+| 36 | Private school enrollment by grade (`private-enrollment`) | iPlatform › Home Education and NonPublic Enrollments › NonPublic School Enrollments by Grade (exported from a normal Chrome window) | `private-enrollments/YYYY-NonPublic School Enrollments by Grade.xlsx` | 2012–2026 | ✅ Loaded 2026-11-21 into `school_private_enrollment` (11,877 grade rows) and `school_private_enrollment_total` (1,667 school-years, 97–131 schools a year); 2027 (2026-27) was Preliminary with no schools |
+| 37 | Private school tuition (`private-tuition`) | Not NHED: each private school's own website, or a document it links to (third-party listings aren't used); read for the 2026-11 research, sites that refuse automated readers in a normal Chrome window, and written into CSVs by `backend/scripts/private_tuition_to_csv.py` | `private-tuition/school-tuition-sources.csv`, `private-tuition/school-tuition-rates.csv` | Mostly 2026-27; some schools 2025-26 or 2027-28 | ✅ Loaded 2026-11-21 into `school_tuition_source` (103 schools: 74 publish their tuition, 24 don't, 5 sites couldn't be read; 105 school-years) and `school_tuition` (264 rates). Read again each fall for the next school year |
 
 ## Property tax
 
@@ -176,6 +182,74 @@ Those files are in the repo, and the load stops if one is missing:
   row means no data rather than no incidents.
 - **Assessment student counts.** The 2009-2018 and 2024 files show "15-Oct", and 2019 shows 43753, where a
   spreadsheet turned the "10 - 15" range into a date; the loader reads both as 10-15.
+- **Private schools' restraints and seclusions** are in `private_school_restraint_seclusion`, never in
+  `school_restraint` or `school_seclusion`: the state and district totals, the safety enrollment views
+  and the Ask's statewide rates are sums over every row of those, and the School Safety Data Collection
+  that fills them lists no private school. Private schools report their own figures (the public schools'
+  are certified by superintendents). Each year's rows must add up to its report's printed nonpublic
+  totals (`expected_totals` in the config) or the load stops; 2019-20's school rows come to 21 students
+  fewer than its printed enrollment, so that one isn't checked. The 2020-21 and 2021-22 reports list a
+  few schools twice with the same figures; the CSVs keep one. Schools not in the school table (43,
+  mostly closed) are skipped and logged, as are four 2018-19 schools that gave enrollment but no counts.
+- **Private schools' 990s.** `school_990_link` gives every private school its case: its own return,
+  an operator's return (Easter Seals, Strafford Learning Center, Mount Prospect and others file one return
+  for several programs, which can't be split by school), the 990-N postcard (no figures), not required
+  (church schools, 26 CFR 1.6033-2(g)(1)(vii)), no IRS record, or not a school. `private_org_990` is keyed
+  by EIN and tax year (an amended return replaces its original), and both it and the link refer to
+  `private_org`, which has every EIN in the link, with or without returns. Each return's program service
+  revenue lines are kept as filed, in `private_org_990_revenue_line`, and sorted into categories by the
+  ordered rules in `private_990_config.yaml` (`revenue_line_categories`; lines no rule matches are `other`
+  and logged; reload after changing a rule). Tuition is the `tuition` lines, which schools give before or
+  after financial aid; an operator's school is often named instead (`school_program`). Revenue includes
+  investment income and gains (St. Paul's School's $133.7M for FY2025 includes $78.8M of investment income,
+  $67.8M of it gains), so revenue less expenses isn't an operating result. Officers' names and pay aren't
+  loaded; `paid_over_100k` is a count.
+- **EFA by provider.** Years 2–4 of the Expenditure Reports are scans: `efa_ocr.swift` reads each twice
+  (OCR_SCALE 3 and 4.5, upside-down pages turned) and `extract_education_freedom_account_expenditures.py` writes only when every
+  category's provider lines add up to its printed total and the totals to the grand total. Categories in the
+  scans are the sentence-case lines (providers are printed in capitals); a provider the two readings read
+  differently takes the second reading's amount when that closes its category, and `CORRECTIONS` holds the
+  eight lines both readings got wrong, each checked against the page (three rows half hidden by shaded
+  bars). The 2024-25 private school tuition matches the research's hand transcription line for line.
+  Providers are keyed by name in capitals, letters and digits only; CSF lists some individuals by initials
+  ("CL Tutor"), so a key can stand for several people, and the served list is kept line by line.
+  `efa-school-match.csv` links name keys to private schools on the state's list (the research's matches,
+  and earlier years' names matched by name and town); out-of-state schools and schools not on the list
+  (White Mountain School, St. Elizabeth Seton) aren't linked. A category published as "A & B" is a purchase
+  charged to several and has its own combined category.
+- **Private School Survey.** NCES's own answers from each school, matched to the state's list by PPIN
+  (`pss-school-match.csv`, the research's match by name and town). NCES renumbered Heronfield Academy and
+  Meeting House Montessori; their earlier PPINs are listed too, limited by the file's `years` column where
+  NCES lists a school under both (Meeting House in 2023-24). The Enriched Learning Center has two NCES
+  entries at one address most years; only the research's match is linked. A school appearing twice in a
+  year stops the load. Coded answers (typology, affiliation, religious orientation, level, community) are
+  stored as the 2023-24 codebook's labels; the earlier files use the same codes and question numbers (in
+  every file, each school's total less its preschool count is NCES's K-12 count). Transitional
+  kindergarten is counted with kindergarten and transitional first grade with grade 1. Blank and negative
+  answers (NCES's "valid skip") are empty; a 0% college share is an answer and is kept. Grades add up to
+  the total for 318 of 352 school-years; the rest have ungraded students.
+- **Private school enrollment.** Kept in `school_private_enrollment`, shaped like `school_enrollment` (grades
+  preschool to 12 and postgraduate, zeros skipped) but apart from it, so the public schools' sums never take in
+  private schools; the ungraded elementary and secondary students and each school's total are in
+  `school_private_enrollment_total`. Only a year's Final report loads, and only when each school's grades and
+  ungraded students add up to its total and every column to the State Total row. Columns are found by their
+  headers. These are the state's official counts; the research's archived per-school PDFs for 2018-19 to
+  2021-22 (`additional-data/raw/private-schools/`) total differently (16,165 against 14,841 for 2018-19) and
+  aren't loaded. The restraint and seclusion reports' enrollment, also the state's, matches for 77–96% of
+  schools a year.
+- **Private school tuition.** No dataset collects it, so it's read from each school's own site: every
+  private school (CH, PA, PR, OT; not the special education schools, which districts pay at rates NHED
+  approves) has a `school_tuition_source` row for the year saying whether it publishes its tuition, the page,
+  and who gets financial aid in the school's own words ("85% of students", "Nearly 35% of families", or "74%" where it doesn't say of whom). `school_tuition` has its rates as it groups
+  them, by grade band and kind (standard, day, boarding, parishioner, international, half or full day...).
+  `tuition` is the annual figure (an annual figure the school gives by the month and number of payments is
+  multiplied out, and said so). `required_fee` is what every student pays the school each year: per-student
+  enrollment, registration, technology, activity and book or materials fees, the new student's figure where
+  new and returning students pay different ones, and the first child's where a fee is priced by the number
+  of children. Flat per-family fees, one-time or new-students-only fees, fundraising obligations a family
+  can work off, payment-plan fees and estimates of what families buy themselves are only in `fee_note`; a
+  required fee the school names without an amount leaves `required_fee` empty. Every figure was checked
+  against its page or document (images and PDFs read by eye).
 - **Safety: schools that didn't report.** A school row with no number in any count cell ("Not Reported",
   "Data Not Yet Submitted", blank) is skipped and logged, rather than stored as zero incidents.
 - **Salary band types** are defined in `district_teacher_salary_band_config.yaml` (`salary_band_types`)

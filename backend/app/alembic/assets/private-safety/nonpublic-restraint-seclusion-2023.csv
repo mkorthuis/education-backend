@@ -1,0 +1,137 @@
+year,school_id,school_name,enrollment,restraint_reports,restraints_bodily_harm,restraints_serious_injury_or_death,restraint_investigations_active,restraint_investigations_closed,seclusion_reports,seclusion_investigations_active,seclusion_investigations_closed
+2023,20110,New Hampton School,343,0,0,0,0,0,0,0,0
+2023,20150,Claremont Christian Academy (Elementary),125,0,0,0,0,0,0,0,0
+2023,20235,St. John Regional School,182,0,0,0,0,0,0,0,0
+2023,20245,Second Start,22,0,0,0,0,0,0,0,0
+2023,20280,St. Paul's School,532,0,0,0,0,0,0,0,0
+2023,20290,Concord Christian Academy,346,0,0,0,0,0,0,0,0
+2023,20310,Trinity Christian School,275,0,0,0,0,0,0,0,0
+2023,20320,Bishop Brady High School,239,0,0,0,0,0,0,0,0
+2023,20440,Saint Mary Academy,237,0,0,0,0,0,0,0,0
+2023,20450,St. Thomas Aquinas High School,395,0,0,0,0,0,0,0,0
+2023,20495,Victory Baptist School,55,0,0,0,0,0,0,0,0
+2023,20520,Seacoast Learning Collaborative,47,62,0,0,0,62,0,0,0
+2023,20580,Phillips Exeter Academy,1077,0,0,0,0,0,0,0,0
+2023,20785,Sacred Heart School,243,0,0,0,0,0,0,0,0
+2023,21080,Presentation of Mary Academy,445,0,0,0,0,0,0,0,0
+2023,21100,Tabernacle Christian School,42,0,0,0,0,0,0,0,0
+2023,21180,St. Joseph Regional School (Keene),224,0,0,0,0,0,0,0,0
+2023,21220,Cedarcrest School,17,0,0,0,0,0,0,0,0
+2023,21225,Pioneer Junior Academy,13,0,0,0,0,0,0,0,0
+2023,21265,Laconia Christian Academy,179,1,0,0,0,1,0,0,0
+2023,21280,Holy Trinity Catholic School,68,0,0,0,0,0,0,0,0
+2023,21320,Cardigan Mountain School,233,0,0,0,0,0,0,0,0
+2023,21345,Estabrook Christian School,,0,0,0,0,0,0,0,0
+2023,21380,Kimball Union Academy,336,0,0,0,0,0,0,0,0
+2023,21430,White Mountain School,93,0,0,0,0,0,0,0,0
+2023,21500,Trinity High School,356,0,0,0,0,0,0,0,0
+2023,21535,The Derryfield School,415,0,0,0,0,0,0,0,0
+2023,21570,Cardinal Lacroix Academy,116,0,0,0,0,0,0,0,0
+2023,21595,St. Joseph Regional Junior High School,106,0,0,0,0,0,0,0,0
+2023,21615,St. Benedict Academy,110,0,0,0,0,0,0,0,0
+2023,21650,Gammon Academy at Zachary Road,78,245,0,0,0,245,0,0,0
+2023,21655,St. Francis Of Assisi School,217,0,0,0,0,0,0,0,0
+2023,21660,St. Catherine School,355,0,0,0,0,0,0,0,0
+2023,21870,Christian Bible Church Academy,26,0,0,0,0,0,0,0,0
+2023,21880,Bishop Guertin High School,801,0,0,0,0,0,0,0,0
+2023,21900,St. Christopher Academy,472,0,0,0,0,0,0,0,0
+2023,21905,Clearway High School,48,0,0,0,0,0,0,0,0
+2023,21920,Nashua Childrens Home,10,5,0,0,0,5,0,0,0
+2023,22125,Proctor Academy,381,0,0,0,0,0,0,0,0
+2023,22235,Dublin Christian Academy,174,0,0,0,0,0,0,0,0
+2023,22240,Dublin School,166,0,0,0,0,0,0,0,0
+2023,22255,Seven Hills at Crotched Mountain,53,93,0,0,0,93,0,0,0
+2023,22305,The Well School,136,0,0,0,0,0,0,0,0
+2023,22325,Hampshire Country School,17,0,0,0,0,0,0,0,0
+2023,22340,Holderness School,303,0,0,0,0,0,0,0,0
+2023,22360,Calvary Christian School,3,0,0,0,0,0,0,0,0
+2023,22420,Brewster Academy,342,0,0,0,0,0,0,0,0
+2023,22435,Cornerstone Christian Academy,83,0,0,0,0,0,0,0,0
+2023,22445,Learning Skills Academy,59,0,0,0,0,0,0,0,0
+2023,22520,Saint Patrick Academy,231,0,0,0,0,0,0,0,0
+2023,22540,Portsmouth Christian Academy,641,0,0,0,0,0,0,0,0
+2023,22570,Pine Haven Boys Center,20,18,0,0,0,18,12,0,12
+2023,22610,Green Valley School,73,0,0,0,0,0,0,0,0
+2023,22685,Monarch School of New England,63,45,4,0,0,45,0,0,0
+2023,22735,Hampstead Academy,29,0,0,0,0,0,0,0,0
+2023,22785,Tri-City Christian Academy,169,0,0,0,0,0,0,0,0
+2023,22825,Strafford Learning Center,31,11,0,0,0,11,60,0,60
+2023,22885,St. Joseph Regional Catholic School (Salem),196,0,0,0,0,0,0,0,0
+2023,22930,Spaulding Academy & Family Services,75,266,1,0,0,266,0,0,0
+2023,22935,Sant Bani School,146,0,0,0,0,0,0,0,0
+2023,22940,Tilton School,187,0,0,0,0,0,0,0,0
+2023,23025,High Mowing School,321,0,0,0,0,0,0,0,0
+2023,26370,The Cornerstone School,156,0,0,0,0,0,0,0,0
+2023,26450,Mountain Shadows School,57,0,0,0,0,0,0,0,0
+2023,26465,World Academy,431,0,0,0,0,0,0,0,0
+2023,26705,Wediko School at the Home for Little Wanderers,41,98,0,0,0,98,0,0,0
+2023,26805,Immaculate Heart Of Mary School,42,0,0,0,0,0,0,0,0
+2023,26845,Victory High School,42,0,0,0,0,0,0,0,0
+2023,26850,Heritage Christian School,95,0,0,0,0,0,0,0,0
+2023,26880,Jesse Remington High School,45,0,0,0,0,0,0,0,0
+2023,26885,Crossroads Academy,124,0,0,0,0,0,0,0,0
+2023,27030,Mount Prospect Academy,111,64,1,0,0,64,0,0,0
+2023,27045,Shaker Road School,237,0,0,0,0,0,0,0,0
+2023,27085,Mount St. Mary Academy,143,0,0,0,0,0,0,0,0
+2023,27120,Mount Royal Academy Inc.,215,0,0,0,0,0,0,0,0
+2023,27490,RSEC (Reg Svces & Educ Ctr) - The Academy,31,0,0,0,0,0,0,0,0
+2023,27555,South Merrimack Christian Academy,244,0,0,0,0,0,0,0,0
+2023,27610,Bethlehem Christian School,21,0,0,0,0,0,0,0,0
+2023,27665,Trinity Christian School of Keene,110,0,0,0,0,0,0,0,0
+2023,27780,Granite Hill School,45,5,0,0,0,5,0,0,0
+2023,27835,Holy Family Academy,99,0,0,0,0,0,0,0,0
+2023,27915,RSEC (Reg Svces & Educ Ctr) - Longview,22,0,0,0,0,0,0,0,0
+2023,27935,Parker Academy,37,0,0,0,0,0,0,0,0
+2023,28025,Shortridge Academy,27,0,0,0,0,0,0,0,0
+2023,28030,The Birchtree Center,29,91,0,0,0,91,376,0,376
+2023,28035,Gammon Academy at Lancaster,13,0,0,0,0,0,0,0,0
+2023,28040,NFI North - Contoocook School,10,3,0,0,0,3,0,0,0
+2023,28210,Hillsboro Christian School,37,0,0,0,0,0,0,0,0
+2023,28405,2nd Nature Academy/Nature of Things,130,0,0,0,0,0,0,0,0
+2023,28415,Oliverian School,28,0,0,0,0,0,0,0,0
+2023,28420,Mount Zion Christian School,151,0,0,0,0,0,0,0,0
+2023,28485,Woodland Community School,20,0,0,0,0,0,0,0,0
+2023,28520,Meeting House Montessori School,48,0,0,0,0,0,0,0,0
+2023,28540,Country Village Montessori School,29,0,0,0,0,0,0,0,0
+2023,28585,Capital Christian School,14,0,0,0,0,0,0,0,0
+2023,28595,Heronfield Academy,90,0,0,0,0,0,0,0,0
+2023,28675,Hollis Montessori School,125,0,0,0,0,0,0,0,0
+2023,28680,Newport Montessori School,116,0,0,0,0,0,0,0,0
+2023,28710,Southern NH Montessori Academy,47,0,0,0,0,0,0,0,0
+2023,28725,Enriched Learning Center,16,2,0,0,0,2,0,0,0
+2023,29025,Rochester Learning Academy,20,11,0,0,0,11,60,0,60
+2023,29095,The Beech Hill School,39,0,0,0,0,0,0,0,0
+2023,29159,Hawthorne Academy,7,0,0,0,0,0,0,0,0
+2023,29168,"North End Montessori School, LLC",182,0,0,0,0,0,0,0,0
+2023,29176,Namaste Montessori School,16,0,0,0,0,0,0,0,0
+2023,29179,Unity Christian School,22,0,0,0,0,0,0,0,0
+2023,29183,Waterville Valley Academy,26,0,0,0,0,0,0,0,0
+2023,29190,Busche Academy,116,0,0,0,0,0,0,0,0
+2023,29198,St. Charles School,16,0,0,0,0,0,0,0,0
+2023,29204,"My School, LLC",9,0,0,0,0,0,0,0,0
+2023,29205,The Trinity School of Bedford,11,0,0,0,0,0,0,0,0
+2023,29206,Shalom Christian Academy,15,0,0,0,0,0,0,0,0
+2023,29207,Building Block Commons,63,0,0,0,0,0,0,0,0
+2023,29209,Mount Royal Academy North,69,0,0,0,0,0,0,0,0
+2023,29212,Compass Academy,1,0,0,0,0,0,0,0,0
+2023,29214,US Performance Academy,218,0,0,0,0,0,0,0,0
+2023,29215,RSEC (RegSvcs Ed Ctr) - Vista Learning Center,12,0,0,0,0,0,0,0,0
+2023,29216,Windham Woods School,159,0,0,0,0,0,0,0,0
+2023,29217,Lupine Montessori School,40,0,0,0,0,0,0,0,0
+2023,29218,Acton Academy New Hampshire,28,0,0,0,0,0,0,0,0
+2023,29220,Chesterbrook School of Natural Learning,38,0,0,0,0,0,0,0,0
+2023,29226,Ashuelot Valley Academy,75,38,0,0,0,38,0,0,0
+2023,29227,Salve Regina Academy,63,0,0,0,0,0,0,0,0
+2023,29228,Squamscott River Academy,23,15,0,0,0,15,0,0,0
+2023,29229,Crossroads Christian School,158,0,0,0,0,0,0,0,0
+2023,29235,Our Lady of Mercy Academy,63,0,0,0,0,0,0,0,0
+2023,29236,Claremont Christian Academy (Jr/Sr High),29,0,0,0,0,0,0,0,0
+2023,29237,Greater Community Terramor Academy,20,0,0,0,0,0,0,0,0
+2023,29241,Bedford Academy,59,0,0,0,0,0,0,0,0
+2023,29243,The Harkness House,0,0,0,0,0,0,0,0,0
+2023,29250,Birch Behavioral Therapy,0,0,0,0,0,0,0,0,0
+2023,29251,Seton Academy,28,0,0,0,0,0,0,0,0
+2023,29252,Lexington Academy,1,0,0,0,0,0,0,0,0
+2023,29253,Crossing LIFE Academy,15,0,0,0,0,0,0,0,0
+2023,29254,Heritage Baptist Academy,33,0,0,0,0,0,0,0,0
+2023,29255,Kroka Expeditions,13,0,0,0,0,0,0,0,0

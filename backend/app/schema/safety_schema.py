@@ -123,6 +123,21 @@ class SchoolSeclusionGet(BaseModel):
     closed_investigation: Optional[int] = None
 
 
+class PrivateSchoolRestraintSeclusionGet(BaseModel):
+    """A private school's restraints and seclusions for a year, as it reported them to NHED, with its enrollment"""
+    school_id: int
+    year: int
+    enrollment: Optional[int] = None
+    restraint_reports: Optional[int] = None
+    restraints_bodily_harm: Optional[int] = None
+    restraints_serious_injury_or_death: Optional[int] = None
+    restraint_investigations_active: Optional[int] = None
+    restraint_investigations_closed: Optional[int] = None
+    seclusion_reports: Optional[int] = None
+    seclusion_investigations_active: Optional[int] = None
+    seclusion_investigations_closed: Optional[int] = None
+
+
 class StateSafetyGet(BaseModel):
     id: int
     year: int

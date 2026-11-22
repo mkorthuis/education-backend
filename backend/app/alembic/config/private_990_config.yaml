@@ -1,0 +1,42 @@
+# Private schools' Form 990 finances. Loaded by app/etl/private_990.py.
+#
+# school-990-link.csv: who files each private school's 990, one row per school on the state's list,
+# from the 2026-11 research (additional-data/raw/private-schools/extracts/nh-private-schools-990-match.csv,
+# checked against ProPublica, the IRS exempt-organization list for NH and the IRS e-file indexes).
+# Statuses: own_return (the school files its own), operator_return (an operator's one return covers it
+# and other programs; it can't be split by school), postcard_only (990-N: no figures),
+# not_required_religious (church schools, including the diocese's group exemption: 26 CFR
+# 1.6033-2(g)(1)(vii)), no_irs_record (often LLCs or other for-profits) and placeholder (rows on the
+# state's list that aren't schools). Correct a school's row here, then load.
+#
+# returns.json: saved by `python -m app.etl fetch private-990`, which finds the own_return and
+# operator_return filers' 990 and 990-EZ returns in the IRS e-file indexes for the years below (the
+# year a return was filed, not its tax year) and reads each return's XML from the GivingTuesday copy
+# of the IRS e-file data, which lags the IRS a little. Add a year to index_years, fetch, then load.
+directory: "../assets/private-990"
+link_file: school-990-link.csv
+returns_file: returns.json
+index_years: [2023, 2024, 2025, 2026]
+index_url: "https://apps.irs.gov/pub/epostcard/990/xml/{year}/index_{year}.csv"
+xml_url: "https://gt990datalake-rawdata.s3.amazonaws.com/EfileData/XmlFiles/{object_id}_public.xml"
+
+# Program service revenue lines, as filers describe them in their own words, sorted into categories:
+# the first rule whose pattern (a case-insensitive regular expression) a line's description matches.
+# A line no rule matches is "other", and the load logs it, so new wording can be given a rule here.
+# Reload after changing a rule; no fetch is needed.
+revenue_line_categories:
+  # "tuition and fees", "tuition, room and boar", "non-member district tuiti" (cut off by the form)
+  - {category: tuition, pattern: "tuiti"}
+  # An operator's services other than schooling: residential, elder and medical care, community programs
+  - {category: human_services, pattern: "board and care|independent living|assisted|elder|senior|patient|medicare|medicaid|brokered|family program|community|food bank|transitional employment|childrens' services"}
+  - {category: room_and_board, pattern: "room|board"}
+  - {category: summer_auxiliary, pattern: "summer|camp|auxil|aux\\.|ancillary|fall programming|additional programming"}
+  - {category: extended_care, pattern: "after school|before/after|extended (care|school)|day care|child ?care"}
+  - {category: student_activities, pattern: "activit|activiites|field trip|club|drama|extracirricular|extracurric|application|lunch|nutrition|food|book|ticket|late fee|student related|student services|student/care"}
+  - {category: transportation, pattern: "transport"}
+  - {category: therapy_tutoring, pattern: "therap|speech|tutor|mental|behavior|consult|occupational|\\bot\\b|student assistance|instructional support|special services"}
+  # An operator's school, named rather than called tuition: "john powers school", "rla", "academy"
+  - {category: school_program, pattern: "school|academy|instruction|special education|\\brla\\b|\\bjps\\b|rochester learning|adult basic education|alternative high"}
+  - {category: rental, pattern: "rental"}
+  # The filer didn't say: "program services", "contract services", "fee for service"
+  - {category: unspecified_program, pattern: "program|contract|fee for service|fees|service"}

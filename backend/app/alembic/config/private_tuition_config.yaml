@@ -1,0 +1,17 @@
+# Private schools' tuition, as each school publishes it on its own website. No dataset collects it:
+# NHED doesn't, and third-party listings (Private School Review, Niche) are estimates whose terms bar
+# re-display. It's read from each school's site once a year and kept in two CSVs. Loaded by
+# app/etl/private_tuition.py into school_tuition_source and school_tuition.
+#
+# school-tuition-sources.csv: one row per school and school year (by its end): whether the school
+# publishes its tuition (published, not_published, or site_unavailable when its site couldn't be read),
+# the page the figures are on, the day it was read, the share of students with financial aid as the
+# school words it, and a note.
+# school-tuition-rates.csv: the school's rates: one per grade band and kind of rate (rate_types below),
+# with its annual tuition and the fees every student pays each year.
+#
+# To refresh: read each school's site in the fall for the next school year, add its rows with the new
+# year, and load. Only a school's own site, or a document it links to, is a source.
+directory: "../assets/private-tuition"
+sources_file: school-tuition-sources.csv
+rates_file: school-tuition-rates.csv

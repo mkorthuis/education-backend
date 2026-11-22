@@ -9,7 +9,7 @@ from app.model.safety import (
     SafetyBullyingClassificationType, SchoolBullyingClassification,
     SafetyBullyingImpactType, SchoolBullyingImpact,
     SafetyHarassmentClassification, SchoolHarassment,
-    SchoolRestraint, SchoolSeclusion,
+    SchoolRestraint, SchoolSeclusion, PrivateSchoolRestraintSeclusion,
     # State models
     StateSafety, StateTruancy,
     StateDisciplineIncident, StateDisciplineCount,
@@ -26,7 +26,7 @@ from app.model.safety import (
     SchoolSafetyEnrollment, StateSafetyEnrollment, DistrictSafetyEnrollment
 )
 from app.model.location import School
-from app.service.dataset_query import Dataset, fail, fetch_dataset, list_types
+from app.service.dataset_query import Dataset, fail, fetch_dataset, list_types, where_school_year
 
 
 # School-level error messages for safety data have no "school" prefix, except for "school safety data"
@@ -141,6 +141,15 @@ class SafetyService:
     def get_school_seclusion(self, session: Session, year: Optional[int] = None, school_id: Optional[int] = None,
                              district_id: Optional[int] = None) -> List[dict]:
         return fetch_dataset(session, SECLUSION, "school", year, school_id, district_id)
+
+    def get_private_school_restraint_seclusion(self, session: Session, year: Optional[int] = None,
+                                               school_id: Optional[int] = None) -> List[dict]:
+        """Private schools' restraints and seclusions, a row per school and year, oldest first. Kept apart from the
+        public schools' (see app/etl/private_safety.py), so there are no district or state totals."""
+        table = PrivateSchoolRestraintSeclusion
+        statement = where_school_year(select(table).order_by(table.school_id_fk, table.year), table, year, school_id)
+        return [{"school_id": row.school_id_fk, **row.model_dump(exclude={"id", "school_id_fk", "date_created", "date_updated"})}
+                for row in session.exec(statement)]
 
     # State-level methods
     def get_state_safety(self, session: Session, year: Optional[int] = None,

@@ -1,0 +1,97 @@
+# The NCES Private School Survey (PSS), every two years: each New Hampshire private school's answers,
+# as NCES publishes them in its public-use files (https://nces.ed.gov/surveys/pss/pssdata.asp). The
+# files here are their New Hampshire rows, saved for the 2026-11 research. Loaded by
+# app/etl/private_school_survey.py into school_private_survey and school_private_survey_grade.
+#
+# The survey identifies schools by NCES's PPIN; pss-school-match.csv links each PPIN to a private school
+# on the state's list (the research's match, by name and town). NCES gave two schools a new PPIN
+# (Heronfield Academy, Meeting House Montessori); their earlier ones are listed too, limited to the
+# years they apply where NCES lists a school under both (the file's years column). The Enriched
+# Learning Center has two NCES entries at one address most years; only the research's match is linked.
+# A school the survey didn't reach, or one that didn't answer, has no row that year.
+directory: "../assets/private-school-survey"
+match_file: pss-school-match.csv
+# Survey files, by the school year each covers (by its end)
+files:
+  2018: pss1718-nh.csv
+  2020: pss1920-nh.csv
+  2022: pss2122-nh.csv
+  2024: pss2324-nh.csv
+
+# Students by grade, by the questions that count them (2023-24 codebook; the same in the earlier
+# files, where each total less its preschool count is NCES's K-12 count for every school).
+# Transitional kindergarten is counted with kindergarten and transitional first grade with grade 1,
+# as the state's enrollment by type of school counts readiness with grade 1.
+grade_columns:
+  P150: Preschool
+  P160: Kindergarten
+  P170: Kindergarten
+  P180: Grade 1
+  P190: Grade 1
+  P200: Grade 2
+  P210: Grade 3
+  P220: Grade 4
+  P230: Grade 5
+  P240: Grade 6
+  P250: Grade 7
+  P260: Grade 8
+  P270: Grade 9
+  P280: Grade 10
+  P290: Grade 11
+  P300: Grade 12
+
+# The codebook's labels for the survey's coded answers
+typology:
+  1: "Catholic, parochial"
+  2: "Catholic, diocesan"
+  3: "Catholic, private"
+  4: "Other religious, conservative Christian"
+  5: "Other religious, affiliated with an established denomination"
+  6: "Other religious, not affiliated with any denomination"
+  7: "Nonsectarian, regular school"
+  8: "Nonsectarian, special program"
+  9: "Nonsectarian, special education"
+affiliation:
+  1: Catholic
+  2: Other religious
+  3: Nonsectarian
+level:
+  1: Elementary
+  2: Secondary
+  3: Combined elementary and secondary
+community_type:
+  1: City
+  2: Suburb
+  3: Town
+  4: Rural
+religious_orientation:
+  1: Roman Catholic
+  2: African Methodist Episcopal
+  3: Amish
+  4: Assembly of God
+  5: Baptist
+  6: Brethren
+  7: Calvinist
+  8: Christian (no specific denomination)
+  9: Church of Christ
+  10: Church of God
+  11: Church of God in Christ
+  12: Church of the Nazarene
+  13: Disciples of Christ
+  14: Episcopal
+  15: Friends
+  16: Greek Orthodox
+  17: Islamic
+  18: Jewish
+  19: Latter Day Saints
+  20: Lutheran Church - Missouri Synod
+  21: Evangelical Lutheran Church in America
+  22: Wisconsin Evangelical Lutheran Synod
+  23: Other Lutheran
+  24: Mennonite
+  25: Methodist
+  26: Pentecostal
+  27: Presbyterian
+  28: Seventh-Day Adventist
+  29: Other
+  30: Nonsectarian

@@ -1,0 +1,36 @@
+# Private (nonpublic) schools' enrollment by grade on October 1, from NHED's iPlatform report
+# "NonPublic School Enrollments by Grade" (iPlatform › Home Education and NonPublic Enrollments): one
+# Excel export a school year, saved as below (YYYY the school year's end). Loaded by
+# app/etl/private_enrollment.py into school_private_enrollment and school_private_enrollment_total,
+# apart from the public schools' school_enrollment.
+#
+# To add a year: on https://my.doe.nh.gov/iPlatform/Report/DataReportsSubCategory?reportSubCategoryId=11
+# open "NonPublic School Enrollments by Grade", choose the School Year, Run Report, Export › Excel (a
+# normal Chrome window; NHED's bot protection refuses scripts and headless browsers). Load a year only
+# once its "Type of Data" is Final; 2026-27 was Preliminary, with no schools, on 2026-11-21.
+file_settings:
+  default_input: "../assets/private-enrollments/****-NonPublic School Enrollments by Grade.xlsx"
+  year_start: 2012
+  year_end: 2026
+
+# The report's columns, by header, and the grades they count
+grade_columns:
+  PS: Preschool
+  KG: Kindergarten
+  "1": Grade 1
+  "2": Grade 2
+  "3": Grade 3
+  "4": Grade 4
+  "5": Grade 5
+  "6": Grade 6
+  "7": Grade 7
+  "8": Grade 8
+  "9": Grade 9
+  "10": Grade 10
+  "11": Grade 11
+  "12": Grade 12
+  PG: Post Graduate
+# Ungraded elementary and secondary students, and the school's total
+ungraded_elementary_column: UGEL
+ungraded_secondary_column: UGSE
+total_column: Total

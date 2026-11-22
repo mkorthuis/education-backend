@@ -1,0 +1,152 @@
+year,school_id,school_name,enrollment,restraint_reports,restraints_bodily_harm,restraints_serious_injury_or_death,restraint_investigations_active,restraint_investigations_closed,seclusion_reports,seclusion_investigations_active,seclusion_investigations_closed
+2019,20110,New Hampton School,347,0,0,0,0,0,0,0,0
+2019,20150,Claremont Christian Academy,155,0,0,0,0,0,0,0,0
+2019,20235,St. John Regional School,190,0,0,0,0,0,0,0,0
+2019,20245,Second Start,35,0,0,0,0,0,0,0,0
+2019,20280,St. Paul's School,534,0,0,0,0,0,0,0,0
+2019,20290,Concord Christian Academy,221,0,0,0,0,0,0,0,0
+2019,20310,Trinity Christian School,208,0,0,0,0,0,0,0,0
+2019,20320,Bishop Brady High School,304,0,0,0,0,0,0,0,0
+2019,20415,St. Thomas Aquinas,129,0,0,0,0,0,0,0,0
+2019,20440,St. Mary Academy,271,0,0,0,0,0,0,0,0
+2019,20450,St. Thomas Aquinas High School,437,0,0,0,0,0,0,0,0
+2019,20495,Victory Baptist School,66,0,0,0,0,0,0,0,0
+2019,20520,Seacoast Learning Collaborative,48,241,0,0,0,241,0,0,0
+2019,20580,Phillips Exeter Academy,1094,0,0,0,0,0,0,0,0
+2019,20785,Sacred Heart School,218,0,0,0,0,0,0,0,0
+2019,21080,Presentation of Mary Academy,474,0,0,0,0,0,0,0,0
+2019,21100,Tabernacle Christian School,94,0,0,0,0,0,0,0,0
+2019,21175,Monadnock Waldorf School,106,0,0,0,0,0,0,0,0
+2019,21180,St. Joseph Regional School (Keene),167,0,0,0,0,0,0,0,0
+2019,21220,Cedarcrest School,15,0,0,0,0,0,0,0,0
+2019,21225,Pioneer Junior Academy,10,0,0,0,0,0,0,0,0
+2019,21265,Laconia Christian Academy,95,0,0,0,0,0,0,0,0
+2019,21270,Lakes Region Christian School,,0,0,0,0,0,0,0,0
+2019,21280,Holy Trinity Catholic School,64,0,0,0,0,0,0,0,0
+2019,21320,Cardigan Mountain School,225,0,0,0,0,0,0,0,0
+2019,21345,Estabrook Christian School,5,0,0,0,0,0,0,0,0
+2019,21380,Kimball Union Academy,344,0,0,0,0,0,0,0,0
+2019,21430,White Mountain School,133,0,0,0,0,0,0,0,0
+2019,21500,Trinity High School,298,0,0,0,0,0,0,0,0
+2019,21535,Derryfield School,390,0,0,0,0,0,0,0,0
+2019,21570,Cardinal Lacroix Academy,142,0,0,0,0,0,0,0,0
+2019,21595,St. Joseph Regional Junior High School,96,0,0,0,0,0,0,0,0
+2019,21615,St. Benedict Academy,100,0,0,0,0,0,0,0,0
+2019,21645,Sununu Youth Services Center (formerly YDC),,4,0,0,0,4,0,0,0
+2019,21650,Robert B. Jolicoeur School,112,306,4,0,0,306,0,0,0
+2019,21655,St. Francis Of Assisi School,125,0,0,0,0,0,0,0,0
+2019,21660,St. Catherine School,241,0,0,0,0,0,0,0,0
+2019,21855,Infant Jesus School,74,0,0,0,0,0,0,0,0
+2019,21870,Christian Bible Church Academy,9,0,0,0,0,0,0,0,0
+2019,21880,Bishop Guertin High School,804,1,0,0,0,1,0,0,0
+2019,21900,St. Christopher School,283,0,0,0,0,0,0,0,0
+2019,21905,Clearway High School,53,0,0,0,0,0,0,0,0
+2019,21920,Nashua Childrens Home,21,170,0,0,0,170,0,0,0
+2019,21945,Nashua Catholic Regional Jr. High,134,0,0,0,0,0,0,0,0
+2019,22125,Proctor Academy,374,0,0,0,0,0,0,0,0
+2019,22175,Burnham Brook School,7,0,0,0,0,0,0,0,0
+2019,22235,Dublin Christian Academy,104,0,0,0,0,0,0,0,0
+2019,22240,Dublin School,165,,,,,,,,
+2019,22255,Crotched Mountain Rehab Center,80,362,0,0,0,362,0,0,0
+2019,22305,The Well School,140,0,0,0,0,0,0,0,0
+2019,22325,Hampshire Country School,23,0,0,0,0,0,0,0,0
+2019,22340,Holderness School,273,0,0,0,0,0,0,0,0
+2019,22360,Calvary Christian School,3,0,0,0,0,0,0,0,0
+2019,22415,Wolfeboro Area Childrens Center Inc.,,0,0,0,0,0,0,0,0
+2019,22420,Brewster Academy,348,0,0,0,0,0,0,0,0
+2019,22435,Cornerstone Christian Academy,47,0,0,0,0,0,0,0,0
+2019,22445,Learning Skills Academy,60,0,0,0,0,0,0,0,0
+2019,22520,St. Patrick Academy,169,0,0,0,0,0,0,0,0
+2019,22540,Portsmouth Christian Academy,458,0,0,0,0,0,0,0,0
+2019,22570,Pine Haven Boys Center,22,70,0,0,0,70,0,0,0
+2019,22610,Green Valley School,70,0,0,0,0,0,0,0,0
+2019,22640,Lighthouse Christian Academy,11,0,0,0,0,0,0,0,0
+2019,22685,Monarch School of New England,63,295,2,0,0,295,0,0,0
+2019,22710,St. Elizabeth Seton School,86,0,0,0,0,0,0,0,0
+2019,22735,Hampstead Academy,23,0,0,0,0,0,0,0,0
+2019,22785,Tri-City Christian Academy,162,,,,,,,,
+2019,22825,Strafford Learning Center,28,10,0,0,0,10,82,0,82
+2019,22885,St. Joseph Regional (Salem),124,0,0,0,0,0,0,0,0
+2019,22930,Spaulding Youth Center,85,204,0,0,0,204,460,0,460
+2019,22940,Tilton School,247,0,0,0,0,0,0,0,0
+2019,23025,High Mowing School,269,0,0,0,0,0,0,0,0
+2019,23065,High Mowing School,,0,0,0,0,0,0,0,0
+2019,26255,Manchester Diocesan,,0,0,0,0,0,0,0,0
+2019,26370,The Cornerstone School,170,0,0,0,0,0,0,0,0
+2019,26450,Mountain Shadows School,63,0,0,0,0,0,0,0,0
+2019,26465,World Academy,385,0,0,0,0,0,0,0,0
+2019,26470,Lakeland School,,0,0,0,0,0,0,0,0
+2019,26705,Wediko Childrens Services Inc.,44,40,3,0,0,40,0,0,0
+2019,26720,The Community School,24,0,0,0,0,0,0,0,0
+2019,26805,Immaculate Heart Of Mary School,50,0,0,0,0,0,0,0,0
+2019,26845,Victory High School,17,0,0,0,0,0,0,0,0
+2019,26850,Heritage Christian School,51,0,0,0,0,0,0,0,0
+2019,26880,Jesse Remington High School,36,0,0,0,0,0,0,0,0
+2019,26885,Crossroads Academy,135,0,0,0,0,0,0,0,0
+2019,27030,Mount Prospect Academy,66,158,9,0,0,158,0,0,0
+2019,27045,Shaker Road School,206,0,0,0,0,0,0,0,0
+2019,27060,NFI North - Davenport School,12,0,0,0,0,0,0,0,0
+2019,27085,Mount St. Mary Academy,92,0,0,0,0,0,0,0,0
+2019,27095,Whiting Hill School,,0,0,0,0,0,0,0,0
+2019,27120,Mount Royal Academy Inc.,184,0,0,0,0,0,0,0,0
+2019,27490,RSEC (Reg Svces & Educ Ctr) - Academy,38,0,0,0,0,0,0,0,0
+2019,27555,South Merrimack Christian Academy,273,,,,,,,,
+2019,27610,Bethlehem Christian School,10,0,0,0,0,0,0,0,0
+2019,27665,Trinity Christian School,95,0,0,0,0,0,0,0,0
+2019,27780,Granite Hill School,29,0,0,0,0,0,0,0,0
+2019,27835,Holy Family Academy,95,0,0,0,0,0,0,0,0
+2019,27915,RSEC (Reg Svces & Educ Ctr) - Longview,23,0,0,0,0,0,0,0,0
+2019,27930,SAU #23 French Pond,8,0,0,0,0,0,5,0,5
+2019,27935,Parker Academy,41,0,0,0,0,0,0,0,0
+2019,27955,SAU #53 TLC Preschool,26,0,0,0,0,0,0,0,0
+2019,28000,Kids Connections,14,0,0,0,0,0,0,0,0
+2019,28010,White Mountain Waldorf School,68,0,0,0,0,0,0,0,0
+2019,28025,Shortridge Academy,42,0,0,0,0,0,0,0,0
+2019,28030,The Birchtree Center,36,1115,0,0,0,1115,1008,0,1008
+2019,28035,Easterseals Lancaster School,13,13,0,0,0,13,0,0,0
+2019,28040,NFI North - Contoocook School,15,0,0,0,0,0,0,0,0
+2019,28060,Barrington Annex,,0,0,0,0,0,0,0,0
+2019,28125,Robert Jolicoeur Boys Group Home,,0,0,0,0,0,0,0,0
+2019,28135,Robert Jolicoeur 2 School-Zachary Rd,,0,0,0,0,0,0,0,0
+2019,28140,Robert Jolicoeur School - Lancaster,,0,0,0,0,0,0,0,0
+2019,28145,Robert Jolicoeur School - Whitehouse,,0,0,0,0,0,0,0,0
+2019,28150,Clearway Alternative School,,0,0,0,0,0,0,0,0
+2019,28165,Nashua Children's Assoc,,0,0,0,0,0,0,0,0
+2019,28170,VASE Alternative School,,0,0,0,0,0,0,0,0
+2019,28175,Williams School at Gonic Plaza,,0,0,0,0,0,0,0,0
+2019,28180,NH Youth Services Center,,0,0,0,0,0,0,0,0
+2019,28190,Odyssey House/Pace,,0,0,0,0,0,0,0,0
+2019,28200,SAU #23 King Street School,15,0,0,0,0,0,9,0,9
+2019,28210,Hillsboro Christian School,23,0,0,0,0,0,0,0,0
+2019,28405,2nd Nature Academy/Nature of Things,113,0,0,0,0,0,0,0,0
+2019,28415,Oliverian School,41,0,0,0,0,0,0,0,0
+2019,28420,Mount Zion Christian School,164,0,0,0,0,0,0,0,0
+2019,28485,Woodland Community School,15,0,0,0,0,0,0,0,0
+2019,28520,Meeting House Montessori,51,0,0,0,0,0,0,0,0
+2019,28540,Country Village Montessori School,16,0,0,0,0,0,0,0,0
+2019,28585,Capital Christian School,8,0,0,0,0,0,0,0,0
+2019,28595,Heronfield Academy,83,0,0,0,0,0,0,0,0
+2019,28675,Hollis Montessori School,125,0,0,0,0,0,0,0,0
+2019,28680,Newport Montessori School,78,0,0,0,0,0,0,0,0
+2019,28690,New England Classical Academy,58,0,0,0,0,0,0,0,0
+2019,28710,Southern NH Montessori Academy,53,0,0,0,0,0,0,0,0
+2019,28725,Enriched Learning Center,13,11,0,0,0,11,0,0,0
+2019,29000,Heart Centered Multi-Age,25,0,0,0,0,0,0,0,0
+2019,29025,Rochester Learning Academy,16,0,0,0,0,0,0,0,0
+2019,29095,The Beech Hill School,35,0,0,0,0,0,0,0,0
+2019,29159,Hawthorne Academy,1,,,,,,,,
+2019,29168,"North End Montessori School ,LLC",154,0,0,0,0,0,0,0,0
+2019,29170,Easterseals - Zachary Residential,,0,0,0,0,0,0,0,0
+2019,29176,Namaste Montessori School,20,0,0,0,0,0,0,0,0
+2019,29179,Unity Christian School,15,0,0,0,0,0,0,0,0
+2019,29183,Waterville Valley Academy,31,0,0,0,0,0,0,0,0
+2019,29186,Enfield School Rec Program - Huse Park,,0,0,0,0,0,0,0,0
+2019,29187,Macoma Valley Recreation Soccer Camp (NSLP-SSO),,0,0,0,0,0,0,0,0
+2019,29190,Busche Academy,0,0,0,0,0,0,0,0,0
+2019,29198,St. Charles School,18,0,0,0,0,0,0,0,0
+2019,29205,The Trinity School of Bedford,2,0,0,0,0,0,0,0,0
+2019,29207,Building Block Commons,113,0,0,0,0,0,0,0,0
+2019,29209,Mount Royal Academy North,31,0,0,0,0,0,0,0,0
+2019,29212,Compass Academy,0,5,0,0,0,5,0,0,0
+2019,29213,Thrive Educational Program,,0,0,0,0,0,0,0,0
+2019,29215,RSEC( RegSvcs Ed Ctr)-Vista Learning Center,,0,0,0,0,0,0,0,0

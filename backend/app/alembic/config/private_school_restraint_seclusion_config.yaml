@@ -1,0 +1,42 @@
+# Restraints and seclusions at private (nonpublic) schools, from NHED's restraint and seclusion
+# reports (https://www.education.nh.gov/who-we-are/division-of-educator-and-analytic-resources/bureau-of-education-statistics/restraint-and-seclusion):
+# the nonpublic pages at the end of each year's report to the legislature (2018-19 to 2022-23, and
+# 2025-26's "corrected annual" report) and the separate "NonPublic School Restraint and Seclusion
+# Report" (2023-24, 2024-25). Earlier years have only statewide nonpublic totals. The page needs a
+# normal browser window. Loaded by app/etl/private_safety.py.
+#
+# The reports are PDFs. Each year's school rows were copied once into a CSV (one row per school,
+# repeats in the 2020-21 and 2021-22 reports dropped); the column headed "Restraints Resulting Death"
+# is the one the reports' summaries total as "restraints resulting in serious injury or death".
+file_settings:
+  default_input: "../assets/private-safety/nonpublic-restraint-seclusion-****.csv"
+  year_start: 2019
+  year_end: 2026
+
+# Each report's printed nonpublic totals, which the year's CSV rows must add up to. 2019-20's school
+# rows come to 16,134 students against its printed 16,155, so its enrollment isn't checked.
+expected_totals:
+  2019: {enrollment: 15990, restraint_reports: 3005, restraints_bodily_harm: 18, restraints_serious_injury_or_death: 0,
+         restraint_investigations_active: 0, restraint_investigations_closed: 3005,
+         seclusion_reports: 1564, seclusion_investigations_active: 0, seclusion_investigations_closed: 1564}
+  2020: {restraint_reports: 1827, restraints_bodily_harm: 4, restraints_serious_injury_or_death: 0,
+         restraint_investigations_active: 0, restraint_investigations_closed: 1827,
+         seclusion_reports: 393, seclusion_investigations_active: 0, seclusion_investigations_closed: 393}
+  2021: {enrollment: 16962, restraint_reports: 830, restraints_bodily_harm: 2, restraints_serious_injury_or_death: 0,
+         restraint_investigations_active: 2, restraint_investigations_closed: 828,
+         seclusion_reports: 446, seclusion_investigations_active: 0, seclusion_investigations_closed: 446}
+  2022: {enrollment: 17198, restraint_reports: 893, restraints_bodily_harm: 10, restraints_serious_injury_or_death: 0,
+         restraint_investigations_active: 0, restraint_investigations_closed: 893,
+         seclusion_reports: 496, seclusion_investigations_active: 0, seclusion_investigations_closed: 496}
+  2023: {enrollment: 17742, restraint_reports: 1073, restraints_bodily_harm: 6, restraints_serious_injury_or_death: 0,
+         restraint_investigations_active: 0, restraint_investigations_closed: 1073,
+         seclusion_reports: 508, seclusion_investigations_active: 0, seclusion_investigations_closed: 508}
+  2024: {enrollment: 17876, restraint_reports: 1380, restraints_bodily_harm: 2, restraints_serious_injury_or_death: 0,
+         restraint_investigations_active: 0, restraint_investigations_closed: 1380,
+         seclusion_reports: 357, seclusion_investigations_active: 0, seclusion_investigations_closed: 357}
+  2025: {enrollment: 17657, restraint_reports: 1310, restraints_bodily_harm: 6, restraints_serious_injury_or_death: 0,
+         restraint_investigations_active: 0, restraint_investigations_closed: 1310,
+         seclusion_reports: 638, seclusion_investigations_active: 0, seclusion_investigations_closed: 638}
+  2026: {enrollment: 17676, restraint_reports: 737, restraints_bodily_harm: 5, restraints_serious_injury_or_death: 0,
+         restraint_investigations_active: 0, restraint_investigations_closed: 737,
+         seclusion_reports: 471, seclusion_investigations_active: 0, seclusion_investigations_closed: 471}

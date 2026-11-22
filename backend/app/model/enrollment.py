@@ -1,3 +1,4 @@
+from decimal import Decimal
 from sqlmodel import Field, Relationship, SQLModel
 from .base import BaseMixin
 from .location import School, Grade, Town
@@ -125,4 +126,67 @@ class StateEnrollmentType(BaseMixin, table=True):
     year: int
     enrollment_type_id_fk: int = Field(foreign_key="enrollment_type.id")
     grade_id_fk: int = Field(foreign_key="grades.id")
+    enrollment: int
+
+
+class SchoolPrivateSurvey(BaseMixin, table=True):
+    """A private school's answers to the NCES Private School Survey for a school year (by its end)"""
+    __tablename__ = "school_private_survey"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    year: int
+    ppin: str
+    # The codebook's labels
+    typology: Optional[str] = None
+    affiliation: Optional[str] = None
+    religious_orientation: Optional[str] = None
+    level: Optional[str] = None
+    community_type: Optional[str] = None
+    # Kindergarten to grade 12 and ungraded; and with preschool
+    students: Optional[int] = None
+    students_with_preschool: Optional[int] = None
+    male_students: Optional[int] = None
+    # The 12th graders the year before, and the share of those graduates who went to a four-year college
+    seniors_prior_year: Optional[int] = None
+    to_four_year_college_pct: Optional[int] = None
+    teachers_fte: Optional[Decimal] = None
+    students_per_teacher: Optional[Decimal] = None
+    school_day_hours: Optional[Decimal] = None
+    pct_american_indian: Optional[Decimal] = None
+    pct_asian: Optional[Decimal] = None
+    pct_pacific_islander: Optional[Decimal] = None
+    pct_hispanic: Optional[Decimal] = None
+    pct_white: Optional[Decimal] = None
+    pct_black: Optional[Decimal] = None
+    pct_two_or_more_races: Optional[Decimal] = None
+
+
+class SchoolPrivateSurveyGrade(BaseMixin, table=True):
+    """A private school's students in a grade, as it answered the Private School Survey"""
+    __tablename__ = "school_private_survey_grade"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    year: int
+    grade_id_fk: int = Field(foreign_key="grades.id")
+    students: int
+
+
+class SchoolPrivateEnrollmentTotal(BaseMixin, table=True):
+    """A private school's ungraded students and total on October 1, from NHED's nonpublic enrollment report"""
+    __tablename__ = "school_private_enrollment_total"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    year: int
+    ungraded_elementary: int
+    ungraded_secondary: int
+    total: int
+
+
+class SchoolPrivateEnrollment(BaseMixin, table=True):
+    """A private school's students in a grade on October 1; apart from the public schools' school_enrollment"""
+    __tablename__ = "school_private_enrollment"
+
+    school_id_fk: int = Field(foreign_key="school.id")
+    grade_id_fk: int = Field(foreign_key="grades.id")
+    year: int
     enrollment: int

@@ -1,0 +1,933 @@
+year,line_no,category,category_total,provider,amount
+2022,1,Tuition and fees at a private school,3162509.40,Trinity Christian School of Concord,251300.89
+2022,2,Tuition and fees at a private school,3162509.40,Laconia Christian Academy,232829.13
+2022,3,Tuition and fees at a private school,3162509.40,Concord Christian Academy,197762.57
+2022,4,Tuition and fees at a private school,3162509.40,"Mount Royal Academy, Inc.",163364.65
+2022,5,Tuition and fees at a private school,3162509.40,Portsmouth Christian Academy,138145.97
+2022,6,Tuition and fees at a private school,3162509.40,Dublin Christian Academy,109965.02
+2022,7,Tuition and fees at a private school,3162509.40,High Mowing School,96394.60
+2022,8,Tuition and fees at a private school,3162509.40,Cardinal Lacroix Academy,88786.76
+2022,9,Tuition and fees at a private school,3162509.40,Ossipee Cornerstone Christian Academy,85895.04
+2022,10,Tuition and fees at a private school,3162509.40,"Mount Zion Christian Schools, Inc.",68956.79
+2022,11,Tuition and fees at a private school,3162509.40,St. Joseph Regional School Keene,61772.20
+2022,12,Tuition and fees at a private school,3162509.40,Trinity High School,61553.77
+2022,13,Tuition and fees at a private school,3162509.40,Saint Christopher Academy,60284.30
+2022,14,Tuition and fees at a private school,3162509.40,"Bishop Guertin High School, Inc",54540.59
+2022,15,Tuition and fees at a private school,3162509.40,Bishop Brady High School,49778.48
+2022,16,Tuition and fees at a private school,3162509.40,St. Thomas Aquinas High School,49246.21
+2022,17,Tuition and fees at a private school,3162509.40,Acton Academy NH,47650.05
+2022,18,Tuition and fees at a private school,3162509.40,Saint Benedict Academy,47267.58
+2022,19,Tuition and fees at a private school,3162509.40,Newport Montessori School,44380.75
+2022,20,Tuition and fees at a private school,3162509.40,Jesse Remington High School,43288.96
+2022,21,Tuition and fees at a private school,3162509.40,Crossroads Christian School,43279.94
+2022,22,Tuition and fees at a private school,3162509.40,St. John Regional School,42759.19
+2022,23,Tuition and fees at a private school,3162509.40,Sant Bani School,42027.77
+2022,24,Tuition and fees at a private school,3162509.40,Victory Baptist School,39567.74
+2022,25,Tuition and fees at a private school,3162509.40,Saint Mary Academy,39285.32
+2022,26,Tuition and fees at a private school,3162509.40,Holy Family Academy,38439.05
+2022,27,Tuition and fees at a private school,3162509.40,St. Francis of Assisi,38389.50
+2022,28,Tuition and fees at a private school,3162509.40,The Beech Hill School,37387.39
+2022,29,Tuition and fees at a private school,3162509.40,Mount St. Mary Academy,36303.90
+2022,30,Tuition and fees at a private school,3162509.40,Tri-City Christian Academy,36126.11
+2022,31,Tuition and fees at a private school,3162509.40,Trinity Christian School of Keene,35135.74
+2022,32,Tuition and fees at a private school,3162509.40,Holy Trinity School,35061.06
+2022,33,Tuition and fees at a private school,3162509.40,Salve Regina Academy,34291.11
+2022,34,Tuition and fees at a private school,3162509.40,Seacoast Christian School,33381.10
+2022,35,Tuition and fees at a private school,3162509.40,St. Joseph Regional Junior High School,33376.08
+2022,36,Tuition and fees at a private school,3162509.40,South Merrimack Christian Academy,29923.57
+2022,37,Tuition and fees at a private school,3162509.40,Immaculate Heart of Mary School,29778.07
+2022,38,Tuition and fees at a private school,3162509.40,Presentation of Mary Academy,27375.11
+2022,39,Tuition and fees at a private school,3162509.40,Saint Catherine of Siena,25774.89
+2022,40,Tuition and fees at a private school,3162509.40,Heritage Christian School,25576.00
+2022,41,Tuition and fees at a private school,3162509.40,St. Elizabeth Seton School,24636.39
+2022,42,Tuition and fees at a private school,3162509.40,Victory High School,24290.12
+2022,43,Tuition and fees at a private school,3162509.40,Claremont Christian Academy,19762.19
+2022,44,Tuition and fees at a private school,3162509.40,Gregory the Great Academy,16497.73
+2022,45,Tuition and fees at a private school,3162509.40,The Well School,16458.57
+2022,46,Tuition and fees at a private school,3162509.40,Building Block Commons,16420.96
+2022,47,Tuition and fees at a private school,3162509.40,Lupine Montessori School,16292.20
+2022,48,Tuition and fees at a private school,3162509.40,Overseas United Education Foundation Inc,15766.18
+2022,49,Tuition and fees at a private school,3162509.40,Acton Academy Seacoast,15676.76
+2022,50,Tuition and fees at a private school,3162509.40,Academy of Notre Dame Tyngsboro,14505.00
+2022,51,Tuition and fees at a private school,3162509.40,Sacred Heart School,14473.68
+2022,52,Tuition and fees at a private school,3162509.40,St. Joseph Regional School,14394.50
+2022,53,Tuition and fees at a private school,3162509.40,Hillsboro Christian School,13575.43
+2022,54,Tuition and fees at a private school,3162509.40,Mid Vermont Christian School,13559.79
+2022,55,Tuition and fees at a private school,3162509.40,Tabernacle Christian School,12998.95
+2022,56,Tuition and fees at a private school,3162509.40,Unity Christian School,11912.50
+2022,57,Tuition and fees at a private school,3162509.40,Mount Royal Academy North,11715.08
+2022,58,Tuition and fees at a private school,3162509.40,St. Michael School,11437.80
+2022,59,Tuition and fees at a private school,3162509.40,Nashua Christian Bible Church Academy,11161.60
+2022,60,Tuition and fees at a private school,3162509.40,Mountain Shadows School,10559.23
+2022,61,Tuition and fees at a private school,3162509.40,Seacoast Waldorf School,10078.09
+2022,62,Tuition and fees at a private school,3162509.40,Meeting House Montessori School,10029.58
+2022,63,Tuition and fees at a private school,3162509.40,Pioneer Junior Academy,9952.06
+2022,64,Tuition and fees at a private school,3162509.40,The Trinity School of Bedford,9270.00
+2022,65,Tuition and fees at a private school,3162509.40,"2nd Nature Academy, LLC",8649.37
+2022,66,Tuition and fees at a private school,3162509.40,Saint Patrick Academy,8594.56
+2022,67,Tuition and fees at a private school,3162509.40,World Academy,8001.63
+2022,68,Tuition and fees at a private school,3162509.40,Green Valley School,7229.98
+2022,69,Tuition and fees at a private school,3162509.40,Phillips Exeter Academy,7156.78
+2022,70,Tuition and fees at a private school,3162509.40,The Derryfield School,6886.49
+2022,71,Tuition and fees at a private school,3162509.40,North End Montessori School,6815.98
+2022,72,Tuition and fees at a private school,3162509.40,Crossroads Academy,6815.98
+2022,73,Tuition and fees at a private school,3162509.40,Bedford Academy,6815.98
+2022,74,Tuition and fees at a private school,3162509.40,Tilton School,6786.38
+2022,75,Tuition and fees at a private school,3162509.40,Christian Bible Church Academy,6289.98
+2022,76,Tuition and fees at a private school,3162509.40,The White Mountain School,5716.55
+2022,77,Tuition and fees at a private school,3162509.40,Southern New Hampshire Montessori,5189.64
+2022,78,Tuition and fees at a private school,3162509.40,Brewster Academy,5111.99
+2022,79,Tuition and fees at a private school,3162509.40,Fork Union Military Academy,5111.99
+2022,80,Tuition and fees at a private school,3162509.40,Proctor Academy,4907.99
+2022,81,Tuition and fees at a private school,3162509.40,"Full Circle Elementary School, Inc.",4600.00
+2022,82,Tuition and fees at a private school,3162509.40,Bradford Christian Academy,3950.00
+2022,83,Tuition and fees at a private school,3162509.40,New Hampton School,3640.98
+2022,84,Tuition and fees at a private school,3162509.40,Fellowship Christian Academy,3445.32
+2022,85,Tuition and fees at a private school,3162509.40,The New School,3437.50
+2022,86,Tuition and fees at a private school,3162509.40,Kimball Union Academy,3407.99
+2022,87,Tuition and fees at a private school,3162509.40,Vermont Academy,3407.99
+2022,88,Tuition and fees at a private school,3162509.40,Montessori Schoolhouse of Cheshire County,3407.99
+2022,89,Tuition and fees at a private school,3162509.40,Hollis Montessori School,3407.99
+2022,90,Tuition and fees at a private school,3162509.40,"Bais Yaakov of Boston, Inc.",3300.00
+2022,91,Tuition and fees at a private school,3162509.40,Country Village Montessori School LLC,3251.59
+2022,92,Tuition and fees at a private school,3162509.40,Fryeburg Academy,3067.20
+2022,93,Tuition and fees at a private school,3162509.40,Woodland Community School,2907.30
+2022,94,Tuition and fees at a private school,3162509.40,Holderness School,2300.00
+2022,95,Tuition and fees at a private school,3162509.40,Shaker Road School,2044.80
+2022,96,Tuition and fees at a private school,3162509.40,LEAP Kindergarden,1917.34
+2022,97,Tuition and fees at a private school,3162509.40,Compass School,1522.50
+2022,98,Tuition and fees at a private school,3162509.40,White Mountain School,1444.30
+2022,99,Tuition and fees at a private school,3162509.40,Second Start,140.00
+2022,100,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Amazon Inc.,493024.34
+2022,101,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Rainbow Resource Center, Inc.",35362.39
+2022,102,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Abeka,34821.14
+2022,103,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Staples,26492.84
+2022,104,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,History Unboxed,15963.79
+2022,105,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Good and the Beautiful,11312.96
+2022,106,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,School Specialty,9772.34
+2022,107,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Mirus Toys Montessori & Waldorf,9188.99
+2022,108,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Inc,8974.97
+2022,109,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,I Create Art,8213.37
+2022,110,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"KiwiCo, Inc.",8066.25
+2022,111,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sonlight,8043.17
+2022,112,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Christian Book Distributors,7455.23
+2022,113,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,ClassWallet ClassRoom Resources,7184.20
+2022,114,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,My Father's World,6824.20
+2022,115,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Scholastic,6747.18
+2022,116,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Christianbook,6599.92
+2022,117,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,BeakerzScience,6204.34
+2022,118,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,West Music,5887.56
+2022,119,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Ace Educational,5828.42
+2022,120,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Hands 4 Building,5791.61
+2022,121,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,ClassWallet Supply Essentials,4870.52
+2022,122,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Lifelong Learning Resources and Children's Books,4870.14
+2022,123,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Timberdoodle Co,4401.52
+2022,124,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,BJU Press,4393.70
+2022,125,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Demco,4155.77
+2022,126,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,eNasco,3726.40
+2022,127,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Steve Spangler Science,3449.84
+2022,128,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Gulstrom,3200.00
+2022,129,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Carolina Biological,3149.43
+2022,130,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,HomeWorks by Precept,3118.05
+2022,131,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Books4School,3083.61
+2022,132,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Lakeshore Learning,3003.77
+2022,133,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Singapore Math,2902.14
+2022,134,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Bookshark LLC,2874.18
+2022,135,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Beckers,2840.75
+2022,136,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Classmate Education Toys & Classroom Essentials,2840.65
+2022,137,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Abilitations,2777.94
+2022,138,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,ABC Fun,2754.54
+2022,139,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Carson Dellosa Education By Staples,2728.46
+2022,140,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Knowledge Tree,2719.74
+2022,141,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Cotton,2602.00
+2022,142,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Discount School Supply,2594.94
+2022,143,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Guitar Center,2568.92
+2022,144,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Usborne Books,2466.54
+2022,145,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Walmart,2458.71
+2022,146,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Play Piper STEM Learning,2385.00
+2022,147,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Master Books,2126.11
+2022,148,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Not Consumed,2039.69
+2022,149,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Carter Books & Supplies,2027.90
+2022,150,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Veritas Press,1867.50
+2022,151,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Teach the Children,1828.89
+2022,152,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,New Leaf Publishing Group: MasterBooks,1817.63
+2022,153,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Fossil Crates,1807.50
+2022,154,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Stages Learning Materials,1735.41
+2022,155,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Homeschool Artbox,1660.00
+2022,156,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Southwestern Advantage,1635.55
+2022,157,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Belmont,1601.66
+2022,158,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Tarquinio,1595.00
+2022,159,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,All About Learning Press,1535.76
+2022,160,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations King,1521.83
+2022,161,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Vermont Violins,1425.00
+2022,162,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Logic of English,1419.47
+2022,163,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Get Smart,1395.30
+2022,164,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Noeo Science,1271.49
+2022,165,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Discount Ink Supply,1251.08
+2022,166,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Really Good Stuff,1234.81
+2022,167,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Educators at Heart,1229.01
+2022,168,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sweetwater,1199.00
+2022,169,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,North Conway Music Center,1171.80
+2022,170,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Seton Home Study School,1110.96
+2022,171,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Gliga Violins USA, Inc.",1096.52
+2022,172,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Time4Learning,1083.05
+2022,173,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Math-U-See, Inc DBA Demme Learning",1081.33
+2022,174,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,I'm The Chef Too,1064.35
+2022,175,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Etap,1047.00
+2022,176,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Oak Meadow,1040.50
+2022,177,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Compass Classroom,1037.70
+2022,178,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Northern Lights Music,1028.92
+2022,179,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Roman Roads Press,1025.07
+2022,180,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Barnes & Noble,1010.91
+2022,181,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Simply Charlotte Mason,997.54
+2022,182,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Musician Friends,958.00
+2022,183,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sport Time,945.98
+2022,184,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Herrmann,925.00
+2022,185,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Childcraft ABC,915.10
+2022,186,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,CrunchLabs,908.15
+2022,187,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Memoria Press,891.64
+2022,188,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Eastern Shore School Supply,871.83
+2022,189,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Standards in Puzzles,859.15
+2022,190,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Labell,849.00
+2022,191,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Lets Play Music and Make Art,llc",722.96
+2022,192,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Memoria Press,713.84
+2022,193,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Frey Scientific,709.34
+2022,194,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Target,708.12
+2022,195,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Dorsey Violins, Violas, Cellos & Bows",700.00
+2022,196,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sharmusic.com,695.00
+2022,197,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Ewers,687.50
+2022,198,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Manchester Music Mill,682.19
+2022,199,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,My Fun Science,672.36
+2022,200,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,AbeBooks,667.63
+2022,201,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Treasures by the Box,661.23
+2022,202,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Brave Writer,637.47
+2022,203,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Teaching Textbooks,636.96
+2022,204,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Catholic Heritage Curricula,630.10
+2022,205,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,RightStart Mathematics,615.96
+2022,206,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Home Training Tools,604.89
+2022,207,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Costco,604.59
+2022,208,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,FB Marketplace Casio,600.00
+2022,209,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Mullins,595.00
+2022,210,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Stephens Educational services, LLC / Essentials in Writing",590.00
+2022,211,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,eBay,583.67
+2022,212,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Lego Education,579.85
+2022,213,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Johnson String Instrument,577.20
+2022,214,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Beautiful Feet Books,573.77
+2022,215,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Our Lady of the Rosary School,569.00
+2022,216,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,DIVE Into Math & Science,563.98
+2022,217,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Music & Arts,555.35
+2022,218,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Homeschool On Enterprises Ltd,553.00
+2022,219,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Ellis Music,547.50
+2022,220,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Skillastics,541.08
+2022,221,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Spielgaben,530.00
+2022,222,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Christian Light Publications, Inc.",525.84
+2022,223,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,HomeScienceTools.com,521.90
+2022,224,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,New Hampshire Audubon,520.00
+2022,225,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Thriftbooks,482.48
+2022,226,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Dick's Sporting Goods,479.97
+2022,227,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Teachers Pay Teachers,476.99
+2022,228,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Critical Thinking Co,473.47
+2022,229,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Acoustic Strings of New England,443.00
+2022,230,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Ossipee,439.38
+2022,231,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Pearson,434.96
+2022,232,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Crossroads Christian School,425.00
+2022,233,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Tuttle Twins,423.20
+2022,234,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Michael's,409.82
+2022,235,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,A.C.E. School of Tomorrow,406.30
+2022,236,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Davidson Violins,395.19
+2022,237,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,WintergreenBotanicals,395.00
+2022,238,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Paper Scissors Stone,393.85
+2022,239,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Clear Water Press,384.50
+2022,240,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Fleisher Music,375.00
+2022,241,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,IXL Learning,373.95
+2022,242,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Blackbird and Company,370.00
+2022,243,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Educational Products, Inc",368.00
+2022,244,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Berean Builders,368.00
+2022,245,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Gather Round Homeschool,364.70
+2022,246,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,College Prep Science,360.00
+2022,247,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Teacher Tools Inc.,357.41
+2022,248,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Academic Press,354.48
+2022,249,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,JoANN,349.50
+2022,250,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,New Hampshire Historical Society,347.50
+2022,251,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Wilson Language Training Store,346.68
+2022,252,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,School Specialty,335.47
+2022,253,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,MEL Science,331.70
+2022,254,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Apolgia,326.25
+2022,255,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Harbor and Sprout,316.56
+2022,256,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Schoolhouseteachers.com,312.97
+2022,257,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Strings and Things,305.97
+2022,258,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Talk Box Mom,304.00
+2022,259,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Deja Vu,300.00
+2022,260,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Riverbend Press,295.00
+2022,261,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Toadstool Bookshop,293.32
+2022,262,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Trekkinn,286.62
+2022,263,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Hobby Lobby,276.73
+2022,264,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Family Nest Printing,275.86
+2022,265,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Ramsey Solutions,273.92
+2022,266,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Center for Lit,270.00
+2022,267,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Etude Student Flute,258.00
+2022,268,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,MODG Books,252.63
+2022,269,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Tom Woods Liberty Platform,248.50
+2022,270,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Super Duper Publications,245.69
+2022,271,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sam's Club,240.92
+2022,272,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Taproot Farm & Environmental Education Center,240.00
+2022,273,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Codecademy,239.88
+2022,274,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Violette,239.00
+2022,275,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,World News Group,236.34
+2022,276,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Barnes,235.00
+2022,277,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Books A Million,225.11
+2022,278,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Teachers Discovery,220.32
+2022,279,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sue Dickson Songs that Teach,214.54
+2022,280,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Classical Conversations Cheshire,210.00
+2022,281,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Demme Learning,209.00
+2022,282,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Nature's Worship,200.00
+2022,283,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Wolters Kluwer,199.99
+2022,284,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,NHTI Concord's Community College,198.07
+2022,285,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Bishop Guertin High School, Inc",196.23
+2022,286,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Stages Dance Academy,196.00
+2022,287,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,ACSI,188.08
+2022,288,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,HomeschoolPsychology.com,185.70
+2022,289,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Udemy Inc,172.88
+2022,290,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Blossom and Root,169.70
+2022,291,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Canon Press,169.00
+2022,292,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Royal Fireworks Press,160.00
+2022,293,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Study.com,159.98
+2022,294,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sensory Site,155.94
+2022,295,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Treehouse Schoolhouse,153.45
+2022,296,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Brave Books,152.94
+2022,297,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Forrests Music,151.74
+2022,298,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Total Language Plus,147.72
+2022,299,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Homeschool Printing Company,147.65
+2022,300,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Usborne Books & More,143.91
+2022,301,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Moving Beyond the Page,140.64
+2022,302,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,School Outfitters,136.96
+2022,303,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Lamp Post Publishing,135.63
+2022,304,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Vista Higher Learning,134.94
+2022,305,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Henderson's Pipes & Drums,132.95
+2022,306,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Nicole the Math Lady, LLC",129.00
+2022,307,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,BJs,126.88
+2022,308,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Drew's Art Box,126.73
+2022,309,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Yoto USA,122.38
+2022,310,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Used Book Superstore,120.05
+2022,311,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Nearpod,120.00
+2022,312,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Aleks Math,119.90
+2022,313,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Thinking Kids Press,119.00
+2022,314,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Etsy,118.29
+2022,315,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Blick Art Materials,113.34
+2022,316,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,PCS Edventures,112.51
+2022,317,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Wonky Star Ltd/ Night Zookeeper,110.98
+2022,318,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Simple Words,110.81
+2022,319,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Gentle + Classical Press,109.09
+2022,320,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,All About Spelling,105.85
+2022,321,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,HP Ink,105.84
+2022,322,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Homeschool in the Woods,104.85
+2022,323,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Boy Scouts of America,104.75
+2022,324,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,TAN Books,103.75
+2022,325,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Hand2Mind,101.72
+2022,326,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sistema Educativo LAM,98.38
+2022,327,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Quizalize,98.00
+2022,328,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Elemental Science,97.08
+2022,329,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,JacKris Publishing,89.38
+2022,330,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Math For Love,85.85
+2022,331,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Institute for Excellence in Writing,85.00
+2022,332,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Touch-type Read and Spell (TTRS),84.95
+2022,333,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Double Play Hobby Consignment,81.50
+2022,334,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Harris Science Center,80.00
+2022,335,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sharps Lumber,75.00
+2022,336,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Daily Skill Builder,72.83
+2022,337,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Mystery of History,71.29
+2022,338,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Pandia Press Inc,70.55
+2022,339,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Typesy.com,67.00
+2022,340,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Purple House Press,65.16
+2022,341,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Answers in,64.98
+2022,342,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Sophia Institute,64.98
+2022,343,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Home Science Adventures,63.89
+2022,344,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Parks and Rec Town of Peterborough,63.00
+2022,345,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Tap My Trees for Teachers,62.95
+2022,346,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,SpellingClassroom,62.46
+2022,347,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Shutterfly,61.97
+2022,348,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Highlights for Children,60.02
+2022,349,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Wilder Child,60.00
+2022,350,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Math Mammoth,59.95
+2022,351,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Home Science Tools,59.25
+2022,352,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,TOPS Learning Systems,55.96
+2022,353,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Educational Innovations,55.45
+2022,354,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,New England Aquarium,55.00
+2022,355,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Lulu,54.89
+2022,356,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Summit Ministries,53.68
+2022,357,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Circe Institute,53.26
+2022,358,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Toy Chest,53.00
+2022,359,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Feppy Box,53.00
+2022,360,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Living Book Press,51.96
+2022,361,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Bakken Books,50.55
+2022,362,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Woke Homeschooling, Inc.",49.99
+2022,363,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Week Junior,49.95
+2022,364,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"The Bookery, Manchester",49.93
+2022,365,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Post From The Past,49.45
+2022,366,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Foundations in Drawing,47.54
+2022,367,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,DIY Repair,47.00
+2022,368,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Cengage,45.49
+2022,369,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Charlotte Mason,44.95
+2022,370,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Disciple Making Parent,44.70
+2022,371,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,State History,42.90
+2022,372,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Cricket Media,41.90
+2022,373,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Life Lessons Global,40.43
+2022,374,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Adidas,40.00
+2022,375,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,VitalSource,40.00
+2022,376,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Etextbooks,38.50
+2022,377,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Bright Star Kids,38.15
+2022,378,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Lowes,37.85
+2022,379,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Informative Products,35.93
+2022,380,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Dollar Tree,35.75
+2022,381,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Night Zookeeper,33.99
+2022,382,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Epoch Times,33.80
+2022,383,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Waldock Way,33.00
+2022,384,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Learning Herbs,32.98
+2022,385,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Ocean State Job Lot,32.82
+2022,386,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Alibris,32.05
+2022,387,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Circle C Adventures,32.00
+2022,388,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Wayside Publishing,31.64
+2022,389,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Great Books Academy Bookstore,30.00
+2022,390,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Lori Bennett Piano Lessons,29.96
+2022,391,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Kids Discover,29.00
+2022,392,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Grammaropolis,29.00
+2022,393,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,National Geographic Magazine,29.00
+2022,394,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Classical Historian,28.99
+2022,395,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,5 Below,28.25
+2022,396,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Home Depot,28.08
+2022,397,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Gentle & Classical Press,26.99
+2022,398,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Jerry's Artarama Art,26.94
+2022,399,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Biscuit and Thistle,26.00
+2022,400,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Grassroots Books,25.67
+2022,401,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,The Beech Hill School,25.00
+2022,402,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Gumroad, Inc.",24.50
+2022,403,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Barbara L Daley Piano,23.97
+2022,404,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Kearsarge Indian Museum,23.40
+2022,405,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Discover Books,23.24
+2022,406,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Study Guide for All Ages,22.22
+2022,407,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Under Armour,20.98
+2022,408,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,"Jackris Publishing, LLC",20.59
+2022,409,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Seventh Street Graphics,20.00
+2022,410,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Vermont Energy Education Program,20.00
+2022,411,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Afterthoughts,19.99
+2022,412,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,deCordova Museum Store,18.90
+2022,413,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Rainbow Loom USA,18.83
+2022,414,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Trinity High School,18.74
+2022,415,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Perfection Learning,18.13
+2022,416,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Thistles and Biscuits,16.50
+2022,417,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,SoWa Power Station,15.94
+2022,418,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Nature Study Hacking,14.99
+2022,419,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Walker Books,14.99
+2022,420,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,FYE,9.99
+2022,421,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Joshua's Toys and Games,7.19
+2022,422,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,My Homeschool Grades,5.99
+2022,423,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Mama's Learning Corner,3.50
+2022,424,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Family Dollar,2.00
+2022,425,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",918026.40,Market Basket Notebook,1.79
+2022,426,Computer hardware or other technological services and devices,565241.49,Amazon Inc.,373606.43
+2022,427,Computer hardware or other technological services and devices,565241.49,Staples,62820.12
+2022,428,Computer hardware or other technological services and devices,565241.49,Best Buy,40985.16
+2022,429,Computer hardware or other technological services and devices,565241.49,Staples Technology Solutions,27065.55
+2022,430,Computer hardware or other technological services and devices,565241.49,Apple,26024.73
+2022,431,Computer hardware or other technological services and devices,565241.49,Carson Dellosa Education By Staples,15577.31
+2022,432,Computer hardware or other technological services and devices,565241.49,Costco,4206.91
+2022,433,Computer hardware or other technological services and devices,565241.49,Lenovo Inc,3339.97
+2022,434,Computer hardware or other technological services and devices,565241.49,Dell Technologies,2613.79
+2022,435,Computer hardware or other technological services and devices,565241.49,Walmart,1934.76
+2022,436,Computer hardware or other technological services and devices,565241.49,"Bishop Guertin High School, Inc",1449.99
+2022,437,Computer hardware or other technological services and devices,565241.49,HP,1006.97
+2022,438,Computer hardware or other technological services and devices,565241.49,ClassWallet Supply Essentials,977.69
+2022,439,Computer hardware or other technological services and devices,565241.49,Target,881.95
+2022,440,Computer hardware or other technological services and devices,565241.49,Verizon,669.99
+2022,441,Computer hardware or other technological services and devices,565241.49,BJs,599.95
+2022,442,Computer hardware or other technological services and devices,565241.49,Microsoft,532.92
+2022,443,Computer hardware or other technological services and devices,565241.49,Sant Bani School,240.00
+2022,444,Computer hardware or other technological services and devices,565241.49,Xfinity,200.77
+2022,445,Computer hardware or other technological services and devices,565241.49,School Outfitters,148.46
+2022,446,Computer hardware or other technological services and devices,565241.49,Sam's Club,124.93
+2022,447,Computer hardware or other technological services and devices,565241.49,4InkJets,124.15
+2022,448,Computer hardware or other technological services and devices,565241.49,McAfee,89.00
+2022,449,Computer hardware or other technological services and devices,565241.49,FedEx Office,19.99
+2022,450,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Trinity Music Academy,29935.65
+2022,451,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Latitude Learning Resources,29150.40
+2022,452,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Classical Conversations Inc,17370.50
+2022,453,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Impact Gymnastics Academy,12081.48
+2022,454,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Manchester Community Music School,11159.86
+2022,455,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,"Lets Play Music and Make Art,llc",11121.04
+2022,456,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,"Saplings, A Forest & Nature Playschool",6815.98
+2022,457,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Concord Community Music School,6383.42
+2022,458,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,The Movement Box Dance Studio,5314.92
+2022,459,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Franklin Karate LLC,5020.90
+2022,460,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Roots School llc,4925.00
+2022,461,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Csehy Summer School of Music,4592.00
+2022,462,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Flying Gravity Circus,3905.00
+2022,463,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Gaia Education Outreach Institute,3766.00
+2022,464,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Figaro Music Studios,3570.57
+2022,465,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,SJ Music services,3540.00
+2022,466,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,YMCA,3400.21
+2022,467,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Youth Ensemble of New England,3273.00
+2022,468,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Seacoast Warriors,3193.99
+2022,469,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,The Dance Company,2964.75
+2022,470,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Chestnut Hill School,2891.72
+2022,471,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,MS Music School,2835.00
+2022,472,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,NOHA Gymnastics Academy,2655.10
+2022,473,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Sole City Dance,2621.86
+2022,474,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Pats Peak Ski Area,2599.00
+2022,475,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,NH Kicks Taekwondo Family Fitness,2565.00
+2022,476,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Gunstock,2557.99
+2022,477,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Broadway Bound Performing Arts Center,2350.47
+2022,478,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,"Lakes Region Dance, LLC",2202.25
+2022,479,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Tokyo Joe's Studios,2153.30
+2022,480,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,R Music,2105.00
+2022,481,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Music Clinic,2060.00
+2022,482,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,LB Piano Lessons,2016.00
+2022,483,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,ME Music Instruction,2013.00
+2022,484,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,BD Piano,2004.62
+2022,485,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Thrive Outdoors,1967.42
+2022,486,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Camp Fatima,1807.50
+2022,487,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,TimberNook,1650.00
+2022,488,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,A Music Studio,1650.00
+2022,489,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,B's Music Studio,1564.26
+2022,490,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Forte Music,1497.50
+2022,491,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Camp Eagle's Cliff,1450.00
+2022,492,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Ballet North,1309.50
+2022,493,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,OP Music Lessons,1300.00
+2022,494,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,US Space & Rocket Center,1299.00
+2022,495,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Satellite School of the Arts,1296.75
+2022,496,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Seacoast United,1290.00
+2022,497,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Dance Impressions,1269.00
+2022,498,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,SDSS of Concord,1211.82
+2022,499,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,RA Music,1200.00
+2022,500,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Academic Expeditions,1195.00
+2022,501,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,M Piano,1189.76
+2022,502,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Northeastern Ballet Theatre,1185.60
+2022,503,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,RM Music Lessons,1134.00
+2022,504,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,CL Music,1094.95
+2022,505,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,JL Dance Center,1062.00
+2022,506,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Boys & Girls Clubs of Central NH,1020.00
+2022,507,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Sol Studio Arts,960.00
+2022,508,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,JS Musician,954.00
+2022,509,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Legacy Farm,945.00
+2022,510,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Schwartz Violin Instructor,940.00
+2022,511,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Hayden Fit,940.00
+2022,512,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Cap City AAU,928.00
+2022,513,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,World Story Exchange,926.70
+2022,514,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Monadnock Gymnastics,924.00
+2022,515,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Presidential Range Crossfit,890.00
+2022,516,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,603 Driving School,875.50
+2022,517,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,New Hampshire Academy of Artistic Gymnastics,860.75
+2022,518,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,SDSS of Keene,835.00
+2022,519,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Rosewood Equine,825.00
+2022,520,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,AK Music,825.00
+2022,521,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,American School of Gymnastics,770.00
+2022,522,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,M Violin,756.00
+2022,523,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Tizmoret Shoshana Fine Arts,750.00
+2022,524,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Camp Bernadette,740.00
+2022,525,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,R's Piano Studio,720.00
+2022,526,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,CH Local Pass,703.00
+2022,527,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Musician Now LLC,700.00
+2022,528,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Commercial Driving School,700.00
+2022,529,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Capital Driving Academy,700.00
+2022,530,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,NH School of Ballet,700.00
+2022,531,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Seacoast Science Center,700.00
+2022,532,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,McIntyre Ski Area,687.00
+2022,533,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,LetGoYourMind STEM program,685.00
+2022,534,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,McAuliffe-Shepard Discovery Center,681.00
+2022,535,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Ready to Roll Driving School,675.00
+2022,536,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,The Trinity School of Bedford,668.10
+2022,537,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,M Piano Studio,660.00
+2022,538,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,USA Ninja Challenge,653.00
+2022,539,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,J Woodworking,637.80
+2022,540,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Edgewater Academy of Dance,630.00
+2022,541,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Krazy Kids Summer Camp,618.50
+2022,542,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,M Academy of Movement Arts,616.99
+2022,543,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Girl Scouts of the Green and White Mountains,616.00
+2022,544,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,D Music Lessons,615.00
+2022,545,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,New Hampshire Audubon,585.00
+2022,546,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Nashua Community Music School,572.00
+2022,547,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,The Hampshire Dome,560.00
+2022,548,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Windsock Camp,550.00
+2022,549,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,The Granite YMCA,538.00
+2022,550,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Snip Tuck Seamstress,530.00
+2022,551,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Brattleboro Music Center,522.30
+2022,552,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,M Piano,510.00
+2022,553,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Boston YMCA Camping Branch NH,481.24
+2022,554,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,M Karate Studio,478.50
+2022,555,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Granite State American Kenpo Karate,478.00
+2022,556,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Gundalow Company,450.00
+2022,557,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Taproot Farm & Environmental Education Center,445.00
+2022,558,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Performance Health & Fitness,432.63
+2022,559,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,KidsEye Summer Filmmaking Workshop,431.12
+2022,560,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Seeds Home School Coop,430.00
+2022,561,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Flipz Gymnastics,420.00
+2022,562,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,P Art Class,410.00
+2022,563,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,MoCo Arts,410.00
+2022,564,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Lefton Dance Complex,402.00
+2022,565,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Weltman Guitar,400.00
+2022,566,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Youth Service International,400.00
+2022,567,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,JS Music,375.00
+2022,568,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Franklin Children's Theater,375.00
+2022,569,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,H Academy,357.00
+2022,570,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,The Wilds of New England,355.00
+2022,571,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,NHTunes Music,354.00
+2022,572,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,N-J American Sign Language,350.00
+2022,573,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,White Mountain Science Institue,350.00
+2022,574,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Masterpiece Society Studio,349.00
+2022,575,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,TeenPact Leadership Schools,335.00
+2022,576,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Katharine Hepburn Cultural Arts Center,325.00
+2022,577,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Strings and Things,320.00
+2022,578,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,New London Barn Playhouse,320.00
+2022,579,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,T.I.M.S. Fitness,319.00
+2022,580,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,BG's Kajukenpo,310.17
+2022,581,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Saint Patrick Academy Camp,305.00
+2022,582,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,"Franklin Opera House, Inc.",300.00
+2022,583,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,L's Black Belt Academy,297.00
+2022,584,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,F Piano,290.00
+2022,585,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,King Pine Ski,280.00
+2022,586,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Dance Inspirations LLC,272.66
+2022,587,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,The Wellness Complex,265.00
+2022,588,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Camp Constitution,250.00
+2022,589,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,CP Guitar,240.00
+2022,590,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Music & Arts,240.00
+2022,591,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Basketball Camp SNHU,235.00
+2022,592,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,McGonagle School of Irish Dance,230.60
+2022,593,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Parks and Rec Town of Antrim,225.00
+2022,594,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,MV Youth Baseball and Softball,213.00
+2022,595,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Parks and Rec City of Rochester,210.00
+2022,596,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Parks and Rec City of Concord,200.00
+2022,597,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Granite Minds Homeschooling Center LLC,200.00
+2022,598,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Stages Dance Academy,196.00
+2022,599,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Summit Conference,195.00
+2022,600,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Amherst Gymnastics,195.00
+2022,601,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Museum of Science,185.70
+2022,602,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Spinner Farm,180.00
+2022,603,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Keene YMCA,175.00
+2022,604,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Aliance for the Visual Arts,160.00
+2022,605,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Express It!,160.00
+2022,606,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,BS Music School,160.00
+2022,607,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Parks and Rec City of Franklin,155.00
+2022,608,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Camp Maranatha,150.00
+2022,609,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Tin Mountain Conservation Center,150.00
+2022,610,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,On Goal,145.00
+2022,611,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,"KiwiCo, Inc.",137.04
+2022,612,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,AC Music Class,135.00
+2022,613,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Skyhawks Sports Academy,135.00
+2022,614,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Studio 550 Art Center,132.50
+2022,615,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Children's Stage Adventure,130.00
+2022,616,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Wakadoodles,130.00
+2022,617,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Parks and Rec Town of Northwood,130.00
+2022,618,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,M South Jr. Soccer,126.00
+2022,619,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Fieldhouse Sports,125.00
+2022,620,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Chesterton Stage Productions,125.00
+2022,621,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Plimoth Patuxet,123.00
+2022,622,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Killington,120.00
+2022,623,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Windham Baseball Softball League,115.00
+2022,624,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Camp Sentinel,110.00
+2022,625,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Trailblazers Learning Cooperative,100.00
+2022,626,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,M Youth Baseball,88.55
+2022,627,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,The Knowledge Tree,80.62
+2022,628,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,WeAre Home Educators,72.00
+2022,629,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Living Shores Aquarium,65.97
+2022,630,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Body Barre Fitness,65.00
+2022,631,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,L Music,60.00
+2022,632,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,DriversEd.com,59.95
+2022,633,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Strawbery Banke,58.00
+2022,634,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,New England Base Camp,50.00
+2022,635,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Col Town Players,50.00
+2022,636,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Parks and Rec Town of New Boston,50.00
+2022,637,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,American Red Cross,45.00
+2022,638,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Parks and Rec Town of Milford,45.00
+2022,639,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Appalachian Mountain Club,45.00
+2022,640,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Grace Capital Camp,43.39
+2022,641,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Old Sturbridge Village,42.00
+2022,642,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Conway Arena,40.00
+2022,643,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Parks and Rec Town of Gilford,40.00
+2022,644,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,National Geographic King Tut Experience,38.50
+2022,645,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,JoANN Education,30.00
+2022,646,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Squam Lakes Natural Science Center,26.00
+2022,647,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Parks and Rec City of Keene,25.70
+2022,648,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Salem Wax Museum,20.00
+2022,649,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Mt. Kearsarge Indian Museum,20.00
+2022,650,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Museum of Discovery and Science,19.00
+2022,651,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Old Fort No. 4,16.00
+2022,652,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Americas Stonehenge,15.00
+2022,653,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Billings Farm and Museum,14.00
+2022,654,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Paul Revere House,12.00
+2022,655,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Salem Witch Museum,12.00
+2022,656,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,Children's Museum of NH,11.00
+2022,657,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,New Bedford Whaling Museum,9.00
+2022,658,Educational Programs: Tuition and fees for summer education programs and specialized education programs,290611.52,The Music Hall,9.00
+2022,659,Tutoring services,103748.48,The Bridge Community Outreach Center,34115.97
+2022,660,Tutoring services,103748.48,MS Math/Reading,8050.00
+2022,661,Tutoring services,103748.48,Hola! Spanish,6015.00
+2022,662,Tutoring services,103748.48,Unlocked Learning LLC,5418.00
+2022,663,Tutoring services,103748.48,JH Tutoring,4665.00
+2022,664,Tutoring services,103748.48,Sylvan Learning Center,4569.40
+2022,665,Tutoring services,103748.48,ES Tutoring,3674.79
+2022,666,Tutoring services,103748.48,H Learning Center,2635.00
+2022,667,Tutoring services,103748.48,Lesson Up Tutoring,2574.00
+2022,668,Tutoring services,103748.48,Seloti Educational Co.,2400.00
+2022,669,Tutoring services,103748.48,Tamworth Learning Circles,2044.80
+2022,670,Tutoring services,103748.48,BigFish Learning Community,2044.79
+2022,671,Tutoring services,103748.48,CD Math,1909.00
+2022,672,Tutoring services,103748.48,RKPT Learning LLC,1901.00
+2022,673,Tutoring services,103748.48,Kumon Math and Reading Center of Nashua,1820.00
+2022,674,Tutoring services,103748.48,Parker Academy,1762.63
+2022,675,Tutoring services,103748.48,Kumon of Norwich,1620.00
+2022,676,Tutoring services,103748.48,Reed Your Best Educational Consulting and Assessment services,1540.00
+2022,677,Tutoring services,103748.48,Mathnasium,1384.60
+2022,678,Tutoring services,103748.48,J Tutorinig,1240.50
+2022,679,Tutoring services,103748.48,Tutoring By N,1210.00
+2022,680,Tutoring services,103748.48,Varsity Tutors,1065.00
+2022,681,Tutoring services,103748.48,Mathnasium of Nashua,1047.00
+2022,682,Tutoring services,103748.48,"DJS Educational Consultants, Inc",1010.00
+2022,683,Tutoring services,103748.48,Literacy Learning Solutions LLC,1000.00
+2022,684,Tutoring services,103748.48,Russian School of Mathematics,896.00
+2022,685,Tutoring services,103748.48,The Reading Foundation,850.00
+2022,686,Tutoring services,103748.48,T Chemistry,750.00
+2022,687,Tutoring services,103748.48,PJ Academic Tutor,675.00
+2022,688,Tutoring services,103748.48,Right Brain Consulting,648.00
+2022,689,Tutoring services,103748.48,SR Tutor,645.00
+2022,690,Tutoring services,103748.48,C Tutor,620.00
+2022,691,Tutoring services,103748.48,W Tutor Certified,420.00
+2022,692,Tutoring services,103748.48,S Math Language Arts,360.00
+2022,693,Tutoring services,103748.48,Nadkami Tutoring,350.00
+2022,694,Tutoring services,103748.48,South Merrimack Christian Academy,300.00
+2022,695,Tutoring services,103748.48,W Tutoring,218.00
+2022,696,Tutoring services,103748.48,Spanish PD Accelerator Program,200.00
+2022,697,Tutoring services,103748.48,W Tutor,100.00
+2022,698,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Computer hardware or other technological services and devices",86881.29,Amazon Inc.,72315.90
+2022,699,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Computer hardware or other technological services and devices",86881.29,Staples,13056.31
+2022,700,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Computer hardware or other technological services and devices",86881.29,Carson Dellosa Education By Staples,967.41
+2022,701,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Computer hardware or other technological services and devices",86881.29,ClassWallet Supply Essentials,541.67
+2022,702,Tuition and fees for non-public / private online learning programs,66186.83,Veritas Press,15389.21
+2022,703,Tuition and fees for non-public / private online learning programs,66186.83,"Regina Caeli, Inc.",7625.10
+2022,704,Tuition and fees for non-public / private online learning programs,66186.83,Outschool,5387.00
+2022,705,Tuition and fees for non-public / private online learning programs,66186.83,Miacademy,3592.62
+2022,706,Tuition and fees for non-public / private online learning programs,66186.83,Liberty University Academy Online,3571.84
+2022,707,Tuition and fees for non-public / private online learning programs,66186.83,Acellus Academy,3440.99
+2022,708,Tuition and fees for non-public / private online learning programs,66186.83,Edovate Learning Corp (Bridgeway Academy),3378.26
+2022,709,Tuition and fees for non-public / private online learning programs,66186.83,"Savvy Education, Inc.",2432.00
+2022,710,Tuition and fees for non-public / private online learning programs,66186.83,"Prenda, Inc.",2350.00
+2022,711,Tuition and fees for non-public / private online learning programs,66186.83,PennFoster,1838.00
+2022,712,Tuition and fees for non-public / private online learning programs,66186.83,Clonlara School,1775.00
+2022,713,Tuition and fees for non-public / private online learning programs,66186.83,Memoria Press Online Academy,1750.00
+2022,714,Tuition and fees for non-public / private online learning programs,66186.83,Mother of Divine Grace School,1700.00
+2022,715,Tuition and fees for non-public / private online learning programs,66186.83,Homeschool Connections,1322.82
+2022,716,Tuition and fees for non-public / private online learning programs,66186.83,Time4Learning,1093.95
+2022,717,Tuition and fees for non-public / private online learning programs,66186.83,James Madison High School,1087.00
+2022,718,Tuition and fees for non-public / private online learning programs,66186.83,Seton Home Study School,751.00
+2022,719,Tuition and fees for non-public / private online learning programs,66186.83,Power Homeschool,745.00
+2022,720,Tuition and fees for non-public / private online learning programs,66186.83,Ron Paul Curriculum,700.00
+2022,721,Tuition and fees for non-public / private online learning programs,66186.83,"Bob Jones University, SCOPE",675.00
+2022,722,Tuition and fees for non-public / private online learning programs,66186.83,Art of Problem Solving Beast Academy,609.30
+2022,723,Tuition and fees for non-public / private online learning programs,66186.83,College Prep Science,572.00
+2022,724,Tuition and fees for non-public / private online learning programs,66186.83,Excelsior Classes,550.00
+2022,725,Tuition and fees for non-public / private online learning programs,66186.83,Monarch,539.53
+2022,726,Tuition and fees for non-public / private online learning programs,66186.83,Big River Academy LLC,500.00
+2022,727,Tuition and fees for non-public / private online learning programs,66186.83,"Miaplaza, Inc.",464.40
+2022,728,Tuition and fees for non-public / private online learning programs,66186.83,Gaia Education Outreach Institute,400.00
+2022,729,Tuition and fees for non-public / private online learning programs,66186.83,American School,396.43
+2022,730,Tuition and fees for non-public / private online learning programs,66186.83,Sarah's Spanish School Online,335.00
+2022,731,Tuition and fees for non-public / private online learning programs,66186.83,Rhode Island School of Design Continuing Education,265.00
+2022,732,Tuition and fees for non-public / private online learning programs,66186.83,The Potter's School,249.00
+2022,733,Tuition and fees for non-public / private online learning programs,66186.83,Ascellus Power Homeschool,175.00
+2022,734,Tuition and fees for non-public / private online learning programs,66186.83,SkillShare,167.88
+2022,735,Tuition and fees for non-public / private online learning programs,66186.83,CTCMath,148.50
+2022,736,Tuition and fees for non-public / private online learning programs,66186.83,Thinkwell,125.00
+2022,737,Tuition and fees for non-public / private online learning programs,66186.83,Homelife Academy,85.00
+2022,738,School uniforms,53350.91,Amazon Inc.,18562.02
+2022,739,School uniforms,53350.91,Lands' End,12842.98
+2022,740,School uniforms,53350.91,Schoolbelles,4135.86
+2022,741,School uniforms,53350.91,Global Schoolwear,2664.91
+2022,742,School uniforms,53350.91,The Children's Place,2508.79
+2022,743,School uniforms,53350.91,Macy's,1760.52
+2022,744,School uniforms,53350.91,ShirtMasters,1393.00
+2022,745,School uniforms,53350.91,Red Brick Clothing Company,1146.50
+2022,746,School uniforms,53350.91,Donnelly's Clothing,965.96
+2022,747,School uniforms,53350.91,Salve Regina Academy,830.00
+2022,748,School uniforms,53350.91,Select Spiritwear,706.70
+2022,749,School uniforms,53350.91,Immaculate Heart of Mary School,693.85
+2022,750,School uniforms,53350.91,Target,686.01
+2022,751,School uniforms,53350.91,St. Francis of Assisi,400.00
+2022,752,School uniforms,53350.91,Old Navy,391.31
+2022,753,School uniforms,53350.91,McGill's Uniforms,388.00
+2022,754,School uniforms,53350.91,Gap,331.86
+2022,755,School uniforms,53350.91,Kohl's,284.05
+2022,756,School uniforms,53350.91,French Toast,253.30
+2022,757,School uniforms,53350.91,EmbroidMe,232.00
+2022,758,School uniforms,53350.91,Walmart,228.40
+2022,759,School uniforms,53350.91,Children's Place,223.56
+2022,760,School uniforms,53350.91,Super Shoes Store,212.46
+2022,761,School uniforms,53350.91,L&B Tailoring,180.00
+2022,762,School uniforms,53350.91,St. Joseph Regional School Keene,150.00
+2022,763,School uniforms,53350.91,Uniform Source,135.75
+2022,764,School uniforms,53350.91,"Educational Apparel, LLC",134.97
+2022,765,School uniforms,53350.91,JB Pride Uniforms,128.07
+2022,766,School uniforms,53350.91,Bonfire,124.49
+2022,767,School uniforms,53350.91,St. Elizabeth Seton School,93.10
+2022,768,School uniforms,53350.91,Alec's Shoe Store,89.90
+2022,769,School uniforms,53350.91,Uniformly Yours,82.00
+2022,770,School uniforms,53350.91,Stride Rite,79.92
+2022,771,School uniforms,53350.91,SpiritShop,73.28
+2022,772,School uniforms,53350.91,Huberts,64.96
+2022,773,School uniforms,53350.91,Tri-City Christian Apparel Store,64.20
+2022,774,School uniforms,53350.91,Modest Apparel USA,61.57
+2022,775,School uniforms,53350.91,Wish,31.66
+2022,776,School uniforms,53350.91,MR Apparel,15.00
+2022,777,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Footsteps to Learning & Light,13883.89
+2022,778,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,MB Tutor,5780.00
+2022,779,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,MF Therapy,4022.00
+2022,780,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,North Star Education services,3000.00
+2022,781,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Resonate Therapy Solutions,2150.00
+2022,782,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,"Visual Victory Training, PLLC",2135.50
+2022,783,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Concord Comprehensive Neuropsychological Services,2075.00
+2022,784,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,VJ PLLC,1852.00
+2022,785,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Reach for the Top Therapy,1650.00
+2022,786,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,"Capital Kids Therapies, LLC",1305.00
+2022,787,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Manchester Community Music School,1212.59
+2022,788,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Clearly Speaking,1170.09
+2022,789,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,DB Speech and Language,1155.00
+2022,790,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Dyslexia Connect,1143.00
+2022,791,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,MCH speech-language pathology,1084.18
+2022,792,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,NILD Educational Therapy,1000.00
+2022,793,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,"HAAF NeuroDevelopment, Inc.",1000.00
+2022,794,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,LB Speech and Language,900.88
+2022,795,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Communicate and Connect Therapy LLC,850.00
+2022,796,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Adventure Education LLC,533.00
+2022,797,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,New England Alliance Athletics,425.00
+2022,798,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,"Rising Tide Therapy services, LLC",375.00
+2022,799,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Resolute Speech Therapy,360.00
+2022,800,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Inspire Vision,280.00
+2022,801,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Easter Seals NH,267.68
+2022,802,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Restoration Recovery,165.00
+2022,803,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Abilitations,100.63
+2022,804,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,"Play and Prosper Therapy, PLLC",90.00
+2022,805,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Child Diagnostics,84.99
+2022,806,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,D Speech Therapy,50.00
+2022,807,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,JH Evaluation,42.00
+2022,808,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Mightier,40.00
+2022,809,"Educational services and therapies, including, but not limited to, occupational, behavioral, physical, speech-language, and audiology therapies",50204.42,Literacy Learning Solutions LLC,21.99
+2022,810,Tuition and fees at an institution of higher education,16376.07,Liberty University,4083.84
+2022,811,Tuition and fees at an institution of higher education,16376.07,NHTI Concord's Community College,2617.89
+2022,812,Tuition and fees at an institution of higher education,16376.07,University of New Hampshire,1626.25
+2022,813,Tuition and fees at an institution of higher education,16376.07,Cedarville University,1090.08
+2022,814,Tuition and fees at an institution of higher education,16376.07,eCornell,1049.30
+2022,815,Tuition and fees at an institution of higher education,16376.07,Lakes Region Community College,1026.84
+2022,816,Tuition and fees at an institution of higher education,16376.07,Gregory the Great Academy,996.25
+2022,817,Tuition and fees at an institution of higher education,16376.07,Friends University,903.38
+2022,818,Tuition and fees at an institution of higher education,16376.07,Northwestern,590.00
+2022,819,Tuition and fees at an institution of higher education,16376.07,BYU,529.43
+2022,820,Tuition and fees at an institution of higher education,16376.07,SNHU,325.00
+2022,821,Tuition and fees at an institution of higher education,16376.07,William and Mary College,300.00
+2022,822,Tuition and fees at an institution of higher education,16376.07,Thomas More College of Liberal Arts,300.00
+2022,823,Tuition and fees at an institution of higher education,16376.07,Manchester Community College,262.92
+2022,824,Tuition and fees at an institution of higher education,16376.07,Boston College,215.00
+2022,825,Tuition and fees at an institution of higher education,16376.07,Ontario Universities,193.21
+2022,826,Tuition and fees at an institution of higher education,16376.07,Plymouth State University,80.00
+2022,827,Tuition and fees at an institution of higher education,16376.07,University of Vermont,55.00
+2022,828,Tuition and fees at an institution of higher education,16376.07,Keene State College,50.00
+2022,829,Tuition and fees at an institution of higher education,16376.07,Harding University,41.68
+2022,830,Tuition and fees at an institution of higher education,16376.07,University of NE,40.00
+2022,831,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Academic Excellence,2926.00
+2022,832,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Seton Home Study School,2169.17
+2022,833,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,PrepPro,1745.00
+2022,834,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Seacoast Test Prep,1567.50
+2022,835,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Homeschool Boss,570.00
+2022,836,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Christian Liberty Press,439.31
+2022,837,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,College Board,412.00
+2022,838,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,G Evaluation,300.00
+2022,839,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Triangle Education Assessments,294.00
+2022,840,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,SSAT,280.00
+2022,841,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Candlestar Educational Services,272.56
+2022,842,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Drexler Evaluation,255.00
+2022,843,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Tilton School,200.00
+2022,844,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Piedmont Testing services,180.00
+2022,845,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,BJU Press,165.00
+2022,846,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Homeschool Testing services,155.00
+2022,847,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Next Step Learning,150.00
+2022,848,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Seton Testing Services,137.00
+2022,849,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,M SAT,103.20
+2022,850,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,ETS,100.00
+2022,851,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Learning By Design Inc,100.00
+2022,852,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,N Evaluation,95.00
+2022,853,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,W Evaluation,90.00
+2022,854,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Classic Learning Test,75.54
+2022,855,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Family Learning Organization,75.00
+2022,856,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Z Evaluation,50.00
+2022,857,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,H Evaluation,50.00
+2022,858,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,Crisp Evalution,50.00
+2022,859,"Fees for nationally standardized assessments, advanced placement examinations, examinations related to college or university admission or awarding of credits and tuition and/or fees for preparatory courses for such exams",13056.28,P Evalutation,50.00
+2022,860,Educational software and applications,10124.88,Amazon Inc.,3694.36
+2022,861,Educational software and applications,10124.88,Prodigy,607.50
+2022,862,Educational software and applications,10124.88,Apple,503.21
+2022,863,Educational software and applications,10124.88,Adventure Academy ABC Mouse,479.96
+2022,864,Educational software and applications,10124.88,Adobe,395.64
+2022,865,Educational software and applications,10124.88,Time4Learning,374.65
+2022,866,Educational software and applications,10124.88,Hooked On Phonics,304.94
+2022,867,Educational software and applications,10124.88,Rocket Languages,259.90
+2022,868,Educational software and applications,10124.88,Bitsbox Coding,228.55
+2022,869,Educational software and applications,10124.88,Musiah Piano,199.99
+2022,870,Educational software and applications,10124.88,Blake eLearning,194.97
+2022,871,Educational software and applications,10124.88,Family Literacy Center,175.00
+2022,872,Educational software and applications,10124.88,Nessy,175.00
+2022,873,Educational software and applications,10124.88,Teaching Textbooks,165.24
+2022,874,Educational software and applications,10124.88,Elephant Learning,145.00
+2022,875,Educational software and applications,10124.88,Babbel French,133.25
+2022,876,Educational software and applications,10124.88,Night Zookeeper,129.92
+2022,877,Educational software and applications,10124.88,Buzzmath,120.00
+2022,878,Educational software and applications,10124.88,Nearpod,120.00
+2022,879,Educational software and applications,10124.88,"SeeSaw Learning, Inc",120.00
+2022,880,Educational software and applications,10124.88,Duolingo,119.99
+2022,881,Educational software and applications,10124.88,Paradigm Accelerated Curriculum,115.05
+2022,882,Educational software and applications,10124.88,Learning A-Z,113.00
+2022,883,Educational software and applications,10124.88,Epic! Creation Inc.,111.94
+2022,884,Educational software and applications,10124.88,Starfall Education,105.00
+2022,885,Educational software and applications,10124.88,ABCYA,89.91
+2022,886,Educational software and applications,10124.88,Haggerty Phonemic Awareness,89.00
+2022,887,Educational software and applications,10124.88,Mightier,80.00
+2022,888,Educational software and applications,10124.88,7 Speed Reading,79.95
+2022,889,Educational software and applications,10124.88,McGraw Hill Aleks,79.80
+2022,890,Educational software and applications,10124.88,Homeschool Buyers Coop,73.85
+2022,891,Educational software and applications,10124.88,Carnegie Learning,65.00
+2022,892,Educational software and applications,10124.88,Kahoot!,60.00
+2022,893,Educational software and applications,10124.88,Touch-type Read and Spell (TTRS),59.96
+2022,894,Educational software and applications,10124.88,Kiddopia,58.49
+2022,895,Educational software and applications,10124.88,BrightEducation.com,49.97
+2022,896,Educational software and applications,10124.88,Wild + Free,49.00
+2022,897,Educational software and applications,10124.88,My Homeschool Grades,47.92
+2022,898,Educational software and applications,10124.88,Learn with Homer,36.00
+2022,899,Educational software and applications,10124.88,Mavis Beacon Typing,29.99
+2022,900,Educational software and applications,10124.88,Kids Discover,29.00
+2022,901,Educational software and applications,10124.88,"Inkarnate, LLC",25.00
+2022,902,Educational software and applications,10124.88,All About Learning Press,19.99
+2022,903,Educational software and applications,10124.88,Google Store,9.99
+2022,904,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & School uniforms",7200.62,Amazon Inc.,7200.62
+2022,905,Computer hardware or other technological services and devices & Educational software and applications,6652.13,Apple,3358.00
+2022,906,Computer hardware or other technological services and devices & Educational software and applications,6652.13,Best Buy,2222.35
+2022,907,Computer hardware or other technological services and devices & Educational software and applications,6652.13,HP,684.97
+2022,908,Computer hardware or other technological services and devices & Educational software and applications,6652.13,Amazon Inc.,261.83
+2022,909,Computer hardware or other technological services and devices & Educational software and applications,6652.13,Staples,124.98
+2022,910,Tuition and fees at a career or technical school and related instructional materials,6443.74,Advanced Technical Schooling LLC,5111.99
+2022,911,Tuition and fees at a career or technical school and related instructional materials,6443.74,NHTI Concord's Community College,1121.75
+2022,912,Tuition and fees at a career or technical school and related instructional materials,6443.74,MaXt Makerspace Woodshaping,150.00
+2022,913,Tuition and fees at a career or technical school and related instructional materials,6443.74,McGregor EMS,60.00
+2022,914,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Educational software and applications",4359.17,Amazon Inc.,3453.29
+2022,915,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Educational software and applications",4359.17,PlayShifu,311.29
+2022,916,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Educational software and applications",4359.17,IXL Learning,239.00
+2022,917,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Educational software and applications",4359.17,Hooked On Phonics,228.74
+2022,918,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Educational software and applications",4359.17,Get Smart,106.90
+2022,919,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Educational software and applications",4359.17,Time4Learning,19.95
+2022,920,"Individual classes, curricular activities, programs and services provided by a district public school, chartered public school, public academy, or independent school",4325.60,SAU #23 Bath Village School,1533.60
+2022,921,"Individual classes, curricular activities, programs and services provided by a district public school, chartered public school, public academy, or independent school",4325.60,SAU #39 Souhegan Cooperative High School,1533.60
+2022,922,"Individual classes, curricular activities, programs and services provided by a district public school, chartered public school, public academy, or independent school",4325.60,SAU #80 Shaker Regional School District,1022.40
+2022,923,"Individual classes, curricular activities, programs and services provided by a district public school, chartered public school, public academy, or independent school",4325.60,SAU #16 Exeter Adult Education,140.00
+2022,924,"Individual classes, curricular activities, programs and services provided by a district public school, chartered public school, public academy, or independent school",4325.60,SAU #65 Kearsarge Regional School District,96.00
+2022,925,"Tuition and fees at a private school, School uniforms",3075.00,Dublin Christian Academy,3075.00
+2022,926,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Computer hardware or other technological services and devices & Educational software and applications",2962.03,Amazon Inc.,2613.03
+2022,927,"Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider & Computer hardware or other technological services and devices & Educational software and applications",2962.03,Play Piper STEM Learning,349.00
+2022,928,"Computer hardware or other technological services and devices & School uniforms & Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",2872.49,Amazon Inc.,2872.49
+2022,929,Fees for transportation paid to a fee-for-service transportation provider for the student to travel directly to and from an approved education service provider,2185.00,High Mowing School,1585.00
+2022,930,Fees for transportation paid to a fee-for-service transportation provider for the student to travel directly to and from an approved education service provider,2185.00,Sant Bani School,600.00
+2022,931,Computer hardware or other technological services and devices & School uniforms,964.63,Amazon Inc.,964.63
+2022,932,"Tuition and fees at a private school & Textbooks, curriculum, or other instructional and supplemental materials or online instruction required by curriculum or provider",795.00,The Trinity School of Bedford,795.00

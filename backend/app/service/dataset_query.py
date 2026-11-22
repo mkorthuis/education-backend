@@ -38,6 +38,15 @@ def fail(label: str) -> HTTPException:
     return HTTPException(status_code=500, detail=f"Failed to fetch {label}")
 
 
+def where_school_year(statement, table, year: Optional[int] = None, school_id: Optional[int] = None):
+    """A statement narrowed to a year and a school, for the private school tables, which have no district"""
+    if year is not None:
+        statement = statement.where(table.year == year)
+    if school_id is not None:
+        statement = statement.where(table.school_id_fk == school_id)
+    return statement
+
+
 def list_types(session: Session, type_model, label: str, fields: tuple = ("id", "name")) -> List[dict]:
     """Get all rows of a lookup table, ordered by name"""
     try:

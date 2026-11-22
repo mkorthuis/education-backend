@@ -1,0 +1,137 @@
+school_id,school_name,status,ein,filer_name,note
+20110,New Hampton School,own_return,020223634,New Hampton School,
+20150,Claremont Christian Academy (Elementary),no_irs_record,,,
+20235,St. John Regional School,not_required_religious,020301651,St John Regional School,group 0928
+20245,Second Start,operator_return,020302477,Second Start,Second Start (alternative HS is one of several programs)
+20280,St. Paul's School,own_return,020222227,St Pauls School,
+20290,Concord Christian Academy,own_return,205009013,Concord Christian Academy,
+20310,Trinity Christian School,not_required_religious,020357935,Trinity Baptist Church Of Concord Nh,Trinity Baptist Church of Concord dba Trinity Christian School
+20320,Bishop Brady High School,not_required_religious,020263534,Bishop Brady High School,RCBM group 0928
+20440,Saint Mary Academy,not_required_religious,020342967,St Mary Academy,"St Mary Academy Dover, group 0928"
+20450,St. Thomas Aquinas High School,not_required_religious,020256491,St Thomas Aquinas High School,group 0928
+20495,Victory Baptist School,not_required_religious,020358626,Victory Christian School & Victory Baptist Church,Victory Christian School & Victory Baptist Church
+20520,Seacoast Learning Collaborative,own_return,021224043,Seacoast Learning Collaborative Inc,
+20580,Phillips Exeter Academy,own_return,020222174,Phillips Exeter Academy,
+20785,Sacred Heart School,no_irs_record,,,
+21080,Presentation of Mary Academy,not_required_religious,020222178,Presentation Of Mary Academy,"Presentation of Mary Academy, group 0928"
+21100,Tabernacle Christian School,no_irs_record,,,
+21180,St. Joseph Regional School (Keene),not_required_religious,020315368,Saint Joseph Regional School,"Saint Joseph Regional School Keene, group 0928"
+21220,Cedarcrest School,operator_return,020441832,Cedarcrest Inc,Cedarcrest Inc (school plus residential/medical care)
+21225,Pioneer Junior Academy,not_required_religious,020407553,Pioneer Jr Academy,Pioneer Jr Academy; Seventh-day Adventist church foundation code
+21265,Laconia Christian Academy,own_return,844154540,Laconia Christian Academy Inc,
+21280,Holy Trinity Catholic School,not_required_religious,020301781,Holy Trinity School,"Holy Trinity School, group 0928"
+21320,Cardigan Mountain School,own_return,020223580,Cardigan Mountain School,
+21345,Estabrook Christian School,not_required_religious,222502114,Estabrook Christian School,Estabrook Christian School; church foundation code
+21380,Kimball Union Academy,own_return,020222147,Kimball Union Academy,
+21500,Trinity High School,not_required_religious,020279436,Trinity High School,group 0928
+21535,The Derryfield School,own_return,020265542,Derryfield School,
+21570,Cardinal Lacroix Academy,no_irs_record,,,
+21595,St. Joseph Junior High School,not_required_religious,020412071,St Joseph Regional Jr High School,"St Joseph Regional Jr High School, group 0928"
+21615,St. Benedict Academy,not_required_religious,020311377,Saint Benedict Academy,"Saint Benedict Academy, group 0928"
+21650,Gammon Academy at Zachary Road,operator_return,020272825,Easter Seals New Hampshire Inc,Easter Seals New Hampshire Inc (runs Gammon Academy)
+21655,St. Francis Of Assisi School,not_required_religious,020234160,St Francis Of Assisi Parish,"St Francis of Assisi Parish (school under parish), group 0928"
+21660,St. Catherine School,not_required_religious,020412824,St Catherine School,group 0928
+21870,Christian Bible Church Academy,not_required_religious,020347432,Christian Bible Church,Christian Bible Church (operator)
+21880,Bishop Guertin High School,no_irs_record,,,not in NH BMF; owned by Brothers of the Sacred Heart
+21900,St. Christopher Academy,not_required_religious,873140656,Saint Christopher Academy Inc,"Saint Christopher Academy Inc, group 0928"
+21905,Clearway High School,operator_return,237204973,Nashua Adult Learning Center Inc,Nashua Adult Learning Center Inc (runs Clearway HS)
+21920,Nashua Childrens Home,operator_return,020222162,Nashua Childrens Home,Nashua Childrens Home (residential plus school)
+22125,Proctor Academy,own_return,020222179,Proctor Academy,
+22235,Dublin Christian Academy,not_required_religious,020272446,Dublin Christian Academy Inc,"BMF filing code 13: religious org, not required to file"
+22240,Dublin School,own_return,020229869,Dublin School Inc,
+22255,Crotched Mountain School,operator_return,884279377,Seven Hills Foundation Inc,Seven Hills Foundation / Seven Hills NH (Crotched Mountain School); parent in MA files group return
+22305,The Well School,own_return,026017362,Well,"BMF name WELL, Peterborough (probable)"
+22325,Hampshire Country School,own_return,020218929,Hampshire Country School,
+22340,Holderness School,own_return,020147630,Holderness School,
+22420,Brewster Academy,own_return,020223317,Brewster Academy,
+22435,Cornerstone Christian Academy,own_return,020474858,Ossipee Cornerstone Christian Academy Inc,Ossipee Cornerstone Christian Academy Inc
+22445,Williams Bridge Academy,own_return,222580920,Williams Bridge Academy,
+22520,Saint Patrick Academy,not_required_religious,020270912,St Patrick School,"St Patrick School, group 0928"
+22540,Portsmouth Christian Academy,own_return,020465448,Portsmouth Christian Academy,
+22570,Pine Haven Boys Center,operator_return,020301883,Pine Haven Boys Center,Pine Haven Boys Center (residential plus school)
+22610,Green Valley School,no_irs_record,,,
+22685,Monarch School of New England,own_return,020315196,Monarch School Of New England,
+22735,Hampstead Academy,postcard_only,383876522,Hampstead Academy,990-N filer (gross receipts under $50K) - check; may be a related entity
+22785,Tri-City Christian Academy,not_required_religious,020327570,Tri City Covenant Church,Tri City Covenant Church (probable operator)
+22825,Charles Ott Academy,operator_return,020347622,Strafford Learning Center,Strafford Learning Center (runs Charles Ott Academy)
+22885,St. Joseph Regional Catholic School (Salem),not_required_religious,020315051,Saint Joseph School,"Saint Joseph School Salem, group 0928"
+22930,Spaulding Academy & Family Services,operator_return,020244216,Spaulding Academy & Family Services,Spaulding Academy & Family Services (residential plus school)
+22935,Sant Bani School,own_return,022655524,Sant Bani School,church foundation code but BMF shows FY2025 revenue
+22940,Tilton School,own_return,020222239,Tilton School,
+23025,High Mowing School,own_return,020222138,High Mowing School Inc,
+26370,The Cornerstone School,own_return,222730159,Cornerstone School,
+26450,Mountain Shadows School,no_irs_record,,,
+26465,World Academy,no_irs_record,,,
+26705,Wediko School at the Home for Little Wanderers,operator_return,042104764,The Home For Little Wanderers Inc,The Home for Little Wanderers Inc (Boston MA); Wediko Childrens Services (046002778) last filed FY2019
+26805,Immaculate Heart Of Mary School,own_return,203109807,Immaculate Heart Of Mary School Inc,Immaculate Heart of Mary School Inc (Winchester address)
+26845,Victory High School,own_return,550813518,Victory High School,
+26850,Heritage Christian School,own_return,020447031,Heritage Christian School,
+26880,Jesse Remington High School,not_required_religious,020379457,Congregational Church In Candia,Congregational Church in Candia dba Jesse Remington HS
+26885,Crossroads Academy,own_return,020451454,Crossroads Academy,
+27030,Mount Prospect Academy,operator_return,320048804,Mount Prospect Academy Inc,Mount Prospect Academy Inc (school plus residential programs)
+27045,Shaker Road School,no_irs_record,,,only a parent-teacher group found
+27085,Mount St. Mary Academy,not_required_religious,020484602,Mt St Mary Academy,"Mt St Mary Academy, group 0928"
+27120,Mount Royal Academy Inc.,own_return,020472455,Mount Royal Academy Inc,"independent Catholic, files 990"
+27490,RSEC (Reg Svces & Educ Ctr) - The Academy,operator_return,020354301,Regional Services And Education Center Inc,Regional Services and Education Center Inc
+27555,South Merrimack Christian Academy,no_irs_record,,,
+27665,Trinity Christian School of Keene,not_required_religious,026003368,Trinity Lutheran Church,Trinity Lutheran Church dba Trinity Christian School (Keene)
+27780,Granite Hill School,no_irs_record,,,
+27835,Holy Family Academy,own_return,020496230,Holy Family Educational Corporation,Holy Family Educational Corporation
+27915,RSEC (Reg Svces & Educ Ctr) - Longview,operator_return,020354301,Regional Services And Education Center Inc,Regional Services and Education Center Inc
+27935,Parker Academy,no_irs_record,,,
+28030,Birchtree,own_return,020520364,Birchtree,Birchtree (Birchtree Center)
+28035,Gammon Academy at Lancaster,operator_return,020272825,Easter Seals New Hampshire Inc,Easter Seals New Hampshire Inc (runs Gammon Academy Lancaster)
+28040,NFI North - Contoocook School,operator_return,043161042,North American Family Institute Inc,North American Family Institute / NFI North Inc
+28210,Hillsboro Christian School,no_irs_record,,,
+28405,2nd Nature Academy,no_irs_record,,,
+28415,Oliverian School,own_return,020433265,The Oliveran School Inc,The Oliveran School Inc
+28420,Mount Zion Christian Schools,own_return,020530732,Mount Zion Christian Schools Inc,
+28485,Woodland Community School,own_return,050592394,Woodland Community School Inc,
+28520,Meeting House Montessori School,no_irs_record,,,
+28540,Country Village Montessori School,no_irs_record,,,
+28585,Capital Christian School,not_required_religious,020445985,Capital Christian School,"Capital Christian School; church foundation code, group exemption 1071"
+28595,Heronfield Academy,own_return,202291270,Heronfield Academy,
+28675,Hollis Montessori School,own_return,263041656,Hollis Montessori School,
+28680,Newport Montessori School,own_return,201953727,Newport Montessori School,
+28710,Southern NH Montessori Academy,no_irs_record,,,
+28725,Enriched Learning Center,no_irs_record,,,
+29025,Rochester Learning Academy,operator_return,020347622,Strafford Learning Center,Strafford Learning Center (runs Rochester Learning Academy)
+29095,The Beech Hill School,own_return,452608521,The Beech Hill School,
+29159,Hawthorne Academy,no_irs_record,,,
+29168,"North End Montessori School, LLC",no_irs_record,,,LLC (for-profit)
+29179,Unity Christian School,own_return,813353344,Unity Christian School,
+29183,Waterville Valley Academy,operator_return,237259958,Waterville Valley Black & Blue Trail Smashers-snowsports Edu Fdn,Waterville Valley Black & Blue Trail Smashers (runs the academy; probable)
+29190,Busche Academy,postcard_only,832898596,Busche International Educational Research Institute,Busche International Educational Research Institute (990-N filer; probable)
+29198,St. Charles School,operator_return,020222163,New Hampshire Catholic Charities Inc,New Hampshire Catholic Charities Inc (St. Charles School is a CCNH program per diocese Impact Report 2026)
+29204,"My School, LLC",no_irs_record,,,LLC (for-profit)
+29206,Shalom Christian Academy,no_irs_record,,,
+29207,Building Block Commons,no_irs_record,,,
+29209,Saint John Paul II School,own_return,823416460,Saint John Paul Ii School,
+29214,US Performance Academy,no_irs_record,,,
+29216,Windham Woods School,own_return,830722515,Windham Woods School Inc,
+29217,Lupine Montessori School,no_irs_record,,,
+29218,Acton Academy New Hampshire,no_irs_record,,,
+29220,Chesterbrook School of Natural Learning,no_irs_record,,,
+29226,Ashuelot Valley Academy,operator_return,320048804,Mount Prospect Academy Inc,Mount Prospect Academy Inc (runs Ashuelot Valley Academy)
+29227,Salve Regina Academy,no_irs_record,,,
+29228,Squamscott River Academy,operator_return,320048804,Mount Prospect Academy Inc,Mount Prospect Academy Inc (runs Squamscott River Academy)
+29229,Crossroads Christian School,not_required_religious,020528801,Crossroads Baptist Church,Crossroads Baptist Church (probable operator)
+29235,Our Lady of Mercy Academy,no_irs_record,,,
+29236,Claremont Christian Academy (Jr/Sr High),no_irs_record,,,
+29241,Bedford Academy,no_irs_record,,,only a parent association (421952748) found
+29243,The Harkness House,own_return,872086306,Harkness House Incorporated,Harkness House Incorporated
+29250,Birch Behavioral Therapy,no_irs_record,,,
+29251,Seton Academy,own_return,882333957,Seton Foundation,"Seton Foundation, Somersworth (probable operator; files 990)"
+29252,Lexington Academy,no_irs_record,,,
+29255,Kroka Expeditions- Gap Year and Semester School,operator_return,043341632,Kroka Expeditions,Kroka Expeditions (gap-year school is one program)
+29265,New England School of the Arts,own_return,873377051,New England School Of The Arts,
+29275,Regina Maria Academy,no_irs_record,,,
+29276,Evergreen Elementary,own_return,931930018,Evergreen Elementary,
+29277,Ready Set Connect,no_irs_record,,,
+29278,John Powers School,operator_return,020347622,Strafford Learning Center,Strafford Learning Center (runs John Powers School)
+29279,John Powers Primary School,operator_return,020347622,Strafford Learning Center,Strafford Learning Center (runs John Powers Primary)
+29286,RSEC (RegSvcs & Educ Ctr)- STARS Learning Academy,operator_return,020354301,Regional Services And Education Center Inc,Regional Services and Education Center Inc
+29287,NorthStar Bridge Academy,no_irs_record,,,
+29295,Karen Langley Learning Center,no_irs_record,,,
+99998,Community Transition Program,placeholder,,,
+99999,NonPublic Preschool,placeholder,,,

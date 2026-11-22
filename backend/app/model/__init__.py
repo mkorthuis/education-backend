@@ -3,14 +3,16 @@ from .location import (
     DistrictGradeLink, SchoolGradeLink, TownServedLink, TownDistrictLink
 )
 from .finance import (
-    DistrictCostPerPupil, StateCostPerPupil, DOEForm, Revenue, Expenditure
+    DistrictCostPerPupil, StateCostPerPupil, DOEForm, Revenue, Expenditure, PrivateOrg, School990Link, PrivateOrg990,
+    PrivateOrg990RevenueLine, SchoolTuitionSource, SchoolTuition
 )
 from .measurement import (
     MeasurementType, MeasurementTypeCategory, Measurement
 )
 from .enrollment import (
     SchoolEnrollment, SchoolReducedLunch, DistrictReducedLunch, StateReducedLunch,
-    DistrictEnglishLearner, StateEnglishLearner, EnrollmentType, StateEnrollmentType
+    DistrictEnglishLearner, StateEnglishLearner, EnrollmentType, StateEnrollmentType,
+    SchoolPrivateSurvey, SchoolPrivateSurveyGrade, SchoolPrivateEnrollmentTotal, SchoolPrivateEnrollment
 )
 from .assessment import (
     AssessmentSubject, AssessmentSubgroup, AssessmentDistrict, 
@@ -18,7 +20,7 @@ from .assessment import (
 )
 from .education_freedom_account import (
     EducationFreedomAccountEntryType, EducationFreedomAccountEntryTypeValue,
-    EducationFreedomAccountEntry
+    EducationFreedomAccountEntry, EducationFreedomAccountCategory, EducationFreedomAccountProvider, EducationFreedomAccountExpenditure, EducationFreedomAccountServed
 )
 from .naep import (
     Jurisdiction, NaepMeasure, NaepStudentGroup, NaepResult, NaepComparison, NaepStateStandard
