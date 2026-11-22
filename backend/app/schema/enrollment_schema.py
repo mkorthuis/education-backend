@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 from pydantic import BaseModel, Field
 from app.schema.location_schema import GradeGet
 from datetime import datetime
@@ -111,3 +111,56 @@ class StateEnrollmentTypeGet(BaseModel):
     enrollment_type: EnrollmentTypeGet
     grade: GradeGet
     enrollment: int
+
+
+class PrivateSchoolEnrollmentGradeGet(BaseModel):
+    grade_id: int
+    grade_name: str
+    enrollment: int
+
+
+class PrivateSchoolEnrollmentGet(BaseModel):
+    """A private school's students on October 1, from NHED's nonpublic enrollment report"""
+    school_id: int
+    year: int
+    total: int
+    ungraded_elementary: int
+    ungraded_secondary: int
+    # Only the grades with students
+    grades: List[PrivateSchoolEnrollmentGradeGet]
+
+
+class PrivateSchoolSurveyGradeGet(BaseModel):
+    grade_id: int
+    grade_name: str
+    students: int
+
+
+class PrivateSchoolSurveyGet(BaseModel):
+    """A private school's answers to the NCES Private School Survey for a school year"""
+    school_id: int
+    year: int
+    ppin: str
+    typology: Optional[str] = None
+    affiliation: Optional[str] = None
+    religious_orientation: Optional[str] = None
+    level: Optional[str] = None
+    community_type: Optional[str] = None
+    # Kindergarten to grade 12 and ungraded; and with preschool
+    students: Optional[int] = None
+    students_with_preschool: Optional[int] = None
+    male_students: Optional[int] = None
+    # The 12th graders the year before, and the share of those graduates who went to a four-year college
+    seniors_prior_year: Optional[int] = None
+    to_four_year_college_pct: Optional[int] = None
+    teachers_fte: Optional[float] = None
+    students_per_teacher: Optional[float] = None
+    school_day_hours: Optional[float] = None
+    pct_american_indian: Optional[float] = None
+    pct_asian: Optional[float] = None
+    pct_pacific_islander: Optional[float] = None
+    pct_hispanic: Optional[float] = None
+    pct_white: Optional[float] = None
+    pct_black: Optional[float] = None
+    pct_two_or_more_races: Optional[float] = None
+    grades: List[PrivateSchoolSurveyGradeGet]

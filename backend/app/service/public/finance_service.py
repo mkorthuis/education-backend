@@ -12,8 +12,11 @@ from app.model.finance import (
     ExpenditureEntryCategory, ExpenditureEntrySuperCategory,
     StateCostPerPupil, DistrictCostPerPupil,
     ExpenditureStateRollup, RevenueStateTotal, ExpenditureStateTotal,
-    DOEFormADM, DOEFormADMState
+    DOEFormADM, DOEFormADMState,
+    PrivateOrg, School990Link, PrivateOrg990, PrivateOrg990RevenueLine, SchoolTuitionSource, SchoolTuition
 )
+from app.model.location import Grade
+from app.service.dataset_query import where_school_year
 from app.schema.finance_schema import (
     DOEFormGet, BalanceSheetGet, RevenueGet, ExpenditureGet,
     FinancialReportGet, AllEntryTypesGet,
@@ -465,6 +468,49 @@ class FinanceService:
         
         # Convert to response schema
         return [DOEFormADMStateGet.model_validate(result.model_dump()) for result in results]
+
+    # Private schools: their Form 990s and published tuition, apart from the public districts' finances
+    def get_private_school_990(self, session: Session, school_id: Optional[int] = None) -> List[dict]:
+        """Who files each private school's Form 990 (see app/etl/private_990.py): the school, an operator whose return
+        covers it, or no one and why; with the filer and its returns, oldest first, each with its program service
+        revenue lines"""
+        statement = select(School990Link).order_by(School990Link.school_id_fk)
+        if school_id is not None:
+            statement = statement.where(School990Link.school_id_fk == school_id)
+        links = session.exec(statement).all()
+        eins = {link.ein for link in links if link.ein}
+        orgs = {org.ein: org for org in session.exec(select(PrivateOrg).where(PrivateOrg.ein.in_(eins)))}
+        returns = {}
+        for row in session.exec(select(PrivateOrg990).where(PrivateOrg990.ein.in_(eins)).order_by(PrivateOrg990.tax_period_end)):
+            returns.setdefault(row.ein, []).append(row)
+        line = PrivateOrg990RevenueLine
+        lines = {}
+        ids = [row.id for rows in returns.values() for row in rows]
+        for row in session.exec(select(line).where(line.return_id.in_(ids)).order_by(line.line_no)):
+            lines.setdefault(row.return_id, []).append(
+                row.model_dump(include={"line_no", "description", "business_code", "amount", "category"}))
+        return [{"school_id": link.school_id_fk, "status": link.status, "note": link.note,
+                 "organization": orgs[link.ein].model_dump(include={"ein", "name", "founded", "mission"}) if link.ein in orgs else None,
+                 "returns": [{**row.model_dump(exclude={"id", "ein", "date_created", "date_updated"}), "revenue_lines": lines.get(row.id, [])}
+                             for row in returns.get(link.ein, [])]}
+                for link in links]
+
+    def get_private_school_tuition(self, session: Session, year: Optional[int] = None,
+                                   school_id: Optional[int] = None) -> List[dict]:
+        """Private schools' tuition as each publishes it on its website (see app/etl/private_tuition.py): a row per
+        school and school year, oldest first, saying whether it publishes it, with its rates"""
+        source, rate = SchoolTuitionSource, SchoolTuition
+        grade_names = dict(session.exec(select(Grade.id, Grade.name)).all())
+        rates = {}
+        for row in session.exec(where_school_year(select(rate).order_by(rate.rate_no), rate, year, school_id)):
+            rates.setdefault((row.school_id_fk, row.year), []).append({
+                **row.model_dump(include={"rate_no", "band", "rate_type", "rate_label", "tuition", "required_fee", "fee_note", "rate_note"}),
+                "lowest_grade_id": row.lowest_grade_id_fk, "lowest_grade": grade_names[row.lowest_grade_id_fk],
+                "highest_grade_id": row.highest_grade_id_fk, "highest_grade": grade_names[row.highest_grade_id_fk]})
+        statement = where_school_year(select(source).order_by(source.school_id_fk, source.year), source, year, school_id)
+        return [{"school_id": row.school_id_fk, **row.model_dump(exclude={"id", "school_id_fk", "date_created", "date_updated"}),
+                 "rates": rates.get((row.school_id_fk, row.year), [])}
+                for row in session.exec(statement)]
 
 # Create singleton instance
 finance_service = FinanceService() 

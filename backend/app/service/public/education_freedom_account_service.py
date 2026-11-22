@@ -1,12 +1,14 @@
 from typing import List, Optional
-from sqlmodel import Session, select
+from sqlmodel import Session, func, select
 from fastapi import HTTPException
 
 from app.model.education_freedom_account import (
     EducationFreedomAccountEntryType,
     EducationFreedomAccountEntryTypeValue,
     EducationFreedomAccountEntry,
-    EducationFreedomAccountEntryState
+    EducationFreedomAccountEntryState,
+    EducationFreedomAccountCategory, EducationFreedomAccountExpenditure, EducationFreedomAccountProvider,
+    EducationFreedomAccountServed,
 )
 from app.model.location import TownDistrictLink
 from app.schema.education_freedom_account_schema import (
@@ -182,6 +184,37 @@ class EducationFreedomAccountService:
         
         # Convert to response schema
         return [EFAEntryStateGet.model_validate(result.model_dump()) for result in results]
+
+    def get_private_school_payments(self, session: Session, school_id: Optional[int] = None) -> List[dict]:
+        """EFA money paid to the private schools on the state's list, and the students they served (see
+        app/etl/education_freedom_account_provider.py): a row per school with the names the reports give it, its
+        payments by school year and category, and its students by calendar year (listed only at 10 or more)"""
+        provider, expenditure, category, served = (EducationFreedomAccountProvider, EducationFreedomAccountExpenditure,
+                                                   EducationFreedomAccountCategory, EducationFreedomAccountServed)
+        statement = select(provider).where(provider.school_id_fk.is_not(None)).order_by(provider.school_id_fk, provider.name)
+        if school_id is not None:
+            statement = statement.where(provider.school_id_fk == school_id)
+        schools = {}
+        for row in session.exec(statement):
+            schools.setdefault(row.school_id_fk, {"school_id": row.school_id_fk, "providers": [], "payments": [], "served": []})
+            schools[row.school_id_fk]["providers"].append(row.name)
+        in_schools = provider.school_id_fk.in_(list(schools))
+        statement = (select(provider.school_id_fk, expenditure.year, category.code, category.name, func.sum(expenditure.amount))
+                     .join(provider, provider.id == expenditure.provider_id)
+                     .join(category, category.id == expenditure.category_id)
+                     .where(in_schools)
+                     .group_by(provider.school_id_fk, expenditure.year, category.code, category.name)
+                     .order_by(expenditure.year, category.code))
+        for school, year, code, name, amount in session.exec(statement):
+            schools[school]["payments"].append({"year": year, "category_code": code, "category_name": name, "amount": amount})
+        statement = (select(provider.school_id_fk, served.calendar_year, func.sum(served.students))
+                     .join(provider, provider.id == served.provider_id)
+                     .where(in_schools)
+                     .group_by(provider.school_id_fk, served.calendar_year)
+                     .order_by(served.calendar_year))
+        for school, calendar_year, students in session.exec(statement):
+            schools[school]["served"].append({"calendar_year": calendar_year, "students": students})
+        return [schools[school] for school in sorted(schools)]
 
 # Create singleton instance
 education_freedom_account_service = EducationFreedomAccountService() 

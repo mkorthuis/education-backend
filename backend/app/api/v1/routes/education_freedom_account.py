@@ -5,7 +5,8 @@ from app.api.v1.deps import SessionDep
 from app.schema.education_freedom_account_schema import (
     EducationFreedomAccountEntryGet,
     EFAEntryTypeGet,
-    EFAEntryStateGet
+    EFAEntryStateGet,
+    PrivateSchoolEducationFreedomAccountGet
 )
 from app.service.public.education_freedom_account_service import education_freedom_account_service
 from app.core.cache import cache_response
@@ -104,4 +105,16 @@ def get_state_education_freedom_account_entries(
         session=session,
         year=year,
         entry_type_id=entry_type_id
-    ) 
+    )
+
+@router.get("/private-school",
+    response_model=List[PrivateSchoolEducationFreedomAccountGet],
+    summary="Get EFA payments and students by private school",
+    description="Retrieves the EFA money paid to each private school on the state's list, by school year and category, and the students it served by calendar year, from the Children's Scholarship Fund's reports (marked draft)",
+    response_description="List of private schools' EFA payments and students, a row per school")
+@cache_response("efa_private_school")
+def get_private_school_education_freedom_account(
+    session: SessionDep,
+    school_id: Optional[int] = Query(default=None, description="Filter by school ID")
+):
+    return education_freedom_account_service.get_private_school_payments(session=session, school_id=school_id)

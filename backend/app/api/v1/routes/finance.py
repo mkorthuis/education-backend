@@ -6,7 +6,7 @@ from app.schema.finance_schema import (
     FinancialReportGet, AllEntryTypesGet, AllFundTypesGet,
     StateCostPerPupilGet, DistrictCostPerPupilGet,
     ExpenditureStateRollupGet, RevenueStateTotalGet, ExpenditureStateTotalGet,
-    DOEFormADMStateGet
+    DOEFormADMStateGet, PrivateSchool990Get, PrivateSchoolTuitionGet
 )
 from app.service.public.finance_service import finance_service
 from app.core.cache import cache_response
@@ -232,4 +232,30 @@ def get_state_adm(
     return finance_service.get_state_adm(
         session=session,
         year=year
-    ) 
+    )
+
+@router.get("/private-school/990",
+    response_model=List[PrivateSchool990Get],
+    summary="Get private school Form 990s",
+    description="Retrieves who files each private school's IRS Form 990 (the school, an operator, or no one and why), with the filer's returns and their program service revenue lines",
+    response_description="List of private schools' Form 990 filers and returns, returns oldest first")
+@cache_response("finance_private_school_990")
+def get_private_school_990(
+    session: SessionDep,
+    school_id: Optional[int] = Query(default=None, description="Filter by school ID")
+):
+    return finance_service.get_private_school_990(session=session, school_id=school_id)
+
+
+@router.get("/private-school/tuition",
+    response_model=List[PrivateSchoolTuitionGet],
+    summary="Get private school tuition",
+    description="Retrieves private schools' tuition as each publishes it on its own website: whether it does, the page, and its rates by grade band, with required fees",
+    response_description="List of private school tuition, a row per school and school year, oldest year first")
+@cache_response("finance_private_school_tuition")
+def get_private_school_tuition(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None, description="Filter by school year (by its end)"),
+    school_id: Optional[int] = Query(default=None, description="Filter by school ID")
+):
+    return finance_service.get_private_school_tuition(session=session, year=year, school_id=school_id)

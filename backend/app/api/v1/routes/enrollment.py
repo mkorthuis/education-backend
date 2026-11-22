@@ -6,7 +6,7 @@ from app.schema.enrollment_schema import (
     StateEnrollmentTypeGet,
     DistrictEnglishLearnerGet, DistrictReducedLunchGet, SchoolEnrollmentGet, SchoolReducedLunchGet,
     StateEnglishLearnerGet, StateEnrollmentGet, StateReducedLunchGet, StateSchoolCountGet, TownEnrollmentGet,
-    TownEnrollmentStateGet,
+    TownEnrollmentStateGet, PrivateSchoolEnrollmentGet, PrivateSchoolSurveyGet,
 )
 from app.service.public.enrollment_service import enrollment_service
 from app.core.cache import cache_response
@@ -247,3 +247,30 @@ def get_state_enrollments(
         session=session, 
         year=year
     )
+
+@router.get("/private-school",
+    response_model=List[PrivateSchoolEnrollmentGet],
+    summary="Get private school enrollment",
+    description="Retrieves private schools' students on October 1 by grade, from NHED's nonpublic enrollment report; kept apart from the public schools' enrollment",
+    response_description="List of private school enrollment, a row per school and year, oldest year first")
+@cache_response("enrollment_private_school")
+def get_private_school_enrollment(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None, description="Filter by year"),
+    school_id: Optional[int] = Query(default=None, description="Filter by school ID")
+):
+    return enrollment_service.get_private_school_enrollment(session=session, year=year, school_id=school_id)
+
+
+@router.get("/private-school/survey",
+    response_model=List[PrivateSchoolSurveyGet],
+    summary="Get private school survey answers",
+    description="Retrieves private schools' answers to the NCES Private School Survey: students, teachers, graduates going to college and students by grade",
+    response_description="List of private school survey answers, a row per school and survey year, oldest year first")
+@cache_response("enrollment_private_school_survey")
+def get_private_school_survey(
+    session: SessionDep,
+    year: Optional[int] = Query(default=None, description="Filter by year"),
+    school_id: Optional[int] = Query(default=None, description="Filter by school ID")
+):
+    return enrollment_service.get_private_school_survey(session=session, year=year, school_id=school_id)

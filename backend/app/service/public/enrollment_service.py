@@ -7,11 +7,12 @@ from app.model.enrollment import (
     EnrollmentType, StateEnrollmentType,
     DistrictEnglishLearner, DistrictReducedLunch, SchoolEnrollment, SchoolReducedLunch, StateEnglishLearner,
     StateEnrollmentLevel, StateReducedLunch, TownEnrollment, TownEnrollmentState,
+    SchoolPrivateEnrollment, SchoolPrivateEnrollmentTotal, SchoolPrivateSurvey, SchoolPrivateSurveyGrade,
 )
 from app.model.location import District, Grade, School, TownDistrictLink
 from app.schema.enrollment_schema import SchoolEnrollmentGet, StateEnrollmentGet, StateSchoolCountGet, TownEnrollmentGet, TownEnrollmentStateGet
 
-from app.service.dataset_query import Dataset, fetch_dataset
+from app.service.dataset_query import Dataset, fetch_dataset, where_school_year
 
 REDUCED_LUNCH = Dataset(
     {"school": SchoolReducedLunch, "district": DistrictReducedLunch, "state": StateReducedLunch},
@@ -326,5 +327,38 @@ class EnrollmentService:
 
     def get_state_english_learner(self, session: Session, year: Optional[int] = None) -> List[dict]:
         return fetch_dataset(session, ENGLISH_LEARNER, "state", year)
+
+    # Private schools: apart from the public schools' enrollment, so there are no district or state totals
+    def get_private_school_enrollment(self, session: Session, year: Optional[int] = None,
+                                      school_id: Optional[int] = None) -> List[dict]:
+        """Private schools' students on October 1 from NHED's nonpublic enrollment report (see
+        app/etl/private_enrollment.py): a row per school and year, oldest first, with its ungraded students and
+        its grades that have students"""
+        total, grade = SchoolPrivateEnrollmentTotal, SchoolPrivateEnrollment
+        grades = {}
+        statement = select(grade, Grade.name).join(Grade, Grade.id == grade.grade_id_fk).order_by(grade.grade_id_fk)
+        for row, name in session.exec(where_school_year(statement, grade, year, school_id)):
+            grades.setdefault((row.school_id_fk, row.year), []).append(
+                {"grade_id": row.grade_id_fk, "grade_name": name, "enrollment": row.enrollment})
+        statement = where_school_year(select(total).order_by(total.school_id_fk, total.year), total, year, school_id)
+        return [{"school_id": row.school_id_fk, "year": row.year, "total": row.total,
+                 "ungraded_elementary": row.ungraded_elementary, "ungraded_secondary": row.ungraded_secondary,
+                 "grades": grades.get((row.school_id_fk, row.year), [])}
+                for row in session.exec(statement)]
+
+    def get_private_school_survey(self, session: Session, year: Optional[int] = None,
+                                  school_id: Optional[int] = None) -> List[dict]:
+        """Private schools' answers to the NCES Private School Survey (see app/etl/private_school_survey.py), a row
+        per school and survey year, oldest first, with its students by grade"""
+        survey, grade = SchoolPrivateSurvey, SchoolPrivateSurveyGrade
+        grades = {}
+        statement = select(grade, Grade.name).join(Grade, Grade.id == grade.grade_id_fk).order_by(grade.grade_id_fk)
+        for row, name in session.exec(where_school_year(statement, grade, year, school_id)):
+            grades.setdefault((row.school_id_fk, row.year), []).append(
+                {"grade_id": row.grade_id_fk, "grade_name": name, "students": row.students})
+        statement = where_school_year(select(survey).order_by(survey.school_id_fk, survey.year), survey, year, school_id)
+        return [{"school_id": row.school_id_fk, **row.model_dump(exclude={"id", "school_id_fk", "date_created", "date_updated"}),
+                 "grades": grades.get((row.school_id_fk, row.year), [])}
+                for row in session.exec(statement)]
 
 enrollment_service = EnrollmentService() 
