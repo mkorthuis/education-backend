@@ -3,15 +3,16 @@ import json
 import logging
 from typing import List, Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Path
 from fastapi.responses import StreamingResponse
 from sqlmodel import Session
 from starlette.concurrency import run_in_threadpool
 
 from app.core.config import settings
 from app.core.db import engine
-from app.schema.ask_schema import AskRequest, AskResponse
+from app.schema.ask_schema import AskConversation, AskRequest, AskResponse
 from app.service.internal.ask.ask_service import MAX_EARLIER, AskFailed, AskLimitReached, AskUnavailable, answer_afresh, prepare_question
+from app.service.internal.ask.conversation import earlier_turns, save_turn, shared_conversation
 from app.service.internal.ask.data_tools import DataToolError, page_place
 from app.service.internal.ask.question_log import record_outcome, record_question
 
@@ -30,7 +31,7 @@ FAILED = "We couldn't answer that question right now. Please try again."
 
 
 async def stream_answer(question: str, earlier: List[dict], deep: bool, show_text: bool, question_id: Optional[int] = None,
-                        place: Optional[dict] = None):
+                        place: Optional[dict] = None, shareable: bool = True, parent: Optional[str] = None):
     # The paragraphs written so far, set by the thread answering
     written: List[List[str]] = [[]]
 
@@ -58,7 +59,9 @@ async def stream_answer(question: str, earlier: List[dict], deep: bool, show_tex
             last_sent = clock()
     try:
         result = task.result()
-        response = AskResponse(**result).model_dump_json()
+        # Saved so its conversation can be shared by link (see conversation)
+        share_id = await run_in_threadpool(save_turn, question, result, deep, place, parent) if shareable else None
+        response = AskResponse(**{**result, "share_id": share_id}).model_dump_json()
     except Exception as error:
         if isinstance(error, AskFailed):
             logger.warning("Ask failed: %s", error)
@@ -81,7 +84,9 @@ async def stream_answer(question: str, earlier: List[dict], deep: bool, show_tex
         "A new answer can start with spaces, sent while it's being written; if it then fails, the "
         "body has only a \"detail\" message. With \"stream\", the answer's paragraphs come first as "
         "they're written, each update a line of JSON with \"partial\", and the answer is the last line. "
-        "With \"place\", the district or school page it was asked from, a question that names no place is about that one."
+        "With \"place\", the district or school page it was asked from, a question that names no place is about that one. "
+        "Each answer is saved with a \"share_id\" for its conversation's link; with \"parent\", the share_id of the "
+        "answer it follows, a follow-up continues that saved conversation."
     ),
 )
 def ask(request: AskRequest):
@@ -98,10 +103,20 @@ def ask(request: AskRequest):
                 place = page_place(session, request.place.kind, request.place.id)
             except DataToolError as error:
                 raise HTTPException(status_code=400, detail=str(error))
+    # A follow-up on a saved conversation continues it from the saved turns, never from what the visitor
+    # sends; an unknown parent starts afresh. Questions sent as history (without a parent) are used, but
+    # the answer then has no link, since the questions it follows aren't saved.
+    history = [turn.model_dump() for turn in request.history]
+    parent = None
+    if request.parent:
+        history = earlier_turns(request.parent, place)
+        parent = request.parent if history is not None else None
+        history = history or []
+    shareable = bool(request.parent) or not request.history
     # Every question goes in the log (question_log) with its outcome: its text, never who asked
-    question_id = record_question(question, [turn.question for turn in request.history][-MAX_EARLIER:], request.deep, place)
+    question_id = record_question(question, [turn["question"] for turn in history][-MAX_EARLIER:], request.deep, place)
     try:
-        earlier, saved = prepare_question(question, [turn.model_dump() for turn in request.history], request.deep, place)
+        earlier, saved = prepare_question(question, history, request.deep, place)
     except AskUnavailable:
         record_outcome(question_id, "unavailable")
         raise HTTPException(status_code=503, detail="Asking questions isn't available right now.")
@@ -110,8 +125,22 @@ def ask(request: AskRequest):
         raise HTTPException(status_code=429, detail="We've answered as many questions as we can today. Please try again tomorrow.")
     if saved:
         record_outcome(question_id, saved.get("status", "answered"), cached=True)
-        return saved
+        return {**saved, "share_id": save_turn(question, saved, request.deep, place, parent) if shareable else None}
     return StreamingResponse(
-        stream_answer(question, earlier, request.deep, request.stream, question_id, place),
+        stream_answer(question, earlier, request.deep, request.stream, question_id, place, shareable, parent),
         media_type="application/x-ndjson" if request.stream else "application/json",
     )
+
+
+@router.get(
+    "/conversation/{share_id}",
+    response_model=AskConversation,
+    summary="A shared Ask conversation",
+    description="The conversation a link to Ask a Question shows: the linked answer and the questions it followed, oldest "
+                "first, as they were answered. Kept for a year.",
+)
+def get_conversation(share_id: str = Path(..., pattern=r"^[A-Za-z0-9]{1,16}$")):
+    found = shared_conversation(share_id)
+    if found is None:
+        raise HTTPException(status_code=404, detail="That conversation wasn't found. Links to answers last a year.")
+    return found

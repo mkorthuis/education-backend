@@ -28,3 +28,25 @@ class AskQuestion(BaseMixin, table=True):
     # The district or school page it was asked from, if any: district or school, and its id
     place_kind: Optional[str] = Field(default=None, max_length=10)
     place_id: Optional[int] = None
+
+
+class AskTurn(BaseMixin, table=True):
+    """
+    An answered question on Ask a Question, saved so its conversation can be shared by link: the
+    address /ask/<share_id> shows it after the turns it followed (parent). The server saves its own
+    answer, never one a visitor sends. Nothing about who asked. Kept for a year, like the question log.
+    """
+    __tablename__ = "ask_turn"
+
+    share_id: str = Field(unique=True, max_length=16)
+    # The turn it followed up, if any; gone (None) once that turn has passed the retention period
+    parent_id: Optional[int] = Field(default=None, foreign_key="ask_turn.id")
+    question: str
+    # The answer as the site showed it (AskResponse, without cached or share_id)
+    answer: dict = Field(sa_column=Column(JSONB, nullable=False))
+    deep: bool = False
+    # The district or school page it was asked from, if any
+    place_kind: Optional[str] = Field(default=None, max_length=10)
+    place_id: Optional[int] = None
+    # One link for the same question and answer after the same turn: a digest of them all
+    fingerprint: str = Field(unique=True, max_length=64)

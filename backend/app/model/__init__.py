@@ -31,7 +31,7 @@ from .census_finance import (
 from .reference import (
     ReferenceTopic, ReferenceFact, ReferenceTable, OutsideSchool, DistrictService
 )
-from .ask import AskQuestion
+from .ask import AskQuestion, AskTurn
 from .question_two import DistrictQuestionTwo, SauQuestionTwo, TownQuestionTwo
 from .child_care import (
     ChildCareProgramType, ChildCareQualityRating, ChildCareRegion, ChildCareLicenseStatus, ChildCareAvailability,

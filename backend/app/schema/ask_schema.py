@@ -33,6 +33,11 @@ class AskRequest(BaseModel):
         default=False,
         description='Show the answer as it\'s written: a new answer comes as lines of JSON, {"partial": [paragraphs so far]} while it\'s written, then the answer',
     )
+    parent: Optional[str] = Field(
+        default=None,
+        max_length=32,
+        description="The share_id of the answer it follows up: its earlier questions are that saved conversation's, and history is ignored",
+    )
 
 
 class AskChartPoint(BaseModel):
@@ -85,3 +90,21 @@ class AskResponse(BaseModel):
     follow_ups: List[str] = []
     sources: List[AskSource] = []
     cached: bool = False
+    # Its conversation's link, /ask/<share_id>; none if it couldn't be saved, or it follows questions sent as history
+    share_id: Optional[str] = None
+
+
+class AskConversationTurn(BaseModel):
+    """A saved turn of a shared conversation: the question, how and where it was asked, when, and its answer"""
+    share_id: str
+    question: str
+    deep: bool
+    place: Optional[AskPlace] = None
+    # The day it was answered (YYYY-MM-DD); the answer is as it was then
+    asked_on: str
+    answer: AskResponse
+
+
+class AskConversation(BaseModel):
+    """A shared conversation: the linked turn and those it followed, oldest first"""
+    turns: List[AskConversationTurn]
