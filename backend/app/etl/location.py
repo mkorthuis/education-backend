@@ -15,7 +15,8 @@ Districts and schools in the latest configured year's lists are marked is_curren
 the API lists only those.
 
 A school whose website in the list is broken or missing takes its working site from the
-config's website_corrections, applied after every load.
+config's website_corrections, and contact details the list gets wrong are kept from the
+config's contact_corrections, both applied after every load.
 
 A school's type comes from the state's type code. Districts on the district/town list are
 school districts; the other operators in the school list are a charter school's board or a
@@ -400,6 +401,7 @@ def load(conn: Connection, years: Optional[Iterable[int]] = None) -> dict:
     counts["former"] = add_former(conn)
     counts["current"] = mark_current(conn, latest or read_year(config, latest_year))
     counts["website_corrections"] = apply_website_corrections(conn, config)
+    counts["contact_corrections"] = apply_contact_corrections(conn, config)
     # The district views also read school, so they are refreshed with it
     counts["views_refreshed"] = refresh_dependent_views(conn, "school")
     return counts
@@ -417,6 +419,38 @@ def apply_website_corrections(conn: Connection, config: Optional[dict] = None) -
         if not updated:
             raise ValueError(f"{CONFIG}: a website correction for school {fix['school_id']}, which the database doesn't have")
     return len(corrections)
+
+
+# What contact_corrections may set: a school's email or zip, an SAU staff member's email
+CONTACT_FIELDS = {"school": ("email", "zip"), "sau_staff": ("email",)}
+
+
+def apply_contact_corrections(conn: Connection, config: Optional[dict] = None) -> int:
+    """
+    Keep the contact details in the config's contact_corrections, which the state's list gets wrong. Each replaces
+    the state's value only while it is still the wrong one (`when`, '' for a blank), so the state's own fix takes
+    over. A correction for a school or SAU staff member the database doesn't have stops the load. Returns how many
+    were applied.
+    """
+    applied = 0
+    for fix in (config or load_config(CONFIG)).get('contact_corrections') or []:
+        table = "school" if "school_id" in fix else "sau_staff"
+        if fix['field'] not in CONTACT_FIELDS[table]:
+            raise ValueError(f"{CONFIG}: a contact correction can't set {table}.{fix['field']}")
+        if table == "school":
+            where, params = "id = :id", {"id": fix['school_id']}
+            who = f"school {fix['school_id']}"
+        else:
+            where = "sau_id_fk = :sau AND lower(first_name) = lower(:first) AND lower(last_name) = lower(:last)"
+            params = {"sau": fix['sau_id'], "first": fix['first_name'], "last": fix['last_name']}
+            who = f"SAU {fix['sau_id']}'s {fix['first_name']} {fix['last_name']}"
+        if conn.execute(text(f"SELECT 1 FROM {table} WHERE {where}"), params).first() is None:
+            raise ValueError(f"{CONFIG}: a contact correction for {who}, whom the database doesn't have")
+        applied += conn.execute(
+            text(f"UPDATE {table} SET {fix['field']} = :value WHERE {where} AND COALESCE({fix['field']}, '') = :when"),
+            {**params, "value": fix['value'], "when": fix['when']},
+        ).rowcount
+    return applied
 
 
 def add_former(conn: Connection) -> dict:

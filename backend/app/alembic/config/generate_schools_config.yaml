@@ -58,3 +58,29 @@ website_corrections:
   - school_id: 29282  # Granite Valley Preparatory Chartered Public School (Keene)
     webpage: https://www.granitevalleyprep.org/
     note: The state's list gives no website.
+
+# Contact details the state's list gets wrong, kept as they were. Each replaces the state's value only while the list
+# still has the wrong one (`when`), so the state's own fix, or a new value, takes over. A school's email or zip, or an
+# SAU staff member's email (by name). Applied after every load (location.apply_contact_corrections); one for a school
+# or staff member the database doesn't have stops the load.
+contact_corrections:
+  # The 2026-11-22 list gives eight private schools and three SAU officials the same email, a personal university
+  # address, in place of their own (the 2026-11-01 list's)
+  - { school_id: 21100, field: email, when: jkg1035@usnh.edu, value: tabernaclecs@comcast.net }  # Tabernacle Christian School
+  - { school_id: 21225, field: email, when: jkg1035@usnh.edu, value: Kpimentel.pja@nnec.org }  # Pioneer Junior Academy
+  - { school_id: 26450, field: email, when: jkg1035@usnh.edu, value: mountain_shadows@comcast.net }  # Mountain Shadows School
+  - { school_id: 26845, field: email, when: jkg1035@usnh.edu, value: victoryhsjaf@gmail.com }  # Victory High School
+  - { school_id: 28520, field: email, when: jkg1035@usnh.edu, value: MHMS28bow@comcast.net }  # Meeting House Montessori School
+  - { school_id: 28540, field: email, when: jkg1035@usnh.edu, value: cedbasket@aol.com }  # Country Village Montessori School
+  - { school_id: 29168, field: email, when: jkg1035@usnh.edu, value: Director@northendmontessori.com }  # North End Montessori School
+  - { school_id: 29206, field: email, when: jkg1035@usnh.edu, value: gamezjoyce@gmail.com }  # Shalom Christian Academy
+  - { sau_id: 97, first_name: Charles, last_name: McGee, field: email, when: jkg1035@usnh.edu, value: cmcgee@carrollcountynh.gov }  # Hale's Location
+  - { sau_id: 98, first_name: Mark, last_name: Brady, field: email, when: jkg1035@usnh.edu, value: mark.brady@cooscountynh.us }  # Coos County
+  - { sau_id: 109, first_name: Cheryl, last_name: Mayberry, field: email, when: jkg1035@usnh.edu, value: cmayberry@sau109.org }  # Unity
+  # The 2026-11-22 list drops these schools' zip codes
+  - { school_id: 21380, field: zip, when: "", value: 03770-5402 }  # Kimball Union Academy
+  - { school_id: 22250, field: zip, when: "", value: 03047-4301 }  # Greenfield Elementary School
+  - { school_id: 27905, field: zip, when: "", value: 03053-3224 }  # Moose Hill School
+  - { school_id: 29229, field: zip, when: "", value: "03076" }  # Crossroads Christian School
+  - { school_id: 29251, field: zip, when: "", value: "03878" }  # Seton Academy
+  - { school_id: 29279, field: zip, when: "", value: "03867" }  # John Powers Primary School

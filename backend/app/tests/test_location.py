@@ -9,6 +9,7 @@ import unittest
 
 import pandas as pd
 from fastapi.testclient import TestClient
+from sqlalchemy import text
 
 from app.core.config import settings
 from app.core.db import engine
@@ -116,6 +117,50 @@ class LocationApiTests(unittest.TestCase):
                     location.apply_website_corrections(conn, config)
             finally:
                 transaction.rollback()
+
+    def test_contact_details_the_state_list_gets_wrong_are_kept(self):
+        with engine.connect() as conn:
+            for fix in CONFIG['contact_corrections']:
+                if 'school_id' in fix:
+                    value = conn.execute(text(f"SELECT {fix['field']} FROM school WHERE id = :id"), {"id": fix['school_id']}).scalar()
+                else:
+                    value = conn.execute(text("SELECT email FROM sau_staff WHERE sau_id_fk = :sau AND lower(last_name) = lower(:last)"),
+                                         {"sau": fix['sau_id'], "last": fix['last_name']}).scalar()
+                self.assertEqual(value, fix['value'], fix)
+            self.assertEqual(conn.execute(text("SELECT COUNT(*) FROM school WHERE email = 'jkg1035@usnh.edu'")).scalar(), 0)
+
+    def test_a_contact_correction_applies_only_while_the_state_list_is_wrong(self):
+        config = {'contact_corrections': [
+            {'school_id': 21100, 'field': 'email', 'when': 'wrong@example.org', 'value': 'kept@example.org'},
+            {'school_id': 21380, 'field': 'zip', 'when': '', 'value': '03770-5402'},
+        ]}
+        with engine.connect() as conn:
+            transaction = conn.begin()
+            try:
+                # The state's value is the wrong one, or blank: the kept value replaces it
+                conn.execute(text("UPDATE school SET email = 'wrong@example.org' WHERE id = 21100"))
+                conn.execute(text("UPDATE school SET zip = NULL WHERE id = 21380"))
+                self.assertEqual(location.apply_contact_corrections(conn, config), 2)
+                self.assertEqual(conn.execute(text("SELECT email FROM school WHERE id = 21100")).scalar(), 'kept@example.org')
+                self.assertEqual(conn.execute(text("SELECT zip FROM school WHERE id = 21380")).scalar(), '03770-5402')
+                # The state has a new value of its own: it stands
+                conn.execute(text("UPDATE school SET email = 'office@example.org' WHERE id = 21100"))
+                self.assertEqual(location.apply_contact_corrections(conn, config), 0)
+                self.assertEqual(conn.execute(text("SELECT email FROM school WHERE id = 21100")).scalar(), 'office@example.org')
+            finally:
+                transaction.rollback()
+
+    def test_a_contact_correction_for_someone_unknown_stops_the_load(self):
+        for fix in ({'school_id': 99999999, 'field': 'email', 'when': '', 'value': 'a@example.org'},
+                    {'sau_id': 97, 'first_name': 'No', 'last_name': 'Such', 'field': 'email', 'when': '', 'value': 'a@example.org'},
+                    {'school_id': 21100, 'field': 'principal_last_name', 'when': '', 'value': 'Anyone'}):
+            with engine.connect() as conn:
+                transaction = conn.begin()
+                try:
+                    with self.assertRaises(ValueError):
+                        location.apply_contact_corrections(conn, {'contact_corrections': [fix]})
+                finally:
+                    transaction.rollback()
 
     def test_district_ranks_can_leave_out_charter_boards(self):
         boards = {d["id"] for d in self.get("location/district", kind="charter")}
