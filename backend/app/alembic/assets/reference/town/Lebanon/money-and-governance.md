@@ -489,7 +489,7 @@ Part of the Lebanon research (town/Lebanon). Gathered November 21, 2026.
    - as_of: 2026-11-21
    - review_by: 2027-11-21
    - place: district Lebanon
-   - note: Slide "Tuition Information / AREA Tuition Rate": "2026 $18,810 $19,768 2027 $19,344 $20,309". The slides label years by a single number; the source does not say whether 2027 means 2026-27 or 2027-28. See table lebanon_area_tuition_rate. Embedded on https://www.sau88.net/budget-documents. Raw: raw/money/budget-2027-28-chapter3-slides.html, .txt
+   - note: Slide "Tuition Information / AREA Tuition Rate": "2026 $18,810 $19,768 2027 $19,344 $20,309". The slides label years by a single number; the source does not say whether 2027 means 2026-27 or 2027-28; Grantham's March 3, 2026 budget presentation (slide 54) gives the same $20,309 and $19,344 as the "current AREA Agreement" rates in its analysis of its 2026-27 budget, which suggests 2026-27; Plainfield's 2026-27 budget carries 81 Lebanon students at the same $19,344, or $1,566,864 (town/Grantham/money-and-governance.md, district-tuition-contracts fact 2; town/Plainfield/money-and-governance.md). See table lebanon_area_tuition_rate. Embedded on https://www.sau88.net/budget-documents. Raw: raw/money/budget-2027-28-chapter3-slides.html, .txt
 8. In 2026, 260 AREA students attended Lebanon's schools: 77 Grantham students at Lebanon Middle School, 109 Grantham students at Lebanon High School and 74 Plainfield students at Lebanon High School, for 183 at the high school (totals derived).
    - citation: Lebanon School District, 2027-28 Budget Process, Chapter 3 (slide 6, "AREA Enrollment")
    - source: https://docs.google.com/presentation/d/e/2PACX-1vTExsUN3800PhBvEfFbswFeMsocrB8u0bsBxDHluRH29GT2n1QUWwe7hFmKCgWepg/pub

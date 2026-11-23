@@ -1439,7 +1439,7 @@ district_service:
     grades: [7, 12]
     arrangement: tuition_contract
     source: https://www.sau104.org/
-    note: Marshwood Middle and High (South Berwick, Maine), attended since 2015-16; the agreement was renewed unchanged in October 2024 and approved by the State Board November 14, 2024; its term wasn't found
+    note: Marshwood Middle (Eliot, Maine) and High (South Berwick, Maine), attended since 2015-16; the agreement was renewed unchanged in October 2024 and approved by the State Board November 14, 2024; its term wasn't found
   # ---- SAU 105 ----
   - district: Strafford
     receiving_district: Coe-Brown Northwood Academy

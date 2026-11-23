@@ -932,7 +932,7 @@ Questions answered wholly by earlier files: none of 17. P10.1, P10.2, P11.3, P16
    - as_of: 2026-11-22
    - review_by: 2027-11-22
    - place: district Mascoma Valley Regional
-   - note: Text: "it is continually reviewed utilizing a five year cycle"; rows "22-23 Math, SEL, handwriting" and "27-28 Math, SEL, handwriting | HS CTE Courses ...". The math program's name isn't given in the documents read. Raw: raw/middle/reports/q-fall-curriculum-2026.txt
+   - note: Text: "it is continually reviewed utilizing a five year cycle"; rows "22-23 Math, SEL, handwriting" and "27-28 Math, SEL, handwriting | HS CTE Courses ...". The math program's name isn't given in the documents read; the November 2026 curriculum newsletter names Illustrative Mathematics (Canaan's research, indian-river-support-and-choices.md, district-curriculum-and-assessment 2). Raw: raw/middle/reports/q-fall-curriculum-2026.txt
 7. For 2026-27 Mascoma is using its state interim and modular assessments mainly for math because it is in the first year of a new K–6 English program (Arts & Letters), and Indian River adopted Fundations in grade 5 and Arts & Letters in grades 5 and 6.
    - citation: Mascoma Curriculum Newsletter, November 2026; Indian River School Quarterly Report, Quarter 4 2025-2026
    - source: https://app.smore.com/n/zf63a

@@ -1,0 +1,58 @@
+# Lancaster Research Brief
+
+Read `/Users/michaelkorthuis/workspace/education/town/research-brief-template.md` first. It holds the goal, rules, format, safety rules and output layout. This file fills in its blanks for Lancaster and lists what is already researched. Use the topics in `/Users/michaelkorthuis/workspace/education/town/shared-topics.md`. The questions are in `/Users/michaelkorthuis/workspace/education/town/Lancaster/questions.md`: 20 profiles and 60 questions, shared by 5 agents.
+
+Dates: `as_of` is the day you check a page, `review_by` is one year later for local facts, and 2027-08-15 for state law.
+
+**Web search may be refused.** Start from the sites below and follow their links (WebFetch works when search doesn't). If a search is refused, don't keep retrying it; work from pages you can reach.
+
+## What you need to know about Lancaster
+
+- **Lancaster** is the Coös County seat on Route 2/3 along the Connecticut River, home of Weeks Medical Center and the Lancaster Fair, with South Lancaster, Grange and Coös Junction. Site town id 287.
+- **The White Mountains Regional School District** (site district id 568) is **SAU 36**, a single district serving Lancaster, Whitefield and neighboring towns (check the member towns: Carroll, Dalton, Jefferson, Lancaster, Whitefield and any others, and how costs are split). It runs Lancaster Elementary School (21475; preschool to grade 6; 308 students in 2024-25), Whitefield Elementary School (26930; preschool to grade 6; 256), and White Mountains Regional High School (21480; 9–12; 319) and Middle School (29291; 7–8) in Whitefield. **Whitefield's research follows this one and will cite your files**, so research the district-wide facts (high school, career programs, the district's money and governance) fully; Whitefield's agents will write only Whitefield's side.
+- **Career programs:** check the culinary arts, welding, diesel and other programs at White Mountains Regional, and credits with White Mountains Community College in Berlin (`town/Berlin/career-center-and-college.md` covers the college's side; cite it).
+- **Site figures:** Resident students (the site's town enrollment; its "2026" row is the October 1, 2025 count, i.e. 2025-26): 498 (2014-15), 419 (2019-20), 398 (2025-26); school enrollment in 2024-25 (the site's "2025" row, the October 1, 2024 count): Lancaster Elementary 308, Whitefield Elementary 256, White Mountains Regional High 319 (the middle school's 7th and 8th grades are not in the site's count); cost per pupil FY2025 White Mountains Regional $25,600, state $22,699; 2025 tax rates per $1,000 (Lancaster): total $21.07, local school $8.69, state education $1.14, municipal $8.24, county $3.00; Question 2: Lancaster 64.3% yes (unofficial).
+- **The site's own data** has every school's enrollment by grade, test scores, class sizes, staff and salary schedules, free and reduced-price meals, English learners, safety counts, graduation and plans, licensed child care, EFAs by town, Census estimates, adequacy aid, special education aid, tax rates and school taxes. Point to these; don't restate them.
+- **Library facts already loaded** (don't repeat them): White Mountains Regional's kindergarten, preschool and budget-form facts. Read them: `grep -n -B2 -A10 -E "place: district (White Mountains Regional)$" /Users/michaelkorthuis/workspace/education/additional-data/district-practices.md`.
+
+## Premises to check
+
+Report each in your "Premises checked" table.
+
+- **Lancaster Elementary:** getting kids to and from school around a 7-to-7 shift (P1.1); an after-school program (P1.2); the "new school cell phone rules" and reaching a child (P1.3); public pre-K (P4.1); special education staffing (P5.1); a counselor in the building (P5.3); the snow day or two-hour delay call by SAU 36 (P6.1); bus routes changing and a kindergartner's near-hour ride (P6.2); 4-H and Lancaster Fair week absences (P6.3); free and reduced lunch (P7.1); a bus stop near Middle Street (P7.2); help with coats, backpacks and gifts (P7.3); bus conduct rules (P12.1); a translator for Spanish-speaking parents (P16.1); registration (P16.2); teacher-workshop Fridays (P16.3); building safety and an emergency plan (P12.3).
+- **White Mountains Regional (Whitefield):** welding and diesel certification (P2.1); credit toward White Mountains Community College (P2.2); the bus from South Lancaster (P2.3); AP and college-prep classes (P8.1); Running Start at the high school (P8.2; the state program was renamed; check); guidance and financial aid (P8.3); culinary arts (P13.1); a late bus to Lancaster (P13.2); sports costs (P13.3); changing classes or entering a trade program mid-year (P14.1); the bell-to-bell phone ban (P14.2); paid internships and work-study (P14.3); a mental health counselor every day (P19.1); the move from a K–6 school (P19.2); making up missed work (P19.3); public safety training (P20.2); vaping and discipline (P20.3).
+- **Money and governance:** a tax bill that keeps rising as enrollment falls (P3.1); the split of school taxes among Lancaster, the state and other SAU 36 towns (P3.2); a "new property tax cap vote" (P3.3); the central office in Whitefield and budget meetings held there (P10.1, P20.1); teacher pay and mentoring (P10.2, P15.2); contract bids by local businesses (P10.3); low state test scores and what the district does (P15.1, P4.2); building condition and a bond (P17.3); town meeting voting and renters (P18.2); adult education nearby (P18.3).
+
+## Already researched
+
+| File | What it covers |
+|---|---|
+| `town/Berlin/` | Berlin's schools, the career center and White Mountains Community College credit, and Berlin's money and governance, for the North Country comparisons. |
+| `town/Littleton/` | Littleton's schools, Gallen CTC and money, for comparisons with the nearest large school district. |
+| Library and earlier towns | State rules: EFAs and home education access (`district-homeschool-access`; the yearly evaluation was repealed July 1, 2026, `choice-hb-1268-home-education-history`); special education, out-of-district placements and 504 plans (Nashua's `special-education.md`); English learners and translation; free and reduced-price meals; guardianship, residency and records; bullying (`students-hb-131-bullying-law`); phones (`climate-phone-free-school-day`); dual enrollment and college credit (`dual-enrollment-rules`, `college-credit-for-ap-and-dual-enrollment`); open enrollment (`open-enrollment-status`); youth employment; default budgets, deliberative sessions and tax caps (`budget-hb-1300-school-tax-cap`, `local-tax-and-budget-caps`); property tax relief (RSA 72:38-a and elderly exemptions in Concord's, Derry's and Hampton's files); voting (`voting-in-local-elections`). Cite these by file, topic and fact number; don't write them again. Where they lack a state rule you need, write it with no place. |
+
+**Being researched at the same time** (November 22, 2026): Antrim, Bethlehem, Bristol, Campton, Canaan, Chesterfield, Chichester, Dunbarton, Gorham, Grantham, Mont Vernon, New Durham, Plainfield, Rollinsford, Sanbornton, Sunapee, Thornton, Tuftonboro, Walpole, Warner and Whitefield (this batch, all running now) Whitefield shares White Mountains Regional and follows this research; don't write Whitefield's town-specific facts.. Don't write facts about those towns.
+
+## Where facts go
+
+- `district White Mountains Regional` for the schools, buses, the district's budget, cost split and board, and the high school.
+- `sau 36` for SAU-wide facts.
+- `town Lancaster` for town government, recreation, the library, scholarships, exemptions and taxes.
+- No place for general NH rules.
+
+All agents write in `town/Lancaster/`. Shared slugs may repeat across files; within one file each slug appears once.
+
+- **Raw copies:** under your own area folder (named in your prompt). Keep each area under about 100 MB, and save only files your facts cite.
+- **Scripts:** in your own scratchpad subfolder.
+- **Overlap:** Money belongs to agent 4; White Mountains Regional's academics and career programs to agent 3; its student life and support to agent 5; Lancaster Elementary's learning, support and choices to agent 2; Lancaster Elementary's operations and families to agent 1. Whitefield will cite agents 3, 4 and 5's files, so the high school and district-wide facts should be complete. Put what you find for another area in your "For another file" section rather than writing it twice.
+- **Blocked pages:** if a page refuses automated requests (HTTP 403, a bot check), list its URL under "Not retrieved" and move on. Don't retry it or route around it through mirrors or archives; the main session opens those in a browser.
+
+## Agent split
+
+| Agent | Area | Output file | Raw folder | Questions |
+|---|---|---|---|---|
+| 1 | Lancaster Elementary operations and families: getting children to school on a 12-hour shift, after-school care, cell phone rules for reaching children, public pre-K, snow days and delay calls, bus routes and long rides, 4-H and Lancaster Fair absences, free and reduced lunch, bus stops and no-car mornings, coats and backpacks, bus conduct rules, parent portal help, volunteering and background checks, translation, registration and records, teacher-workshop days | `lancaster-elementary-and-families.md` | `raw/elementary/` | P1.1, P1.2, P1.3, P4.1, P6.1, P6.2, P6.3, P7.1, P7.2, P7.3, P12.1, P12.2, P15.3, P16.2, P16.3 |
+| 2 | Lancaster Elementary learning, support and choices: reading and math against southern New Hampshire, internet and coding, special education staffing, counselors, re-enrolling from homeschooling, homeschoolers at sports and band, EFA use, a new student's welcome, bullying policy, after-school clubs and youth sports, test scores and what the district is doing, translation, an honest answer on whether the schools are good, whether to stay in Lancaster to raise a child | `lancaster-elementary-support-and-choices.md` | `raw/middle/` | P4.2, P4.3, P5.1, P5.3, P9.1, P9.2, P9.3, P11.1, P11.2, P11.3, P15.1, P16.1, P17.1, P18.1 |
+| 3 | White Mountains Regional High and career programs (district-wide; Whitefield will cite this): welding, diesel and culinary programs and certification, credit toward White Mountains Community College, the bus from South Lancaster, AP and college-prep classes, Running Start, guidance and financial aid, dropping or switching classes, paid internships and work-study, adult education, public safety training, a late bus to Lancaster | `white-mountains-regional-high-and-career.md` | `raw/high/` | P2.1, P2.2, P2.3, P8.1, P8.2, P8.3, P13.1, P14.1, P14.3, P18.3, P20.2 |
+| 4 | Money and governance (district-wide; Whitefield will cite this): why taxes rise as enrollment falls, how school taxes are split among towns and the state, the property tax cap vote, the central office and where board meetings are held, teacher pay and mentoring, local bids for school contracts, buildings and a bond, town meeting voting and renters, which town's children go to which school, and the SAU 36 member towns' cost formula | `money-and-governance.md` | `raw/money/` | P3.1, P3.2, P3.3, P10.1, P10.2, P10.3, P12.3, P15.2, P17.2, P17.3, P18.2, P20.1 |
+| 5 | White Mountains Regional student life and support (district-wide; Whitefield will cite this): a student with an IEP moving up to the high school, sports costs and late buses, the bell-to-bell phone ban, a daily mental health counselor, the move from a K–6 school, making up missed work, substance use and discipline | `white-mountains-regional-student-life-and-support.md` | `raw/support/` | P5.2, P13.2, P13.3, P14.2, P19.1, P19.2, P19.3, P20.3 |
